@@ -1,0 +1,31 @@
+language: csharp
+sudo: required
+dist: trusty
+mono: latest
+os:
+- linux
+git:
+  depth: 1
+cache:
+  directories:
+  - tools
+  - "$HOME/.nuget/packages"
+before_cache:
+- rm -f tools/packages.config
+before_script:
+- curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+- sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+- sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod
+  trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+- sudo apt-get update
+- sudo apt-get install dotnet-dev-1.1.5
+- sudo apt-get install dotnet-sdk-2.0.3
+script:
+- git fetch --unshallow
+- git fetch origin '+refs/heads/*:refs/heads/*'
+- git branch -r
+- chmod 755 ./build.sh
+- "./build.sh --verbosity Diagnostic"
+notifications:
+  slack:
+    secure: MU2lAQxQroTxdVbGbVeZ7PAq33c/9Z1Mut+mSJfPGKooKvxf3k+Sx2ikgqZVKlPYgquYUAWC/bITRTTDCl4c9piFnv5Q+oxvN/cyktR7vt7re7eRmuQtrOEYomeUFEY7Vt8z3f6FJvQzzqYnYmzXJFeZuVP259p0jDhSsAyQlJkrTQTF60YbNK3yjredcfCxNPbKERkLqdEw+cuYmRElTVDUCnuGF2zuZcTedA79oH7eZM4kctKBV0hsBfOif4HqtCXjZ1QAUkV2c+vzG7slgN9rjsaw7V7fXhdqntcln2jp53T3S2a10t9A4MxcB6cjfvCnla3DFl5aJJ3BTyNmfDNMQdh1LzNYSP5Z1CV3w/1KMza59TKzVf76/YxugnQ4iNMpM2r3dCSiYk7/X6uKUbEqZq8kwgPQNaFeyhBEzhFJ/t4HQeT0sfetSDAN7G/QEH60p74IwYrmSOV/WttaWXeKyjUbY9OpMOsJXeNfs9R5dKw9sxl+w8jZYqyA5k7/4/Zrl71Z7HrU6pza4an2BMw+/YqI7kH076GJkqTCGpg871XEDLNuxm4r00uZJOMaEoPUgPZXqU/Hn0pQu+oDk60ujaCTOKkSab0oh1F1VxWOIdiDxIg7M91C/86Q7Yyky3Zc3Q0abyK/c7Vscf2BQQet3Ld75Bk/Cfg4/a43ZBs=

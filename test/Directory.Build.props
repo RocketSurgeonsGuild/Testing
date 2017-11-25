@@ -1,0 +1,10 @@
+<Project>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Common.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+        <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+        <DebugType>full</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+</Project>
