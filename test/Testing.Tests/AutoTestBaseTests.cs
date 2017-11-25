@@ -13,8 +13,8 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
             {
-                DefaultLogger.LogError("abcd");
-                DefaultLogger.LogError("abcd {something}", "somevalue");
+                Logger.LogError("abcd");
+                Logger.LogError("abcd {something}", "somevalue");
             }
         }
 
