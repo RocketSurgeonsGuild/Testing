@@ -16,6 +16,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
             {
                 DefaultLogger.LogError("abcd");
+                DefaultLogger.LogError("abcd {something}", "somevalue");
             }
         }
 
@@ -24,8 +25,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             var helper = A.Fake<ITestOutputHelper>();
             var test = new Impl(helper);
-
-            A.CallTo(() => helper.WriteLine(A<string>._, A<object[]>._)).MustHaveHappened();
+            A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
         }
     }
 }
