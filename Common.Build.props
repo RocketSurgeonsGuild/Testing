@@ -8,7 +8,7 @@
     <PropertyGroup>
         <RSG_Build_Version>1.2.1</RSG_Build_Version>
         <RSG_Builders_Version>0.5.0</RSG_Builders_Version>
-        <RSG_Conventions_Version>0.6.0</RSG_Conventions_Version>
+        <RSG_Conventions_Version>0.7.1</RSG_Conventions_Version>
         <Microsoft_Extensions_Logging_Version>2.0.0</Microsoft_Extensions_Logging_Version>
         <SourceLink_Version>2.6.0</SourceLink_Version>
         <Microsoft_NET_Test_Sdk_Version>15.5.0</Microsoft_NET_Test_Sdk_Version>
