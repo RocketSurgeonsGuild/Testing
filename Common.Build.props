@@ -6,15 +6,15 @@
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup>
-        <RSG_Build_Version>1.2.2</RSG_Build_Version>
+        <RSG_Build_Version>1.2.3</RSG_Build_Version>
         <RSG_Builders_Version>1.0.0</RSG_Builders_Version>
         <RSG_Conventions_Version>0.8.0</RSG_Conventions_Version>
         <Microsoft_Extensions_Logging_Version>2.0.0</Microsoft_Extensions_Logging_Version>
-        <SourceLink_Version>2.6.0</SourceLink_Version>
+        <SourceLink_Version>2.7.4</SourceLink_Version>
         <Microsoft_NET_Test_Sdk_Version>15.5.0</Microsoft_NET_Test_Sdk_Version>
         <xunit_Version>2.3.1</xunit_Version>
-        <FluentAssertions_Version>5.0.0-beta0004</FluentAssertions_Version>
-        <FakeItEasy_Version>4.1.1</FakeItEasy_Version>
+        <FluentAssertions_Version>5.0.0-rc0002</FluentAssertions_Version>
+        <FakeItEasy_Version>4.3.0</FakeItEasy_Version>
         <Autofac_FakeItEasy_Version>5.0.0</Autofac_FakeItEasy_Version>
     </PropertyGroup>
     <!-- Overrides -->
