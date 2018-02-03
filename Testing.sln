@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F2329C11-7
 	ProjectSection(SolutionItems) = preProject
 		test\Directory.Build.props = test\Directory.Build.props
 		test\Directory.Build.targets = test\Directory.Build.targets
+		src\Testing.Docker\IEnsureContainerIsRunningContext.cs = src\Testing.Docker\IEnsureContainerIsRunningContext.cs
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Testing", "src\Testing\Rocket.Surgery.Extensions.Testing.csproj", "{770BEC0E-2D1C-4EE8-84FB-2B3DB1720C9D}"
