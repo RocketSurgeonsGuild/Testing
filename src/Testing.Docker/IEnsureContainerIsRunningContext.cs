@@ -8,6 +8,6 @@ namespace Rocket.Surgery.Extensions.Testing.Docker
         ContainerListResponse GetContainer(IList<ContainerListResponse> responses);
         CreateContainerParameters CreateContainer(CreateContainerParameters createContainerParameters);
         ContainerStartParameters StartContainer(ContainerStartParameters containerStartParameters);
-
+        ImagesCreateParameters CreateImage(ImagesCreateParameters imagesCreateParameters);
     }
 }
