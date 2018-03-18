@@ -9,6 +9,7 @@
         <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="$(FakeItEasy_Version)" />
         <PackageReference Include="Autofac.Extras.FakeItEasy" Version="$(Autofac_FakeItEasy_Version)" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="$(Microsoft_Extensions_Logging_Version)" />
+        <PackageReference Include="Bogus" Version="$(Bogus_Version)" />
     </ItemGroup>
 	<ItemGroup>
 	</ItemGroup>
