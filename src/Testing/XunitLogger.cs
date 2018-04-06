@@ -9,12 +9,12 @@ namespace Rocket.Surgery.Extensions.Testing
     {
         private static readonly string[] NewLineChars = { Environment.NewLine };
         private readonly string _category;
-        private readonly LogLevel _minLogLevel;
+        private readonly XunitLoggerProvider _loggerProvider;
         private readonly ITestOutputHelper _output;
 
-        public XunitLogger(ITestOutputHelper output, string category, LogLevel minLogLevel)
+        public XunitLogger(ITestOutputHelper output, string category, XunitLoggerProvider loggerProvider)
         {
-            _minLogLevel = minLogLevel;
+            _loggerProvider = loggerProvider;
             _category = category;
             _output = output;
         }
@@ -22,10 +22,11 @@ namespace Rocket.Surgery.Extensions.Testing
         public void Log<TState>(
             LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            if (!IsEnabled(logLevel))
+            if (!IsEnabled(logLevel) || _loggerProvider.FilterNames.Any(name => _category.StartsWith(name, StringComparison.OrdinalIgnoreCase)))
             {
                 return;
             }
+
             var firstLinePrefix = $"| {_category} {logLevel}: ";
             var lines = formatter(state, exception).Split(NewLineChars, StringSplitOptions.RemoveEmptyEntries);
             WriteLine(firstLinePrefix + lines.First());
@@ -47,11 +48,9 @@ namespace Rocket.Surgery.Extensions.Testing
             }
         }
 
-        public bool IsEnabled(LogLevel logLevel)
-            => logLevel >= _minLogLevel;
+        public bool IsEnabled(LogLevel logLevel) => logLevel >= _loggerProvider.MinLevel;
 
-        public IDisposable BeginScope<TState>(TState state)
-            => new NullScope();
+        public IDisposable BeginScope<TState>(TState state) => new NullScope();
 
         private void WriteLine(string message)
         {

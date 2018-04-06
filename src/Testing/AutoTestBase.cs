@@ -1,4 +1,5 @@
 ﻿using Autofac.Extras.FakeItEasy;
+using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing
@@ -7,7 +8,11 @@ namespace Rocket.Surgery.Extensions.Testing
     {
         protected  readonly AutoFake AutoFake;
 
-        protected AutoTestBase(ITestOutputHelper outputHelper) : base(outputHelper)
+        protected AutoTestBase(ITestOutputHelper outputHelper) : this(outputHelper, LogLevel.Information)
+        {
+        }
+
+        protected AutoTestBase(ITestOutputHelper outputHelper, LogLevel minLevel) : base(outputHelper, minLevel)
         {
             AutoFake = new AutoFake();
             AutoFake.Container.ComponentRegistry.AddRegistrationSource(

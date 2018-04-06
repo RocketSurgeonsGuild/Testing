@@ -7,11 +7,17 @@ namespace Rocket.Surgery.Extensions.Testing
     {
         protected readonly LoggerFactory LoggerFactory;
         protected readonly ILogger Logger;
+        protected readonly XunitLoggerProvider Provider;
 
-        protected TestBase(ITestOutputHelper outputHelper)
+        protected TestBase(ITestOutputHelper outputHelper) : this(outputHelper, LogLevel.Information)
+        {
+        }
+
+        protected TestBase(ITestOutputHelper outputHelper, LogLevel minLevel)
         {
             LoggerFactory = new LoggerFactory();
-            LoggerFactory.AddProvider(new XunitLoggerProvider(outputHelper));
+            Provider = new XunitLoggerProvider(outputHelper, minLevel);
+            LoggerFactory.AddProvider(Provider);
             Logger = LoggerFactory.CreateLogger("Default");
         }
     }
