@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net451;netstandard2.0;net461</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="xunit" Version="$(xunit_Version)" />
@@ -10,6 +10,4 @@
         <PackageReference Include="Autofac.Extras.FakeItEasy" Version="$(Autofac_FakeItEasy_Version)" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="$(Microsoft_Extensions_Logging_Version)" />
     </ItemGroup>
-	<ItemGroup>
-	</ItemGroup>
 </Project>
