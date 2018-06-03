@@ -3,8 +3,8 @@
         <TargetFrameworks>netcoreapp2.0;netcoreapp2.1;net461</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
-      <ProjectReference Include="..\..\src\Testing.Docker\Rocket.Surgery.Extensions.Testing.Docker.csproj" />
-      <ProjectReference Include="..\..\src\Testing.AzureStorageEmulator\Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.csproj" />
+        <ProjectReference Include="..\..\src\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
+        <ProjectReference Include="..\..\src\Testing.Docker\Rocket.Surgery.Extensions.Testing.Docker.csproj" />
+        <ProjectReference Include="..\..\src\Testing.AzureStorageEmulator\Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.csproj" />
     </ItemGroup>
 </Project>
