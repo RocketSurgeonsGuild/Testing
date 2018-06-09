@@ -15,10 +15,12 @@ namespace Rocket.Surgery.Extensions.Testing
     class LoggingRegistrationSource : IRegistrationSource
     {
         private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger _defaultLogger;
 
-        public LoggingRegistrationSource(ILoggerFactory loggerFactory)
+        public LoggingRegistrationSource(ILoggerFactory loggerFactory, ILogger defaultLogger)
         {
             _loggerFactory = loggerFactory;
+            _defaultLogger = defaultLogger;
         }
 
         public IEnumerable<IComponentRegistration> RegistrationsFor(Service service, Func<Service, IEnumerable<IComponentRegistration>> registrationAccessor)
@@ -36,7 +38,7 @@ namespace Rocket.Surgery.Extensions.Testing
             {
                 yield return new ComponentRegistration(
                     Guid.NewGuid(),
-                    new ProvidedInstanceActivator(A.Fake<ILogger>(x => x.Wrapping(_loggerFactory.CreateLogger("Default")))),
+                    new ProvidedInstanceActivator(_defaultLogger),
                     new RootScopeLifetime(),
                     InstanceSharing.Shared,
                     InstanceOwnership.OwnedByLifetimeScope,
