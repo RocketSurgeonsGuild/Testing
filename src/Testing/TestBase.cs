@@ -5,7 +5,7 @@ namespace Rocket.Surgery.Extensions.Testing
 {
     public abstract class TestBase
     {
-        protected readonly LoggerFactory LoggerFactory;
+        protected readonly ILoggerFactory LoggerFactory;
         protected readonly ILogger Logger;
         protected readonly XunitLoggerProvider Provider;
 
