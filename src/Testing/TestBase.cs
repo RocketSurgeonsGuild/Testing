@@ -15,7 +15,7 @@ namespace Rocket.Surgery.Extensions.Testing
 
         protected TestBase(ITestOutputHelper outputHelper, LogLevel minLevel)
         {
-            LoggerFactory = new LoggerFactory();
+            LoggerFactory = new TestLoggerFactory();
             Provider = new XunitLoggerProvider(outputHelper, minLevel);
             LoggerFactory.AddProvider(Provider);
             Logger = LoggerFactory.CreateLogger("Default");

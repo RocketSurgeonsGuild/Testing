@@ -6,7 +6,8 @@
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup>
-        <RSG_Build_Version>2.0.0</RSG_Build_Version>
+        <RSG_Build_Version>2.1.0</RSG_Build_Version>
+        <RSG_Extensions_Version>0.8.2</RSG_Extensions_Version>
         <Microsoft_Extensions_Logging_Version>2.1.0</Microsoft_Extensions_Logging_Version>
         <SourceLink_Version>2.8.1</SourceLink_Version>
         <Microsoft_NET_Test_Sdk_Version>15.7.2</Microsoft_NET_Test_Sdk_Version>

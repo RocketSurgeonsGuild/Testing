@@ -7,6 +7,7 @@ using Autofac.Core;
 using Autofac.Core.Activators.ProvidedInstance;
 using Autofac.Core.Lifetime;
 using Autofac.Core.Registration;
+using FakeItEasy;
 using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing
@@ -35,7 +36,7 @@ namespace Rocket.Surgery.Extensions.Testing
             {
                 yield return new ComponentRegistration(
                     Guid.NewGuid(),
-                    new ProvidedInstanceActivator(_loggerFactory.CreateLogger("Default")),
+                    new ProvidedInstanceActivator(A.Fake<ILogger>(x => x.Wrapping(_loggerFactory.CreateLogger("Default")))),
                     new RootScopeLifetime(),
                     InstanceSharing.Shared,
                     InstanceOwnership.OwnedByLifetimeScope,
@@ -45,13 +46,13 @@ namespace Rocket.Surgery.Extensions.Testing
 
             if (typedService.ServiceType == typeof(ILoggerFactory))
             {
-                yield return  new ComponentRegistration(
+                yield return new ComponentRegistration(
                     Guid.NewGuid(),
-                    new ProvidedInstanceActivator(_loggerFactory),
-                    new RootScopeLifetime(), 
+                    new ProvidedInstanceActivator(A.Fake<ILoggerFactory>(x => x.Wrapping(_loggerFactory))),
+                    new RootScopeLifetime(),
                     InstanceSharing.Shared,
                     InstanceOwnership.OwnedByLifetimeScope,
-                    new [] { service },
+                    new[] { service },
                     new Dictionary<string, object>());
             }
         }
