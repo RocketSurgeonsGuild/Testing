@@ -16,7 +16,7 @@ namespace Rocket.Surgery.Extensions.Testing
         {
             AutoFake = new AutoFake();
             AutoFake.Container.ComponentRegistry.AddRegistrationSource(
-                new LoggingRegistrationSource(LoggerFactory)
+                new LoggingRegistrationSource(LoggerFactory, Logger)
             );
         }
     }
