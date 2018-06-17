@@ -1,16 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="xunit" Version="$(xunit_Version)" />
-        <PackageReference Include="FluentAssertions" Version="$(FluentAssertions_Version)" />
-        <PackageReference Include="FakeItEasy" Version="$(FakeItEasy_Version)" />
-        <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="$(FakeItEasy_Version)" />
-        <PackageReference Include="Autofac.Extras.FakeItEasy" Version="$(Autofac_FakeItEasy_Version)" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="$(Microsoft_Extensions_Logging_Version)" />
-        <PackageReference Include="Bogus" Version="$(Bogus_Version)" />
-        <PackageReference Include="XunitXml.TestLogger" Version="$(XunitXml_TestLogger_Version)" />
-        <PackageReference Include="Rocket.Surgery.Reactive.Extensions" Version="$(RSG_Extensions_Version)" />
-    </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="$(xunit_Version)" />
+    <PackageReference Include="FluentAssertions" Version="$(FluentAssertions_Version)" />
+    <PackageReference Include="FakeItEasy" Version="$(FakeItEasy_Version)" />
+    <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="$(FakeItEasy_Version)" />
+    <PackageReference Include="Autofac.Extras.FakeItEasy" Version="$(Autofac_FakeItEasy_Version)" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="$(Microsoft_Extensions_Logging_Version)" />
+    <PackageReference Include="Bogus" Version="$(Bogus_Version)" />
+    <PackageReference Include="XunitXml.TestLogger" Version="$(XunitXml_TestLogger_Version)" />
+    <PackageReference Include="Rocket.Surgery.Reactive.Extensions" Version="$(RSG_Extensions_Version)" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="$(System_Diagnostics_DiagnosticSource_Version)" />
+    <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" Version="$(Microsoft_Extensions_DiagnosticAdapter_Version)" />
+  </ItemGroup>
 </Project>
