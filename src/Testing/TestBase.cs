@@ -24,14 +24,15 @@ namespace Rocket.Surgery.Extensions.Testing
         protected TestBase(ITestOutputHelper outputHelper, LogLevel minLevel)
         {
             Disposable = new CompositeDisposable();
-            var diagnosticListener = new DiagnosticListener("Test");
-            Disposable.Add(diagnosticListener.SubscribeWithAdapter(new TestDiagnosticListenerLoggingAdapter(Logger)));
-            DiagnosticSource = diagnosticListener;
 
             LoggerFactory = new TestLoggerFactory();
             Provider = new XunitLoggerProvider(outputHelper, minLevel);
             LoggerFactory.AddProvider(Provider);
             Logger = LoggerFactory.CreateLogger("Default");
+
+            var diagnosticListener = new DiagnosticListener("Test");
+            Disposable.Add(diagnosticListener.SubscribeWithAdapter(new TestDiagnosticListenerLoggingAdapter(Logger)));
+            DiagnosticSource = diagnosticListener;
         }
 
         public void Dispose()
