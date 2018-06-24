@@ -15,7 +15,7 @@ namespace Rocket.Surgery.Extensions.Testing
         protected readonly ILogger Logger;
         protected readonly XunitLoggerProvider Provider;
         protected readonly DiagnosticSource DiagnosticSource;
-        protected CompositeDisposable Disposable;
+        protected readonly CompositeDisposable Disposable;
 
         protected TestBase(ITestOutputHelper outputHelper) : this(outputHelper, LogLevel.Information)
         {
