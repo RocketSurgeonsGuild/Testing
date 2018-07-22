@@ -8,7 +8,8 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Update="Rocket.Surgery.Build.Metadata" Version="2.1.0" PrivateAssets="All" />
-        <PackageReference Update="SourceLink.Embed.AllSourceFiles" Version="2.8.3" PrivateAssets="All" />
+        <PackageReference Update="SourceLink.Copy.PdbFiles" Version="2.8.3" PrivateAssets="All" />
+        <PackageReference Update="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Update="Autofac.Extras.FakeItEasy" Version="5.0.1" />
