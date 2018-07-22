@@ -1,0 +1,26 @@
+<Project>
+    <ItemGroup>
+        <PackageReference Update="Microsoft.Extensions.Logging" Version="2.1.0" />
+        <PackageReference Update="Rocket.Surgery.Reactive.Extensions" Version="0.8.2" />
+        <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.0" />
+        <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="2.1.0" />
+        <PackageReference Update="Docker.DotNet" Version="3.125.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Update="Rocket.Surgery.Build.Metadata" Version="2.1.0" PrivateAssets="All" />
+        <PackageReference Update="SourceLink.Embed.AllSourceFiles" Version="2.8.3" PrivateAssets="All" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Update="Autofac.Extras.FakeItEasy" Version="5.0.1" />
+        <PackageReference Update="Bogus" Version="22.3.2" />
+        <PackageReference Update="coverlet.msbuild" Version="2.1.1" />
+        <PackageReference Update="FakeItEasy" Version="4.7.1" />
+        <PackageReference Update="FakeItEasy.Analyzer.CSharp" Version="4.7.1" />
+        <PackageReference Update="FluentAssertions" Version="5.4.1" />
+        <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+        <!-- <PackageReference Update="Rocket.Surgery.Extensions.Testing" Version="0.8.0" /> -->
+        <PackageReference Update="xunit" Version="2.4.0" />
+        <PackageReference Update="xunit.runner.visualstudio" Version="2.4.0" />
+        <PackageReference Update="XunitXml.TestLogger" Version="2.0.0" />
+    </ItemGroup>
+</Project>

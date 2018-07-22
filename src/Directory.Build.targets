@@ -1,0 +1,7 @@
+<Project>
+    <ItemGroup>
+        <PackageReference Include="Rocket.Surgery.Build.Metadata" />
+        <PackageReference Include="SourceLink.Embed.AllSourceFiles" />
+    </ItemGroup>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Common.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+</Project>
