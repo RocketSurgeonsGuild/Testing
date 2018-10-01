@@ -1,0 +1,44 @@
+parameters:
+  BuildScript: 'cakefile.cake'
+  Target: 'Default'
+  CakeVersion: ''
+  DotNetVersion: ''
+  Configuration: ''
+  Coverage: '$(Agent.BuildDirectory)/c'
+  Artifacts: $(Build.ArtifactStagingDirectory)
+  Verbosity: ''
+
+steps:
+- task: DotNetCoreInstaller@0
+  displayName: Install dotnet ${{ parameters.DotNetVersion }}
+  inputs:
+    packageType: 'sdk'
+    version: ${{ parameters.DotNetVersion }}
+
+- script: dotnet tool install -g Cake.Tool --version ${{ parameters.CakeVersion }}
+
+- script: dotnet cake cakefile.cake --Configuration="${{ parameters.Configuration }}" --Artifacts="${{ parameters.Artifacts }}" --Coverage="${{ parameters.Coverage }}" --verbosity=${{ parameters.Verbosity }}
+
+- task: PublishTestResults@2
+  displayName: Publish Tests
+  condition: always()
+  inputs:
+    testRunner: "XUnit"
+    testResultsFiles: "${{ parameters.Artifacts }}/test/**/*.xml"
+
+- task: PublishCodeCoverageResults@1
+  displayName: Publish Code Coverage
+  condition: always()
+  inputs:
+    codeCoverageTool: "Cobertura"
+    summaryFileLocation: "${{ parameters.Coverage }}/solution.cobertura"
+    reportDirectory: "${{ parameters.Coverage }}/report/"
+    # failIfCoverageEmpty: "true"
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Logs
+  condition: always()
+  inputs:
+    PathtoPublish: "${{ parameters.Artifacts }}/logs/"
+    ArtifactName: "logs"
+    ArtifactType: "Container"

@@ -1,14 +1,45 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
-pool:
-  vmImage: 'Ubuntu 16.04'
-
 variables:
-  buildConfiguration: 'Release'
+  Configuration: Release
+  Verbosity: Normal
+  Coverage: '$(Agent.BuildDirectory)/c'
+  VstsCoverage: '$(Coverage)'
+  Artifacts: $(Build.ArtifactStagingDirectory)
+  VstsArtifacts: '$(Artifacts)'
+  # system.enableAccessToken: 'true'
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true'
+  DotNetVersion: "2.1.401"
+  NuGetVersion: "4.6.2"
+  CakeVersion: "0.30.0"
+jobs:jobs:
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+  - template: tools/azure-build.yml
+    parameters:
+      CakeVersion: '$(CakeVersion)'
+      DotNetVersion: '$(DotNetVersion)'
+      Configuration: '$(Configuration)'
+      Verbosity: '$(Verbosity)'
 
-steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+- job: Linux
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps:
+  - template: tools/azure-build.yml
+    parameters:
+      CakeVersion: '$(CakeVersion)'
+      DotNetVersion: '$(DotNetVersion)'
+      Configuration: '$(Configuration)'
+      Verbosity: '$(Verbosity)'
+
+- job: Windows
+  pool:
+    vmImage: 'VS2017-Win2016'
+  steps:
+  - template: tools/azure-build.yml
+    parameters:
+      CakeVersion: '$(CakeVersion)'
+      DotNetVersion: '$(DotNetVersion)'
+      Configuration: '$(Configuration)'
+      Verbosity: '$(Verbosity)'
