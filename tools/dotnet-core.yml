@@ -11,6 +11,11 @@ steps:
     packageType: 'sdk'
     version: ${{ parameters.DotNetVersion }}
 
-- script: dotnet tool install -g Cake.Tool --version $(CakeVersion)
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet install cake'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'install -g Cake.Tool --version $(CakeVersion)'
   env:
     CakeVersion: ${{ parameters.CakeVersion }}

@@ -7,7 +7,12 @@ parameters:
   Verbosity: ''
 
 steps:
-- script: dotnet cake cakefile.cake --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet cake'
+  inputs:
+    command: custom
+    custom: cake
+    arguments: 'cakefile.cake --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)'
   env:
     Configuration: ${{ parameters.Configuration }}
     Artifacts: ${{ parameters.Artifacts }}
