@@ -10,35 +10,50 @@ parameters:
 
 steps:
 - task: DotNetCoreInstaller@0
-  displayName: Install dotnet ${{ parameters.DotNetVersion }}
+  displayName: Install dotnet $(DotNetVersion)
   inputs:
     packageType: 'sdk'
     version: ${{ parameters.DotNetVersion }}
 
-- script: dotnet tool install -g Cake.Tool --version ${{ parameters.CakeVersion }}
+- script: dotnet tool install -g Cake.Tool --version $(CakeVersion)
+  env:
+    CakeVersion: ${{ parameters.CakeVersion }}
 
-- script: dotnet cake cakefile.cake --Configuration="${{ parameters.Configuration }}" --Artifacts="${{ parameters.Artifacts }}" --Coverage="${{ parameters.Coverage }}" --verbosity=${{ parameters.Verbosity }}
+- script: dotnet cake cakefile.cake --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
+  env:
+    Configuration: ${{ parameters.Configuration }}
+    Artifacts: ${{ parameters.Artifacts }}
+    VstsArtifacts: ${{ parameters.Artifacts }}
+    Coverage: ${{ parameters.Coverage }}
+    VstsCoverage: ${{ parameters.Coverage }}
+    Verbosity: ${{ parameters.Verbosity }}
 
 - task: PublishTestResults@2
   displayName: Publish Tests
   condition: always()
   inputs:
     testRunner: "XUnit"
-    testResultsFiles: "${{ parameters.Artifacts }}/test/**/*.xml"
+    testResultsFiles: "$(Artifacts)/test/**/*.xml"
+  env:
+    Artifacts: ${{ parameters.Artifacts }}
 
 - task: PublishCodeCoverageResults@1
   displayName: Publish Code Coverage
   condition: always()
   inputs:
     codeCoverageTool: "Cobertura"
-    summaryFileLocation: "${{ parameters.Coverage }}/solution.cobertura"
-    reportDirectory: "${{ parameters.Coverage }}/report/"
+    summaryFileLocation: "$(Coverage)/solution.cobertura"
+    reportDirectory: "$(Coverage)/report/"
     # failIfCoverageEmpty: "true"
+  env:
+    Coverage: ${{ parameters.Coverage }}
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Logs
   condition: always()
   inputs:
-    PathtoPublish: "${{ parameters.Artifacts }}/logs/"
+    PathtoPublish: "$(Artifacts)/logs/"
     ArtifactName: "logs"
     ArtifactType: "Container"
+  env:
+    Artifacts: ${{ parameters.Artifacts }}
