@@ -10,7 +10,7 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'dotnet cake'
   inputs:
-    command: custoom
+    command: custom
     custom: cake
     arguments: cakefile.cake --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
   env:
