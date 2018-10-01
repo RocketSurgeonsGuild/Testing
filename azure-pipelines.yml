@@ -10,7 +10,7 @@ variables:
   DotNetVersion: "2.1.401"
   NuGetVersion: "4.6.2"
   CakeVersion: "0.30.0"
-jobs:jobs:
+jobs:
 - job: macOS
   pool:
     vmImage: 'macOS-10.13'
