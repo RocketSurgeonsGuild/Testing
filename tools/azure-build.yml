@@ -1,5 +1,5 @@
 parameters:
-  BuildScript: 'cakefile.cake'
+  Script: 'cakefile.cake'
   Target: 'Default'
   Configuration: 'Release'
   Coverage: '$(Agent.BuildDirectory)/c'
@@ -7,7 +7,7 @@ parameters:
   Verbosity: ''
 
 steps:
-- script: $(Agent.ToolsDirectory)/dotnet-cake $(BuildScript) --Target="$(Target)" --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
+- script: $(Agent.ToolsDirectory)/dotnet-cake $(Script) --Target="$(Target)" --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
   displayName: 'dotnet cake'
   env:
     Configuration: ${{ parameters.Configuration }}
@@ -16,7 +16,7 @@ steps:
     Coverage: ${{ parameters.Coverage }}
     VstsCoverage: ${{ parameters.Coverage }}
     Verbosity: ${{ parameters.Verbosity }}
-    BuildScript: ${{ parameters.BuildScript }}
+    Script: ${{ parameters.BuildScript }}
     Target: ${{ parameters.Target }}
 
 - task: PublishTestResults@2
