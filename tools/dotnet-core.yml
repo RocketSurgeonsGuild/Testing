@@ -16,6 +16,6 @@ steps:
   inputs:
     command: custom
     custom: tool
-    arguments: 'install --tool-path $(Agent.ToolsDirectory) -g Cake.Tool --version $(CakeVersion)'
+    arguments: 'install --tool-path "$(Agent.ToolsDirectory)" -g Cake.Tool --version $(CakeVersion)'
   env:
     CakeVersion: ${{ parameters.CakeVersion }}
