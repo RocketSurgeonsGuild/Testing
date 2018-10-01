@@ -21,8 +21,6 @@ jobs:
       DotNetVersion: '$(DotNetVersion)'
   - template: tools/azure-build.yml
     parameters:
-      Script: 'cakefile.cake'
-      Target: 'Default'
       Configuration: '$(Configuration)'
       Verbosity: '$(Verbosity)'
 
@@ -36,8 +34,6 @@ jobs:
       DotNetVersion: '$(DotNetVersion)'
   - template: tools/azure-build.yml
     parameters:
-      Script: 'cakefile.cake'
-      Target: 'Default'
       Configuration: '$(Configuration)'
       Verbosity: '$(Verbosity)'
 
@@ -51,7 +47,5 @@ jobs:
       DotNetVersion: '$(DotNetVersion)'
   - template: tools/azure-build.yml
     parameters:
-      Script: 'cakefile.cake'
-      Target: 'Default'
       Configuration: '$(Configuration)'
       Verbosity: '$(Verbosity)'
