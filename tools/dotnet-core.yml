@@ -21,4 +21,4 @@ steps:
     CakeVersion: ${{ parameters.CakeVersion }}
 
 - script: export PATH="$PATH:$HOME/.dotnet/tools"
-  condition: or(eq(variables['Agent.OS']), 'Darwin'), eq(variables['Agent.OS']), 'Linux'))
+  condition: or(eq(variables['Agent.OS'], 'Darwin'), eq(variables['Agent.OS'], 'Linux'))
