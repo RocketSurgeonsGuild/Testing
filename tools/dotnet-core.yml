@@ -19,3 +19,6 @@ steps:
     arguments: 'install -g Cake.Tool --version $(CakeVersion)'
   env:
     CakeVersion: ${{ parameters.CakeVersion }}
+
+- script: export PATH="$PATH:$HOME/.dotnet/tools"
+  condition: or(eq(variables['Agent.OS']), 'Darwin'), eq(variables['Agent.OS']), 'Linux'))
