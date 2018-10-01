@@ -7,9 +7,10 @@ parameters:
   Verbosity: ''
 
 steps:
-- script: $(Agent.ToolsDirectory)/dotnet-cake cakefile.cake --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
+- script: $(Agent.ToolsDirectory)/dotnet-cake cakefile.cake --Target=$(Target) --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
   displayName: 'dotnet cake'
   env:
+    Target: ${{ parameters.Target }}
     Configuration: ${{ parameters.Configuration }}
     Artifacts: ${{ parameters.Artifacts }}
     VstsArtifacts: ${{ parameters.Artifacts }}
