@@ -7,16 +7,17 @@ parameters:
   Verbosity: ''
 
 steps:
-- script: $(Agent.ToolsDirectory)/dotnet-cake cakefile.cake --Target="$(Command)" --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
+- script: $(Agent.ToolsDirectory)/dotnet-cake $(BuildScript) --Target="$(Target)" --Configuration="$(Configuration)" --Artifacts="$(Artifacts)" --Coverage="$(Coverage)" --verbosity=$(Verbosity)
   displayName: 'dotnet cake'
   env:
-    Command: ${{ parameters.Target }}
     Configuration: ${{ parameters.Configuration }}
     Artifacts: ${{ parameters.Artifacts }}
     VstsArtifacts: ${{ parameters.Artifacts }}
     Coverage: ${{ parameters.Coverage }}
     VstsCoverage: ${{ parameters.Coverage }}
     Verbosity: ${{ parameters.Verbosity }}
+    BuildScript: ${{ parameters.BuildScript }}
+    Target: ${{ parameters.Target }}
 
 - task: PublishTestResults@2
   displayName: Publish Tests
