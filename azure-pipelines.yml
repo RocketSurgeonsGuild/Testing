@@ -15,10 +15,12 @@ jobs:
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - template: tools/azure-build.yml
+  - template: tools/dotnet-core.yml
     parameters:
       CakeVersion: '$(CakeVersion)'
       DotNetVersion: '$(DotNetVersion)'
+  - template: tools/azure-build.yml
+    parameters:
       Configuration: '$(Configuration)'
       Verbosity: '$(Verbosity)'
 
@@ -26,10 +28,12 @@ jobs:
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
-  - template: tools/azure-build.yml
+  - template: tools/dotnet-core.yml
     parameters:
       CakeVersion: '$(CakeVersion)'
       DotNetVersion: '$(DotNetVersion)'
+  - template: tools/azure-build.yml
+    parameters:
       Configuration: '$(Configuration)'
       Verbosity: '$(Verbosity)'
 
@@ -37,9 +41,11 @@ jobs:
   pool:
     vmImage: 'VS2017-Win2016'
   steps:
-  - template: tools/azure-build.yml
+  - template: tools/dotnet-core.yml
     parameters:
       CakeVersion: '$(CakeVersion)'
       DotNetVersion: '$(DotNetVersion)'
+  - template: tools/azure-build.yml
+    parameters:
       Configuration: '$(Configuration)'
       Verbosity: '$(Verbosity)'
