@@ -1,51 +1,75 @@
 variables:
   Configuration: Release
   Verbosity: Normal
-  Coverage: '$(Agent.BuildDirectory)/c'
-  VstsCoverage: '$(Coverage)'
+  Coverage: "$(Agent.BuildDirectory)/c"
+  VstsCoverage: "$(Coverage)"
   Artifacts: $(Build.ArtifactStagingDirectory)
-  VstsArtifacts: '$(Artifacts)'
+  VstsArtifacts: "$(Artifacts)"
   # system.enableAccessToken: 'true'
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true'
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "true"
   DotNetVersion: "2.1.401"
-  NuGetVersion: "4.6.2"
+  NuGetVersion: "4.7.1"
   CakeVersion: "0.30.0"
 jobs:
-- job: macOS
-  pool:
-    vmImage: 'macOS-10.13'
-  steps:
-  - template: tools/dotnet-core.yml
-    parameters:
-      CakeVersion: '$(CakeVersion)'
-      DotNetVersion: '$(DotNetVersion)'
-  - template: tools/azure-build.yml
-    parameters:
-      Configuration: '$(Configuration)'
-      Verbosity: '$(Verbosity)'
+  - job: GitVersion
+    pool:
+      vmImage: "VS2017-Win2016"
+    steps:
+      - template: .pipelines/gitversion-store.yml
+        parameters:
+          NuGetVersion: "$(NuGetVersion)"
 
-- job: Linux
-  pool:
-    vmImage: 'Ubuntu-16.04'
-  steps:
-  - template: tools/dotnet-core.yml
-    parameters:
-      CakeVersion: '$(CakeVersion)'
-      DotNetVersion: '$(DotNetVersion)'
-  - template: tools/azure-build.yml
-    parameters:
-      Configuration: '$(Configuration)'
-      Verbosity: '$(Verbosity)'
+  - job: macOS
+    dependsOn: GitVersion
+    pool:
+      vmImage: "macOS-10.13"
+    steps:
+      - template: .pipelines/gitversion-restore.yml
+      - template: .pipelines/dotnet-core.yml
+        parameters:
+          CakeVersion: "$(CakeVersion)"
+          DotNetVersion: "$(DotNetVersion)"
+      - task: RocketSurgeonsGuild.variable-tools.ShowVariables.ShowVariables@1
+        displayName: 'Show Variables'
+      - template: .pipelines/azure-build.yml
+        parameters:
+          Configuration: "$(Configuration)"
+          Verbosity: "$(Verbosity)"
 
-- job: Windows
-  pool:
-    vmImage: 'VS2017-Win2016'
-  steps:
-  - template: tools/dotnet-core.yml
-    parameters:
-      CakeVersion: '$(CakeVersion)'
-      DotNetVersion: '$(DotNetVersion)'
-  - template: tools/azure-build.yml
-    parameters:
-      Configuration: '$(Configuration)'
-      Verbosity: '$(Verbosity)'
+  - job: Linux
+    dependsOn: GitVersion
+    pool:
+      vmImage: "Ubuntu-16.04"
+    steps:
+      - template: .pipelines/gitversion-restore.yml
+      - template: .pipelines/dotnet-core.yml
+        parameters:
+          CakeVersion: "$(CakeVersion)"
+          DotNetVersion: "$(DotNetVersion)"
+      - task: RocketSurgeonsGuild.variable-tools.ShowVariables.ShowVariables@1
+        displayName: 'Show Variables'
+      - template: .pipelines/azure-build.yml
+        parameters:
+          Configuration: "$(Configuration)"
+          Verbosity: "$(Verbosity)"
+
+  - job: Windows
+    dependsOn: GitVersion
+    pool:
+      vmImage: "VS2017-Win2016"
+    steps:
+      - template: .pipelines/gitversion-restore.yml
+      - template: .pipelines/dotnet-core.yml
+        parameters:
+          CakeVersion: "$(CakeVersion)"
+          DotNetVersion: "$(DotNetVersion)"
+      - task: NuGetToolInstaller@0
+        displayName: "Get NuGet"
+        inputs:
+          versionSpec: $(NuGetVersion)
+      - task: RocketSurgeonsGuild.variable-tools.ShowVariables.ShowVariables@1
+        displayName: 'Show Variables'
+      - template: .pipelines/azure-build.yml
+        parameters:
+          Configuration: "$(Configuration)"
+          Verbosity: "$(Verbosity)"

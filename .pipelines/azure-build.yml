@@ -23,6 +23,9 @@ steps:
   inputs:
     testRunner: "XUnit"
     testResultsFiles: "$(Artifacts)/test/**/*.xml"
+    testRunTitle: "XUnit Results - $(system.phaseName)"
+    buildPlatform: ${{ parameters.os }}
+    buildConfiguration: ${{ parameters.Configuration }}
   env:
     Artifacts: ${{ parameters.Artifacts }}
 
@@ -42,7 +45,7 @@ steps:
   condition: always()
   inputs:
     PathtoPublish: "$(Artifacts)/logs/"
-    ArtifactName: "logs"
+    ArtifactName: "Logs - $(system.phaseName)"
     ArtifactType: "Container"
   env:
     Artifacts: ${{ parameters.Artifacts }}
