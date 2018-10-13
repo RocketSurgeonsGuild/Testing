@@ -9,6 +9,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(CoverletOutput)'==''">
         <CoverletOutput Condition="'$(CoverageDirectory)'==''">$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('Common.Build.props', '$(MSBuildProjectDirectory)'))))/coverage/$(CoverletName)/</CoverletOutput>
-        <CoverletOutput Condition="'$(CoverageDirectory)'!=''">$(CoverletOutputDirectory)/$(CoverletName)</CoverletOutput>
+        <CoverletOutput Condition="'$(CoverageDirectory)'!=''">$(CoverageDirectory)/$(CoverletName)</CoverletOutput>
     </PropertyGroup>
 </Project>
