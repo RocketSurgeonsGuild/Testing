@@ -16,4 +16,8 @@
         <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" />
         <PackageReference Include="coverlet.msbuild" />
     </ItemGroup>
+    <ItemGroup>
+        <None Include="build/*.*" Pack="true" PackagePath="build" />
+        <None Include="buildMultiTargeting/*.*" Pack="true" PackagePath="buildMultiTargeting" />
+    </ItemGroup>
 </Project>
