@@ -5,7 +5,10 @@
 
         <CollectCoverage>true</CollectCoverage>
         <CoverletOutputFormat>json,lcov,cobertura,opencover</CoverletOutputFormat>
-        <CoverletOutput Condition="'$(CoverageDirectory)'==''">$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('Common.Build.props', '$(MSBuildThisFileDirectory)../'))))/coverage/$(MSBuildProjectName.Replace('.', '-'))/</CoverletOutput>
-        <CoverletOutput Condition="'$(CoverageDirectory)'!=''">$(CoverletOutputDirectory)/$(MSBuildProjectName.Replace('.', '-'))</CoverletOutput>
+        <CoverletName>$(MSBuildProjectName.Replace('.', '-'))</CoverletName>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(CoverletOutput)'==''">
+        <CoverletOutput Condition="'$(CoverageDirectory)'==''">$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('Common.Build.props', '$(MSBuildProjectDirectory)'))))/coverage/$(CoverletName)/</CoverletOutput>
+        <CoverletOutput Condition="'$(CoverageDirectory)'!=''">$(CoverletOutputDirectory)/$(CoverletName)</CoverletOutput>
     </PropertyGroup>
 </Project>
