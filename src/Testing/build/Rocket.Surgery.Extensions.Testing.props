@@ -8,7 +8,7 @@
         <CoverletName>$(MSBuildProjectName.Replace('.', '-'))</CoverletName>
     </PropertyGroup>
     <!-- If coverlet is empty or set to the default override -->
-    <PropertyGroup Condition="'$(CoverletOutput)'=='' Or '$(CoverletOutput)'=='$([MSBuild]::EnsureTrailingSlash('$(MSBuildProjectDirectory)'))'">
+    <PropertyGroup Condition="'$(CoverletOutput)'=='' Or '$(CoverletOutput)'==$([MSBuild]::EnsureTrailingSlash('$(MSBuildProjectDirectory)'))">
         <CoverletOutput Condition="'$(CoverageDirectory)'==''">$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('Common.Build.props', '$(MSBuildProjectDirectory)'))))/coverage/$(CoverletName)/</CoverletOutput>
         <CoverletOutput Condition="'$(CoverageDirectory)'!=''">$(CoverageDirectory)/$(CoverletName)</CoverletOutput>
     </PropertyGroup>
