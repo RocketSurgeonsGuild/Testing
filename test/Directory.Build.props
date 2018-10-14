@@ -1,5 +1,6 @@
 <Project>
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Common.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+    <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.props" />
     <PropertyGroup>
         <IsPackable>false</IsPackable>
         <PreserveCompilationContext>true</PreserveCompilationContext>
