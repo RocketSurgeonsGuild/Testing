@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Rocket.Surgery.Extensions.Testing.Fixtures.Tests;
 using Xunit;
 
 namespace Testing.Fixture.Tests

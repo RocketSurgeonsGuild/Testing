@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Rocket.Surgery.Extensions.Testing.Fixture
+namespace Rocket.Surgery.Extensions.Testing.Fixtures
 {
     /// <summary>
     /// Default methods for the <see cref="ITestFixtureBuilder"/> abstraction.

@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-namespace Testing.Fixture.Tests
+namespace Rocket.Surgery.Extensions.Testing.Fixtures.Tests
 {
     public class TestFixture
     {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using Rocket.Surgery.Extensions.Testing.Fixture;
+using Rocket.Surgery.Extensions.Testing.Fixtures;
+using Rocket.Surgery.Extensions.Testing.Fixtures.Tests;
 
 namespace Testing.Fixture.Tests
 {

@@ -1,4 +1,4 @@
-﻿namespace Rocket.Surgery.Extensions.Testing.Fixture
+﻿namespace Rocket.Surgery.Extensions.Testing.Fixtures
 {
     /// <summary>
     /// Interface for the <see cref="TestFixtureBuilderExtensions"/> extension methods.
