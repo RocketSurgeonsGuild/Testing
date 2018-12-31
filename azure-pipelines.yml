@@ -21,9 +21,9 @@ resources:
 variables:
   Configuration: Release
   Verbosity: Normal
-  DotNetVersion: "2.1.403"
+  DotNetVersion: "2.2.101"
   CakeVersion: "0.31.0"
-  NuGetVersion: '4.7.1'
+  NuGetVersion: "4.9.2"
   Coverage: "$(Agent.BuildDirectory)/c"
   VstsCoverage: "$(Coverage)"
   Artifacts: $(Build.ArtifactStagingDirectory)
