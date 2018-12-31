@@ -1,0 +1,70 @@
+{
+  "Rocket.Surgery.Extensions.Testing.Fixtures.dll": {
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing.Fixtures\\TestFixtureBuilderExtensions.cs": {
+      "Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions": {
+        "TBuilder Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions::With(TBuilder,TField&,TField)": {
+          "Lines": {
+            "22": 10,
+            "23": 10
+          },
+          "Branches": []
+        },
+        "TBuilder Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions::With(TBuilder,System.Collections.Generic.List`1<TField>&,System.Collections.Generic.IEnumerable`1<TField>)": {
+          "Lines": {
+            "38": 4,
+            "40": 0,
+            "41": 0,
+            "44": 4,
+            "47": 4
+          },
+          "Branches": [
+            {
+              "Line": 38,
+              "Offset": 1,
+              "EndOffset": 3,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 38,
+              "Offset": 1,
+              "EndOffset": 8,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            }
+          ]
+        },
+        "TBuilder Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions::With(TBuilder,System.Collections.Generic.List`1<TField>&,TField)": {
+          "Lines": {
+            "62": 1,
+            "63": 1
+          },
+          "Branches": []
+        },
+        "TBuilder Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions::With(TBuilder,System.Collections.Generic.Dictionary`2<TKey,TField>&,System.Collections.Generic.KeyValuePair`2<TKey,TField>)": {
+          "Lines": {
+            "79": 4,
+            "80": 4
+          },
+          "Branches": []
+        },
+        "TBuilder Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions::With(TBuilder,System.Collections.Generic.Dictionary`2<TKey,TField>&,TKey,TField)": {
+          "Lines": {
+            "97": 4,
+            "98": 4
+          },
+          "Branches": []
+        },
+        "TBuilder Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions::With(TBuilder,System.Collections.Generic.Dictionary`2<TKey,TField>&,System.Collections.Generic.IDictionary`2<TKey,TField>)": {
+          "Lines": {
+            "115": 0,
+            "116": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}

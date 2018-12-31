@@ -1,0 +1,994 @@
+{
+  "Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.dll": {
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing.AzureStorageEmulator\\AzureStorageEmulatorAutomation.cs": {
+      "Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation": {
+        "System.Boolean Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::get_StartedByAutomation()": {
+          "Lines": {
+            "11": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::Dispose()": {
+          "Lines": {
+            "15": 0,
+            "17": 0,
+            "19": 0
+          },
+          "Branches": [
+            {
+              "Line": 15,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 6,
+              "EndOffset": 14,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::Start()": {
+          "Lines": {
+            "23": 0,
+            "25": 0,
+            "26": 0,
+            "28": 0
+          },
+          "Branches": [
+            {
+              "Line": 23,
+              "Offset": 5,
+              "EndOffset": 7,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 5,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::Stop()": {
+          "Lines": {
+            "32": 0,
+            "33": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::ClearAll()": {
+          "Lines": {
+            "37": 0,
+            "38": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::ClearBlobs()": {
+          "Lines": {
+            "42": 0,
+            "43": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::ClearTables()": {
+          "Lines": {
+            "47": 0,
+            "48": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::ClearQueues()": {
+          "Lines": {
+            "52": 0,
+            "53": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::IsEmulatorRunning()": {
+          "Lines": {
+            "57": 0,
+            "59": 0,
+            "61": 0,
+            "63": 0,
+            "65": 0,
+            "67": 0,
+            "70": 0
+          },
+          "Branches": [
+            {
+              "Line": 61,
+              "Offset": 27,
+              "EndOffset": 29,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 61,
+              "Offset": 27,
+              "EndOffset": 31,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 42,
+              "EndOffset": 44,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 42,
+              "EndOffset": 46,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::RunWithParameter(System.String)": {
+          "Lines": {
+            "75": 0,
+            "77": 0,
+            "78": 0
+          },
+          "Branches": []
+        },
+        "System.String Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::get_AzureSdkDirectory()": {
+          "Lines": {
+            "84": 0,
+            "85": 0,
+            "87": 0
+          },
+          "Branches": []
+        },
+        "System.String Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation::GetPathToStorageEmulatorExecutable()": {
+          "Lines": {
+            "93": 0,
+            "94": 0,
+            "95": 0,
+            "96": 0,
+            "97": 0,
+            "99": 0,
+            "101": 0,
+            "103": 0,
+            "107": 0,
+            "108": 0,
+            "109": 0
+          },
+          "Branches": [
+            {
+              "Line": 99,
+              "Offset": 71,
+              "EndOffset": 49,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 101,
+              "Offset": 59,
+              "EndOffset": 61,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 101,
+              "Offset": 59,
+              "EndOffset": 63,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 99,
+              "Offset": 71,
+              "EndOffset": 73,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation/ProcessHelper": {
+        "System.String Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.AzureStorageEmulatorAutomation/ProcessHelper::RunAndGetStandardOutputAsString(System.String,System.String)": {
+          "Lines": {
+            "116": 0,
+            "117": 0,
+            "118": 0,
+            "119": 0,
+            "120": 0,
+            "121": 0,
+            "122": 0,
+            "123": 0,
+            "124": 0,
+            "125": 0,
+            "127": 0,
+            "129": 0,
+            "130": 0,
+            "132": 0,
+            "134": 0
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "Rocket.Surgery.Extensions.Testing.dll": {
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing\\AutoTestBase.cs": {
+      "Rocket.Surgery.Extensions.Testing.AutoTestBase": {
+        "System.Void Rocket.Surgery.Extensions.Testing.AutoTestBase::.ctor(Xunit.Abstractions.ITestOutputHelper)": {
+          "Lines": {
+            "11": 8,
+            "13": 8
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.AutoTestBase::.ctor(Xunit.Abstractions.ITestOutputHelper,Microsoft.Extensions.Logging.LogLevel)": {
+          "Lines": {
+            "15": 8,
+            "17": 8,
+            "18": 8,
+            "19": 8,
+            "20": 8,
+            "21": 8
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing\\LoggingRegistrationSource.cs": {
+      "Rocket.Surgery.Extensions.Testing.LoggingRegistrationSource": {
+        "System.Boolean Rocket.Surgery.Extensions.Testing.LoggingRegistrationSource::get_IsAdapterForIndividualComponents()": {
+          "Lines": {
+            "62": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.LoggingRegistrationSource::<RegistrationsFor>b__3_0(FakeItEasy.Creation.IFakeOptions`1<Microsoft.Extensions.Logging.ILoggerFactory>)": {
+          "Lines": {
+            "53": 4
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.LoggingRegistrationSource::.ctor(Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Logging.ILogger)": {
+          "Lines": {
+            "20": 8,
+            "22": 8,
+            "23": 8,
+            "24": 8
+          },
+          "Branches": []
+        }
+      },
+      "Rocket.Surgery.Extensions.Testing.LoggingRegistrationSource/<RegistrationsFor>d__3": {
+        "System.Boolean Rocket.Surgery.Extensions.Testing.LoggingRegistrationSource/<RegistrationsFor>d__3::MoveNext()": {
+          "Lines": {
+            "28": 12,
+            "29": 12,
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "37": 12,
+            "39": 1,
+            "40": 1,
+            "41": 1,
+            "42": 1,
+            "43": 1,
+            "44": 1,
+            "45": 1,
+            "46": 1,
+            "49": 12,
+            "51": 2,
+            "52": 2,
+            "54": 2,
+            "55": 2,
+            "56": 2,
+            "57": 2,
+            "58": 2,
+            "60": 12
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 65,
+              "EndOffset": 69,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 12
+            },
+            {
+              "Line": 29,
+              "Offset": 95,
+              "EndOffset": 97,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 29,
+              "Offset": 95,
+              "EndOffset": 198,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 12
+            },
+            {
+              "Line": 37,
+              "Offset": 224,
+              "EndOffset": 226,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 37,
+              "Offset": 224,
+              "EndOffset": 296,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 12
+            },
+            {
+              "Line": 49,
+              "Offset": 322,
+              "EndOffset": 324,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 49,
+              "Offset": 322,
+              "EndOffset": 405,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 12
+            }
+          ]
+        }
+      }
+    },
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing\\TestBase.cs": {
+      "Rocket.Surgery.Extensions.Testing.TestBase": {
+        "System.Void Rocket.Surgery.Extensions.Testing.TestBase::Dispose()": {
+          "Lines": {
+            "40": 5,
+            "41": 5
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestBase::.ctor(Xunit.Abstractions.ITestOutputHelper)": {
+          "Lines": {
+            "20": 2,
+            "22": 2
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestBase::.ctor(Xunit.Abstractions.ITestOutputHelper,Microsoft.Extensions.Logging.LogLevel)": {
+          "Lines": {
+            "24": 10,
+            "26": 10,
+            "28": 10,
+            "29": 10,
+            "30": 10,
+            "31": 10,
+            "33": 10,
+            "34": 10,
+            "35": 10,
+            "36": 10
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing\\TestDiagnosticListenerLoggingAdapter.cs": {
+      "Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter": {
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter::LogOther(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,System.Exception,System.String)": {
+          "Lines": {
+            "17": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter::LogTrace(Microsoft.Extensions.Logging.EventId,System.Exception,System.String)": {
+          "Lines": {
+            "20": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter::LogDebug(Microsoft.Extensions.Logging.EventId,System.Exception,System.String)": {
+          "Lines": {
+            "23": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter::LogInformation(Microsoft.Extensions.Logging.EventId,System.Exception,System.String)": {
+          "Lines": {
+            "26": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter::LogWarning(Microsoft.Extensions.Logging.EventId,System.Exception,System.String)": {
+          "Lines": {
+            "29": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter::LogError(Microsoft.Extensions.Logging.EventId,System.Exception,System.String)": {
+          "Lines": {
+            "32": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter::LogCritical(Microsoft.Extensions.Logging.EventId,System.Exception,System.String)": {
+          "Lines": {
+            "35": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter::.ctor(Microsoft.Extensions.Logging.ILogger)": {
+          "Lines": {
+            "11": 10,
+            "13": 10,
+            "14": 10
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing\\TestDiagnosticLogger.cs": {
+      "Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger": {
+        "System.String Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger::GetName(Microsoft.Extensions.Logging.LogLevel)": {
+          "Lines": {
+            "19": 0
+          },
+          "Branches": [
+            {
+              "Line": 19,
+              "Offset": 13,
+              "EndOffset": 15,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 13,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger::Log(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,TState,System.Exception,System.Func`3<TState,System.Exception,System.String>)": {
+          "Lines": {
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0
+          },
+          "Branches": []
+        },
+        "System.Boolean Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger::IsEnabled(Microsoft.Extensions.Logging.LogLevel)": {
+          "Lines": {
+            "41": 0
+          },
+          "Branches": []
+        },
+        "System.IDisposable Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger::BeginScope(TState)": {
+          "Lines": {
+            "46": 0,
+            "47": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger::.ctor(System.Diagnostics.DiagnosticSource)": {
+          "Lines": {
+            "22": 0,
+            "24": 0,
+            "25": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger::.cctor()": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0
+          },
+          "Branches": []
+        }
+      },
+      "Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger/Disposable": {
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger/Disposable::Dispose()": {
+          "Lines": {
+            "65": 0,
+            "66": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.TestDiagnosticLogger/Disposable::.ctor(System.Diagnostics.DiagnosticSource,System.Diagnostics.Activity,System.Object)": {
+          "Lines": {
+            "56": 0,
+            "58": 0,
+            "59": 0,
+            "60": 0,
+            "61": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing\\TestLoggerFactory.cs": {
+      "Rocket.Surgery.Extensions.Testing.TestLoggerFactory": {
+        "Microsoft.Extensions.Logging.ILogger Rocket.Surgery.Extensions.Testing.TestLoggerFactory::Microsoft.Extensions.Logging.ILoggerFactory.CreateLogger(System.String)": {
+          "Lines": {
+            "10": 14,
+            "11": 28
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing\\XunitLogger.cs": {
+      "Rocket.Surgery.Extensions.Testing.XunitLogger": {
+        "System.Void Rocket.Surgery.Extensions.Testing.XunitLogger::Log(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,TState,System.Exception,System.Func`3<TState,System.Exception,System.String>)": {
+          "Lines": {
+            "25": 10,
+            "27": 0,
+            "30": 10,
+            "31": 10,
+            "32": 10,
+            "34": 10,
+            "35": 20,
+            "37": 0,
+            "40": 10,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "46": 0,
+            "49": 10
+          },
+          "Branches": [
+            {
+              "Line": 25,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 10
+            },
+            {
+              "Line": 25,
+              "Offset": 7,
+              "EndOffset": 39,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 37,
+              "EndOffset": 39,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 37,
+              "EndOffset": 40,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 10
+            },
+            {
+              "Line": 35,
+              "Offset": 172,
+              "EndOffset": 144,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 35,
+              "Offset": 172,
+              "EndOffset": 174,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 10
+            },
+            {
+              "Line": 40,
+              "Offset": 188,
+              "EndOffset": 190,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 261,
+              "EndOffset": 231,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 261,
+              "EndOffset": 263,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 40,
+              "Offset": 188,
+              "EndOffset": 277,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 10
+            }
+          ]
+        },
+        "System.Boolean Rocket.Surgery.Extensions.Testing.XunitLogger::IsEnabled(Microsoft.Extensions.Logging.LogLevel)": {
+          "Lines": {
+            "51": 10
+          },
+          "Branches": []
+        },
+        "System.IDisposable Rocket.Surgery.Extensions.Testing.XunitLogger::BeginScope(TState)": {
+          "Lines": {
+            "53": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.XunitLogger::WriteLine(System.String)": {
+          "Lines": {
+            "59": 10,
+            "60": 10,
+            "61": 0,
+            "67": 0,
+            "68": 10
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.XunitLogger::.ctor(Xunit.Abstractions.ITestOutputHelper,System.String,Rocket.Surgery.Extensions.Testing.XunitLoggerProvider)": {
+          "Lines": {
+            "15": 12,
+            "17": 12,
+            "18": 12,
+            "19": 12,
+            "20": 12
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.XunitLogger::.cctor()": {
+          "Lines": {
+            "10": 1
+          },
+          "Branches": []
+        }
+      },
+      "Rocket.Surgery.Extensions.Testing.XunitLogger/NullScope": {
+        "System.Void Rocket.Surgery.Extensions.Testing.XunitLogger/NullScope::Dispose()": {
+          "Lines": {
+            "74": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing\\XunitLoggerProvider.cs": {
+      "Rocket.Surgery.Extensions.Testing.XunitLoggerProvider": {
+        "Microsoft.Extensions.Logging.ILogger Rocket.Surgery.Extensions.Testing.XunitLoggerProvider::CreateLogger(System.String)": {
+          "Lines": {
+            "25": 12
+          },
+          "Branches": []
+        },
+        "Microsoft.Extensions.Logging.LogLevel Rocket.Surgery.Extensions.Testing.XunitLoggerProvider::get_MinLevel()": {
+          "Lines": {
+            "28": 20
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.HashSet`1<System.String> Rocket.Surgery.Extensions.Testing.XunitLoggerProvider::get_FilterNames()": {
+          "Lines": {
+            "29": 20
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.XunitLoggerProvider::Dispose()": {
+          "Lines": {
+            "33": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.XunitLoggerProvider::.ctor(Xunit.Abstractions.ITestOutputHelper)": {
+          "Lines": {
+            "13": 0,
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.XunitLoggerProvider::.ctor(Xunit.Abstractions.ITestOutputHelper,Microsoft.Extensions.Logging.LogLevel)": {
+          "Lines": {
+            "17": 10,
+            "19": 10,
+            "20": 10,
+            "21": 10
+          },
+          "Branches": []
+        }
+      }
+    }
+  },
+  "Rocket.Surgery.Extensions.Testing.Docker.dll": {
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing.Docker\\EnsureContainerIsRunningContext.cs": {
+      "Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningContext": {
+        "Docker.DotNet.Models.ContainerListResponse Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningContext::GetContainer(System.Collections.Generic.IList`1<Docker.DotNet.Models.ContainerListResponse>)": {
+          "Lines": {
+            "31": 0
+          },
+          "Branches": []
+        },
+        "Docker.DotNet.Models.CreateContainerParameters Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningContext::CreateContainer(Docker.DotNet.Models.CreateContainerParameters)": {
+          "Lines": {
+            "36": 0
+          },
+          "Branches": []
+        },
+        "Docker.DotNet.Models.ContainerStartParameters Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningContext::StartContainer(Docker.DotNet.Models.ContainerStartParameters)": {
+          "Lines": {
+            "41": 0
+          },
+          "Branches": []
+        },
+        "Docker.DotNet.Models.ImagesCreateParameters Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningContext::CreateImage(Docker.DotNet.Models.ImagesCreateParameters)": {
+          "Lines": {
+            "46": 0
+          },
+          "Branches": []
+        },
+        "System.Void Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningContext::.ctor(System.Func`2<System.Collections.Generic.IList`1<Docker.DotNet.Models.ContainerListResponse>,Docker.DotNet.Models.ContainerListResponse>,System.Func`2<Docker.DotNet.Models.CreateContainerParameters,Docker.DotNet.Models.CreateContainerParameters>,System.Func`2<Docker.DotNet.Models.ContainerStartParameters,Docker.DotNet.Models.ContainerStartParameters>,System.Func`2<Docker.DotNet.Models.ImagesCreateParameters,Docker.DotNet.Models.ImagesCreateParameters>)": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0
+          },
+          "Branches": [
+            {
+              "Line": 23,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 23,
+              "Offset": 9,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 31,
+              "EndOffset": 33,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 31,
+              "EndOffset": 45,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 53,
+              "EndOffset": 55,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 53,
+              "EndOffset": 67,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 26,
+              "Offset": 76,
+              "EndOffset": 78,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 26,
+              "Offset": 76,
+              "EndOffset": 90,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "D:\\development\\ReadySelect\\rocketsurgery\\Testing\\src\\Testing.Docker\\EnsureContainerIsRunningExtensions.cs": {
+      "Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningExtensions": {
+        "System.Threading.Tasks.Task`1<System.String> Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningExtensions::EnsureContainerIsRunning(Docker.DotNet.DockerClient,Rocket.Surgery.Extensions.Testing.Docker.IEnsureContainerIsRunningContext)": {
+          "Lines": {
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Threading.Tasks.Task`1<System.String> Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningExtensions::EnsureContainerIsRunning(Docker.DotNet.DockerClient,System.Func`2<System.Collections.Generic.IList`1<Docker.DotNet.Models.ContainerListResponse>,Docker.DotNet.Models.ContainerListResponse>,System.Func`2<Docker.DotNet.Models.CreateContainerParameters,Docker.DotNet.Models.CreateContainerParameters>,System.Func`2<Docker.DotNet.Models.ContainerStartParameters,Docker.DotNet.Models.ContainerStartParameters>,System.Func`2<Docker.DotNet.Models.ImagesCreateParameters,Docker.DotNet.Models.ImagesCreateParameters>)": {
+          "Lines": {
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0
+          },
+          "Branches": []
+        }
+      },
+      "Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningExtensions/<EnsureContainerIsRunningInternal>d__2": {
+        "System.Void Rocket.Surgery.Extensions.Testing.Docker.EnsureContainerIsRunningExtensions/<EnsureContainerIsRunningInternal>d__2::MoveNext()": {
+          "Lines": {
+            "40": 0,
+            "41": 0,
+            "42": 0,
+            "43": 0,
+            "44": 0,
+            "47": 0,
+            "48": 0,
+            "51": 0,
+            "52": 0,
+            "53": 0,
+            "54": 0,
+            "55": 0,
+            "56": 0,
+            "57": 0,
+            "58": 0,
+            "59": 0,
+            "62": 0,
+            "65": 0,
+            "66": 0,
+            "67": 0
+          },
+          "Branches": [
+            {
+              "Line": 40,
+              "Offset": 86,
+              "EndOffset": 88,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 40,
+              "Offset": 86,
+              "EndOffset": 153,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 175,
+              "EndOffset": 180,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 52,
+              "Offset": 268,
+              "EndOffset": 270,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 52,
+              "Offset": 268,
+              "EndOffset": 335,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 57,
+              "Offset": 388,
+              "EndOffset": 390,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 57,
+              "Offset": 388,
+              "EndOffset": 455,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 48,
+              "Offset": 175,
+              "EndOffset": 486,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 560,
+              "EndOffset": 562,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 0
+            },
+            {
+              "Line": 65,
+              "Offset": 560,
+              "EndOffset": 624,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    }
+  }
+}

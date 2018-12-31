@@ -12,5 +12,6 @@
         <PackageReference Include="coverlet.msbuild" />
     </ItemGroup>
     <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.targets" />
+    <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Common.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 </Project>
