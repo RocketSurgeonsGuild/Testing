@@ -1,7 +1,7 @@
 <Project>
     <ItemGroup>
         <PackageReference Update="Microsoft.Extensions.Logging" Version="2.1.0" />
-        <PackageReference Update="Rocket.Surgery.Reactive.Extensions" Version="0.10.0" />
+        <PackageReference Update="Rocket.Surgery.Reactive.Extensions" Version="0.11.0" />
         <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
         <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="2.1.0" />
         <PackageReference Update="Docker.DotNet" Version="3.125.2" />
