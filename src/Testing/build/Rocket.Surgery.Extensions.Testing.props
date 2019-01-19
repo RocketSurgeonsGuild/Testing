@@ -4,6 +4,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <CollectCoverage>true</CollectCoverage>
         <CoverletOutputFormat>json,lcov,cobertura,opencover</CoverletOutputFormat>
         <CoverletName>$(MSBuildProjectName.Replace('.', '-'))</CoverletName>

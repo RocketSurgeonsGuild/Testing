@@ -3,8 +3,8 @@
     <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.props" />
     <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.props" />
     <PropertyGroup>
-        <IsPackable>false</IsPackable>
         <PreserveCompilationContext>true</PreserveCompilationContext>
         <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+        <Include>[Rocket.Surgery.*]*</Include>
     </PropertyGroup>
 </Project>
