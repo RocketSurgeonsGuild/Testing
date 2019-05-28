@@ -11,6 +11,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging" />
         <PackageReference Include="Bogus" />
         <PackageReference Include="XunitXml.TestLogger" />
+        <PackageReference Include="Rocket.Surgery.Linq.Extensions" />
         <PackageReference Include="Rocket.Surgery.Reactive.Extensions" />
         <PackageReference Include="System.Diagnostics.DiagnosticSource" />
         <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" />
