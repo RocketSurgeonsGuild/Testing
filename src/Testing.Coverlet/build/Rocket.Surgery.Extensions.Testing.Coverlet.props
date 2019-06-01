@@ -3,7 +3,6 @@
         <CollectCoverage>true</CollectCoverage>
         <CoverletOutputFormat>json,lcov,cobertura,opencover</CoverletOutputFormat>
         <CoverletName>$(MSBuildProjectName.Replace('.', '-'))-$(TargetFramework.Replace('.', '-'))</CoverletName>
-        <UseSourceLink>true</UseSourceLink>
     </PropertyGroup>
     <!-- If coverlet is empty or set to the default override -->
     <PropertyGroup Condition="'$(CoverletOutput)'=='' Or '$(CoverletOutput)'==$([MSBuild]::EnsureTrailingSlash('$(MSBuildProjectDirectory)'))">
