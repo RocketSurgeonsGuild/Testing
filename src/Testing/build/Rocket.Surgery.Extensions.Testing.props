@@ -1,6 +1,6 @@
 ﻿<Project>
     <PropertyGroup>
-        <Exclude>[Bogus*]*,[Autofac.*]*,[FakeItEasy*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*</Exclude>
+        <!-- <Exclude>[Bogus*]*,[Autofac.*]*,[FakeItEasy*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*</Exclude> -->
     </PropertyGroup>
 
     <PropertyGroup>
