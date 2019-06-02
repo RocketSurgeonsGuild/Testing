@@ -1,7 +1,7 @@
 ﻿<Project>
     <PropertyGroup>
-        <Exclude Condition="'$(Exclude)'==''">[Bogus*]*,[Autofac.*]*,[FakeItEasy*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*</Exclude>
-        <Exclude Condition="'$(Exclude)'!=''">[Bogus*]*,[Autofac.*]*,[FakeItEasy*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*,$(Exclude)</Exclude>
+        <!-- <Exclude Condition="'$(Exclude)'==''">[Bogus*]*,[Autofac.*]*,[FakeItEasy*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*</Exclude>
+        <Exclude Condition="'$(Exclude)'!=''">[Bogus*]*,[Autofac.*]*,[FakeItEasy*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*,$(Exclude)</Exclude> -->
     </PropertyGroup>
 
     <PropertyGroup>
