@@ -1,10 +1,18 @@
 <Project>
+    <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='netcoreapp2.1'">
+        <PackageReference Update="Microsoft.Extensions.Logging" Version="2.1.0" />
+        <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="2.1.0" />
+        <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
+        <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0-preview5.19227.9" />
+        <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.0.0-preview5.19227.9" />
+        <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview5.19224.8" />
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Update="Microsoft.Extensions.Logging" Version="2.1.0" />
         <PackageReference Update="Rocket.Surgery.Linq.Extensions" Version="1.0.0" />
         <PackageReference Update="Rocket.Surgery.Reactive.Extensions" Version="1.0.0" />
-        <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
-        <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="2.1.0" />
         <PackageReference Update="Docker.DotNet" Version="3.125.2" />
     </ItemGroup>
     <ItemGroup>
