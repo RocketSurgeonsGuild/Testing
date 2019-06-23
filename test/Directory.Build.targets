@@ -7,8 +7,10 @@
         <PackageReference Include="FakeItEasy" />
         <PackageReference Include="FakeItEasy.Analyzer.CSharp" />
         <PackageReference Include="FluentAssertions" />
-        <PackageReference Include="xunit.runner.visualstudio" />
+        <PackageReference Include="FluentAssertions.Analyzers" />
         <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.analyzers" />
+        <PackageReference Include="xunit.runner.visualstudio" />
         <PackageReference Include="XunitXml.TestLogger" />
     </ItemGroup>
     <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.targets" />
