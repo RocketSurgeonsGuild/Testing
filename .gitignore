@@ -200,3 +200,5 @@ project.lock.json
 /tools/*.exe
 /tools/*.md5sum
 !tools/packages.config
+
+codealike.json
