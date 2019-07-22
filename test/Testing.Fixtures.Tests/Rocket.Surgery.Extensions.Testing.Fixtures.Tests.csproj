@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <ProjectReference Include="..\..\src\Testing.Fixtures\Rocket.Surgery.Extensions.Testing.Fixtures.csproj" />
   </ItemGroup>
 

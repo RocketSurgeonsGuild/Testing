@@ -3,6 +3,7 @@
         <TargetFrameworks>netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <ProjectReference Include="..\..\src\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
         <ProjectReference Include="..\..\src\Testing.Docker\Rocket.Surgery.Extensions.Testing.Docker.csproj" />
         <ProjectReference Include="..\..\src\Testing.AzureStorageEmulator\Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.csproj" />
