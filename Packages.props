@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Update="Nuke.Common" Version="0.21.1" />
     <PackageReference Update="Rocket.Surgery.Nuke.DotNetCore" Version="0.2.8" />
-    <PackageReference Update="GitVersion.CommandLine.DotNetCore" Version="5.0.0-beta5.40" />
+    <PackageReference Update="GitVersion.CommandLine.DotNetCore" Version="5.0.0-beta5.50" />
     <PackageReference Update="ReportGenerator" Version="4.2.10" />
   </ItemGroup>
   <ItemGroup>
@@ -18,9 +18,9 @@
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='netcoreapp2.1'">
-    <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview6.19303.8" />
+    <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0-preview7.19362.4" />
+    <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.0.0-preview7.19362.4" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview7.19362.9" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Microsoft.Extensions.Logging" Version="2.1.0" />
