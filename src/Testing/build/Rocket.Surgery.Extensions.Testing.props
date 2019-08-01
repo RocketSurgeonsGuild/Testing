@@ -8,26 +8,4 @@
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>
-
-    <PropertyGroup>
-        <CollectCoverage>true</CollectCoverage>
-        <CoverletOutputFormat>json,lcov,cobertura,opencover</CoverletOutputFormat>
-        <CoverletName>$(MSBuildProjectName.Replace('.', '-'))-$(TargetFramework.Replace('.', '-'))</CoverletName>
-    </PropertyGroup>
-
-    <!-- If coverlet is empty or set to the default override -->
-    <PropertyGroup Condition="'$(CoverletOutput)'=='' Or '$(CoverletOutput)'==$([MSBuild]::EnsureTrailingSlash('$(MSBuildProjectDirectory)'))">
-        <__RSG__BestRootGuess__RSG__ Condition="'$(__RSG__BestRootGuess__RSG__)' == ''">$([MSBuild]::GetPathOfFileAbove('Common.Build.props', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <__RSG__BestRootGuess__RSG__ Condition="!Exists($(__RSG__BestRootGuess__RSG__))">$([MSBuild]::GetPathOfFileAbove('Common.Build.targets', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <__RSG__BestRootGuess__RSG__ Condition="!Exists($(__RSG__BestRootGuess__RSG__))">$([MSBuild]::GetPathOfFileAbove('Packages.props', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <__RSG__BestRootGuess__RSG__ Condition="!Exists($(__RSG__BestRootGuess__RSG__))">$([MSBuild]::GetPathOfFileAbove('NuGet.config', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <__RSG__BestRootGuess__RSG__ Condition="!Exists($(__RSG__BestRootGuess__RSG__))">$([MSBuild]::GetPathOfFileAbove('build.cake', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <__RSG__BestRootGuess__RSG__ Condition="!Exists($(__RSG__BestRootGuess__RSG__))">$([MSBuild]::GetPathOfFileAbove('build.sh', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <__RSG__BestRootGuess__RSG__ Condition="!Exists($(__RSG__BestRootGuess__RSG__))">$([MSBuild]::GetPathOfFileAbove('build.ps1', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <__RSG__BestRootGuess__RSG__ Condition="!Exists($(__RSG__BestRootGuess__RSG__))">$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <__RSG__BestRootGuess__RSG__ Condition="!Exists($(__RSG__BestRootGuess__RSG__))">$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildProjectDirectory)'))</__RSG__BestRootGuess__RSG__>
-        <CoverletOutput Condition="Exists($(__RSG__BestRootGuess__RSG__)) and '$(CoverageDirectory)'==''">$([System.IO.Path]::GetDirectoryName($(__RSG__BestRootGuess__RSG__)))/coverage/$(CoverletName)/</CoverletOutput>
-        <!-- <CoverletOutput Condition="'$(CoverageDirectory)'==''">$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildProjectDirectory)'))))/coverage/$(CoverletName)/</CoverletOutput> -->
-        <CoverletOutput Condition="'$(CoverageDirectory)'!=''">$(CoverageDirectory)/$(CoverletName)</CoverletOutput>
-    </PropertyGroup>
 </Project>
