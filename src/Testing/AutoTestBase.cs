@@ -20,4 +20,20 @@ namespace Rocket.Surgery.Extensions.Testing
             );
         }
     }
+    public abstract class AutoTestHostBase : AutoTestBase
+    {
+        protected  readonly AutoFake AutoFake;
+
+        protected AutoTestBase(ITestOutputHelper outputHelper) : this(outputHelper, LogLevel.Information)
+        {
+        }
+
+        protected AutoTestBase(ITestOutputHelper outputHelper, LogLevel minLevel) : base(outputHelper, minLevel)
+        {
+            AutoFake = new AutoFake();
+            AutoFake.Container.ComponentRegistry.AddRegistrationSource(
+                new LoggingRegistrationSource(LoggerFactory, Logger)
+            );
+        }
+    }
 }
