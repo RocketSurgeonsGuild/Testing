@@ -9,7 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Nuke.Common" Version="0.21.2" />
-    <PackageReference Update="Rocket.Surgery.Nuke.DotNetCore" Version="0.3.7" />
+    <PackageReference Update="Rocket.Surgery.Nuke.DotNetCore" Version="0.3.8" />
     <PackageReference Update="GitVersion.CommandLine.DotNetCore" Version="5.0.1" />
     <PackageReference Update="ReportGenerator" Version="4.2.15" />
   </ItemGroup>
@@ -25,8 +25,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Microsoft.Extensions.Logging" Version="2.1.0" />
-    <PackageReference Update="Rocket.Surgery.Linq.Extensions" Version="1.0.3" />
-    <PackageReference Update="Rocket.Surgery.Reactive.Extensions" Version="1.0.3" />
+    <PackageReference Update="Rocket.Surgery.Linq.Extensions" Version="1.0.4" />
+    <PackageReference Update="Rocket.Surgery.Reactive.Extensions" Version="1.0.4" />
     <PackageReference Update="Docker.DotNet" Version="3.125.2" />
   </ItemGroup>
   <ItemGroup>
