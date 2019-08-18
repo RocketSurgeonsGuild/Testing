@@ -32,14 +32,14 @@ namespace Rocket.Surgery.Extensions.Testing.Fixtures
         /// <param name="field">The field.</param>
         /// <param name="values">The values.</param>
         /// <returns></returns>
-        public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField> field, IEnumerable<TField> values)
+        public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, IEnumerable<TField> values)
             where TBuilder : ITestFixtureBuilder
         {
             if (values == null)
             {
                 field = null;
             }
-            else
+            else if (field != null)
             {
                 field.AddRange(values);
             }
@@ -56,10 +56,10 @@ namespace Rocket.Surgery.Extensions.Testing.Fixtures
         /// <param name="field">The field.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField> field, TField value)
+        public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, TField value)
             where TBuilder : ITestFixtureBuilder
         {
-            field.Add(value);
+            field?.Add(value);
             return @this;
         }
 

@@ -4,15 +4,22 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
+    /// <summary>
+    /// A base class with AutoFake wired in for Autofac
+    /// </summary>
     public abstract class AutoTestBase : TestBase
     {
-        protected  readonly AutoFake AutoFake;
+        /// <summary>
+        /// The AutoFake instance
+        /// </summary>
+        protected readonly AutoFake AutoFake;
 
-        protected AutoTestBase(ITestOutputHelper outputHelper) : this(outputHelper, LogLevel.Information)
-        {
-        }
-
-        protected AutoTestBase(ITestOutputHelper outputHelper, LogLevel minLevel) : base(outputHelper, minLevel)
+        /// <summary>
+        /// Create the auto test class
+        /// </summary>
+        /// <param name="outputHelper"></param>
+        /// <param name="minLevel"></param>
+        protected AutoTestBase(ITestOutputHelper outputHelper, LogLevel minLevel = LogLevel.Information) : base(outputHelper, minLevel)
         {
             AutoFake = new AutoFake();
             AutoFake.Container.ComponentRegistry.AddRegistrationSource(

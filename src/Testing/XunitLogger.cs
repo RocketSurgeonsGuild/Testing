@@ -5,6 +5,9 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
+    /// <summary>
+    /// A logger for XUnit
+    /// </summary>
     public class XunitLogger : ILogger
     {
         private static readonly string[] NewLineChars = { Environment.NewLine };
@@ -12,6 +15,12 @@ namespace Rocket.Surgery.Extensions.Testing
         private readonly XunitLoggerProvider _loggerProvider;
         private readonly ITestOutputHelper _output;
 
+        /// <summary>
+        /// The default constructor
+        /// </summary>
+        /// <param name="output"></param>
+        /// <param name="category"></param>
+        /// <param name="loggerProvider"></param>
         public XunitLogger(ITestOutputHelper output, string category, XunitLoggerProvider loggerProvider)
         {
             _loggerProvider = loggerProvider;
@@ -19,6 +28,7 @@ namespace Rocket.Surgery.Extensions.Testing
             _output = output;
         }
 
+        /// <inheritdoc />
         public void Log<TState>(
             LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
@@ -48,8 +58,10 @@ namespace Rocket.Surgery.Extensions.Testing
             }
         }
 
+        /// <inheritdoc />
         public bool IsEnabled(LogLevel logLevel) => logLevel >= _loggerProvider.MinLevel;
 
+        /// <inheritdoc />
         public IDisposable BeginScope<TState>(TState state) => new NullScope();
 
         private void WriteLine(string message)
