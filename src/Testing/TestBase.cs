@@ -9,19 +9,44 @@ using System.Reactive.Linq;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
+    /// <summary>
+    /// A simple base test class with logger, logger factory and diagnostic source all wired into the <see cref="ITestOutputHelper" />.
+    /// </summary>
     public abstract class TestBase : IDisposable
     {
+        /// <summary>
+        /// The <see cref="ILoggerFactory" />
+        /// </summary>
         protected readonly ILoggerFactory LoggerFactory;
+
+        /// <summary>
+        /// The <see cref="ILogger" />
+        /// </summary>
         protected readonly ILogger Logger;
+
+        /// <summary>
+        /// The <see cref="XunitLoggerProvider" />
+        /// </summary>
         protected readonly XunitLoggerProvider Provider;
+
+        /// <summary>
+        /// The <see cref="DiagnosticSource" />
+        /// </summary>
         protected readonly DiagnosticSource DiagnosticSource;
+
+
+        /// <summary>
+        /// The <see cref="CompositeDisposable" />
+        /// </summary>
         protected readonly CompositeDisposable Disposable;
 
-        protected TestBase(ITestOutputHelper outputHelper) : this(outputHelper, LogLevel.Information)
-        {
-        }
-
-        protected TestBase(ITestOutputHelper outputHelper, LogLevel minLevel)
+        /// <summary>
+        /// The default constructor with available logging level
+        /// </summary>
+        /// <param name="outputHelper"></param>
+        /// <param name="minLevel"></param>
+        /// <returns></returns>
+        protected TestBase(ITestOutputHelper outputHelper, LogLevel minLevel = LogLevel.Information)
         {
             Disposable = new CompositeDisposable();
 
@@ -35,7 +60,7 @@ namespace Rocket.Surgery.Extensions.Testing
             DiagnosticSource = diagnosticListener;
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             Disposable.Dispose();
         }

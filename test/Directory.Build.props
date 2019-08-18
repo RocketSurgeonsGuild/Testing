@@ -4,7 +4,7 @@
     <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.props" />
     <PropertyGroup>
         <PreserveCompilationContext>true</PreserveCompilationContext>
-        <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+        <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
         <Include>[Rocket.Surgery.*]*</Include>
     </PropertyGroup>
 </Project>
