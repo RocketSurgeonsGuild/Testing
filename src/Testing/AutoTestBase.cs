@@ -1,4 +1,6 @@
-﻿using Autofac.Extras.FakeItEasy;
+﻿using System;
+using Autofac;
+using Autofac.Extras.FakeItEasy;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
@@ -9,10 +11,12 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoTestBase : TestBase
     {
+        private readonly Lazy<AutoFake> _autoFake;
+
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected readonly AutoFake AutoFake;
+        protected AutoFake AutoFake => _autoFake.Value;
 
         /// <summary>
         /// Create the auto test class
@@ -21,10 +25,17 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="minLevel"></param>
         protected AutoTestBase(ITestOutputHelper outputHelper, LogLevel minLevel = LogLevel.Information) : base(outputHelper, minLevel)
         {
-            AutoFake = new AutoFake();
-            AutoFake.Container.ComponentRegistry.AddRegistrationSource(
-                new LoggingRegistrationSource(LoggerFactory, Logger)
-            );
+            _autoFake = new Lazy<AutoFake>(() =>
+            {
+                var cb = new ContainerBuilder();
+                BuildContainer(cb);
+                //cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger));
+                return new AutoFake(builder: cb);
+            });
+        }
+
+        protected virtual void BuildContainer(ContainerBuilder cb)
+        {
         }
     }
 }
