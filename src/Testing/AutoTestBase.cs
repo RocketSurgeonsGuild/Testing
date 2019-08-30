@@ -29,8 +29,9 @@ namespace Rocket.Surgery.Extensions.Testing
             {
                 var cb = new ContainerBuilder();
                 BuildContainer(cb);
-                //cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger));
-                return new AutoFake(builder: cb);
+                var af = new AutoFake(builder: cb);
+                af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger));
+                return af;
             });
         }
 
