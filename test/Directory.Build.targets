@@ -2,7 +2,6 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="Autofac.Extras.FakeItEasy" />
-        <PackageReference Include="Bogus" />
         <PackageReference Include="coverlet.collector" />
         <PackageReference Include="coverlet.msbuild" />
         <PackageReference Include="FakeItEasy" />
@@ -12,7 +11,6 @@
         <PackageReference Include="xunit" />
         <PackageReference Include="xunit.analyzers" />
         <PackageReference Include="xunit.runner.visualstudio" />
-        <PackageReference Include="XunitXml.TestLogger" />
     </ItemGroup>
     <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.targets" />
     <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />

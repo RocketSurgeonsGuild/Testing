@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Core.Activators.ProvidedInstance;
 using Autofac.Core.Lifetime;
 using Autofac.Core.Registration;
-using FakeItEasy;
 using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing
@@ -50,7 +48,7 @@ namespace Rocket.Surgery.Extensions.Testing
             {
                 yield return new ComponentRegistration(
                     Guid.NewGuid(),
-                    new ProvidedInstanceActivator(A.Fake<ILoggerFactory>(x => x.Wrapping(_loggerFactory))),
+                    new ProvidedInstanceActivator(_loggerFactory),
                     new RootScopeLifetime(),
                     InstanceSharing.Shared,
                     InstanceOwnership.OwnedByLifetimeScope,

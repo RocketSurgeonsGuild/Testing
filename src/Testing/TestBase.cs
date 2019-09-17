@@ -12,7 +12,7 @@ namespace Rocket.Surgery.Extensions.Testing
     /// <summary>
     /// A simple base test class with logger, logger factory and diagnostic source all wired into the <see cref="ITestOutputHelper" />.
     /// </summary>
-    public abstract class TestBase : IDisposable
+    public abstract class LoggerTest : IDisposable
     {
         /// <summary>
         /// The <see cref="ILoggerFactory" />
@@ -45,12 +45,12 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         /// <param name="outputHelper"></param>
         /// <param name="minLevel"></param>
+        /// <param name="loggerFactory"></param>
         /// <returns></returns>
-        protected TestBase(ITestOutputHelper outputHelper, LogLevel minLevel = LogLevel.Information)
+        protected LoggerTest(ITestOutputHelper outputHelper, LogLevel minLevel = LogLevel.Information, ILoggerFactory loggerFactory = null)
         {
             Disposable = new CompositeDisposable();
-
-            LoggerFactory = new TestLoggerFactory();
+            LoggerFactory = loggerFactory ?? new LoggerFactory();
             Provider = new XunitLoggerProvider(outputHelper, minLevel);
             LoggerFactory.AddProvider(Provider);
             Logger = LoggerFactory.CreateLogger("Default");
