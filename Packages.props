@@ -8,12 +8,6 @@
     <GlobalPackageReference Include="Roslynator.Analyzers" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Nuke.Common" Version="0.21.2" />
-    <PackageReference Update="Rocket.Surgery.Nuke.DotNetCore" Version="0.4.1" />
-    <PackageReference Update="GitVersion.CommandLine.DotNetCore" Version="5.0.1" />
-    <PackageReference Update="ReportGenerator" Version="4.2.20" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Update="Microsoft.Extensions.Logging" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="2.1.0" />
     <PackageReference Update="System.Collections.Immutable" Version="1.5.0" />
@@ -22,9 +16,9 @@
     <PackageReference Update="System.Reactive" Version="4.1.5" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='netcoreapp2.1'">
-    <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0-preview9.19423.4" />
-    <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.0.0-preview9.19423.4" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-preview9.19421.4" />
+    <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0-rc1.19456.10" />
+    <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.0.0-rc1.19456.10" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-rc1.19456.4" />
     <PackageReference Update="System.Interactive" Version="4.0.0-preview.8.build.9" />
     <PackageReference Update="System.Reactive" Version="4.2.0-preview.625" />
   </ItemGroup>
@@ -40,7 +34,7 @@
     <PackageReference Update="FluentAssertions" Version="5.9.0" />
     <PackageReference Update="FluentAssertions.Analyzers" Version="0.11.4" />
     <PackageReference Update="Moq" Version="4.13.0" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.3.0" />
     <PackageReference Update="xunit" Version="2.4.1" />
     <PackageReference Update="xunit.analyzers" Version="0.10.0" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
