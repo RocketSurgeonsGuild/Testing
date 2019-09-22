@@ -6,7 +6,7 @@ namespace Rocket.Surgery.Extensions.Testing
     /// <summary>
     /// A simple logging factory to create a faked logger, wrapping the logger
     /// </summary>
-    public class TestLoggerFactory : LoggerFactory, ILoggerFactory
+    class FakeItEasyLoggerFactory : LoggerFactory, ILoggerFactory
     {
         ILogger ILoggerFactory.CreateLogger(string categoryName)
         {

@@ -2,14 +2,15 @@
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
+using Rocket.Surgery.Extensions.Testing;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests
 {
-    public class AutoTestBaseTests : AutoTestBase
+    public class AutoFakeTestTests : AutoFakeTest
     {
-        public AutoTestBaseTests(ITestOutputHelper outputHelper) : base(outputHelper){ }
+        public AutoFakeTestTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
-        class Impl : AutoTestBase
+        class Impl : AutoFakeTest
         {
             public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
             {
@@ -25,7 +26,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
         }
 
-        class LoggerImpl : AutoTestBase
+        class LoggerImpl : AutoFakeTest
         {
             public LoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
             {
@@ -46,7 +47,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
         }
 
-        class LoggerFactoryImpl : AutoTestBase
+        class LoggerFactoryImpl : AutoFakeTest
         {
             public LoggerFactoryImpl(ITestOutputHelper outputHelper) : base(outputHelper)
             {
@@ -67,7 +68,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
         }
 
-        class GenericLoggerImpl : AutoTestBase
+        class GenericLoggerImpl : AutoFakeTest
         {
             public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
             {
@@ -87,7 +88,5 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             test.Write();
             A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
         }
-
-
     }
 }

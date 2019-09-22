@@ -8,11 +8,12 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests
 {
-    public class TestBaseTests : TestBase
+    public class LoggerTestTests : LoggerTest
     {
-        public TestBaseTests(ITestOutputHelper outputHelper) : base(outputHelper){}
+        public LoggerTestTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
-        class Impl : TestBase {
+        class Impl : LoggerTest
+        {
             public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
             {
                 Logger.LogError("abcd");

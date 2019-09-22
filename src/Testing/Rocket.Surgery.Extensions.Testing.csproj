@@ -4,21 +4,18 @@
         <IsTestProject>false</IsTestProject>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="Autofac" />
         <PackageReference Include="xunit" />
         <PackageReference Include="xunit.analyzers" />
-        <PackageReference Include="FluentAssertions" />
-        <PackageReference Include="FluentAssertions.Analyzers" />
-        <PackageReference Include="FakeItEasy" />
-        <PackageReference Include="FakeItEasy.Analyzer.CSharp" />
-        <PackageReference Include="Autofac.Extras.FakeItEasy" />
         <PackageReference Include="Microsoft.Extensions.Logging" />
-        <PackageReference Include="Bogus" />
-        <PackageReference Include="XunitXml.TestLogger" />
-        <PackageReference Include="Rocket.Surgery.Linq.Extensions" />
-        <PackageReference Include="Rocket.Surgery.Reactive.Extensions" />
-        <PackageReference Include="System.Diagnostics.DiagnosticSource" />
         <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" />
+        <PackageReference Include="System.Collections.Immutable" />
+        <PackageReference Include="System.Diagnostics.DiagnosticSource" />
+        <PackageReference Include="System.Interactive" />
+        <PackageReference Include="System.Reactive" />
         <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles;analyzers" />
+        <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.FakeItEasy" />
+        <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.Moq" />
     </ItemGroup>
     <ItemGroup>
         <None Include="build/*.*" Pack="true" PackagePath="build" />
