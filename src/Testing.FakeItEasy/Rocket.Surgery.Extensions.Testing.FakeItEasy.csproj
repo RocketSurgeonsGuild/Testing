@@ -8,7 +8,8 @@
         <PackageReference Include="FakeItEasy" />
         <PackageReference Include="FakeItEasy.Analyzer.CSharp" />
         <PackageReference Include="Autofac.Extras.FakeItEasy" />
-        <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj" />
+        <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj" PrivateAssets="contentfiles;analyzers" />
+        <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles;analyzers" />
     </ItemGroup>
     <ItemGroup>
         <None Include="build/*.*" Pack="true" PackagePath="build" />
