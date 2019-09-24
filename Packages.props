@@ -13,14 +13,14 @@
     <PackageReference Update="System.Collections.Immutable" Version="1.5.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
     <PackageReference Update="System.Interactive" Version="3.2.0" />
-    <PackageReference Update="System.Reactive" Version="4.1.5" />
+    <PackageReference Update="System.Reactive" Version="4.1.6" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='netcoreapp2.1'">
     <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0" />
     <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.0.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
     <PackageReference Update="System.Interactive" Version="4.0.0-preview.8.build.9" />
-    <PackageReference Update="System.Reactive" Version="4.2.0-preview.625" />
+    <PackageReference Update="System.Reactive" Version="4.1.6" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="Autofac" Version="4.2.0" />
