@@ -16,9 +16,9 @@
     <PackageReference Update="System.Reactive" Version="4.1.5" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='netcoreapp2.1'">
-    <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0-rc1.19456.10" />
-    <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.0.0-rc1.19456.10" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0-rc1.19456.4" />
+    <PackageReference Update="Microsoft.Extensions.Logging" Version="3.0.0" />
+    <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.0.0" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
     <PackageReference Update="System.Interactive" Version="4.0.0-preview.8.build.9" />
     <PackageReference Update="System.Reactive" Version="4.2.0-preview.625" />
   </ItemGroup>
@@ -26,9 +26,9 @@
     <PackageReference Update="Autofac" Version="4.2.0" />
     <PackageReference Update="Autofac.Extras.FakeItEasy" Version="5.0.1" />
     <PackageReference Update="Autofac.Extras.Moq" Version="4.3.0" />
-    <PackageReference Update="Bogus" Version="28.2.1" />
-    <PackageReference Update="coverlet.collector" Version="1.0.1" />
-    <PackageReference Update="coverlet.msbuild" Version="2.6.3" />
+    <PackageReference Update="Bogus" Version="28.3.1" />
+    <PackageReference Update="coverlet.collector" Version="1.1.0" />
+    <PackageReference Update="coverlet.msbuild" Version="2.7.0" />
     <PackageReference Update="FakeItEasy" Version="5.2.0" />
     <PackageReference Update="FakeItEasy.Analyzer.CSharp" Version="5.2.0" />
     <PackageReference Update="FluentAssertions" Version="5.9.0" />
