@@ -4,5 +4,6 @@
     <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.props" />
     <PropertyGroup>
         <Include>[Rocket.Surgery.*]*</Include>
+        <MergeCoverage>true</MergeCoverage>
     </PropertyGroup>
 </Project>
