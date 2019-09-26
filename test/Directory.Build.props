@@ -3,7 +3,7 @@
     <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.props" />
     <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.props" />
     <PropertyGroup>
-        <Include>[Rocket.Surgery.*]*</Include>
         <MergeCoverage>true</MergeCoverage>
+        <IncludeTestAssembly>true</IncludeTestAssembly>
     </PropertyGroup>
 </Project>
