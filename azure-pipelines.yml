@@ -42,4 +42,4 @@ jobs:
       DotNetSdk:
         - "2.2.x"
         - "3.0.x"
-      NuGetVersion: "5.2.0"
+      NuGetVersion: "5.3.0"
