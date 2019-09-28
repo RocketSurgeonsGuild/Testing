@@ -21,7 +21,8 @@
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Autofac" Version="4.2.0" />
+    <PackageReference Update="Autofac" Version="4.9.1" />
+    <PackageReference Update="Autofac.Extensions.DependencyInjection" Version="5.0.0" />
     <PackageReference Update="Autofac.Extras.FakeItEasy" Version="5.0.1" />
     <PackageReference Update="Autofac.Extras.Moq" Version="4.3.0" />
     <PackageReference Update="Bogus" Version="28.3.1" />

@@ -5,6 +5,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Autofac" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" />
         <PackageReference Include="xunit" />
         <PackageReference Include="xunit.analyzers" />
         <PackageReference Include="Microsoft.Extensions.Logging" />
