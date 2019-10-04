@@ -25,7 +25,7 @@
     <PackageReference Update="Autofac.Extensions.DependencyInjection" Version="5.0.0" />
     <PackageReference Update="Autofac.Extras.FakeItEasy" Version="5.0.1" />
     <PackageReference Update="Autofac.Extras.Moq" Version="4.3.0" />
-    <PackageReference Update="Bogus" Version="28.3.1" />
+    <PackageReference Update="Bogus" Version="28.3.2" />
     <PackageReference Update="coverlet.collector" Version="1.1.0" />
     <PackageReference Update="coverlet.msbuild" Version="2.7.0" />
     <PackageReference Update="FakeItEasy" Version="5.2.0" />
