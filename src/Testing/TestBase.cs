@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 using System.Reactive;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
