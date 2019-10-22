@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Serilog;
+using Serilog.Events;
+using Serilog.Extensions.Logging;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing
@@ -34,17 +37,41 @@ namespace Rocket.Surgery.Extensions.Testing
         protected AutoMock Moq => _autoMoq.Value;
 
         /// <summary>
-        /// Create the auto test class
+        /// The default constructor with available logging level
         /// </summary>
         /// <param name="outputHelper"></param>
         /// <param name="mockBehavior"></param>
+        /// <param name="logFormat"></param>
+        /// <param name="configureLogger"></param>
+        protected AutoMockTest(ITestOutputHelper outputHelper, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LogEventLevel.Information, mockBehavior, logFormat, configureLogger)
+        {
+        }
+        /// <summary>
+        /// The default constructor with available logging level
+        /// </summary>
+        /// <param name="outputHelper"></param>
         /// <param name="minLevel"></param>
-        protected AutoMockTest(ITestOutputHelper outputHelper, MockBehavior mockBehavior = MockBehavior.Default, LogLevel minLevel = LogLevel.Information) : base(outputHelper, minLevel, new LoggerFactory())
+        /// <param name="mockBehavior"></param>
+        /// <param name="logFormat"></param>
+        /// <param name="configureLogger"></param>
+        protected AutoMockTest(ITestOutputHelper outputHelper, LogLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), mockBehavior, logFormat, configureLogger)
+        {
+        }
+
+        /// <summary>
+        /// The default constructor with available logging level
+        /// </summary>
+        /// <param name="outputHelper"></param>
+        /// <param name="minLevel"></param>
+        /// <param name="mockBehavior"></param>
+        /// <param name="logFormat"></param>
+        /// <param name="configureLogger"></param>
+        protected AutoMockTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : base(outputHelper, minLevel, logFormat, configureLogger)
         {
             _autoMoq = new Lazy<AutoMock>(() =>
             {
                 var af = AutoMock.GetFromRepository(new MockRepository(mockBehavior), SetupContainer);
-                af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger));
+                af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
                 return af;
             });
         }

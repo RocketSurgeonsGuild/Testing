@@ -7,17 +7,21 @@ using Autofac.Core.Activators.ProvidedInstance;
 using Autofac.Core.Lifetime;
 using Autofac.Core.Registration;
 using Microsoft.Extensions.Logging;
+using IMsftLogger = Microsoft.Extensions.Logging.ILogger;
+using ISeriLogger = Serilog.ILogger;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
     class LoggingRegistrationSource : IRegistrationSource
     {
         private readonly ILoggerFactory _loggerFactory;
-        private readonly ILogger _defaultLogger;
+        private readonly ISeriLogger _serilogLogger;
+        private readonly IMsftLogger _defaultLogger;
 
-        public LoggingRegistrationSource(ILoggerFactory loggerFactory, ILogger defaultLogger)
+        public LoggingRegistrationSource(ILoggerFactory loggerFactory, IMsftLogger defaultLogger, ISeriLogger serilogLogger)
         {
             _loggerFactory = loggerFactory;
+            _serilogLogger = serilogLogger;
             _defaultLogger = defaultLogger;
         }
 
@@ -32,11 +36,23 @@ namespace Rocket.Surgery.Extensions.Testing
                 yield return registration.CreateRegistration();
             }
 
-            if (typedService.ServiceType == typeof(ILogger))
+            if (typedService.ServiceType == typeof(IMsftLogger))
             {
                 yield return new ComponentRegistration(
                     Guid.NewGuid(),
                     new ProvidedInstanceActivator(_defaultLogger),
+                    new RootScopeLifetime(),
+                    InstanceSharing.Shared,
+                    InstanceOwnership.OwnedByLifetimeScope,
+                    new[] { service },
+                    new Dictionary<string, object>());
+            }
+
+            if (typedService.ServiceType == typeof(ISeriLogger))
+            {
+                yield return new ComponentRegistration(
+                    Guid.NewGuid(),
+                    new ProvidedInstanceActivator(_serilogLogger),
                     new RootScopeLifetime(),
                     InstanceSharing.Shared,
                     InstanceOwnership.OwnedByLifetimeScope,

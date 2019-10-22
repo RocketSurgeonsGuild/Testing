@@ -6,6 +6,9 @@ using FakeItEasy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
+using Serilog.Extensions.Logging;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing
@@ -34,18 +37,42 @@ namespace Rocket.Surgery.Extensions.Testing
         protected AutoFake Fake => _autoFake.Value;
 
         /// <summary>
-        /// Create the auto test class
+        /// The default constructor with available logging level
         /// </summary>
         /// <param name="outputHelper"></param>
         /// <param name="minLevel"></param>
-        protected AutoFakeTest(ITestOutputHelper outputHelper, LogLevel minLevel = LogLevel.Information) : base(outputHelper, minLevel, A.Fake<ILoggerFactory>(x => x.Wrapping(new FakeItEasyLoggerFactory())))
+        /// <param name="logFormat"></param>
+        /// <param name="configureLogger"></param>
+        protected AutoFakeTest(ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger)
+        {
+        }
+
+        /// <summary>
+        /// The default constructor with available logging level
+        /// </summary>
+        /// <param name="outputHelper"></param>
+        /// <param name="minLevel"></param>
+        /// <param name="logFormat"></param>
+        /// <param name="configureLogger"></param>
+        protected AutoFakeTest(ITestOutputHelper outputHelper, LogLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger)
+        {
+        }
+
+        /// <summary>
+        /// The default constructor with available logging level
+        /// </summary>
+        /// <param name="outputHelper"></param>
+        /// <param name="minLevel"></param>
+        /// <param name="logFormat"></param>
+        /// <param name="configureLogger"></param>
+        protected AutoFakeTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : base(outputHelper, minLevel, logFormat, configureLogger)
         {
             _autoFake = new Lazy<AutoFake>(() =>
             {
                 var cb = new ContainerBuilder();
                 SetupContainer(cb);
                 var af = new AutoFake(builder: cb);
-                af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger));
+                af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
                 return af;
             });
         }
