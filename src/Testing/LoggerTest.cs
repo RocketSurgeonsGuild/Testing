@@ -97,10 +97,9 @@ namespace Rocket.Surgery.Extensions.Testing
                 Disposable.Add(logger);
 
                 var diagnosticListener = new DiagnosticListener("Test");
-                var defaultLogger = factory.CreateLogger("Default");
-                Disposable.Add(diagnosticListener.SubscribeWithAdapter(new TestDiagnosticListenerLoggingAdapter(defaultLogger)));
+                Disposable.Add(diagnosticListener.SubscribeWithAdapter(new TestDiagnosticListenerLoggingAdapter(factory.CreateLogger("DiagnosticSource"))));
 
-                return (defaultLogger, factory, logger, diagnosticListener);
+                return (factory.CreateLogger("Default"), factory, logger, diagnosticListener);
             });
         }
 
