@@ -1,7 +1,6 @@
 <Project>
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="Autofac.Extras.FakeItEasy" />
         <PackageReference Include="coverlet.collector" />
         <PackageReference Include="coverlet.msbuild" />
         <PackageReference Include="FakeItEasy" />
