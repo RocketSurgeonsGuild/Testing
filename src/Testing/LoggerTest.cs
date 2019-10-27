@@ -91,7 +91,7 @@ namespace Rocket.Surgery.Extensions.Testing
                 var logger = config.CreateLogger();
 
                 var loggerProviderCollection = new LoggerProviderCollection();
-                var factory = new SerilogLoggerFactory(logger, false, loggerProviderCollection);
+                var factory = CreateLoggerFactory(logger, loggerProviderCollection);
                 var container = new ServiceCollection().AddLogging().AddSingleton(factory).BuildServiceProvider();
                 Disposable.Add(container);
                 Disposable.Add(logger);
@@ -101,6 +101,14 @@ namespace Rocket.Surgery.Extensions.Testing
 
                 return (factory.CreateLogger("Default"), factory, logger, diagnosticListener);
             });
+        }
+
+        /// <summary>
+        /// Control the way that the serilog logger factory is created.
+        /// </summary>
+        protected virtual ILoggerFactory CreateLoggerFactory(ISeriLogger logger, LoggerProviderCollection loggerProviderCollection)
+        {
+            return new SerilogLoggerFactory(logger, false, loggerProviderCollection);
         }
 
         void IDisposable.Dispose()

@@ -93,6 +93,15 @@ namespace Rocket.Surgery.Extensions.Testing
         {
         }
 
+        /// <summary>
+        /// Control the way that the serilog logger factory is created.
+        /// </summary>
+        protected override ILoggerFactory CreateLoggerFactory(Serilog.ILogger logger, LoggerProviderCollection loggerProviderCollection)
+        {
+            var factory = new FakeItEasyLoggerFactory(new SerilogLoggerFactory(logger, false, loggerProviderCollection));
+            return A.Fake<ILoggerFactory>(l => l.Wrapping(factory));
+        }
+
         private void SetupContainer(ContainerBuilder cb)
         {
             if (_serviceCollection != null)
