@@ -45,5 +45,23 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             Logger.LogInformation("this is a test 3");
             logs.Should().HaveCount(1);
         }
+
+        [Fact]
+        public void Should_Create_A_Log_Filter_Stream()
+        {
+            Logger.LogInformation("this is a test 1");
+
+            using var listener = CaptureLogs(log => log.Level >= LogEventLevel.Warning, out var logs);
+            using (listener)
+            {
+                Logger.LogInformation("this is a test 2");
+                Logger.LogWarning ("this is a test 2");
+                Logger.LogError("this is a test 2");
+                Logger.LogCritical("this is a test 2");
+            }
+
+            Logger.LogInformation("this is a test 3");
+            logs.Should().HaveCount(3);
+        }
     }
 }

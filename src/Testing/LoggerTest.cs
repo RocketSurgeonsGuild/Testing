@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging;
 using Xunit.Abstractions;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Serilog;
 using Serilog.Events;
@@ -123,7 +124,23 @@ namespace Rocket.Surgery.Extensions.Testing
         {
             var list = new List<LogEvent>();
             logs = list;
-            return LogStream.Subscribe(x => list.Add(x));
+            return LogStream
+                .Subscribe(x => list.Add(x));
+        }
+
+        /// <summary>
+        /// Capture log outputs until the item is disposed
+        /// </summary>
+        /// <param name="logs">The output logs</param>
+        /// <param name="filterLogs">A delegate to filter the logs to only a subset of the expected logs</param>
+        /// <returns></returns>
+        protected IDisposable CaptureLogs(Func<LogEvent, bool> filterLogs, out IEnumerable<LogEvent> logs)
+        {
+            var list = new List<LogEvent>();
+            logs = list;
+            return LogStream
+                .Where(filterLogs)
+                .Subscribe(x => list.Add(x));
         }
 
         /// <summary>
