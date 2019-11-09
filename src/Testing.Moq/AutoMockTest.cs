@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.Moq;
@@ -18,23 +18,33 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoMockTest : LoggerTest
     {
-        private readonly Lazy<AutoMock> _autoMoq;
-        private IServiceCollection? _serviceCollection;
+        private readonly Lazy<(AutoMock autoMock, IContainer container, AutofacServiceProvider serviceProvider)> _autoMoq;
+        private IServiceCollection? _serviceCollection = new ServiceCollection();
 
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
-        protected IConfiguration? Configuration { get; private set; } = new ConfigurationBuilder().Build();
+        protected IConfiguration Configuration { get; private set; } = new ConfigurationBuilder().Build();
 
         /// <summary>
-        /// The AutoFake instance
+        /// The AutoMock instance
         /// </summary>
-        protected AutoMock AutoMock => _autoMoq.Value;
+        protected AutoMock AutoMock => _autoMoq.Value.autoMock;
 
         /// <summary>
-        /// The AutoFake instance
+        /// The AutoMock instance
         /// </summary>
-        protected AutoMock Moq => _autoMoq.Value;
+        protected AutoMock Moq => _autoMoq.Value.autoMock;
+
+        /// <summary>
+        /// The Autofac container
+        /// </summary>
+        protected IContainer Container => _autoMoq.Value.container;
+
+        /// <summary>
+        /// The Service Provider
+        /// </summary>
+        protected AutofacServiceProvider ServiceProvider => _autoMoq.Value.serviceProvider;
 
         /// <summary>
         /// The default constructor with available logging level
@@ -43,9 +53,11 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="mockBehavior"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoMockTest(ITestOutputHelper outputHelper, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LogEventLevel.Information, mockBehavior, logFormat, configureLogger)
+        protected AutoMockTest(ITestOutputHelper outputHelper, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
+            : this(outputHelper, LogEventLevel.Information, mockBehavior, logFormat, configureLogger)
         {
         }
+
         /// <summary>
         /// The default constructor with available logging level
         /// </summary>
@@ -54,7 +66,8 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="mockBehavior"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoMockTest(ITestOutputHelper outputHelper, LogLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), mockBehavior, logFormat, configureLogger)
+        protected AutoMockTest(ITestOutputHelper outputHelper, LogLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
+            : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), mockBehavior, logFormat, configureLogger)
         {
         }
 
@@ -66,23 +79,28 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="mockBehavior"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoMockTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : base(outputHelper, minLevel, logFormat, configureLogger)
-        {
-            _autoMoq = new Lazy<AutoMock>(() =>
-            {
-                var af = AutoMock.GetFromRepository(new MockRepository(mockBehavior), SetupContainer);
-                af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
-                return af;
-            });
-        }
+        protected AutoMockTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
+            : base(outputHelper, minLevel, logFormat, configureLogger)
+            => _autoMoq = new Lazy<(AutoMock autoMock, IContainer container, AutofacServiceProvider serviceProvider)>(() =>
+                {
+                    var af = AutoMock.GetFromRepository(new MockRepository(mockBehavior), SetupContainer);
+                    af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
+                    return (af, af.Container, new AutofacServiceProvider(af.Container));
+                });
 
         /// <summary>
         /// Populate the test class with the given configuration and services
         /// </summary>
-        protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context)
+        protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context) =>
+            Populate(context.configuration, context.serviceCollection);
+
+        /// <summary>
+        /// Populate the test class with the given configuration and services
+        /// </summary>
+        protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
-            Configuration = context.configuration;
-            _serviceCollection = context.serviceCollection;
+            Configuration = configuration;
+            _serviceCollection = serviceCollection;
         }
 
         /// <summary>
@@ -94,10 +112,7 @@ namespace Rocket.Surgery.Extensions.Testing
 
         private void SetupContainer(ContainerBuilder cb)
         {
-            if (_serviceCollection != null)
-            {
-                cb.Populate(_serviceCollection);
-            }
+            cb.Populate(_serviceCollection);
             BuildContainer(cb);
         }
     }

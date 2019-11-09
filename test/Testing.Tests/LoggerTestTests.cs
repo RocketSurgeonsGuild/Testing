@@ -55,13 +55,33 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             using (listener)
             {
                 Logger.LogInformation("this is a test 2");
-                Logger.LogWarning ("this is a test 2");
+                Logger.LogWarning("this is a test 2");
                 Logger.LogError("this is a test 2");
                 Logger.LogCritical("this is a test 2");
             }
 
             Logger.LogInformation("this is a test 3");
             logs.Should().HaveCount(3);
+        }
+
+        [Theory]
+        [ClassData(typeof(LoggerTheoryData))]
+        public void Should_Support_Theory_Data(IEnumerable<string> messages, int count)
+        {
+            using var listener = CaptureLogs(out var logs);
+            foreach (var item in messages)
+            Logger.LogInformation(item);
+            logs.Should().HaveCount(count);
+        }
+
+        public class LoggerTheoryData : TheoryData<(IEnumerable<string>, int)>
+        {
+            protected override IEnumerable<(IEnumerable<string>, int)> GetData()
+            {
+                yield return (new[] { "1", "2", "3" }, 3);
+                yield return (new[] { "1", "2" }, 2);
+                yield return (new[] { "1" }, 1);
+            }
         }
     }
 }

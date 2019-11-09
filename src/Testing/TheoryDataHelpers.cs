@@ -31,13 +31,12 @@ namespace Rocket.Surgery.Extensions.Testing
 
             if (type.IsGenericType)
             {
-                if (type.GetGenericTypeDefinition() == typeof(ValueTuple<>) ||
+                if (
+                    type.GetGenericTypeDefinition() == typeof(ValueTuple<>) ||
                     type.GetGenericTypeDefinition() == typeof(ValueTuple<,>) ||
                     type.GetGenericTypeDefinition() == typeof(ValueTuple<,,>) ||
                     type.GetGenericTypeDefinition() == typeof(ValueTuple<,,,>) ||
-                    type.GetGenericTypeDefinition() == typeof(ValueTuple<,,,,>) ||
-                    type.GetGenericTypeDefinition() == typeof(ValueTuple<,,,,,>) ||
-                    type.GetGenericTypeDefinition() == typeof(ValueTuple<,,,,,,>)
+                    type.GetGenericTypeDefinition() == typeof(ValueTuple<,,,,>)
                 )
                 {
                     var methodInfo = GetTupleMethodInfo(type);

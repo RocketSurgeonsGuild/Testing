@@ -18,23 +18,33 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoFakeTest : LoggerTest
     {
-        private readonly Lazy<AutoFake> _autoFake;
-        private IServiceCollection? _serviceCollection;
+        private readonly Lazy<(AutoFake autoFake, IContainer container, AutofacServiceProvider serviceProvider)> _autoFake;
+        private IServiceCollection? _serviceCollection = new ServiceCollection();
 
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
-        protected IConfiguration? Configuration { get; private set; } = new ConfigurationBuilder().Build();
+        protected IConfiguration Configuration { get; private set; } = new ConfigurationBuilder().Build();
 
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected AutoFake AutoFake => _autoFake.Value;
+        protected AutoFake AutoFake => _autoFake.Value.autoFake;
 
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected AutoFake Fake => _autoFake.Value;
+        protected AutoFake Fake => _autoFake.Value.autoFake;
+
+        /// <summary>
+        /// The Autofac container
+        /// </summary>
+        protected IContainer Container => _autoFake.Value.container;
+
+        /// <summary>
+        /// The Service Provider
+        /// </summary>
+        protected AutofacServiceProvider ServiceProvider => _autoFake.Value.serviceProvider;
 
         /// <summary>
         /// The default constructor with available logging level
@@ -42,7 +52,8 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="outputHelper"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoFakeTest(ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger)
+        protected AutoFakeTest(ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
+            : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger)
         {
         }
 
@@ -53,7 +64,8 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="minLevel"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoFakeTest(ITestOutputHelper outputHelper, LogLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger)
+        protected AutoFakeTest(ITestOutputHelper outputHelper, LogLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
+            : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger)
         {
         }
 
@@ -64,25 +76,30 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="minLevel"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoFakeTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : base(outputHelper, minLevel, logFormat, configureLogger)
-        {
-            _autoFake = new Lazy<AutoFake>(() =>
-            {
-                var cb = new ContainerBuilder();
-                SetupContainer(cb);
-                var af = new AutoFake(builder: cb);
-                af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
-                return af;
-            });
-        }
+        protected AutoFakeTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
+            : base(outputHelper, minLevel, logFormat, configureLogger)
+            => _autoFake = new Lazy<(AutoFake autoFake, IContainer container, AutofacServiceProvider serviceProvider)>(() =>
+                {
+                    var cb = new ContainerBuilder();
+                    SetupContainer(cb);
+                    var af = new AutoFake(builder: cb);
+                    af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
+                    return (af, af.Container, new AutofacServiceProvider(af.Container));
+                });
 
         /// <summary>
         /// Populate the test class with the given configuration and services
         /// </summary>
-        protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context)
+        protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context) =>
+            Populate(context.configuration, context.serviceCollection);
+
+        /// <summary>
+        /// Populate the test class with the given configuration and services
+        /// </summary>
+        protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
-            Configuration = context.configuration;
-            _serviceCollection = context.serviceCollection;
+            Configuration = configuration;
+            _serviceCollection = serviceCollection;
         }
 
         /// <summary>
@@ -103,10 +120,7 @@ namespace Rocket.Surgery.Extensions.Testing
 
         private void SetupContainer(ContainerBuilder cb)
         {
-            if (_serviceCollection != null)
-            {
-                cb.Populate(_serviceCollection);
-            }
+            cb.Populate(_serviceCollection);
             BuildContainer(cb);
         }
     }
