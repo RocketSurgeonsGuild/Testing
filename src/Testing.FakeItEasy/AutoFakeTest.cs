@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.FakeItEasy;
@@ -40,7 +40,6 @@ namespace Rocket.Surgery.Extensions.Testing
         /// The default constructor with available logging level
         /// </summary>
         /// <param name="outputHelper"></param>
-        /// <param name="minLevel"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
         protected AutoFakeTest(ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null) : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger)

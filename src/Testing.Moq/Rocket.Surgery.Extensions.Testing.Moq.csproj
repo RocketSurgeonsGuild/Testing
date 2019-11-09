@@ -5,8 +5,10 @@
         <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Moq" />
-        <PackageReference Include="Autofac.Extras.Moq" />
+      <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.Tests" />
+      <PackageReference Include="Moq" />
+        <!-- Disabled for now to handle scenarios with enumerables -->
+        <!--<PackageReference Include="Autofac.Extras.Moq" />-->
         <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj" PrivateAssets="contentfiles;analyzers" />
         <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles;analyzers" />
     </ItemGroup>

@@ -19,21 +19,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".build", ".build\.build.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{E3DCB78E-EE06-4EA3-88AC-762D8910387C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing", "src\Testing\Rocket.Surgery.Extensions.Testing.csproj", "{488EEFB7-E90B-4756-9E8A-E47A02D66776}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Testing", "src\Testing\Rocket.Surgery.Extensions.Testing.csproj", "{488EEFB7-E90B-4756-9E8A-E47A02D66776}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.AzureStorageEmulator", "src\Testing.AzureStorageEmulator\Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.csproj", "{822E911E-D3A9-4BC0-A25A-46537DEE60A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Testing.Coverlet", "src\Testing.Coverlet\Rocket.Surgery.Extensions.Testing.Coverlet.csproj", "{A86ADCFA-37A4-4F91-B512-08B5C85BB0A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.Coverlet", "src\Testing.Coverlet\Rocket.Surgery.Extensions.Testing.Coverlet.csproj", "{A86ADCFA-37A4-4F91-B512-08B5C85BB0A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Testing.Fixtures", "src\Testing.Fixtures\Rocket.Surgery.Extensions.Testing.Fixtures.csproj", "{3CBDC240-0C29-4D62-B8EF-53907D14EDDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.Fixtures", "src\Testing.Fixtures\Rocket.Surgery.Extensions.Testing.Fixtures.csproj", "{3CBDC240-0C29-4D62-B8EF-53907D14EDDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Testing.Fixtures.Tests", "test\Testing.Fixtures.Tests\Rocket.Surgery.Extensions.Testing.Fixtures.Tests.csproj", "{D70648B5-C21A-4F71-8DFC-B39F4D0FA950}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.Fixtures.Tests", "test\Testing.Fixtures.Tests\Rocket.Surgery.Extensions.Testing.Fixtures.Tests.csproj", "{D70648B5-C21A-4F71-8DFC-B39F4D0FA950}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Testing.Tests", "test\Testing.Tests\Rocket.Surgery.Extensions.Testing.Tests.csproj", "{C824FF8B-0B82-461F-8D1F-28769D32D188}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.Tests", "test\Testing.Tests\Rocket.Surgery.Extensions.Testing.Tests.csproj", "{C824FF8B-0B82-461F-8D1F-28769D32D188}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Testing.Moq", "src\Testing.Moq\Rocket.Surgery.Extensions.Testing.Moq.csproj", "{6016D53B-90FA-4223-BE4A-0CC6AB9CBD0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.Moq", "src\Testing.Moq\Rocket.Surgery.Extensions.Testing.Moq.csproj", "{6016D53B-90FA-4223-BE4A-0CC6AB9CBD0A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.FakeItEasy", "src\Testing.FakeItEasy\Rocket.Surgery.Extensions.Testing.FakeItEasy.csproj", "{961EE399-F31D-40A9-9559-F9568BCF5088}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket.Surgery.Extensions.Testing.FakeItEasy", "src\Testing.FakeItEasy\Rocket.Surgery.Extensions.Testing.FakeItEasy.csproj", "{961EE399-F31D-40A9-9559-F9568BCF5088}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,18 +65,6 @@ Global
 		{488EEFB7-E90B-4756-9E8A-E47A02D66776}.Release|x64.Build.0 = Release|Any CPU
 		{488EEFB7-E90B-4756-9E8A-E47A02D66776}.Release|x86.ActiveCfg = Release|Any CPU
 		{488EEFB7-E90B-4756-9E8A-E47A02D66776}.Release|x86.Build.0 = Release|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Debug|x64.Build.0 = Debug|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Debug|x86.Build.0 = Debug|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Release|x64.ActiveCfg = Release|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Release|x64.Build.0 = Release|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Release|x86.ActiveCfg = Release|Any CPU
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3}.Release|x86.Build.0 = Release|Any CPU
 		{A86ADCFA-37A4-4F91-B512-08B5C85BB0A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A86ADCFA-37A4-4F91-B512-08B5C85BB0A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A86ADCFA-37A4-4F91-B512-08B5C85BB0A1}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -158,7 +144,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{55EFAE2F-A7CA-4917-A381-4A6EF5E79610} = {E3DCB78E-EE06-4EA3-88AC-762D8910387C}
 		{488EEFB7-E90B-4756-9E8A-E47A02D66776} = {8FFDF555-DB50-45F9-9A2D-6410F39151C3}
-		{822E911E-D3A9-4BC0-A25A-46537DEE60A3} = {8FFDF555-DB50-45F9-9A2D-6410F39151C3}
 		{A86ADCFA-37A4-4F91-B512-08B5C85BB0A1} = {8FFDF555-DB50-45F9-9A2D-6410F39151C3}
 		{3CBDC240-0C29-4D62-B8EF-53907D14EDDA} = {8FFDF555-DB50-45F9-9A2D-6410F39151C3}
 		{D70648B5-C21A-4F71-8DFC-B39F4D0FA950} = {DF33E0FB-9790-4654-B60F-8AB22E0CC3D1}

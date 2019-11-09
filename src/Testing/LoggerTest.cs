@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -48,7 +48,6 @@ namespace Rocket.Surgery.Extensions.Testing
         /// The default constructor with available logging level
         /// </summary>
         /// <param name="outputHelper"></param>
-        /// <param name="minLevel"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
         /// <returns></returns>

@@ -1,8 +1,14 @@
-﻿using Moq;
+using Moq;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 using Rocket.Surgery.Extensions.Testing;
+using System;
+using Serilog;
+using System.Collections.Generic;
+using System.Linq;
+using Autofac.Extras.FakeItEasy;
+using FluentAssertions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests
 {

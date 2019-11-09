@@ -7,6 +7,5 @@
         <ProjectReference Include="..\..\src\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
         <ProjectReference Include="..\..\src\Testing.Moq\Rocket.Surgery.Extensions.Testing.Moq.csproj" />
         <ProjectReference Include="..\..\src\Testing.FakeItEasy\Rocket.Surgery.Extensions.Testing.FakeItEasy.csproj" />
-        <ProjectReference Include="..\..\src\Testing.AzureStorageEmulator\Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.csproj" />
     </ItemGroup>
 </Project>
