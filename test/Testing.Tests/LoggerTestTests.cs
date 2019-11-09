@@ -43,7 +43,6 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             }
 
             Logger.LogInformation("this is a test 3");
-
             logs.Should().HaveCount(1);
         }
     }
