@@ -10,6 +10,7 @@
         <PackageReference Include="xunit.analyzers" />
         <PackageReference Include="Serilog" />
         <PackageReference Include="Serilog.Extensions.Logging" />
+        <PackageReference Include="Serilog.Sinks.Observable" />
         <PackageReference Include="Serilog.Sinks.XUnit" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="Microsoft.Extensions.Logging" />

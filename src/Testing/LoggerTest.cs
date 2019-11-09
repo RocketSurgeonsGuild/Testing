@@ -1,23 +1,27 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging;
 using Xunit.Abstractions;
 using System.Reactive.Disposables;
+using System.Reactive.Subjects;
 using Serilog;
 using Serilog.Events;
 using IMsftLogger = Microsoft.Extensions.Logging.ILogger;
 using ISeriLogger = Serilog.ILogger;
+using JetBrains.Annotations;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
     /// <summary>
     /// A simple base test class with logger, logger factory and diagnostic source all wired into the <see cref="ITestOutputHelper" />.
     /// </summary>
+    [PublicAPI]
     public abstract class LoggerTest : IDisposable
     {
-        private readonly Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource)> _values;
+        private readonly Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource, IObservable<LogEvent> logStream)> _values;
 
         /// <summary>
         /// The <see cref="ILoggerFactory" />
@@ -38,6 +42,11 @@ namespace Rocket.Surgery.Extensions.Testing
         /// The <see cref="DiagnosticSource" />
         /// </summary>
         protected DiagnosticSource DiagnosticSource => _values.Value.diagnosticSource;
+
+        /// <summary>
+        /// The <see cref="IObservable{LogEvent}" />
+        /// </summary>
+        protected IObservable<LogEvent> LogStream => _values.Value.logStream;
 
         /// <summary>
         /// The <see cref="CompositeDisposable" />
@@ -81,11 +90,14 @@ namespace Rocket.Surgery.Extensions.Testing
         {
             Disposable = new CompositeDisposable();
 
-            _values = new Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource)>(() =>
+            _values = new Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource, IObservable<LogEvent> logStream)>(() =>
             {
+                var subject = new Subject<LogEvent>();
                 var config = new LoggerConfiguration()
                     .WriteTo.TestOutput(outputHelper, LogEventLevel.Verbose, logFormat)
-                    .MinimumLevel.Is(minLevel);
+                    .WriteTo.Observers(x => x.Subscribe(subject))
+                    .MinimumLevel.Is(minLevel)
+                    .Enrich.FromLogContext();
                 configureLogger?.Invoke(config);
                 var logger = config.CreateLogger();
 
@@ -98,22 +110,28 @@ namespace Rocket.Surgery.Extensions.Testing
                 var diagnosticListener = new DiagnosticListener("Test");
                 Disposable.Add(diagnosticListener.SubscribeWithAdapter(new TestDiagnosticListenerLoggingAdapter(factory.CreateLogger("DiagnosticSource"))));
 
-                return (factory.CreateLogger("Default"), factory, logger, diagnosticListener);
+                return (factory.CreateLogger("Default"), factory, logger, diagnosticListener, subject);
             });
+        }
+
+        /// <summary>
+        /// Capture log outputs until the item is disposed
+        /// </summary>
+        /// <param name="logs">The output logs</param>
+        /// <returns></returns>
+        protected IDisposable CaptureLogs(out IEnumerable<LogEvent> logs)
+        {
+            var list = new List<LogEvent>();
+            logs = list;
+            return LogStream.Subscribe(x => list.Add(x));
         }
 
         /// <summary>
         /// Control the way that the serilog logger factory is created.
         /// </summary>
-        protected virtual ILoggerFactory CreateLoggerFactory(ISeriLogger logger, LoggerProviderCollection loggerProviderCollection)
-        {
-            return new SerilogLoggerFactory(logger, false, loggerProviderCollection);
-        }
+        protected virtual ILoggerFactory CreateLoggerFactory(ISeriLogger logger, LoggerProviderCollection loggerProviderCollection) => new SerilogLoggerFactory(logger, false, loggerProviderCollection);
 
-        void IDisposable.Dispose()
-        {
-            Disposable.Dispose();
-        }
+        void IDisposable.Dispose() => Disposable.Dispose();
     }
 }
 

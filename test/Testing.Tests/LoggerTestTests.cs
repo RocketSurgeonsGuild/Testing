@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using FakeItEasy;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using Serilog.Events;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -27,6 +29,22 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             var helper = A.Fake<ITestOutputHelper>();
             var test = new Impl(helper);
             A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void Should_Create_A_Log_Stream()
+        {
+            Logger.LogInformation("this is a test 1");
+
+            using var listener = CaptureLogs(out var logs);
+            using (listener)
+            {
+                Logger.LogInformation("this is a test 2");
+            }
+
+            Logger.LogInformation("this is a test 3");
+
+            logs.Should().HaveCount(1);
         }
     }
 }
