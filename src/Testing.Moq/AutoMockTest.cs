@@ -84,7 +84,6 @@ namespace Rocket.Surgery.Extensions.Testing
             => _autoMoq = new Lazy<(AutoMock autoMock, IContainer container, AutofacServiceProvider serviceProvider)>(() =>
                 {
                     var af = AutoMock.GetFromRepository(new MockRepository(mockBehavior), SetupContainer);
-                    af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
                     return (af, af.Container, new AutofacServiceProvider(af.Container));
                 });
 
@@ -113,6 +112,7 @@ namespace Rocket.Surgery.Extensions.Testing
         private void SetupContainer(ContainerBuilder cb)
         {
             cb.Populate(_serviceCollection);
+            cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
             BuildContainer(cb);
         }
     }

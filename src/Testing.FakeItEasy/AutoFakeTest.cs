@@ -83,7 +83,6 @@ namespace Rocket.Surgery.Extensions.Testing
                     var cb = new ContainerBuilder();
                     SetupContainer(cb);
                     var af = new AutoFake(builder: cb);
-                    af.Container.ComponentRegistry.AddRegistrationSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
                     return (af, af.Container, new AutofacServiceProvider(af.Container));
                 });
 
@@ -121,6 +120,7 @@ namespace Rocket.Surgery.Extensions.Testing
         private void SetupContainer(ContainerBuilder cb)
         {
             cb.Populate(_serviceCollection);
+            cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
             BuildContainer(cb);
         }
     }
