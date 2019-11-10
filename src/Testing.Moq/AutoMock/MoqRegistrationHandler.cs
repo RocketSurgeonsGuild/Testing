@@ -91,7 +91,7 @@ namespace Autofac.Extras.Moq
             }
 
             var typedService = service as TypedService;
-            if (typedService == null || registrationAccessor(service)?.Any() == true || !CanMockService(typedService))
+            if (typedService == null|| !CanMockService(typedService) || registrationAccessor(service)?.Any() == true)
             {
                 return Enumerable.Empty<IComponentRegistration>();
             }

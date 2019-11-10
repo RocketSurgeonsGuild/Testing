@@ -81,11 +81,11 @@ namespace Autofac.Extras.FakeItEasy
 
             var typedService = service as TypedService;
             if (typedService == null ||
-                registrationAccessor(service)?.Any() == true ||
                 (!typedService.ServiceType.GetTypeInfo().IsInterface && !typedService.ServiceType.GetTypeInfo().IsAbstract) ||
                 (typedService.ServiceType.GetTypeInfo().IsGenericType && typedService.ServiceType.GetGenericTypeDefinition() == typeof(IEnumerable<>)) ||
                 typedService.ServiceType.IsArray ||
-                typeof(IStartable).IsAssignableFrom(typedService.ServiceType))
+                typeof(IStartable).IsAssignableFrom(typedService.ServiceType) ||
+                registrationAccessor(service)?.Any() == true)
             {
                 return Enumerable.Empty<IComponentRegistration>();
             }
