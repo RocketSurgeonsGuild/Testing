@@ -1,7 +1,7 @@
 ﻿<Project>
     <PropertyGroup>
-        <CollectCoverage>true</CollectCoverage>
-        <CoverletOutputFormat>json,lcov,cobertura,opencover</CoverletOutputFormat>
+        <CollectCoverage Condition="'$(CollectCoverage)' == ''">true</CollectCoverage>
+        <CoverletOutputFormat Condition="'$(CoverletOutputFormat)' == ''">json,lcov,cobertura,opencover</CoverletOutputFormat>
         <MergeCoverage Condition="'$(MergeCoverage)' == ''">false</MergeCoverage>
     </PropertyGroup>
 </Project>
