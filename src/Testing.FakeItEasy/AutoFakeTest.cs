@@ -18,7 +18,7 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoFakeTest : LoggerTest
     {
-        private readonly Lazy<(AutoFake autoFake, IContainer container, AutofacServiceProvider serviceProvider)> _autoFake;
+        private readonly Lazy<(AutoFake autoFake, IContainer container, IServiceProvider serviceProvider)> _autoFake;
         private IServiceCollection? _serviceCollection = new ServiceCollection();
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The Service Provider
         /// </summary>
-        protected AutofacServiceProvider ServiceProvider => _autoFake.Value.serviceProvider;
+        protected IServiceProvider ServiceProvider => _autoFake.Value.serviceProvider;
 
         /// <summary>
         /// The default constructor with available logging level
@@ -78,12 +78,16 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="configureLogger"></param>
         protected AutoFakeTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
             : base(outputHelper, minLevel, logFormat, configureLogger)
-            => _autoFake = new Lazy<(AutoFake autoFake, IContainer container, AutofacServiceProvider serviceProvider)>(() =>
+            => _autoFake = new Lazy<(AutoFake autoFake, IContainer container, IServiceProvider serviceProvider)>(() =>
                 {
                     var cb = new ContainerBuilder();
                     SetupContainer(cb);
                     var af = new AutoFake(builder: cb);
-                    return (af, af.Container, new AutofacServiceProvider(af.Container));
+                    return (
+                        af,
+                        A.Fake<IContainer>(x => x.Wrapping(af.Container)),
+                        A.Fake<IServiceProvider>(x => x.Wrapping(new AutofacServiceProvider(af.Container)))
+                    );
                 });
 
         /// <summary>
