@@ -6,7 +6,7 @@ namespace Rocket.Surgery.Extensions.Testing
     /// <summary>
     /// A class that can be used to create strongly typed
     /// </summary>
-    public abstract class TheoryData<T> : IEnumerable<object?[]>
+    public abstract class TheoryCollection<T> : IEnumerable<object?[]>
     {
         /// <inheritdoc />
         public IEnumerator<object?[]> GetEnumerator() => InternalGetData().GetEnumerator();
@@ -14,7 +14,7 @@ namespace Rocket.Surgery.Extensions.Testing
 
         private IEnumerable<object?[]> InternalGetData()
         {
-            var converter = TheoryDataHelpers.GetConverterMethod(typeof(T));
+            var converter = TheoryCollectionHelpers.GetConverterMethod(typeof(T));
             foreach (var item in GetData())
             {
                 yield return converter(item!);

@@ -1,6 +1,7 @@
 using System;
 using Moq;
 using Xunit;
+#pragma warning disable CA1034 // Nested types should not be visible
 
 namespace Autofac.Extras.Moq.Test
 {
@@ -326,6 +327,7 @@ namespace Autofac.Extras.Moq.Test
                 _serviceB.RunB();
             }
         }
+
 
         // ReSharper disable once ClassNeverInstantiated.Global
         // ReSharper disable once MemberCanBePrivate.Global

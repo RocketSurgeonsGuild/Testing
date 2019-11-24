@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Autofac;
 using Autofac.Builder;
@@ -9,10 +9,11 @@ using Autofac.Core.Registration;
 using Microsoft.Extensions.Logging;
 using IMsftLogger = Microsoft.Extensions.Logging.ILogger;
 using ISeriLogger = Serilog.ILogger;
+#pragma warning disable CA2000 // Dispose objects before losing scope
 
 namespace Rocket.Surgery.Extensions.Testing
 {
-    class LoggingRegistrationSource : IRegistrationSource
+    internal class LoggingRegistrationSource : IRegistrationSource
     {
         private readonly ILoggerFactory _loggerFactory;
         private readonly ISeriLogger _serilogLogger;

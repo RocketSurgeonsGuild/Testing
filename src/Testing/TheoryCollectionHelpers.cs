@@ -6,11 +6,11 @@ using System.Reflection;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
-    internal static class TheoryDataHelpers
+    internal static class TheoryCollectionHelpers
     {
         internal static MethodInfo GetTupleMethodInfo(Type type)
         {
-            var methodInfo = typeof(TheoryDataHelpers)
+            var methodInfo = typeof(TheoryCollectionHelpers)
                 .GetMethods(BindingFlags.Static | BindingFlags.NonPublic)
                 .Where(x => x.GetParameters().FirstOrDefault()?.ParameterType.IsGenericType == true)
                 .Single(x => x.GetParameters().FirstOrDefault()?.ParameterType.GetGenericTypeDefinition().GetGenericArguments().Length == type.GetGenericArguments().Length);

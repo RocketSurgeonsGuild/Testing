@@ -1,0 +1,26 @@
+Rocket.Surgery.Extensions.Testing.LoggerTest
+Rocket.Surgery.Extensions.Testing.LoggerTest.CaptureLogs(System.Func<Serilog.Events.LogEvent, bool> filterLogs, out System.Collections.Generic.IEnumerable<Serilog.Events.LogEvent> logs) -> System.IDisposable
+Rocket.Surgery.Extensions.Testing.LoggerTest.CaptureLogs(out System.Collections.Generic.IEnumerable<Serilog.Events.LogEvent> logs) -> System.IDisposable
+Rocket.Surgery.Extensions.Testing.LoggerTest.DiagnosticSource.get -> System.Diagnostics.DiagnosticSource
+Rocket.Surgery.Extensions.Testing.LoggerTest.LogStream.get -> System.IObservable<Serilog.Events.LogEvent>
+Rocket.Surgery.Extensions.Testing.LoggerTest.Logger.get -> Microsoft.Extensions.Logging.ILogger
+Rocket.Surgery.Extensions.Testing.LoggerTest.LoggerFactory.get -> Microsoft.Extensions.Logging.ILoggerFactory
+Rocket.Surgery.Extensions.Testing.LoggerTest.LoggerTest(Xunit.Abstractions.ITestOutputHelper outputHelper, Microsoft.Extensions.Logging.LogLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", System.Action<Serilog.LoggerConfiguration> configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.LoggerTest.LoggerTest(Xunit.Abstractions.ITestOutputHelper outputHelper, Serilog.Events.LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", System.Action<Serilog.LoggerConfiguration> configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.LoggerTest.LoggerTest(Xunit.Abstractions.ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", System.Action<Serilog.LoggerConfiguration> configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.LoggerTest.SerilogLogger.get -> Serilog.ILogger
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter.LogCritical(Microsoft.Extensions.Logging.EventId eventId, System.Exception exception, string message) -> void
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter.LogDebug(Microsoft.Extensions.Logging.EventId eventId, System.Exception exception, string message) -> void
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter.LogError(Microsoft.Extensions.Logging.EventId eventId, System.Exception exception, string message) -> void
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter.LogInformation(Microsoft.Extensions.Logging.EventId eventId, System.Exception exception, string message) -> void
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter.LogOther(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, System.Exception exception, string message) -> void
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter.LogTrace(Microsoft.Extensions.Logging.EventId eventId, System.Exception exception, string message) -> void
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter.LogWarning(Microsoft.Extensions.Logging.EventId eventId, System.Exception exception, string message) -> void
+Rocket.Surgery.Extensions.Testing.TestDiagnosticListenerLoggingAdapter.TestDiagnosticListenerLoggingAdapter(Microsoft.Extensions.Logging.ILogger logger) -> void
+Rocket.Surgery.Extensions.Testing.TheoryCollection<T>
+Rocket.Surgery.Extensions.Testing.TheoryCollection<T>.GetEnumerator() -> System.Collections.Generic.IEnumerator<object[]>
+Rocket.Surgery.Extensions.Testing.TheoryCollection<T>.TheoryCollection() -> void
+abstract Rocket.Surgery.Extensions.Testing.TheoryCollection<T>.GetData() -> System.Collections.Generic.IEnumerable<T>
+readonly Rocket.Surgery.Extensions.Testing.LoggerTest.Disposable -> System.Reactive.Disposables.CompositeDisposable
+virtual Rocket.Surgery.Extensions.Testing.LoggerTest.CreateLoggerFactory(Serilog.ILogger logger, Serilog.Extensions.Logging.LoggerProviderCollection loggerProviderCollection) -> Microsoft.Extensions.Logging.ILoggerFactory

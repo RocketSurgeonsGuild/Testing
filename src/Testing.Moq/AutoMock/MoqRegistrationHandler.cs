@@ -34,6 +34,7 @@ using Autofac.Features.Metadata;
 using Autofac.Features.OwnedInstances;
 using Moq;
 
+// ReSharper disable once CheckNamespace
 namespace Autofac.Extras.Moq
 {
     /// <summary>

@@ -1,7 +1,9 @@
 using System;
 using FakeItEasy;
 using Xunit;
+#pragma warning disable CA1034 // Nested types should not be visible
 
+// ReSharper disable once CheckNamespace
 namespace Autofac.Extras.FakeItEasy.Test
 {
     public class AutoFakeFixture

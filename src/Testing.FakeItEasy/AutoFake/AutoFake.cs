@@ -29,6 +29,8 @@ using System.Security;
 using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Features.ResolveAnything;
+#pragma warning disable IDE0032 // Use auto property
+#pragma warning disable IDE0069 // Disposable fields should be disposed
 
 namespace Autofac.Extras.FakeItEasy
 {
@@ -82,10 +84,7 @@ namespace Autofac.Extras.FakeItEasy
         /// <summary>
         /// Gets the <see cref="IContainer"/> that handles the component resolution.
         /// </summary>
-        public IContainer Container
-        {
-            get { return _container; }
-        }
+        public IContainer Container => _container;
 
         /// <summary>
         /// Disposes internal container.
@@ -167,7 +166,7 @@ namespace Autofac.Extras.FakeItEasy
             {
                 if (disposing)
                 {
-                    Container.Dispose();
+                    _container.Dispose();
                 }
 
                 _disposed = true;

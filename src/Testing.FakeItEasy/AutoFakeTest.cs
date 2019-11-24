@@ -46,6 +46,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         protected IServiceProvider ServiceProvider => _autoFake.Value.serviceProvider;
 
+#pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
         /// <summary>
         /// The default constructor with available logging level
         /// </summary>
@@ -89,6 +90,7 @@ namespace Rocket.Surgery.Extensions.Testing
                         A.Fake<IServiceProvider>(x => x.Wrapping(new AutofacServiceProvider(af.Container)))
                     );
                 });
+#pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 
         /// <summary>
         /// Populate the test class with the given configuration and services
@@ -117,7 +119,9 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         protected override ILoggerFactory CreateLoggerFactory(Serilog.ILogger logger, LoggerProviderCollection loggerProviderCollection)
         {
+#pragma warning disable CA2000 // Dispose objects before losing scope
             var factory = new FakeItEasyLoggerFactory(new SerilogLoggerFactory(logger, false, loggerProviderCollection));
+#pragma warning restore CA2000 // Dispose objects before losing scope
             return A.Fake<ILoggerFactory>(l => l.Wrapping(factory));
         }
 

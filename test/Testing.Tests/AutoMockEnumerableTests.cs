@@ -4,6 +4,11 @@ using Xunit;
 using Xunit.Abstractions;
 using System.Collections.Generic;
 using FluentAssertions;
+using JetBrains.Annotations;
+
+#pragma warning disable CA1034 // Nested types should not be visible
+#pragma warning disable CA1715 // Identifiers should have correct prefix
+#pragma warning disable CA1040 // Avoid empty interfaces
 
 namespace Rocket.Surgery.Extensions.Testing.Tests
 {
@@ -36,21 +41,30 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
 
         }
 
-        class A : Item
+        private class A : Item
         {
 
         }
 
-        class B : Item
+        private class B : Item
         {
 
         }
 
-        class LoggerTest : Item
+        private class LoggerTest : Item
         {
-            public LoggerTest(ILogger logger)
+#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable RCS1163 // Unused parameter.
+#pragma warning disable CS0436 // Type conflicts with imported type
+            public LoggerTest([NotNull] ILogger logger)
+#pragma warning restore CS0436 // Type conflicts with imported type
+#pragma warning restore RCS1163 // Unused parameter.
+#pragma warning restore IDE0060 // Remove unused parameter
             {
-
+                if (logger == null)
+                {
+                    throw new ArgumentNullException(nameof(logger));
+                }
             }
         }
     }

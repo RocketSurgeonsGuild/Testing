@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+#pragma warning disable CA2227 // Collection properties should be read only
 
 namespace Rocket.Surgery.Extensions.Testing.Fixtures.Tests
 {

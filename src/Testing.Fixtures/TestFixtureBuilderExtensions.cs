@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Rocket.Surgery.Extensions.Testing.Fixtures
 {
@@ -16,6 +18,7 @@ namespace Rocket.Surgery.Extensions.Testing.Fixtures
         /// <param name="field">The field.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
+        // ReSharper disable once RedundantAssignment
         public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref TField field, TField value)
             where TBuilder : ITestFixtureBuilder
         {
@@ -73,9 +76,14 @@ namespace Rocket.Surgery.Extensions.Testing.Fixtures
         /// <param name="dictionary">The dictionary.</param>
         /// <param name="keyValuePair">The key value pair.</param>
         /// <returns></returns>
-        public static TBuilder With<TBuilder, TKey, TField>(this TBuilder @this, ref Dictionary<TKey, TField> dictionary, KeyValuePair<TKey, TField> keyValuePair)
+        public static TBuilder With<TBuilder, TKey, TField>(this TBuilder @this, [NotNull] ref Dictionary<TKey, TField> dictionary, KeyValuePair<TKey, TField> keyValuePair)
             where TBuilder : ITestFixtureBuilder
         {
+            if (dictionary == null)
+            {
+                throw new ArgumentNullException(nameof(dictionary));
+            }
+
             dictionary.Add(keyValuePair.Key, keyValuePair.Value);
             return @this;
         }
@@ -91,9 +99,14 @@ namespace Rocket.Surgery.Extensions.Testing.Fixtures
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static TBuilder With<TBuilder, TKey, TField>(this TBuilder @this, ref Dictionary<TKey, TField> dictionary, TKey key, TField value)
+        public static TBuilder With<TBuilder, TKey, TField>(this TBuilder @this, [NotNull] ref Dictionary<TKey, TField> dictionary, TKey key, TField value)
             where TBuilder : ITestFixtureBuilder
         {
+            if (dictionary == null)
+            {
+                throw new ArgumentNullException(nameof(dictionary));
+            }
+
             dictionary.Add(key, value);
             return @this;
         }

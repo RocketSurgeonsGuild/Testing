@@ -1,0 +1,23 @@
+Autofac.Extras.FakeItEasy.AutoFake
+Autofac.Extras.FakeItEasy.AutoFake.AutoFake(bool strict = false, bool callsBaseMethods = false, System.Action<object> configureFake = null, Autofac.ContainerBuilder builder = null) -> void
+Autofac.Extras.FakeItEasy.AutoFake.Container.get -> Autofac.IContainer
+Autofac.Extras.FakeItEasy.AutoFake.Create<T>(params Autofac.Core.Parameter[] parameters) -> T
+Autofac.Extras.FakeItEasy.AutoFake.Dispose() -> void
+Autofac.Extras.FakeItEasy.AutoFake.Provide<TService, TImplementation>(params Autofac.Core.Parameter[] parameters) -> TService
+Autofac.Extras.FakeItEasy.AutoFake.Provide<TService>(TService instance) -> TService
+Autofac.Extras.FakeItEasy.AutoFake.Resolve<T>(params Autofac.Core.Parameter[] parameters) -> T
+Autofac.Extras.FakeItEasy.AutoFake.~AutoFake() -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.AutoFake.get -> Autofac.Extras.FakeItEasy.AutoFake
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.AutoFakeTest(Xunit.Abstractions.ITestOutputHelper outputHelper, Microsoft.Extensions.Logging.LogLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", System.Action<Serilog.LoggerConfiguration> configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.AutoFakeTest(Xunit.Abstractions.ITestOutputHelper outputHelper, Serilog.Events.LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", System.Action<Serilog.LoggerConfiguration> configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.AutoFakeTest(Xunit.Abstractions.ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", System.Action<Serilog.LoggerConfiguration> configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Configuration.get -> Microsoft.Extensions.Configuration.IConfiguration
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Container.get -> Autofac.IContainer
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Fake.get -> Autofac.Extras.FakeItEasy.AutoFake
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Populate((Microsoft.Extensions.Configuration.IConfiguration configuration, Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) context) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Populate(Microsoft.Extensions.Configuration.IConfiguration configuration, Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.ServiceProvider.get -> System.IServiceProvider
+override Rocket.Surgery.Extensions.Testing.AutoFakeTest.CreateLoggerFactory(Serilog.ILogger logger, Serilog.Extensions.Logging.LoggerProviderCollection loggerProviderCollection) -> Microsoft.Extensions.Logging.ILoggerFactory
+virtual Autofac.Extras.FakeItEasy.AutoFake.Dispose(bool disposing) -> void
+virtual Rocket.Surgery.Extensions.Testing.AutoFakeTest.BuildContainer(Autofac.ContainerBuilder cb) -> void

@@ -49,11 +49,16 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         protected IObservable<LogEvent> LogStream => _values.Value.logStream;
 
+#pragma warning disable CA1051 // Do not declare visible instance fields
+#pragma warning disable IDE1006 // Naming Styles
         /// <summary>
         /// The <see cref="CompositeDisposable" />
         /// </summary>
         protected readonly CompositeDisposable Disposable;
+#pragma warning restore IDE1006 // Naming Styles
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
+#pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
         /// <summary>
         /// The default constructor with available logging level
         /// </summary>
@@ -114,6 +119,7 @@ namespace Rocket.Surgery.Extensions.Testing
                 return (factory.CreateLogger("Default"), factory, logger, diagnosticListener, subject);
             });
         }
+#pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 
         /// <summary>
         /// Capture log outputs until the item is disposed

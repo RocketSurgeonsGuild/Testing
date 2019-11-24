@@ -11,7 +11,11 @@ namespace Testing.Fixture.Tests
         private List<string>? _tests = new List<string>();
         private Dictionary<string, string> _variables = new Dictionary<string, string>();
 
+#pragma warning disable CA2225 // Operator overloads have named alternates
+#pragma warning disable CA1062 // Validate arguments of public methods
         public static implicit operator TestFixture(TestFixtureBuilder builder) => builder.Build();
+#pragma warning restore CA1062 // Validate arguments of public methods
+#pragma warning restore CA2225 // Operator overloads have named alternates
 
         public TestFixture Build() => new TestFixture
         {
@@ -25,7 +29,9 @@ namespace Testing.Fixture.Tests
 
         public TestFixtureBuilder WithDictionary(Dictionary<string, string> variables) => this.With(ref _variables, variables);
 
+#pragma warning disable CA1720 // Identifier contains type name
         public TestFixtureBuilder WithKeyValue(KeyValuePair<string, string> single) => this.With(ref _variables, single);
+#pragma warning restore CA1720 // Identifier contains type name
 
         public TestFixtureBuilder WithKeyValue(string key, string value) => this.With(ref _variables, key, value);
 

@@ -46,6 +46,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         protected AutofacServiceProvider ServiceProvider => _autoMoq.Value.serviceProvider;
 
+#pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
         /// <summary>
         /// The default constructor with available logging level
         /// </summary>
@@ -86,6 +87,7 @@ namespace Rocket.Surgery.Extensions.Testing
                     var af = AutoMock.GetFromRepository(new MockRepository(mockBehavior), SetupContainer);
                     return (af, af.Container, new AutofacServiceProvider(af.Container));
                 });
+#pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 
         /// <summary>
         /// Populate the test class with the given configuration and services

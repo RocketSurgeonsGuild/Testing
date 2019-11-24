@@ -32,6 +32,7 @@ using Autofac.Core;
 using Autofac.Features.ResolveAnything;
 using Moq;
 
+// ReSharper disable once CheckNamespace
 namespace Autofac.Extras.Moq
 {
     /// <summary>
