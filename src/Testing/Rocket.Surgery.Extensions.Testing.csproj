@@ -7,7 +7,7 @@
         <PackageReference Include="Autofac" />
         <PackageReference Include="Autofac.Extensions.DependencyInjection" />
         <PackageReference Include="xunit" />
-        <PackageReference Include="xunit.analyzers" />
+        <PackageReference Include="xunit.analyzers" PrivateAssets="contentfiles" />
         <PackageReference Include="Serilog" />
         <PackageReference Include="Serilog.Extensions.Logging" />
         <PackageReference Include="Serilog.Sinks.Observable" />
@@ -19,7 +19,7 @@
         <PackageReference Include="System.Diagnostics.DiagnosticSource" />
         <PackageReference Include="System.Interactive" />
         <PackageReference Include="System.Reactive" />
-        <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles;analyzers" />
+        <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles" />
         <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.FakeItEasy" />
         <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.Moq" />
     </ItemGroup>
