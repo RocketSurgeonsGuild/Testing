@@ -15,14 +15,13 @@
 <!-- history badges -->
 
 <!-- nuget packages -->
-| Package | NuGet | MyGet |
-| ------- | ----- | ----- |
-| Rocket.Surgery.Extensions.Testing | [![nuget-version-ingbk+ngdt+w-badge]![nuget-downloads-ingbk+ngdt+w-badge]][nuget-ingbk+ngdt+w] | [![myget-version-ingbk+ngdt+w-badge]![myget-downloads-ingbk+ngdt+w-badge]][myget-ingbk+ngdt+w] |
-| Rocket.Surgery.Extensions.Testing.AzureStorageEmulator | [![nuget-version-qytpweownfjg-badge]![nuget-downloads-qytpweownfjg-badge]][nuget-qytpweownfjg] | [![myget-version-qytpweownfjg-badge]![myget-downloads-qytpweownfjg-badge]][myget-qytpweownfjg] |
-| Rocket.Surgery.Extensions.Testing.Coverlet | [![nuget-version-2jdbmqdcrhfg-badge]![nuget-downloads-2jdbmqdcrhfg-badge]][nuget-2jdbmqdcrhfg] | [![myget-version-2jdbmqdcrhfg-badge]![myget-downloads-2jdbmqdcrhfg-badge]][myget-2jdbmqdcrhfg] |
-| Rocket.Surgery.Extensions.Testing.Fixtures | [![nuget-version-xegxxxxh/pzg-badge]![nuget-downloads-xegxxxxh/pzg-badge]][nuget-xegxxxxh/pzg] | [![myget-version-xegxxxxh/pzg-badge]![myget-downloads-xegxxxxh/pzg-badge]][myget-xegxxxxh/pzg] |
-| Rocket.Surgery.Extensions.Testing.Moq | [![nuget-version-lgkm8pi65yea-badge]![nuget-downloads-lgkm8pi65yea-badge]][nuget-lgkm8pi65yea] | [![myget-version-lgkm8pi65yea-badge]![myget-downloads-lgkm8pi65yea-badge]][myget-lgkm8pi65yea] |
-| Rocket.Surgery.Extensions.Testing.FakeItEasy | [![nuget-version-6rnnzg4ixtvq-badge]![nuget-downloads-6rnnzg4ixtvq-badge]][nuget-6rnnzg4ixtvq] | [![myget-version-6rnnzg4ixtvq-badge]![myget-downloads-6rnnzg4ixtvq-badge]][myget-6rnnzg4ixtvq] |
+| Package | NuGet |
+| ------- | ----- |
+| Rocket.Surgery.Extensions.Testing | [![nuget-version-ingbk+ngdt+w-badge]![nuget-downloads-ingbk+ngdt+w-badge]][nuget-ingbk+ngdt+w] |
+| Rocket.Surgery.Extensions.Testing.Coverlet | [![nuget-version-2jdbmqdcrhfg-badge]![nuget-downloads-2jdbmqdcrhfg-badge]][nuget-2jdbmqdcrhfg] |
+| Rocket.Surgery.Extensions.Testing.Fixtures | [![nuget-version-xegxxxxh/pzg-badge]![nuget-downloads-xegxxxxh/pzg-badge]][nuget-xegxxxxh/pzg] |
+| Rocket.Surgery.Extensions.Testing.Moq | [![nuget-version-lgkm8pi65yea-badge]![nuget-downloads-lgkm8pi65yea-badge]][nuget-lgkm8pi65yea] |
+| Rocket.Surgery.Extensions.Testing.FakeItEasy | [![nuget-version-6rnnzg4ixtvq-badge]![nuget-downloads-6rnnzg4ixtvq-badge]][nuget-6rnnzg4ixtvq] |
 <!-- nuget packages -->
 
 # Whats next?
@@ -46,39 +45,18 @@ TBD
 [nuget-ingbk+ngdt+w]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing/
 [nuget-version-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-ingbk+ngdt+w]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Testing
-[myget-version-ingbk+ngdt+w-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Testing.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-ingbk+ngdt+w-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
-[nuget-qytpweownfjg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.AzureStorageEmulator/
-[nuget-version-qytpweownfjg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-qytpweownfjg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-qytpweownfjg]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Testing.AzureStorageEmulator
-[myget-version-qytpweownfjg-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-qytpweownfjg-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Testing.AzureStorageEmulator.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
 [nuget-2jdbmqdcrhfg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Coverlet/
 [nuget-version-2jdbmqdcrhfg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Coverlet.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-2jdbmqdcrhfg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Coverlet.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-2jdbmqdcrhfg]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Testing.Coverlet
-[myget-version-2jdbmqdcrhfg-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Testing.Coverlet.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-2jdbmqdcrhfg-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Testing.Coverlet.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
 [nuget-xegxxxxh/pzg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Fixtures/
 [nuget-version-xegxxxxh/pzg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Fixtures.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-xegxxxxh/pzg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Fixtures.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-xegxxxxh/pzg]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Testing.Fixtures
-[myget-version-xegxxxxh/pzg-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Testing.Fixtures.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-xegxxxxh/pzg-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Testing.Fixtures.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
 [nuget-lgkm8pi65yea]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Moq/
 [nuget-version-lgkm8pi65yea-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Moq.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-lgkm8pi65yea-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Moq.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-lgkm8pi65yea]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Testing.Moq
-[myget-version-lgkm8pi65yea-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Testing.Moq.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-lgkm8pi65yea-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Testing.Moq.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
 [nuget-6rnnzg4ixtvq]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.FakeItEasy/
 [nuget-version-6rnnzg4ixtvq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.FakeItEasy.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-6rnnzg4ixtvq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.FakeItEasy.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[myget-6rnnzg4ixtvq]: https://www.myget.org/feed/rocket-surgeons-guild/package/nuget/Rocket.Surgery.Extensions.Testing.FakeItEasy
-[myget-version-6rnnzg4ixtvq-badge]: https://img.shields.io/myget/rocket-surgeons-guild/vpre/Rocket.Surgery.Extensions.Testing.FakeItEasy.svg?label=myget&color=004880&logo=nuget&style=flat-square "MyGet Pre-Release Version"
-[myget-downloads-6rnnzg4ixtvq-badge]: https://img.shields.io/myget/rocket-surgeons-guild/dt/Rocket.Surgery.Extensions.Testing.FakeItEasy.svg?color=004880&logo=nuget&style=flat-square "MyGet Downloads"
 <!-- generated references -->
 
 <!-- nuke-data
@@ -92,6 +70,4 @@ azurepipelines:
 appveyor:
   account: RocketSurgeonsGuild
   build: testing
-myget:
-  account: rocket-surgeons-guild
 -->
