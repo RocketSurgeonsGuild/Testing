@@ -92,7 +92,7 @@ namespace Autofac.Extras.Moq
             }
 
             var typedService = service as TypedService;
-            if (typedService == null|| !CanMockService(typedService) || registrationAccessor(service)?.Any() == true)
+            if (typedService == null || !CanMockService(typedService) || registrationAccessor(service)?.Any() == true)
             {
                 return Enumerable.Empty<IComponentRegistration>();
             }
@@ -124,9 +124,9 @@ namespace Autofac.Extras.Moq
             // Issue #15: Ensure there's a zero-parameter ctor or the DynamicProxy under Moq fails.
             return serverTypeInfo.IsInterface
                 || serverTypeInfo.IsAbstract
-                || (serverTypeInfo.IsClass &&
+                || ( serverTypeInfo.IsClass &&
                     !serverTypeInfo.IsSealed &&
-                    typedService.ServiceType.GetConstructors().Any(c => c.GetParameters().Length == 0));
+                    typedService.ServiceType.GetConstructors().Any(c => c.GetParameters().Length == 0) );
         }
 
         private bool CanMockService(IServiceWithType typedService)

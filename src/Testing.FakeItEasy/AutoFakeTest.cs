@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.FakeItEasy;
 using FakeItEasy;
+using FakeItEasy.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -53,10 +54,12 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="outputHelper"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoFakeTest(ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
-            : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger)
-        {
-        }
+        protected AutoFakeTest(
+            ITestOutputHelper outputHelper,
+            string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+            Action<LoggerConfiguration>? configureLogger = null
+        )
+            : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger) { }
 
         /// <summary>
         /// The default constructor with available logging level
@@ -65,10 +68,13 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="minLevel"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoFakeTest(ITestOutputHelper outputHelper, LogLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
-            : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger)
-        {
-        }
+        protected AutoFakeTest(
+            ITestOutputHelper outputHelper,
+            LogLevel minLevel,
+            string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+            Action<LoggerConfiguration>? configureLogger = null
+        )
+            : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger) { }
 
         /// <summary>
         /// The default constructor with available logging level
@@ -77,26 +83,39 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="minLevel"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoFakeTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
-            : base(outputHelper, minLevel, logFormat, configureLogger)
-            => _autoFake = new Lazy<(AutoFake autoFake, IContainer container, IServiceProvider serviceProvider)>(() =>
+        protected AutoFakeTest(
+            ITestOutputHelper outputHelper,
+            LogEventLevel minLevel,
+            string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+            Action<LoggerConfiguration>? configureLogger = null
+        )
+            : base(outputHelper, minLevel, logFormat, configureLogger) => _autoFake =
+            new Lazy<(AutoFake autoFake, IContainer container, IServiceProvider serviceProvider)>(
+                () =>
                 {
-                    var cb = new ContainerBuilder();
-                    SetupContainer(cb);
-                    var af = new AutoFake(builder: cb);
+                    var af = new AutoFake(configureAction: ConfigureContainerBuilder);
                     return (
                         af,
                         A.Fake<IContainer>(x => x.Wrapping(af.Container)),
                         A.Fake<IServiceProvider>(x => x.Wrapping(new AutofacServiceProvider(af.Container)))
                     );
-                });
+                }
+            );
 #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
+
+        private void ConfigureContainerBuilder(ContainerBuilder cb)
+        {
+            cb.RegisterSource<RemoveProxyFromEnumerableRegistrationSource>();
+            cb.Populate(_serviceCollection);
+            cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
+            BuildContainer(cb);
+        }
 
         /// <summary>
         /// Populate the test class with the given configuration and services
         /// </summary>
-        protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context) =>
-            Populate(context.configuration, context.serviceCollection);
+        protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context)
+            => Populate(context.configuration, context.serviceCollection);
 
         /// <summary>
         /// Populate the test class with the given configuration and services
@@ -110,26 +129,21 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// A method that allows you to override and update the behavior of building the container
         /// </summary>
-        protected virtual void BuildContainer(ContainerBuilder cb)
-        {
-        }
+        protected virtual void BuildContainer(ContainerBuilder cb) { }
 
         /// <summary>
         /// Control the way that the serilog logger factory is created.
         /// </summary>
-        protected override ILoggerFactory CreateLoggerFactory(Serilog.ILogger logger, LoggerProviderCollection loggerProviderCollection)
+        protected override ILoggerFactory CreateLoggerFactory(
+            Serilog.ILogger logger,
+            LoggerProviderCollection loggerProviderCollection
+        )
         {
 #pragma warning disable CA2000 // Dispose objects before losing scope
-            var factory = new FakeItEasyLoggerFactory(new SerilogLoggerFactory(logger, false, loggerProviderCollection));
+            var factory =
+                new FakeItEasyLoggerFactory(new SerilogLoggerFactory(logger, false, loggerProviderCollection));
 #pragma warning restore CA2000 // Dispose objects before losing scope
             return A.Fake<ILoggerFactory>(l => l.Wrapping(factory));
-        }
-
-        private void SetupContainer(ContainerBuilder cb)
-        {
-            cb.Populate(_serviceCollection);
-            cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
-            BuildContainer(cb);
         }
     }
 }
