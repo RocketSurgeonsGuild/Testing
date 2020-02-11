@@ -21,7 +21,7 @@ namespace Rocket.Surgery.Extensions.Testing
                 var registrations = registrationAccessor(service);
                 foreach (var registration in registrations.TakeLast(1))
                 {
-                    void onRegistrationOnActivating(object sender, ActivatingEventArgs<object> args)
+                    registration.Activating += (sender, args) =>
                     {
                         var method = typeof(RemoveProxyFromEnumerableRegistrationSource).GetMethod(
                                 nameof(ReplaceInstance),
@@ -33,11 +33,7 @@ namespace Rocket.Surgery.Extensions.Testing
                         {
                             method.Invoke(null, new object[] { args, enumerable });
                         }
-
-                        registration.Activating -= onRegistrationOnActivating;
-                    }
-
-                    registration.Activating += onRegistrationOnActivating;
+                    };
                 }
             }
 
