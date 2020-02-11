@@ -42,6 +42,11 @@ namespace Autofac.Extras.Moq
     {
         private bool _disposed;
 
+        private readonly Stack<ILifetimeScope> _scopes = new Stack<ILifetimeScope>();
+
+        [SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", Justification = "It's only a reference, dispose is called from the _scopes Stack")]
+        private ILifetimeScope _currentScope;
+
         private readonly List<Type> _createdServiceTypes = new List<Type>();
 
         private AutoMock(MockBehavior behavior, Action<ContainerBuilder>? beforeBuild)
@@ -63,6 +68,7 @@ namespace Autofac.Extras.Moq
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
             builder.RegisterSource(new MoqRegistrationHandler(_createdServiceTypes));
             Container = builder.Build();
+            _currentScope = Container.BeginLifetimeScope();
             VerifyAll = false;
         }
 
@@ -207,10 +213,15 @@ namespace Autofac.Extras.Moq
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The component registry is responsible for registration disposal.")]
         public TService Provide<TService, TImplementation>(params Parameter[] parameters)
         {
-            Container.ComponentRegistry.Register(
-                            RegistrationBuilder.ForType<TImplementation>().As<TService>().InstancePerLifetimeScope().CreateRegistration());
+            var scope = _currentScope.BeginLifetimeScope(b =>
+            {
+                b.RegisterType<TImplementation>().As<TService>().InstancePerLifetimeScope();
+            });
 
-            return Container.Resolve<TService>(parameters);
+            _scopes.Push(scope);
+            _currentScope = scope;
+
+            return _currentScope.Resolve<TService>(parameters);
         }
 
         /// <summary>
@@ -223,10 +234,12 @@ namespace Autofac.Extras.Moq
         public TService Provide<TService>(TService instance)
             where TService : class
         {
-            Container.ComponentRegistry.Register(
-                            RegistrationBuilder.ForDelegate((c, p) => instance).InstancePerLifetimeScope().CreateRegistration());
+            var scope = _currentScope.BeginLifetimeScope(b => b.Register(c => instance).InstancePerLifetimeScope());
 
-            return Container.Resolve<TService>();
+            _scopes.Push(scope);
+            _currentScope = scope;
+
+            return _currentScope.Resolve<TService>();
         }
 
         private T Create<T>(bool isMock, params Parameter[] parameters)
@@ -234,7 +247,7 @@ namespace Autofac.Extras.Moq
             if (!isMock && !_createdServiceTypes.Contains(typeof(T)))
                 _createdServiceTypes.Add(typeof(T));
 
-            return Container.Resolve<T>(parameters);
+            return _currentScope.Resolve<T>(parameters);
         }
 
         /// <summary>
@@ -268,6 +281,9 @@ namespace Autofac.Extras.Moq
                     }
                     finally
                     {
+                        while (_scopes.Count > 0)
+                            _scopes.Pop().Dispose();
+
                         Container.Dispose();
                     }
                 }

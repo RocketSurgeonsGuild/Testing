@@ -9,7 +9,7 @@
         <PackageReference Include="FakeItEasy" />
         <PackageReference Include="FakeItEasy.Analyzer.CSharp" PrivateAssets="contentfiles" />
         <!-- Disabled for now to handle scenarios with enumerables -->
-        <!--<PackageReference Include="Autofac.Extras.FakeItEasy" />-->
+        <PackageReference Include="Autofac.Extras.FakeItEasy" />
         <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj" PrivateAssets="contentfiles" />
         <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles" />
     </ItemGroup>

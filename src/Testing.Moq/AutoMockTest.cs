@@ -116,6 +116,7 @@ namespace Rocket.Surgery.Extensions.Testing
             cb.Populate(_serviceCollection);
             cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
             BuildContainer(cb);
+            cb.RegisterSource(new RemoveMockFromEnumerableRegistrationSource());
         }
     }
 }
