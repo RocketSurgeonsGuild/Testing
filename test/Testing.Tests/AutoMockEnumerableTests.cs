@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using JetBrains.Annotations;
 
@@ -36,20 +37,69 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             a.Should().NotThrow();
         }
 
-        public interface Item
+        [Fact]
+        public void Handle_Zero_Items()
         {
-
+            AutoMock.Create<IEnumerable<Item>>().Should().HaveCount(0);
         }
 
-        private class A : Item
+        [Fact]
+        public void Handle_One_Fake_Item()
         {
+            var fake1 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
+            var result = AutoMock.Create<IEnumerable<Item>>().ToArray();
+            result.Should().HaveCount(1);
+            result.Should().Contain(fake1);
         }
 
-        private class B : Item
+        [Fact]
+        public void Handle_Two_Fake_Item()
         {
+            var fake1 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
+            var fake2 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
+            var result = AutoMock.Create<IEnumerable<Item>>().ToArray();
+            result.Should().HaveCount(2);
+            result.Should().Contain(fake1);
+            result.Should().Contain(fake2);
         }
+
+        [Fact]
+        public void Handle_Three_Fake_Item()
+        {
+            var fake1 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
+            var fake2 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
+            var fake3 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
+
+            var result = AutoMock.Create<IEnumerable<Item>>().ToArray();
+            result.Should().HaveCount(3);
+            result.Should().Contain(fake1);
+            result.Should().Contain(fake2);
+            result.Should().Contain(fake3);
+        }
+
+        [Fact]
+        public void Handle_Four_Fake_Item()
+        {
+            var fake1 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
+            var fake2 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
+            var fake3 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
+            var fake4 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
+
+            var result = AutoMock.Create<IEnumerable<Item>>().ToArray();
+            result.Should().HaveCount(4);
+            result.Should().Contain(fake1);
+            result.Should().Contain(fake2);
+            result.Should().Contain(fake3);
+            result.Should().Contain(fake4);
+        }
+
+        public interface Item { }
+
+        private class A : Item { }
+
+        private class B : Item { }
 
         private class LoggerTest : Item
         {
