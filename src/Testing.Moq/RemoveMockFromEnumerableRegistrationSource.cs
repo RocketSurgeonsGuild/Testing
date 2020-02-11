@@ -43,7 +43,24 @@ namespace Rocket.Surgery.Extensions.Testing
 
         static void ReplaceInstance<T>(ActivatingEventArgs<object> args, IEnumerable<T> items)
         {
-            args.ReplaceInstance(items.Where(z => !(z is IMocked)).ToArray().AsEnumerable());
+            // autofac does arrays, we're using a list.
+            if (items.GetType() == typeof(List<T>))
+                return;
+
+            var newItems = new List<T>();
+            newItems.AddRange(items);
+            if (newItems.Count == 1)
+            {
+                // The fake can only be the one item here
+                newItems.Clear();
+            }
+            else if (newItems.Count >= 2)
+            {
+                // The Fake seems to always be index 1
+                newItems.RemoveAt(1);
+            }
+
+            args.ReplaceInstance(newItems.AsEnumerable());
         }
     }
 }

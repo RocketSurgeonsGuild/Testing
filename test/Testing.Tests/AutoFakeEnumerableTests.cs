@@ -3,7 +3,9 @@ using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 using System.Collections.Generic;
+using System.Linq;
 using Autofac.Extras.FakeItEasy;
+using FakeItEasy;
 using FluentAssertions;
 using JetBrains.Annotations;
 
@@ -28,6 +30,64 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         }
 
         [Fact]
+        public void Handle_Zero_Items()
+        {
+            Fake.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void Handle_One_Fake_Item()
+        {
+            var fake1 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+
+            var result = Fake.Resolve<IEnumerable<Item>>().ToArray();
+            result.Should().HaveCount(1);
+            result.Should().Contain(fake1);
+        }
+
+        [Fact]
+        public void Handle_Two_Fake_Item()
+        {
+            var fake1 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+            var fake2 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+
+            var result = Fake.Resolve<IEnumerable<Item>>().ToArray();
+            result.Should().HaveCount(2);
+            result.Should().Contain(fake1);
+            result.Should().Contain(fake2);
+        }
+
+        [Fact]
+        public void Handle_Three_Fake_Item()
+        {
+            var fake1 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+            var fake2 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+            var fake3 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+
+            var result = Fake.Resolve<IEnumerable<Item>>().ToArray();
+            result.Should().HaveCount(3);
+            result.Should().Contain(fake1);
+            result.Should().Contain(fake2);
+            result.Should().Contain(fake3);
+        }
+
+        [Fact]
+        public void Handle_Four_Fake_Item()
+        {
+            var fake1 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+            var fake2 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+            var fake3 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+            var fake4 = Fake.Provide(FakeItEasy.A.Fake<Item>());
+
+            var result = Fake.Resolve<IEnumerable<Item>>().ToArray();
+            result.Should().HaveCount(4);
+            result.Should().Contain(fake1);
+            result.Should().Contain(fake2);
+            result.Should().Contain(fake3);
+            result.Should().Contain(fake4);
+        }
+
+        [Fact]
         [Obsolete("TBD")]
         public void Should_Handle_Creating_A_Mock_With_Logger()
         {
@@ -39,20 +99,11 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             a.Should().NotThrow();
         }
 
-        public interface Item
-        {
+        public interface Item { }
 
-        }
+        private class A : Item { }
 
-        private class A : Item
-        {
-
-        }
-
-        private class B : Item
-        {
-
-        }
+        private class B : Item { }
 
         private class LoggerTest : Item
         {
