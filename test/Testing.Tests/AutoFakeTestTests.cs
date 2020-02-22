@@ -1,4 +1,5 @@
-﻿using FakeItEasy;
+﻿using System;
+using FakeItEasy;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -96,6 +97,12 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             var item = AutoFake.Provide(new MyItem());
             ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        }
+
+        [Fact]
+        public void Should_Return_Self_For_ServiceProvider()
+        {
+            ServiceProvider.GetRequiredService<IServiceProvider>().Should().BeOfType<AutoFakeServiceProvider>();
         }
 
         class MyItem

@@ -89,10 +89,8 @@ namespace Rocket.Surgery.Extensions.Testing
                 () =>
                 {
                     var af = new AutoFake(configureAction: ConfigureContainerBuilder);
-                    return (
-                        af,
-                        A.Fake<IServiceProvider>(x => x.Wrapping(new AutoFakeServiceProvider(af)))
-                    );
+                    var sp = A.Fake<IServiceProvider>(x => x.Wrapping(new AutoFakeServiceProvider(af)));
+                    return ( af, sp );
                 }
             );
 #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters

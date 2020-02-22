@@ -14,6 +14,6 @@ namespace Rocket.Surgery.Extensions.Testing
         public AutoFakeServiceProvider(AutoFake autoFake) => _autoFake = autoFake;
 
         public object GetService(Type serviceType)
-            => ResolveMethod.MakeGenericMethod(serviceType).Invoke(_autoFake, _parameters);
+            => serviceType == typeof(IServiceProvider) ? this : ResolveMethod.MakeGenericMethod(serviceType).Invoke(_autoFake, _parameters);
     }
 }

@@ -14,6 +14,6 @@ namespace Rocket.Surgery.Extensions.Testing
         public AutoMockServiceProvider(AutoMock autoMock) => _autoMock = autoMock;
 
         public object GetService(Type serviceType)
-            => CreateMethod.MakeGenericMethod(serviceType).Invoke(_autoMock, _parameters);
+            => serviceType == typeof(IServiceProvider) ? this : CreateMethod.MakeGenericMethod(serviceType).Invoke(_autoMock, _parameters);
     }
 }

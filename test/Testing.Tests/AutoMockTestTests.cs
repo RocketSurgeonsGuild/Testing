@@ -42,6 +42,12 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
         }
 
+        [Fact]
+        public void Should_Return_Self_For_ServiceProvider()
+        {
+            ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
+        }
+
         class MyItem { }
     }
 }
