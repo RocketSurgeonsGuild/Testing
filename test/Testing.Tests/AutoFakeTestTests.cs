@@ -1,4 +1,6 @@
 ﻿using FakeItEasy;
+using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
@@ -87,6 +89,17 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             var test = AutoFake.Resolve<GenericLoggerImpl>();
             test.Write();
             A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void Should_Provide_Values()
+        {
+            var item = AutoFake.Provide(new MyItem());
+            ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        }
+
+        class MyItem
+        {
         }
     }
 }

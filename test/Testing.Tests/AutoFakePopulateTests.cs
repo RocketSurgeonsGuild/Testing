@@ -19,7 +19,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         public void Should_Populate_Services()
         {
             Configuration.GetValue<string>("a").Should().Be("1");
-            Container.Resolve<A>().Should().BeSameAs(ServiceProvider.GetService<A>());
+            ServiceProvider.GetRequiredService<A>().Should().BeSameAs(ServiceProvider.GetService<A>());
         }
 
         class A { }

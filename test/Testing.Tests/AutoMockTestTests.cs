@@ -34,5 +34,14 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             var test = AutoMock.Create<Impl>();
             AutoMock.Mock<ITestOutputHelper>().Verify(x => x.WriteLine(It.IsAny<string>()), Times.AtLeastOnce);
         }
+
+        [Fact]
+        public void Should_Provide_Values()
+        {
+            var item = AutoMock.Provide(new MyItem());
+            ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        }
+
+        class MyItem { }
     }
 }
