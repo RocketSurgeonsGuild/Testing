@@ -18,7 +18,7 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoMockTest : LoggerTest
     {
-        private readonly Lazy<(AutoMock autoMock, IContainer container, AutofacServiceProvider serviceProvider)> _autoMoq;
+        private readonly Lazy<(AutoMock autoMock, IServiceProvider serviceProvider)> _autoMoq;
         private IServiceCollection? _serviceCollection = new ServiceCollection();
 
         /// <summary>
@@ -37,14 +37,9 @@ namespace Rocket.Surgery.Extensions.Testing
         protected AutoMock Moq => _autoMoq.Value.autoMock;
 
         /// <summary>
-        /// The Autofac container
-        /// </summary>
-        protected IContainer Container => _autoMoq.Value.container;
-
-        /// <summary>
         /// The Service Provider
         /// </summary>
-        protected AutofacServiceProvider ServiceProvider => _autoMoq.Value.serviceProvider;
+        protected IServiceProvider ServiceProvider => _autoMoq.Value.serviceProvider;
 
 #pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
         /// <summary>
@@ -82,10 +77,10 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="configureLogger"></param>
         protected AutoMockTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
             : base(outputHelper, minLevel, logFormat, configureLogger)
-            => _autoMoq = new Lazy<(AutoMock autoMock, IContainer container, AutofacServiceProvider serviceProvider)>(() =>
+            => _autoMoq = new Lazy<(AutoMock autoMock, IServiceProvider serviceProvider)>(() =>
                 {
                     var af = AutoMock.GetFromRepository(new MockRepository(mockBehavior), SetupContainer);
-                    return (af, af.Container, new AutofacServiceProvider(af.Container));
+                    return (af, new AutoMockServiceProvider(af));
                 });
 #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 

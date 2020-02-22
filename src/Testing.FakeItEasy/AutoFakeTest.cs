@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Extras.FakeItEasy;
@@ -19,7 +19,7 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoFakeTest : LoggerTest
     {
-        private readonly Lazy<(AutoFake autoFake, IContainer container, IServiceProvider serviceProvider)> _autoFake;
+        private readonly Lazy<(AutoFake autoFake, IServiceProvider serviceProvider)> _autoFake;
         private IServiceCollection? _serviceCollection = new ServiceCollection();
 
         /// <summary>
@@ -36,11 +36,6 @@ namespace Rocket.Surgery.Extensions.Testing
         /// The AutoFake instance
         /// </summary>
         protected AutoFake Fake => _autoFake.Value.autoFake;
-
-        /// <summary>
-        /// The Autofac container
-        /// </summary>
-        protected IContainer Container => _autoFake.Value.container;
 
         /// <summary>
         /// The Service Provider
@@ -90,14 +85,13 @@ namespace Rocket.Surgery.Extensions.Testing
             Action<LoggerConfiguration>? configureLogger = null
         )
             : base(outputHelper, minLevel, logFormat, configureLogger) => _autoFake =
-            new Lazy<(AutoFake autoFake, IContainer container, IServiceProvider serviceProvider)>(
+            new Lazy<(AutoFake autoFake, IServiceProvider serviceProvider)>(
                 () =>
                 {
                     var af = new AutoFake(configureAction: ConfigureContainerBuilder);
                     return (
                         af,
-                        A.Fake<IContainer>(x => x.Wrapping(af.Container)),
-                        A.Fake<IServiceProvider>(x => x.Wrapping(new AutofacServiceProvider(af.Container)))
+                        A.Fake<IServiceProvider>(x => x.Wrapping(new AutoFakeServiceProvider(af)))
                     );
                 }
             );
