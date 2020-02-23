@@ -1,4 +1,5 @@
 ﻿using System;
+using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using FakeItEasy;
 using FakeItEasy.Creation;
@@ -96,10 +97,10 @@ namespace Rocket.Surgery.Extensions.Testing
 
         private IContainer ConfigureContainer(IContainer container)
         {
-            container = container
-               .WithDependencyInjectionAdapter()
-               .RegisterLoggers(LoggerFactory, Logger, SerilogLogger);
-            return BuildContainer(container);
+            container.RegisterInstance(LoggerFactory);
+            container.RegisterInstance(Logger);
+            container.RegisterInstance(SerilogLogger);
+            return BuildContainer(container.WithDependencyInjectionAdapter());
         }
 
         /// <summary>
