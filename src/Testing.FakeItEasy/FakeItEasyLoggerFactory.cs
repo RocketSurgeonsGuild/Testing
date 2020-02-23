@@ -1,6 +1,5 @@
 using FakeItEasy;
 using Microsoft.Extensions.Logging;
-using Serilog.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing
 {

@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
-using Rocket.Surgery.Extensions.Testing;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests
 {
@@ -71,7 +70,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
         }
 
-        class GenericLoggerImpl : AutoFakeTest
+        public class GenericLoggerImpl : AutoFakeTest
         {
             public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
             {
@@ -102,7 +101,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         [Fact]
         public void Should_Return_Self_For_ServiceProvider()
         {
-            ServiceProvider.GetRequiredService<IServiceProvider>().Should().BeOfType<AutoFakeServiceProvider>();
+            ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
         }
 
         class MyItem
