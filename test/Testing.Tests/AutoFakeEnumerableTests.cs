@@ -4,8 +4,6 @@ using Xunit;
 using Xunit.Abstractions;
 using System.Collections.Generic;
 using System.Linq;
-using Autofac.Extras.FakeItEasy;
-using FakeItEasy;
 using FluentAssertions;
 using JetBrains.Annotations;
 
@@ -93,7 +91,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             Action a = () =>
             {
-                var lt = AutoFake.Create<LoggerTest>();
+                var lt = AutoFake.Resolve<LoggerTest>();
                 AutoFake.Provide<Item>(lt);
             };
             a.Should().NotThrow();

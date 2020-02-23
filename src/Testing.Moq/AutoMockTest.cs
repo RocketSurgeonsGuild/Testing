@@ -1,7 +1,6 @@
 using System;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Autofac.Extras.Moq;
+using DryIoc;
+using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,13 +13,10 @@ using Xunit.Abstractions;
 namespace Rocket.Surgery.Extensions.Testing
 {
     /// <summary>
-    /// A base class with AutoFake wired in for Autofac
+    /// A base class with AutoFake wired in for DryIoc
     /// </summary>
     public abstract class AutoMockTest : LoggerTest
     {
-        private readonly Lazy<(AutoMock autoMock, IServiceProvider serviceProvider)> _autoMoq;
-        private IServiceCollection? _serviceCollection = new ServiceCollection();
-
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
@@ -29,17 +25,17 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The AutoMock instance
         /// </summary>
-        protected AutoMock AutoMock => _autoMoq.Value.autoMock;
+        protected AutoMock AutoMock { get; }
 
         /// <summary>
-        /// The AutoMock instance
+        /// The DryIoc container
         /// </summary>
-        protected AutoMock Moq => _autoMoq.Value.autoMock;
+        protected IContainer Container => AutoMock.Container;
 
         /// <summary>
         /// The Service Provider
         /// </summary>
-        protected IServiceProvider ServiceProvider => _autoMoq.Value.serviceProvider;
+        protected IServiceProvider ServiceProvider => AutoMock.Container;
 
 #pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
         /// <summary>
@@ -75,14 +71,26 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="mockBehavior"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
-        protected AutoMockTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
-            : base(outputHelper, minLevel, logFormat, configureLogger)
-            => _autoMoq = new Lazy<(AutoMock autoMock, IServiceProvider serviceProvider)>(() =>
-                {
-                    var af = AutoMock.GetFromRepository(new MockRepository(mockBehavior), SetupContainer);
-                    return (af, new AutoMockServiceProvider(af));
-                });
+        protected AutoMockTest(
+            ITestOutputHelper outputHelper,
+            LogEventLevel minLevel,
+            MockBehavior mockBehavior = MockBehavior.Default,
+            string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+            Action<LoggerConfiguration>? configureLogger = null
+        )
+            : base(outputHelper, minLevel, logFormat, configureLogger) => AutoMock = new AutoMock(
+            new MockRepository(mockBehavior),
+            configureAction: ConfigureContainer
+        );
 #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
+
+        private IContainer ConfigureContainer(IContainer container)
+        {
+            container = container
+               .WithDependencyInjectionAdapter()
+               .RegisterLoggers(LoggerFactory, Logger, SerilogLogger);
+            return BuildContainer(container);
+        }
 
         /// <summary>
         /// Populate the test class with the given configuration and services
@@ -95,23 +103,13 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
-            Configuration = configuration;
-            _serviceCollection = serviceCollection;
+            Configuration = new ConfigurationBuilder().AddConfiguration(Configuration).AddConfiguration(configuration).Build();
+            Container.Populate(serviceCollection);
         }
 
         /// <summary>
         /// A method that allows you to override and update the behavior of building the container
         /// </summary>
-        protected virtual void BuildContainer(ContainerBuilder cb)
-        {
-        }
-
-        private void SetupContainer(ContainerBuilder cb)
-        {
-            cb.Populate(_serviceCollection);
-            cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
-            BuildContainer(cb);
-            cb.RegisterSource(new RemoveMockFromEnumerableRegistrationSource());
-        }
+        protected virtual IContainer BuildContainer(IContainer container) => container;
     }
 }

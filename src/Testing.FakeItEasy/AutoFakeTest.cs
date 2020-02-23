@@ -1,9 +1,7 @@
 ﻿using System;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Autofac.Extras.FakeItEasy;
+using DryIoc.Microsoft.DependencyInjection;
 using FakeItEasy;
-using FakeItEasy.Core;
+using FakeItEasy.Creation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,17 +9,15 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Extensions.Logging;
 using Xunit.Abstractions;
+using IContainer = DryIoc.IContainer;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
     /// <summary>
-    /// A base class with AutoFake wired in for Autofac
+    /// A base class with AutoFake wired in for DryIoc
     /// </summary>
     public abstract class AutoFakeTest : LoggerTest
     {
-        private readonly Lazy<(AutoFake autoFake, IServiceProvider serviceProvider)> _autoFake;
-        private IServiceCollection? _serviceCollection = new ServiceCollection();
-
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
@@ -30,17 +26,22 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected AutoFake AutoFake => _autoFake.Value.autoFake;
+        protected AutoFake AutoFake { get; }
 
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected AutoFake Fake => _autoFake.Value.autoFake;
+        protected AutoFake Fake => AutoFake;
+
+        /// <summary>
+        /// The DryIoc container
+        /// </summary>
+        protected IContainer Container => AutoFake.Container;
 
         /// <summary>
         /// The Service Provider
         /// </summary>
-        protected IServiceProvider ServiceProvider => _autoFake.Value.serviceProvider;
+        protected IServiceProvider ServiceProvider => AutoFake.Container;
 
 #pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
         /// <summary>
@@ -49,12 +50,14 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="outputHelper"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
+        /// <param name="fakeOptionsAction"></param>
         protected AutoFakeTest(
             ITestOutputHelper outputHelper,
             string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
-            Action<LoggerConfiguration>? configureLogger = null
+            Action<LoggerConfiguration>? configureLogger = null,
+            Action<IFakeOptions> fakeOptionsAction = null
         )
-            : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger) { }
+            : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger, fakeOptionsAction) { }
 
         /// <summary>
         /// The default constructor with available logging level
@@ -63,13 +66,15 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="minLevel"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
+        /// <param name="fakeOptionsAction"></param>
         protected AutoFakeTest(
             ITestOutputHelper outputHelper,
             LogLevel minLevel,
             string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
-            Action<LoggerConfiguration>? configureLogger = null
+            Action<LoggerConfiguration>? configureLogger = null,
+            Action<IFakeOptions> fakeOptionsAction = null
         )
-            : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger) { }
+            : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger, fakeOptionsAction) { }
 
         /// <summary>
         /// The default constructor with available logging level
@@ -78,29 +83,23 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="minLevel"></param>
         /// <param name="logFormat"></param>
         /// <param name="configureLogger"></param>
+        /// <param name="fakeOptionsAction"></param>
         protected AutoFakeTest(
             ITestOutputHelper outputHelper,
             LogEventLevel minLevel,
             string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
-            Action<LoggerConfiguration>? configureLogger = null
+            Action<LoggerConfiguration>? configureLogger = null,
+            Action<IFakeOptions> fakeOptionsAction = null
         )
-            : base(outputHelper, minLevel, logFormat, configureLogger) => _autoFake =
-            new Lazy<(AutoFake autoFake, IServiceProvider serviceProvider)>(
-                () =>
-                {
-                    var af = new AutoFake(configureAction: ConfigureContainerBuilder);
-                    var sp = A.Fake<IServiceProvider>(x => x.Wrapping(new AutoFakeServiceProvider(af)));
-                    return ( af, sp );
-                }
-            );
+            : base(outputHelper, minLevel, logFormat, configureLogger) => AutoFake = new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: fakeOptionsAction);
 #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 
-        private void ConfigureContainerBuilder(ContainerBuilder cb)
+        private IContainer ConfigureContainer(IContainer container)
         {
-            cb.RegisterSource<RemoveProxyFromEnumerableRegistrationSource>();
-            cb.Populate(_serviceCollection);
-            cb.RegisterSource(new LoggingRegistrationSource(LoggerFactory, Logger, SerilogLogger));
-            BuildContainer(cb);
+            container = container
+               .WithDependencyInjectionAdapter()
+               .RegisterLoggers(LoggerFactory, Logger, SerilogLogger);
+            return BuildContainer(container);
         }
 
         /// <summary>
@@ -114,14 +113,14 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
-            Configuration = configuration;
-            _serviceCollection = serviceCollection;
+            Configuration = new ConfigurationBuilder().AddConfiguration(Configuration).AddConfiguration(configuration).Build();
+            Container.Populate(serviceCollection);
         }
 
         /// <summary>
         /// A method that allows you to override and update the behavior of building the container
         /// </summary>
-        protected virtual void BuildContainer(ContainerBuilder cb) { }
+        protected virtual IContainer BuildContainer(IContainer container) => container;
 
         /// <summary>
         /// Control the way that the serilog logger factory is created.

@@ -23,7 +23,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             AutoMock.Provide<Item>(new A());
             AutoMock.Provide<Item>(new B());
 
-            AutoMock.Create<IEnumerable<Item>>().Should().HaveCount(2);
+            AutoMock.Resolve<IEnumerable<Item>>().Should().HaveCount(2);
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             Action a = () =>
             {
-                var lt = AutoMock.Create<LoggerTest>();
+                var lt = AutoMock.Resolve<LoggerTest>();
                 AutoMock.Provide<Item>(lt);
             };
             a.Should().NotThrow();
@@ -40,7 +40,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         [Fact]
         public void Handle_Zero_Items()
         {
-            AutoMock.Create<IEnumerable<Item>>().Should().HaveCount(0);
+            AutoMock.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             var fake1 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
-            var result = AutoMock.Create<IEnumerable<Item>>().ToArray();
+            var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
             result.Should().HaveCount(1);
             result.Should().Contain(fake1);
         }
@@ -59,7 +59,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             var fake1 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
             var fake2 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
-            var result = AutoMock.Create<IEnumerable<Item>>().ToArray();
+            var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
             result.Should().HaveCount(2);
             result.Should().Contain(fake1);
             result.Should().Contain(fake2);
@@ -72,7 +72,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             var fake2 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
             var fake3 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
-            var result = AutoMock.Create<IEnumerable<Item>>().ToArray();
+            var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
             result.Should().HaveCount(3);
             result.Should().Contain(fake1);
             result.Should().Contain(fake2);
@@ -87,7 +87,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             var fake3 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
             var fake4 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
-            var result = AutoMock.Create<IEnumerable<Item>>().ToArray();
+            var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
             result.Should().HaveCount(4);
             result.Should().Contain(fake1);
             result.Should().Contain(fake2);

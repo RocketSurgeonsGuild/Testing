@@ -33,8 +33,8 @@
         <PackageReference Update="System.Reactive" Version="4.3.2"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Update="Autofac" Version="5.1.2"/>
-        <PackageReference Update="Autofac.Extensions.DependencyInjection" Version="6.0.0"/>
+        <PackageReference Update="DryIoc.dll" Version="4.1.0"/>
+        <PackageReference Update="DryIoc.Microsoft.DependencyInjection" Version="3.0.3"/>
         <PackageReference Update="coverlet.collector" Version="1.2.0"/>
         <PackageReference Update="coverlet.msbuild" Version="2.8.0"/>
         <PackageReference Update="FakeItEasy" Version="6.0.0"/>
