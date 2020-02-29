@@ -77,6 +77,9 @@ namespace Rocket.Surgery.Extensions.Testing
                                 if (!serviceType.IsAbstract)
                                     return null; // Mock interface or abstract class only.
 
+                                if (request.Is(parameter: info => info.IsOptional))
+                                    return null; // Ignore optional parameters
+
                                 if (!dictionary.TryGetValue(serviceType, out var instance))
                                 {
                                     var method = createMethod.MakeGenericMethod(serviceType);

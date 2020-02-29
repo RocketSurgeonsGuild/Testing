@@ -30,9 +30,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
 
         class LoggerImpl : AutoFakeTest
         {
-            public LoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-            {
-            }
+            public LoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
             public void Write()
             {
@@ -51,9 +49,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
 
         class LoggerFactoryImpl : AutoFakeTest
         {
-            public LoggerFactoryImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-            {
-            }
+            public LoggerFactoryImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
             public void Write()
             {
@@ -72,9 +68,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
 
         public class GenericLoggerImpl : AutoFakeTest
         {
-            public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-            {
-            }
+            public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
 
             public void Write()
             {
@@ -104,8 +98,32 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
         }
 
-        class MyItem
+        [Fact]
+        public void Should_Not_Fake_Optional_Parameters()
         {
+            AutoFake.Resolve<Optional>().Item.Should().BeNull();
+        }
+
+        [Fact]
+        public void Should_Populate_Optional_Parameters_When_Provided()
+        {
+            AutoFake.Provide<IItem>(new MyItem());
+            AutoFake.Resolve<Optional>().Item.Should().NotBeNull()
+               .And.Match(z => !Fake.IsFake(z));
+        }
+
+        class MyItem : IItem { }
+
+        public interface IItem
+        {
+            
+        }
+
+        class Optional
+        {
+            public IItem? Item { get; }
+
+            public Optional(IItem? item = null) => Item = item;
         }
     }
 }

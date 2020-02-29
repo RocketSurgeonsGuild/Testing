@@ -41,6 +41,31 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
         }
 
-        class MyItem { }
+        [Fact]
+        public void Should_Not_Mock_Optional_Parameters()
+        {
+            AutoMock.Resolve<Optional>().Item.Should().BeNull();
+        }
+
+        [Fact]
+        public void Should_Populate_Optional_Parameters_When_Provided()
+        {
+            AutoMock.Provide<IItem>(new MyItem());
+            var optional = AutoMock.Resolve<Optional>();
+            optional.Item.Should().NotBeNull();
+            Action a = () => Mock.Get(optional);
+            a.Should().Throw<ArgumentException>();
+        }
+
+        class MyItem : IItem { }
+
+        public interface IItem { }
+
+        class Optional
+        {
+            public IItem? Item { get; }
+
+            public Optional(IItem? item = null) => Item = item;
+        }
     }
 }

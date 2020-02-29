@@ -30,11 +30,6 @@ namespace Rocket.Surgery.Extensions.Testing
         protected AutoFake AutoFake { get; }
 
         /// <summary>
-        /// The AutoFake instance
-        /// </summary>
-        protected AutoFake Fake => AutoFake;
-
-        /// <summary>
         /// The DryIoc container
         /// </summary>
         protected IContainer Container => AutoFake.Container;

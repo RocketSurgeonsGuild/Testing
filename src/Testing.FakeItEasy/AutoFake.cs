@@ -31,7 +31,8 @@ namespace Rocket.Surgery.Extensions.Testing
                 Container = configureAction.Invoke(Container);
             if (fakeOptionsAction == null)
                 fakeOptionsAction = options => { };
-            Container = Container.With(
+            Container = Container
+               .With(
                 rules =>
                 {
                     var dictionary = new ConcurrentDictionary<Type, Factory>();
@@ -69,6 +70,9 @@ namespace Rocket.Surgery.Extensions.Testing
                                 var serviceType = request.ServiceType;
                                 if (!serviceType.IsAbstract)
                                     return null; // Mock interface or abstract class only.
+
+                                if (request.Is(parameter: info => info.IsOptional))
+                                    return null; // Ignore optional parameters
 
                                 if (!dictionary.TryGetValue(serviceType, out var instance))
                                 {
