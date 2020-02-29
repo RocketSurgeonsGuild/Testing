@@ -54,7 +54,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The <see cref="CompositeDisposable" />
         /// </summary>
-        protected readonly CompositeDisposable Disposable;
+        protected readonly CompositeDisposable Disposables;
 #pragma warning restore IDE1006 // Naming Styles
 #pragma warning restore CA1051 // Do not declare visible instance fields
 
@@ -94,7 +94,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <returns></returns>
         protected LoggerTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
         {
-            Disposable = new CompositeDisposable();
+            Disposables = new CompositeDisposable();
 
             _values = new Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource, IObservable<LogEvent> logStream)>(() =>
             {
@@ -110,11 +110,11 @@ namespace Rocket.Surgery.Extensions.Testing
                 var loggerProviderCollection = new LoggerProviderCollection();
                 var factory = CreateLoggerFactory(logger, loggerProviderCollection);
                 var container = new ServiceCollection().AddLogging().AddSingleton(factory).BuildServiceProvider();
-                Disposable.Add(container);
-                Disposable.Add(logger);
+                Disposables.Add(container);
+                Disposables.Add(logger);
 
                 var diagnosticListener = new DiagnosticListener("Test");
-                Disposable.Add(diagnosticListener.SubscribeWithAdapter(new TestDiagnosticListenerLoggingAdapter(factory.CreateLogger("DiagnosticSource"))));
+                Disposables.Add(diagnosticListener.SubscribeWithAdapter(new TestDiagnosticListenerLoggingAdapter(factory.CreateLogger("DiagnosticSource"))));
 
                 return (factory.CreateLogger("Default"), factory, logger, diagnosticListener, subject);
             });
@@ -154,7 +154,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         protected virtual ILoggerFactory CreateLoggerFactory(ISeriLogger logger, LoggerProviderCollection loggerProviderCollection) => new SerilogLoggerFactory(logger, false, loggerProviderCollection);
 
-        void IDisposable.Dispose() => Disposable.Dispose();
+        void IDisposable.Dispose() => Disposables.Dispose();
     }
 }
 
