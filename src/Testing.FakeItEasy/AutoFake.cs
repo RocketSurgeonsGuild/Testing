@@ -32,67 +32,19 @@ namespace Rocket.Surgery.Extensions.Testing
             if (fakeOptionsAction == null)
                 fakeOptionsAction = options => { };
             Container = Container
+
                .With(
-                rules =>
-                {
-                    var dictionary = new ConcurrentDictionary<Type, Factory>();
-                    return rules
-                       .WithUnknownServiceResolvers(
-                            request =>
-                            {
-                                var serviceType = request.ServiceType;
-                                if (!serviceType.IsGenericType ||
-                                    serviceType.GetGenericTypeDefinition() != typeof(ILogger<>))
-                                {
-                                    return null;
-                                }
-
-                                if (!dictionary.TryGetValue(serviceType, out var instance))
-                                {
-                                    var loggerType = typeof(Logger<>).MakeGenericType(
-                                        request.ServiceType.GetGenericArguments()[0]
-                                    );
-                                    instance = new DelegateFactory(
-                                        _ => Create.Fake(
-                                            serviceType,
-                                            x => x.Wrapping(
-                                                ActivatorUtilities.CreateInstance(request.Container, loggerType)
-                                            )
-                                        ),
-                                        Reuse.Singleton
-                                    );
-                                }
-
-                                return instance;
-                            },
-                            request =>
-                            {
-                                var serviceType = request.ServiceType;
-                                if (!serviceType.IsAbstract)
-                                    return null; // Mock interface or abstract class only.
-
-                                if (request.Is(parameter: info => info.IsOptional))
-                                    return null; // Ignore optional parameters
-
-                                if (!dictionary.TryGetValue(serviceType, out var instance))
-                                {
-                                    instance = new ReflectionFactory(
-                                        reuse: Reuse.Singleton,
-                                        made: Made.Of(
-                                            () => Create.Fake(Arg.Index<Type>(0), Arg.Index<Action<IFakeOptions>>(1)),
-                                            _ => serviceType,
-                                            _ => fakeOptionsAction
-                                        )
-                                    );
-                                    dictionary.TryAdd(serviceType, instance);
-                                }
-
-                                return instance;
-                            }
+                    rules => rules
+                       .WithTestLoggerResolver(
+                            (request, loggerType) => Create.Fake(
+                                request.ServiceType,
+                                x
+                                    => x.Wrapping(ActivatorUtilities.CreateInstance(request.Container, loggerType))
+                            )
                         )
-                       .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient);
-                }
-            );
+                       .WithUndefinedTestDependenciesResolver(request => Create.Fake(request.ServiceType, fakeOptionsAction))
+                       .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient)
+                );
         }
 
         /// <summary>

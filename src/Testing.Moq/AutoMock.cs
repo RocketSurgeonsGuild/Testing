@@ -42,59 +42,20 @@ namespace Rocket.Surgery.Extensions.Testing
             Container = container ?? new Container();
             if (configureAction != null)
                 Container = configureAction.Invoke(Container);
-            var createMethod = typeof(MockRepository).GetMethod(nameof(MockRepository.Create), new Type[0]);
+
             Container = Container.With(
                 rules =>
                 {
-                    var dictionary = new ConcurrentDictionary<Type, Factory>();
+                    var createMethod = typeof(MockRepository).GetMethod(nameof(MockRepository.Create), Array.Empty<Type>());
                     return rules
-                       .WithUnknownServiceResolvers(
-                            request =>
-                            {
-                                var serviceType = request.ServiceType;
-                                if (!serviceType.IsGenericType ||
-                                    serviceType.GetGenericTypeDefinition() != typeof(ILogger<>))
-                                {
-                                    return null;
-                                }
-
-                                if (!dictionary.TryGetValue(serviceType, out var instance))
-                                {
-                                    var loggerType = typeof(Logger<>).MakeGenericType(
-                                        request.ServiceType.GetGenericArguments()[0]
-                                    );
-                                    instance = new DelegateFactory(
-                                        _ => ActivatorUtilities.CreateInstance(request.Container, loggerType),
-                                        Reuse.ScopedOrSingleton
-                                    );
-                                }
-
-                                return instance;
-                            },
-                            request =>
-                            {
-                                var serviceType = request.ServiceType;
-                                if (!serviceType.IsAbstract)
-                                    return null; // Mock interface or abstract class only.
-
-                                if (request.Is(parameter: info => info.IsOptional))
-                                    return null; // Ignore optional parameters
-
-                                if (!dictionary.TryGetValue(serviceType, out var instance))
-                                {
-                                    var method = createMethod.MakeGenericMethod(serviceType);
-                                    instance = new DelegateFactory(
-                                        _ => ( (Mock)method.Invoke(
-                                            repository,
-                                            Array.Empty<object>()
-                                        ) ).Object,
-                                        Reuse.Singleton
-                                    );
-                                    dictionary.TryAdd(serviceType, instance);
-                                }
-
-                                return instance;
-                            }
+                       .WithTestLoggerResolver(
+                            (request, loggerType) => ActivatorUtilities.CreateInstance(request.Container, loggerType)
+                        )
+                       .WithUndefinedTestDependenciesResolver(
+                            request => ( (Mock)createMethod
+                                   .MakeGenericMethod(request.ServiceType)
+                                   .Invoke(repository, Array.Empty<object>())
+                                ).Object
                         )
                        .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient);
                 }
