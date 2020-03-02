@@ -19,24 +19,24 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         [Fact]
         public void Does_Not_Auto_Substitute_Enumerable()
         {
-            NSubstitute.Provide<Item>(new A());
-            NSubstitute.Provide<Item>(new B());
+            AutoSubstitute.Provide<Item>(new A());
+            AutoSubstitute.Provide<Item>(new B());
 
-            NSubstitute.Resolve<IEnumerable<Item>>().Should().HaveCount(2);
+            AutoSubstitute.Resolve<IEnumerable<Item>>().Should().HaveCount(2);
         }
 
         [Fact]
         public void Handle_Zero_Items()
         {
-            NSubstitute.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
+            AutoSubstitute.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
         }
 
         [Fact]
         public void Handle_One_Substitute_Item()
         {
-            var fake1 = NSubstitute.Provide(Substitute.For<Item>());
+            var fake1 = AutoSubstitute.Provide(Substitute.For<Item>());
 
-            var result = NSubstitute.Resolve<IEnumerable<Item>>().ToArray();
+            var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
             result.Should().HaveCount(1);
             result.Should().Contain(fake1);
         }
@@ -44,10 +44,10 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         [Fact]
         public void Handle_Two_Substitute_Item()
         {
-            var fake1 = NSubstitute.Provide(Substitute.For<Item>());
-            var fake2 = NSubstitute.Provide(Substitute.For<Item>());
+            var fake1 = AutoSubstitute.Provide(Substitute.For<Item>());
+            var fake2 = AutoSubstitute.Provide(Substitute.For<Item>());
 
-            var result = NSubstitute.Resolve<IEnumerable<Item>>().ToArray();
+            var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
             result.Should().HaveCount(2);
             result.Should().Contain(fake1);
             result.Should().Contain(fake2);
@@ -56,11 +56,11 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         [Fact]
         public void Handle_Three_Substitute_Item()
         {
-            var fake1 = NSubstitute.Provide(Substitute.For<Item>());
-            var fake2 = NSubstitute.Provide(Substitute.For<Item>());
-            var fake3 = NSubstitute.Provide(Substitute.For<Item>());
+            var fake1 = AutoSubstitute.Provide(Substitute.For<Item>());
+            var fake2 = AutoSubstitute.Provide(Substitute.For<Item>());
+            var fake3 = AutoSubstitute.Provide(Substitute.For<Item>());
 
-            var result = NSubstitute.Resolve<IEnumerable<Item>>().ToArray();
+            var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
             result.Should().HaveCount(3);
             result.Should().Contain(fake1);
             result.Should().Contain(fake2);
@@ -70,12 +70,12 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         [Fact]
         public void Handle_Four_Substitute_Item()
         {
-            var fake1 = NSubstitute.Provide(Substitute.For<Item>());
-            var fake2 = NSubstitute.Provide(Substitute.For<Item>());
-            var fake3 = NSubstitute.Provide(Substitute.For<Item>());
-            var fake4 = NSubstitute.Provide(Substitute.For<Item>());
+            var fake1 = AutoSubstitute.Provide(Substitute.For<Item>());
+            var fake2 = AutoSubstitute.Provide(Substitute.For<Item>());
+            var fake3 = AutoSubstitute.Provide(Substitute.For<Item>());
+            var fake4 = AutoSubstitute.Provide(Substitute.For<Item>());
 
-            var result = NSubstitute.Resolve<IEnumerable<Item>>().ToArray();
+            var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
             result.Should().HaveCount(4);
             result.Should().Contain(fake1);
             result.Should().Contain(fake2);

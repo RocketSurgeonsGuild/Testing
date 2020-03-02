@@ -33,11 +33,6 @@ namespace Rocket.Surgery.Extensions.Testing
         protected AutoSubstitute AutoSubstitute { get; }
 
         /// <summary>
-        /// The AutoFake instance
-        /// </summary>
-        protected AutoSubstitute NSubstitute => AutoSubstitute;
-
-        /// <summary>
         /// The DryIoc container
         /// </summary>
         protected IContainer Container => AutoSubstitute.Container;
