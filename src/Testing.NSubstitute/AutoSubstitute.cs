@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using DryIoc;
+using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
 
 namespace Rocket.Surgery.Extensions.Testing
 {
@@ -24,6 +26,18 @@ namespace Rocket.Surgery.Extensions.Testing
             {
                 Container = configureAction.Invoke(Container);
             }
+            Container = Container
+
+               .With(
+                    rules => rules
+                       .WithTestLoggerResolver(
+                            (request, loggerType) => Substitute.For(
+            new[] {request.ServiceType},
+                               new object[]{ request.Container })
+                            )
+                       .WithUndefinedTestDependenciesResolver(request => Substitute.For(new[] { request.ServiceType }, null))
+                       .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient)
+                );
         }
 
         /// <summary>
