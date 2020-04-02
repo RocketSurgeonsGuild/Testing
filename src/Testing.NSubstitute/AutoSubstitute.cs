@@ -70,6 +70,23 @@ namespace Rocket.Surgery.Extensions.Testing
             return instance;
         }
 
+        /// <summary>
+        /// Resolve the specified type in the container (register specified instance if needed).
+        /// </summary>
+        /// <typeparam name="TService">The type of the service.</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
+        /// <returns>The instance resolved from container.</returns>
+        [SuppressMessage(
+            "Microsoft.Reliability",
+            "CA2000:Dispose objects before losing scope",
+            Justification = "The component registry is responsible for registration disposal."
+        )]
+        public TService Provide<TService, TImplementation>() where TImplementation : TService
+        {
+            Container.Register<TService, TImplementation>();
+            return Container.Resolve<TService>();
+        }
+
         void IDisposable.Dispose() => Container.Dispose();
     }
 }
