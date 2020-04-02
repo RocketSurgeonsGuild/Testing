@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using DryIoc;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,10 +31,10 @@ namespace Rocket.Surgery.Extensions.Testing
                .With(
                     rules => rules
                        .WithTestLoggerResolver(
-                            (request, loggerType) => Substitute.For(
-            new[] {request.ServiceType},
-                               new object[]{ request.Container })
-                            )
+                            (request, loggerType) =>
+                                Substitute.For(new[] {request.ServiceType}, new object[]{ }))
+                       .WithUndefinedTestDependenciesResolver(request =>
+                           Substitute.For(new[] { request.ServiceType }, null))
                        .WithUndefinedTestDependenciesResolver(request => Substitute.For(new[] { request.ServiceType }, null))
                        .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient)
                 );
