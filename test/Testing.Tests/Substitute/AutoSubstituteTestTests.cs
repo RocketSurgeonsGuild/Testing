@@ -70,7 +70,12 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
 
         public class GenericLoggerImpl : AutoSubstituteTest
         {
-            public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
+            private ITestOutputHelper _otherHelper;
+
+            public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
+            {
+                this._otherHelper = outputHelper;
+            }
 
             public void Write()
             {
@@ -84,7 +89,8 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             var test = AutoSubstitute.Resolve<GenericLoggerImpl>();
             test.Write();
-            AutoSubstitute.Resolve<ITestOutputHelper>().Received().WriteLine(Arg.Any<string>());
+            var testOutputHelper = AutoSubstitute.Resolve<ITestOutputHelper>();
+            testOutputHelper.Received().WriteLine(Arg.Any<string>());
         }
 
         [Fact]
