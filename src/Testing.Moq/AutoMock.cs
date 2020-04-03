@@ -111,11 +111,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <typeparam name="TService">The type of the service.</typeparam>
         /// <param name="instance">The instance to register if needed.</param>
         /// <returns>The instance resolved from container.</returns>
-        [SuppressMessage(
-            "Microsoft.Reliability",
-            "CA2000:Dispose objects before losing scope",
-            Justification = "The component registry is responsible for registration disposal."
-        )]
+        [SuppressMessage("Microsoft.Reliability","CA2000:Dispose objects before losing scope",Justification = "The component registry is responsible for registration disposal.")]
         public TService Provide<TService>(TService instance)
             where TService : class
         {
