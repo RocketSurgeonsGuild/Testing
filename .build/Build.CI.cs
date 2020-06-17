@@ -71,7 +71,7 @@ public partial class Solution
                         $directories = Get-ChildItem $root | Where-Object { $_.Name -ne $version };
                         foreach ($dir in $directories) {
                             $from = $dir.FullName;
-                            $to = ""$root/$version/$($dir.Name)"";
+                            $to = ""$root/$version"";
                             Write-Host Copying from $from to $to;
                             Copy-Item $from $to -Recurse -Force;
                         }"
