@@ -75,23 +75,8 @@ public partial class Solution
                             Write-Host Copying from $from to $to;
                             Copy-Item ""$from\*"" $to -Recurse -Force;
                         }
-                        gci -Recurse $root
-                        gci -Recurse $ENV:DOTNET_ROOT
                         "
             },
-            // new UsingStep("Install GitVersion")
-            // {
-            //     Uses = "gittools/actions/gitversion/setup@master",
-            //     With = {
-            //         ["versionSpec"] = "5.1.x",
-            //     }
-
-            // },
-            // new UsingStep("Use GitVersion")
-            // {
-            //     Id = "gitversion",
-            //     Uses = "gittools/actions/gitversion/execute@master"
-            // }
         });
 
         buildJob.Steps.Add(new UsingStep("Publish Coverage")
