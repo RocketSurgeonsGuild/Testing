@@ -76,19 +76,19 @@ public partial class Solution
                             Copy-Item $from $to -Recurse -Force;
                         }"
             },
-            new UsingStep("Install GitVersion")
-            {
-                Uses = "gittools/actions/gitversion/setup@master",
-                With = {
-                    ["versionSpec"] = "5.1.x",
-                }
+            // new UsingStep("Install GitVersion")
+            // {
+            //     Uses = "gittools/actions/gitversion/setup@master",
+            //     With = {
+            //         ["versionSpec"] = "5.1.x",
+            //     }
 
-            },
-            new UsingStep("Use GitVersion")
-            {
-                Id = "gitversion",
-                Uses = "gittools/actions/gitversion/execute@master"
-            }
+            // },
+            // new UsingStep("Use GitVersion")
+            // {
+            //     Id = "gitversion",
+            //     Uses = "gittools/actions/gitversion/execute@master"
+            // }
         });
 
         buildJob.Steps.Add(new UsingStep("Publish Coverage")

@@ -63,13 +63,6 @@ jobs:
           Write-Host Copying from $from to $to;
           Copy-Item $from $to -Recurse -Force;
           }
-      - name: 📲 Install GitVersion
-        uses: gittools/actions/gitversion/setup@master
-        with:
-          versionSpec: '5.1.x'
-      - name: 🔨 Use GitVersion
-        id: gitversion
-        uses: gittools/actions/gitversion/execute@master
       - name: 🎁 dotnet tool restore
         run: |
           dotnet tool restore

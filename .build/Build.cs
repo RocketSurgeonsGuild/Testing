@@ -55,7 +55,7 @@ public partial class Solution : NukeBuild,
     public Target Pack => _ => _.Inherit<ICanPackWithDotNetCore>(x => x.CorePack)
        .DependsOn(Clean);
 
-    [GitVersion(UpdateBuildNumber = true, Framework = "netcoreapp3.1")]
+    [ComputedGitVersion]
     public GitVersion GitVersion { get; } = null!;
 
     public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean);
