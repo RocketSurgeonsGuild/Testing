@@ -73,7 +73,7 @@ public partial class Solution
                             $from = $dir.FullName;
                             $to = ""$root/$version"";
                             Write-Host Copying from $from to $to;
-                            Copy-Item $from $to -Recurse -Force;
+                            Copy-Item ""$from\*"" $to -Recurse -Force;
                         }
                         gci -Recurse $root
                         gci -Recurse $ENV:DOTNET_ROOT
