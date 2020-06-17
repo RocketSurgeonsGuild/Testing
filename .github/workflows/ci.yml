@@ -63,6 +63,9 @@ jobs:
           Write-Host Copying from $from to $to;
           Copy-Item $from $to -Recurse -Force;
           }
+          gci -Recurse $root
+          gci -Recurse $ENV:DOTNET_ROOT
+          
       - name: 🎁 dotnet tool restore
         run: |
           dotnet tool restore
