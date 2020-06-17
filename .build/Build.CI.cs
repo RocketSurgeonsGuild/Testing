@@ -68,7 +68,7 @@ public partial class Solution
                 Shell = GithubActionShell.Pwsh,
                 Run = @"$version = Split-Path (Split-Path $ENV:DOTNET_ROOT -Parent) -Leaf;
                         $root = Split-Path (Split-Path $ENV:DOTNET_ROOT -Parent) -Parent;
-                        $directories = Get-ChildItem $ENV:DOTNET_ROOT | Where-Object { $_.Name -ne $version };
+                        $directories = Get-ChildItem $root | Where-Object { $_.Name -ne $version };
                         foreach ($dir in $directories) {
                             $from = $dir.FullName;
                             $to = ""$root/$version/$($dir.Name)"";
