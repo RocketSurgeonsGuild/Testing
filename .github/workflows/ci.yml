@@ -64,11 +64,7 @@ jobs:
           Write-Host Copying from $from to $to;
           Copy-Item "$from\*" $to -Recurse -Force;
           }
-<<<<<<< Updated upstream
-          
-=======
 
->>>>>>> Stashed changes
       - name: 🎁 dotnet tool restore
         run: |
           dotnet tool restore
