@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Xunit;
 using Xunit.Abstractions;
+
 #pragma warning disable CA1034 // Nested types should not be visible
 #pragma warning disable CA2000 // Dispose objects before losing scope
 #pragma warning disable CA1062 // Validate arguments of public methods
@@ -79,9 +80,9 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             protected override IEnumerable<(IEnumerable<string>, int)> GetData()
             {
-                yield return (new[] { "1", "2", "3" }, 3);
-                yield return (new[] { "1", "2" }, 2);
-                yield return (new[] { "1" }, 1);
+                yield return ( new[] { "1", "2", "3" }, 3 );
+                yield return ( new[] { "1", "2" }, 2 );
+                yield return ( new[] { "1" }, 1 );
             }
         }
     }
