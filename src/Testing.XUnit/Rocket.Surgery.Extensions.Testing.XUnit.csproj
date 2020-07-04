@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsTestProject>false</IsTestProject>
+        <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+		<PackageReference Include="xunit.abstractions" />
+    </ItemGroup>
+</Project>
