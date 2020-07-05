@@ -27,8 +27,6 @@ namespace Rocket.Surgery.Extensions.Testing
         )
         {
             Container = container ?? new Container();
-            if (configureAction != null)
-                Container = configureAction.Invoke(Container);
             if (fakeOptionsAction == null)
                 fakeOptionsAction = options => { };
             Container = Container
@@ -45,6 +43,8 @@ namespace Rocket.Surgery.Extensions.Testing
                        .WithUndefinedTestDependenciesResolver(request => Create.Fake(request.ServiceType, fakeOptionsAction))
                        .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient)
                 );
+            if (configureAction != null)
+                Container = configureAction.Invoke(Container);
         }
 
         /// <summary>
