@@ -19,6 +19,9 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoFakeTest : LoggerTest
     {
+        private readonly Action<IFakeOptions> _fakeOptionsAction;
+        private AutoFake _autoFake;
+
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
@@ -27,7 +30,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected AutoFake AutoFake { get; }
+        protected AutoFake AutoFake => _autoFake ??= new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: _fakeOptionsAction);
 
         /// <summary>
         /// The DryIoc container
@@ -87,7 +90,10 @@ namespace Rocket.Surgery.Extensions.Testing
             Action<LoggerConfiguration>? configureLogger = null,
             Action<IFakeOptions> fakeOptionsAction = null
         )
-            : base(outputHelper, minLevel, logFormat, configureLogger) => AutoFake = new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: fakeOptionsAction);
+            : base(outputHelper, minLevel, logFormat, configureLogger)
+        {
+            _fakeOptionsAction = fakeOptionsAction;
+        }
 #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 
         private IContainer ConfigureContainer(IContainer container)
