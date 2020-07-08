@@ -17,6 +17,9 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoMockTest : LoggerTest
     {
+        private readonly MockBehavior _mockBehavior;
+        private AutoMock _autoMock;
+
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
@@ -25,7 +28,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The AutoMock instance
         /// </summary>
-        protected AutoMock AutoMock { get; }
+        protected AutoMock AutoMock => _autoMock ??= new AutoMock(new MockRepository(_mockBehavior), configureAction: ConfigureContainer);
 
         /// <summary>
         /// The DryIoc container
@@ -78,10 +81,10 @@ namespace Rocket.Surgery.Extensions.Testing
             string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
             Action<LoggerConfiguration>? configureLogger = null
         )
-            : base(outputHelper, minLevel, logFormat, configureLogger) => AutoMock = new AutoMock(
-            new MockRepository(mockBehavior),
-            configureAction: ConfigureContainer
-        );
+            : base(outputHelper, minLevel, logFormat, configureLogger)
+        {
+            _mockBehavior = mockBehavior;
+        }
 #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 
         private IContainer ConfigureContainer(IContainer container)

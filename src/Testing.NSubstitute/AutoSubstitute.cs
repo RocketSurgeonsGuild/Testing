@@ -22,11 +22,6 @@ namespace Rocket.Surgery.Extensions.Testing
         {
             Container = container ?? new Container();
 
-            if (configureAction != null)
-            {
-                Container = configureAction.Invoke(Container);
-            }
-
             Container = Container
 
                 .With(
@@ -34,9 +29,14 @@ namespace Rocket.Surgery.Extensions.Testing
                         .WithTestLoggerResolver(
                             (request, loggerType) => ActivatorUtilities.CreateInstance(request.Container, loggerType))
                         .WithUndefinedTestDependenciesResolver(request =>
-                            Substitute.For(new[] {request.ServiceType}, null))
+                            Substitute.For(new[] { request.ServiceType }, null))
                         .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient)
                 );
+
+            if (configureAction != null)
+            {
+                Container = configureAction.Invoke(Container);
+            }
         }
 
         /// <summary>

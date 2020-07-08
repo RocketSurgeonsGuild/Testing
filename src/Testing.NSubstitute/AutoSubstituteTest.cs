@@ -13,14 +13,29 @@ namespace Rocket.Surgery.Extensions.Testing
 {
     public abstract class AutoSubstituteTest : LoggerTest
     {
-        protected AutoSubstituteTest(ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
+        private AutoSubstitute _autoSubstitute;
+
+        protected AutoSubstituteTest(
+            ITestOutputHelper outputHelper,
+            string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+            Action<LoggerConfiguration>? configureLogger = null
+        )
             : this(outputHelper, LogLevel.Information, logFormat, configureLogger) { }
 
-        protected AutoSubstituteTest(ITestOutputHelper outputHelper, LogLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
+        protected AutoSubstituteTest(
+            ITestOutputHelper outputHelper,
+            LogLevel minLevel,
+            string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+            Action<LoggerConfiguration>? configureLogger = null
+        )
             : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger) { }
 
-        protected AutoSubstituteTest(ITestOutputHelper outputHelper, LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null)
-            : base(outputHelper, minLevel, logFormat, configureLogger) => AutoSubstitute = new AutoSubstitute(configureAction: ConfigureContainer);
+        protected AutoSubstituteTest(
+            ITestOutputHelper outputHelper,
+            LogEventLevel minLevel,
+            string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+            Action<LoggerConfiguration>? configureLogger = null
+        ) : base(outputHelper, minLevel, logFormat, configureLogger) { }
 
         /// <summary>
         /// The Configuration if defined otherwise empty.
@@ -30,7 +45,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected AutoSubstitute AutoSubstitute { get; }
+        protected AutoSubstitute AutoSubstitute => _autoSubstitute ??= new AutoSubstitute(configureAction: ConfigureContainer);
 
         /// <summary>
         /// The DryIoc container
