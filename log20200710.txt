@@ -1,0 +1,179 @@
+2020-07-10 17:35:08.721 -04:00 [INF] This only goes file...
+2020-07-10 17:35:09.373 -04:00 [INF] Configuring
+2020-07-10 17:35:09.382 -04:00 [INF] inside ctor
+2020-07-10 17:35:09.397 -04:00 [INF] Fooooo!
+2020-07-10 17:35:09.474 -04:00 [DBG] Finding descriptor for initialize
+2020-07-10 17:35:09.482 -04:00 [DBG] Queueing "Serial":initialize:0 request for processing
+2020-07-10 17:35:09.502 -04:00 [DBG] Starting: Processing request initialize 0
+2020-07-10 17:35:09.508 -04:00 [DBG] Starting: Routing Request (0) initialize
+2020-07-10 17:35:09.515 -04:00 [VRB] Converting params for Request (0) initialize to OmniSharp.Extensions.LanguageServer.Protocol.Models.InitializeParams
+2020-07-10 17:35:13.858 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.InitializeResult
+2020-07-10 17:35:13.861 -04:00 [DBG] Finished: Routing Request (0) initialize in 4352ms
+2020-07-10 17:35:13.862 -04:00 [DBG] Finished: Processing request initialize 0 in 4356ms
+2020-07-10 17:35:13.900 -04:00 [DBG] Finding descriptor for initialized
+2020-07-10 17:35:13.901 -04:00 [DBG] Queueing "Serial":initialized request for processing
+2020-07-10 17:35:13.904 -04:00 [DBG] Starting: Processing notification initialized
+2020-07-10 17:35:13.905 -04:00 [DBG] Starting: Routing Notification initialized
+2020-07-10 17:35:13.906 -04:00 [DBG] Converting params for Notification initialized to OmniSharp.Extensions.LanguageServer.Protocol.Models.InitializedParams
+2020-07-10 17:35:13.934 -04:00 [DBG] Finished: Routing Notification initialized in 28ms
+2020-07-10 17:35:13.934 -04:00 [DBG] Finished: Processing notification initialized in 30ms
+2020-07-10 17:35:13.938 -04:00 [DBG] Finding descriptor for workspace/didChangeConfiguration
+2020-07-10 17:35:13.939 -04:00 [DBG] Queueing "Serial":workspace/didChangeConfiguration request for processing
+2020-07-10 17:35:13.939 -04:00 [DBG] Starting: Processing notification workspace/didChangeConfiguration
+2020-07-10 17:35:13.939 -04:00 [DBG] Starting: Routing Notification workspace/didChangeConfiguration
+2020-07-10 17:35:13.939 -04:00 [DBG] Converting params for Notification workspace/didChangeConfiguration to OmniSharp.Extensions.LanguageServer.Protocol.Models.DidChangeConfigurationParams
+2020-07-10 17:35:13.950 -04:00 [DBG] Finished: Routing Notification workspace/didChangeConfiguration in 10ms
+2020-07-10 17:35:13.950 -04:00 [DBG] Finished: Processing notification workspace/didChangeConfiguration in 11ms
+2020-07-10 17:35:13.962 -04:00 [DBG] Finding descriptor for textDocument/didOpen
+2020-07-10 17:35:13.962 -04:00 [DBG] Queueing "Serial":textDocument/didOpen request for processing
+2020-07-10 17:35:13.962 -04:00 [DBG] Starting: Processing notification textDocument/didOpen
+2020-07-10 17:35:13.962 -04:00 [DBG] Starting: Routing Notification textDocument/didOpen
+2020-07-10 17:35:13.963 -04:00 [DBG] Converting params for Notification textDocument/didOpen to OmniSharp.Extensions.LanguageServer.Protocol.Models.DidOpenTextDocumentParams
+2020-07-10 17:35:13.968 -04:00 [INF] Hello world!
+2020-07-10 17:35:13.984 -04:00 [DBG] Finding descriptor for textDocument/documentSymbol
+2020-07-10 17:35:13.984 -04:00 [DBG] Swapping from "Serial" to "Parallel"
+2020-07-10 17:35:13.984 -04:00 [DBG] Completing existing request process type "Serial"
+2020-07-10 17:35:13.986 -04:00 [DBG] Queueing "Parallel":textDocument/documentSymbol:1 request for processing
+2020-07-10 17:35:13.991 -04:00 [DBG] Finished: Routing Notification textDocument/didOpen in 28ms
+2020-07-10 17:35:13.991 -04:00 [DBG] Finished: Processing notification textDocument/didOpen in 28ms
+2020-07-10 17:35:13.992 -04:00 [DBG] Starting: Processing request textDocument/documentSymbol 1
+2020-07-10 17:35:13.992 -04:00 [DBG] Starting: Routing Request (1) textDocument/documentSymbol
+2020-07-10 17:35:13.992 -04:00 [VRB] Converting params for Request (1) textDocument/documentSymbol to OmniSharp.Extensions.LanguageServer.Protocol.Models.DocumentSymbolParams
+2020-07-10 17:35:14.000 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.SymbolInformationOrDocumentSymbolContainer
+2020-07-10 17:35:14.000 -04:00 [DBG] Finished: Routing Request (1) textDocument/documentSymbol in 8ms
+2020-07-10 17:35:14.000 -04:00 [DBG] Finished: Processing request textDocument/documentSymbol 1 in 8ms
+2020-07-10 17:35:14.060 -04:00 [DBG] Finding descriptor for textDocument/semanticTokens/range
+2020-07-10 17:35:14.060 -04:00 [DBG] Queueing "Parallel":textDocument/semanticTokens/range:2 request for processing
+2020-07-10 17:35:14.060 -04:00 [DBG] Starting: Processing request textDocument/semanticTokens/range 2
+2020-07-10 17:35:14.061 -04:00 [DBG] Starting: Routing Request (2) textDocument/semanticTokens/range
+2020-07-10 17:35:14.061 -04:00 [VRB] Converting params for Request (2) textDocument/semanticTokens/range to OmniSharp.Extensions.LanguageServer.Protocol.Models.Proposals.SemanticTokensRangeParams
+2020-07-10 17:35:14.093 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Proposals.SemanticTokens
+2020-07-10 17:35:14.093 -04:00 [DBG] Finished: Routing Request (2) textDocument/semanticTokens/range in 32ms
+2020-07-10 17:35:14.093 -04:00 [DBG] Finished: Processing request textDocument/semanticTokens/range 2 in 32ms
+2020-07-10 17:35:14.153 -04:00 [DBG] Finding descriptor for textDocument/foldingRange
+2020-07-10 17:35:14.153 -04:00 [DBG] Queueing "Parallel":textDocument/foldingRange:3 request for processing
+2020-07-10 17:35:14.153 -04:00 [DBG] Starting: Processing request textDocument/foldingRange 3
+2020-07-10 17:35:14.153 -04:00 [DBG] Starting: Routing Request (3) textDocument/foldingRange
+2020-07-10 17:35:14.153 -04:00 [VRB] Converting params for Request (3) textDocument/foldingRange to OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRangeRequestParam
+2020-07-10 17:35:14.156 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Container`1[[OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRange, OmniSharp.Extensions.LanguageProtocol, Version=0.0.9.9, Culture=neutral, PublicKeyToken=6d868dff454e6022]]
+2020-07-10 17:35:14.156 -04:00 [DBG] Finished: Routing Request (3) textDocument/foldingRange in 3ms
+2020-07-10 17:35:14.157 -04:00 [DBG] Finished: Processing request textDocument/foldingRange 3 in 3ms
+2020-07-10 17:35:14.254 -04:00 [DBG] Finding descriptor for textDocument/semanticTokens
+2020-07-10 17:35:14.254 -04:00 [DBG] Queueing "Parallel":textDocument/semanticTokens:4 request for processing
+2020-07-10 17:35:14.254 -04:00 [DBG] Starting: Processing request textDocument/semanticTokens 4
+2020-07-10 17:35:14.254 -04:00 [DBG] Starting: Routing Request (4) textDocument/semanticTokens
+2020-07-10 17:35:14.254 -04:00 [VRB] Converting params for Request (4) textDocument/semanticTokens to OmniSharp.Extensions.LanguageServer.Protocol.Models.Proposals.SemanticTokensParams
+2020-07-10 17:35:14.257 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Proposals.SemanticTokens
+2020-07-10 17:35:14.258 -04:00 [DBG] Finished: Routing Request (4) textDocument/semanticTokens in 3ms
+2020-07-10 17:35:14.258 -04:00 [DBG] Finished: Processing request textDocument/semanticTokens 4 in 3ms
+2020-07-10 17:35:24.599 -04:00 [DBG] Finding descriptor for textDocument/didOpen
+2020-07-10 17:35:24.599 -04:00 [DBG] Swapping from "Parallel" to "Serial"
+2020-07-10 17:35:24.599 -04:00 [DBG] Cancelling any outstanding requests (switch from parallel to serial)
+2020-07-10 17:35:24.600 -04:00 [DBG] Completing existing request process type "Parallel"
+2020-07-10 17:35:24.600 -04:00 [DBG] Queueing "Serial":textDocument/didOpen request for processing
+2020-07-10 17:35:24.601 -04:00 [DBG] Starting: Processing notification textDocument/didOpen
+2020-07-10 17:35:24.601 -04:00 [DBG] Starting: Routing Notification textDocument/didOpen
+2020-07-10 17:35:24.601 -04:00 [DBG] Converting params for Notification textDocument/didOpen to OmniSharp.Extensions.LanguageServer.Protocol.Models.DidOpenTextDocumentParams
+2020-07-10 17:35:24.602 -04:00 [INF] Hello world!
+2020-07-10 17:35:24.602 -04:00 [DBG] Finding descriptor for textDocument/documentSymbol
+2020-07-10 17:35:24.602 -04:00 [DBG] Swapping from "Serial" to "Parallel"
+2020-07-10 17:35:24.602 -04:00 [DBG] Completing existing request process type "Serial"
+2020-07-10 17:35:24.602 -04:00 [DBG] Queueing "Parallel":textDocument/documentSymbol:5 request for processing
+2020-07-10 17:35:24.602 -04:00 [DBG] Finding descriptor for textDocument/semanticTokens
+2020-07-10 17:35:24.602 -04:00 [DBG] Queueing "Parallel":textDocument/semanticTokens:6 request for processing
+2020-07-10 17:35:24.612 -04:00 [DBG] Finished: Routing Notification textDocument/didOpen in 11ms
+2020-07-10 17:35:24.612 -04:00 [DBG] Finished: Processing notification textDocument/didOpen in 11ms
+2020-07-10 17:35:24.613 -04:00 [DBG] Starting: Processing request textDocument/documentSymbol 5
+2020-07-10 17:35:24.613 -04:00 [DBG] Starting: Routing Request (5) textDocument/documentSymbol
+2020-07-10 17:35:24.613 -04:00 [VRB] Converting params for Request (5) textDocument/documentSymbol to OmniSharp.Extensions.LanguageServer.Protocol.Models.DocumentSymbolParams
+2020-07-10 17:35:24.613 -04:00 [DBG] Starting: Processing request textDocument/semanticTokens 6
+2020-07-10 17:35:24.614 -04:00 [DBG] Starting: Routing Request (6) textDocument/semanticTokens
+2020-07-10 17:35:24.614 -04:00 [VRB] Converting params for Request (6) textDocument/semanticTokens to OmniSharp.Extensions.LanguageServer.Protocol.Models.Proposals.SemanticTokensParams
+2020-07-10 17:35:24.614 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.SymbolInformationOrDocumentSymbolContainer
+2020-07-10 17:35:24.614 -04:00 [DBG] Finished: Routing Request (5) textDocument/documentSymbol in 1ms
+2020-07-10 17:35:24.614 -04:00 [DBG] Finished: Processing request textDocument/documentSymbol 5 in 1ms
+2020-07-10 17:35:24.615 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Proposals.SemanticTokens
+2020-07-10 17:35:24.615 -04:00 [DBG] Finished: Routing Request (6) textDocument/semanticTokens in 1ms
+2020-07-10 17:35:24.615 -04:00 [DBG] Finished: Processing request textDocument/semanticTokens 6 in 1ms
+2020-07-10 17:35:24.748 -04:00 [DBG] Finding descriptor for textDocument/semanticTokens/range
+2020-07-10 17:35:24.748 -04:00 [DBG] Queueing "Parallel":textDocument/semanticTokens/range:7 request for processing
+2020-07-10 17:35:24.748 -04:00 [DBG] Starting: Processing request textDocument/semanticTokens/range 7
+2020-07-10 17:35:24.748 -04:00 [DBG] Starting: Routing Request (7) textDocument/semanticTokens/range
+2020-07-10 17:35:24.748 -04:00 [VRB] Converting params for Request (7) textDocument/semanticTokens/range to OmniSharp.Extensions.LanguageServer.Protocol.Models.Proposals.SemanticTokensRangeParams
+2020-07-10 17:35:24.749 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Proposals.SemanticTokens
+2020-07-10 17:35:24.749 -04:00 [DBG] Finished: Routing Request (7) textDocument/semanticTokens/range in 1ms
+2020-07-10 17:35:24.750 -04:00 [DBG] Finished: Processing request textDocument/semanticTokens/range 7 in 1ms
+2020-07-10 17:35:24.776 -04:00 [DBG] Finding descriptor for textDocument/foldingRange
+2020-07-10 17:35:24.776 -04:00 [DBG] Queueing "Parallel":textDocument/foldingRange:8 request for processing
+2020-07-10 17:35:24.776 -04:00 [DBG] Starting: Processing request textDocument/foldingRange 8
+2020-07-10 17:35:24.776 -04:00 [DBG] Starting: Routing Request (8) textDocument/foldingRange
+2020-07-10 17:35:24.776 -04:00 [VRB] Converting params for Request (8) textDocument/foldingRange to OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRangeRequestParam
+2020-07-10 17:35:24.776 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Container`1[[OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRange, OmniSharp.Extensions.LanguageProtocol, Version=0.0.9.9, Culture=neutral, PublicKeyToken=6d868dff454e6022]]
+2020-07-10 17:35:24.776 -04:00 [DBG] Finished: Routing Request (8) textDocument/foldingRange in 0ms
+2020-07-10 17:35:24.776 -04:00 [DBG] Finished: Processing request textDocument/foldingRange 8 in 0ms
+2020-07-10 17:35:25.008 -04:00 [DBG] Finding descriptor for textDocument/documentSymbol
+2020-07-10 17:35:25.008 -04:00 [DBG] Queueing "Parallel":textDocument/documentSymbol:9 request for processing
+2020-07-10 17:35:25.009 -04:00 [DBG] Starting: Processing request textDocument/documentSymbol 9
+2020-07-10 17:35:25.010 -04:00 [DBG] Starting: Routing Request (9) textDocument/documentSymbol
+2020-07-10 17:35:25.011 -04:00 [VRB] Converting params for Request (9) textDocument/documentSymbol to OmniSharp.Extensions.LanguageServer.Protocol.Models.DocumentSymbolParams
+2020-07-10 17:35:25.014 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.SymbolInformationOrDocumentSymbolContainer
+2020-07-10 17:35:25.014 -04:00 [DBG] Finished: Routing Request (9) textDocument/documentSymbol in 3ms
+2020-07-10 17:35:25.015 -04:00 [DBG] Finished: Processing request textDocument/documentSymbol 9 in 4ms
+2020-07-10 17:35:25.213 -04:00 [DBG] Finding descriptor for textDocument/foldingRange
+2020-07-10 17:35:25.213 -04:00 [DBG] Queueing "Parallel":textDocument/foldingRange:10 request for processing
+2020-07-10 17:35:25.214 -04:00 [DBG] Starting: Processing request textDocument/foldingRange 10
+2020-07-10 17:35:25.214 -04:00 [DBG] Starting: Routing Request (10) textDocument/foldingRange
+2020-07-10 17:35:25.214 -04:00 [VRB] Converting params for Request (10) textDocument/foldingRange to OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRangeRequestParam
+2020-07-10 17:35:25.215 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Container`1[[OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRange, OmniSharp.Extensions.LanguageProtocol, Version=0.0.9.9, Culture=neutral, PublicKeyToken=6d868dff454e6022]]
+2020-07-10 17:35:25.215 -04:00 [DBG] Finished: Routing Request (10) textDocument/foldingRange in 1ms
+2020-07-10 17:35:25.215 -04:00 [DBG] Finished: Processing request textDocument/foldingRange 10 in 1ms
+2020-07-10 17:35:25.941 -04:00 [DBG] Finding descriptor for textDocument/documentSymbol
+2020-07-10 17:35:25.941 -04:00 [DBG] Queueing "Parallel":textDocument/documentSymbol:11 request for processing
+2020-07-10 17:35:25.942 -04:00 [DBG] Starting: Processing request textDocument/documentSymbol 11
+2020-07-10 17:35:25.942 -04:00 [DBG] Starting: Routing Request (11) textDocument/documentSymbol
+2020-07-10 17:35:25.942 -04:00 [VRB] Converting params for Request (11) textDocument/documentSymbol to OmniSharp.Extensions.LanguageServer.Protocol.Models.DocumentSymbolParams
+2020-07-10 17:35:25.944 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.SymbolInformationOrDocumentSymbolContainer
+2020-07-10 17:35:25.944 -04:00 [DBG] Finished: Routing Request (11) textDocument/documentSymbol in 1ms
+2020-07-10 17:35:25.944 -04:00 [DBG] Finished: Processing request textDocument/documentSymbol 11 in 2ms
+2020-07-10 17:35:26.091 -04:00 [DBG] Finding descriptor for textDocument/foldingRange
+2020-07-10 17:35:26.091 -04:00 [DBG] Queueing "Parallel":textDocument/foldingRange:12 request for processing
+2020-07-10 17:35:26.091 -04:00 [DBG] Starting: Processing request textDocument/foldingRange 12
+2020-07-10 17:35:26.092 -04:00 [DBG] Starting: Routing Request (12) textDocument/foldingRange
+2020-07-10 17:35:26.092 -04:00 [VRB] Converting params for Request (12) textDocument/foldingRange to OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRangeRequestParam
+2020-07-10 17:35:26.092 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Container`1[[OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRange, OmniSharp.Extensions.LanguageProtocol, Version=0.0.9.9, Culture=neutral, PublicKeyToken=6d868dff454e6022]]
+2020-07-10 17:35:26.092 -04:00 [DBG] Finished: Routing Request (12) textDocument/foldingRange in 0ms
+2020-07-10 17:35:26.092 -04:00 [DBG] Finished: Processing request textDocument/foldingRange 12 in 0ms
+2020-07-10 17:35:26.848 -04:00 [DBG] Finding descriptor for textDocument/documentSymbol
+2020-07-10 17:35:26.849 -04:00 [DBG] Queueing "Parallel":textDocument/documentSymbol:13 request for processing
+2020-07-10 17:35:26.850 -04:00 [DBG] Starting: Processing request textDocument/documentSymbol 13
+2020-07-10 17:35:26.852 -04:00 [DBG] Starting: Routing Request (13) textDocument/documentSymbol
+2020-07-10 17:35:26.852 -04:00 [VRB] Converting params for Request (13) textDocument/documentSymbol to OmniSharp.Extensions.LanguageServer.Protocol.Models.DocumentSymbolParams
+2020-07-10 17:35:26.854 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.SymbolInformationOrDocumentSymbolContainer
+2020-07-10 17:35:26.854 -04:00 [DBG] Finished: Routing Request (13) textDocument/documentSymbol in 2ms
+2020-07-10 17:35:26.854 -04:00 [DBG] Finished: Processing request textDocument/documentSymbol 13 in 2ms
+2020-07-10 17:35:27.006 -04:00 [DBG] Finding descriptor for textDocument/foldingRange
+2020-07-10 17:35:27.006 -04:00 [DBG] Queueing "Parallel":textDocument/foldingRange:14 request for processing
+2020-07-10 17:35:27.007 -04:00 [DBG] Starting: Processing request textDocument/foldingRange 14
+2020-07-10 17:35:27.007 -04:00 [DBG] Starting: Routing Request (14) textDocument/foldingRange
+2020-07-10 17:35:27.007 -04:00 [VRB] Converting params for Request (14) textDocument/foldingRange to OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRangeRequestParam
+2020-07-10 17:35:27.008 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Container`1[[OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRange, OmniSharp.Extensions.LanguageProtocol, Version=0.0.9.9, Culture=neutral, PublicKeyToken=6d868dff454e6022]]
+2020-07-10 17:35:27.008 -04:00 [DBG] Finished: Routing Request (14) textDocument/foldingRange in 0ms
+2020-07-10 17:35:27.008 -04:00 [DBG] Finished: Processing request textDocument/foldingRange 14 in 0ms
+2020-07-10 17:35:27.685 -04:00 [DBG] Finding descriptor for textDocument/documentSymbol
+2020-07-10 17:35:27.685 -04:00 [DBG] Queueing "Parallel":textDocument/documentSymbol:15 request for processing
+2020-07-10 17:35:27.685 -04:00 [DBG] Starting: Processing request textDocument/documentSymbol 15
+2020-07-10 17:35:27.685 -04:00 [DBG] Starting: Routing Request (15) textDocument/documentSymbol
+2020-07-10 17:35:27.685 -04:00 [VRB] Converting params for Request (15) textDocument/documentSymbol to OmniSharp.Extensions.LanguageServer.Protocol.Models.DocumentSymbolParams
+2020-07-10 17:35:27.687 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.SymbolInformationOrDocumentSymbolContainer
+2020-07-10 17:35:27.687 -04:00 [DBG] Finished: Routing Request (15) textDocument/documentSymbol in 1ms
+2020-07-10 17:35:27.687 -04:00 [DBG] Finished: Processing request textDocument/documentSymbol 15 in 1ms
+2020-07-10 17:35:27.869 -04:00 [DBG] Finding descriptor for textDocument/foldingRange
+2020-07-10 17:35:27.869 -04:00 [DBG] Queueing "Parallel":textDocument/foldingRange:16 request for processing
+2020-07-10 17:35:27.870 -04:00 [DBG] Starting: Processing request textDocument/foldingRange 16
+2020-07-10 17:35:27.870 -04:00 [DBG] Starting: Routing Request (16) textDocument/foldingRange
+2020-07-10 17:35:27.870 -04:00 [VRB] Converting params for Request (16) textDocument/foldingRange to OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRangeRequestParam
+2020-07-10 17:35:27.871 -04:00 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.Container`1[[OmniSharp.Extensions.LanguageServer.Protocol.Models.FoldingRange, OmniSharp.Extensions.LanguageProtocol, Version=0.0.9.9, Culture=neutral, PublicKeyToken=6d868dff454e6022]]
+2020-07-10 17:35:27.872 -04:00 [DBG] Finished: Routing Request (16) textDocument/foldingRange in 1ms
+2020-07-10 17:35:27.872 -04:00 [DBG] Finished: Processing request textDocument/foldingRange 16 in 1ms
+2020-07-10 17:35:34.033 -04:00 [INF] Base Config: [[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]]]
+2020-07-10 17:35:34.037 -04:00 [INF] Scoped Config: [[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]],[[]]]
