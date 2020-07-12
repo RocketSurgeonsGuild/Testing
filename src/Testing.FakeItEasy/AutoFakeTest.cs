@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using FakeItEasy;
@@ -26,7 +27,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
-        protected IConfiguration Configuration => Container.GetService<IConfiguration>() ?? ReadOnlyConfiguration;
+        protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.GetService<IConfiguration>() : ReadOnlyConfiguration;
 
         /// <summary>
         /// The AutoFake instance
@@ -36,7 +37,11 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The DryIoc container
         /// </summary>
-        protected IContainer Container => AutoFake.Container;
+        protected IContainer Container
+        {
+            get => AutoFake.Container;
+            private set => _autoFake = new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: _fakeOptionsAction, container: value);
+        }
 
         /// <summary>
         /// The Service Provider
@@ -108,12 +113,16 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// Populate the test class with the given configuration and services
         /// </summary>
+        [ExcludeFromCodeCoverage]
+        [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
         protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context)
             => Populate(context.configuration, context.serviceCollection);
 
         /// <summary>
         /// Populate the test class with the given configuration and services
         /// </summary>
+        [ExcludeFromCodeCoverage]
+        [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
         protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
             Container.UseInstance(configuration);
@@ -123,10 +132,12 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// Populate the test class with the given configuration and services
         /// </summary>
-        protected void Populate(IServiceCollection serviceCollection)
-        {
-            Container.Populate(serviceCollection);
-        }
+        protected void Populate(IServiceCollection serviceCollection) => Container.Populate(serviceCollection);
+
+        /// <summary>
+        /// Populate the test class with the given configuration and services
+        /// </summary>
+        protected void Populate(IContainer container) => Container = container;
 
         /// <summary>
         /// A method that allows you to override and update the behavior of building the container
