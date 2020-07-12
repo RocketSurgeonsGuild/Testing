@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -17,13 +18,14 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoMockTest : LoggerTest
     {
+        private static readonly IConfiguration ReadOnlyConfiguration = new ConfigurationBuilder().Build();
         private readonly MockBehavior _mockBehavior;
         private AutoMock _autoMock;
 
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
-        protected IConfiguration Configuration { get; private set; } = new ConfigurationBuilder().Build();
+        protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.GetService<IConfiguration>() : ReadOnlyConfiguration;
 
         /// <summary>
         /// The AutoMock instance
@@ -33,7 +35,11 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The DryIoc container
         /// </summary>
-        protected IContainer Container => AutoMock.Container;
+        protected IContainer Container
+        {
+            get => AutoMock.Container;
+            private set => _autoMock = new AutoMock(new MockRepository(_mockBehavior), configureAction: ConfigureContainer, container: value);
+        }
 
         /// <summary>
         /// The Service Provider
@@ -98,17 +104,34 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// Populate the test class with the given configuration and services
         /// </summary>
+        [ExcludeFromCodeCoverage]
+        [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
         protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context) =>
             Populate(context.configuration, context.serviceCollection);
 
         /// <summary>
         /// Populate the test class with the given configuration and services
         /// </summary>
+        [ExcludeFromCodeCoverage]
+        [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
         protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
-            Configuration = new ConfigurationBuilder().AddConfiguration(Configuration).AddConfiguration(configuration).Build();
+            Container.UseInstance(configuration);
             Container.Populate(serviceCollection);
         }
+
+        /// <summary>
+        /// Populate the test class with the given configuration and services
+        /// </summary>
+        protected void Populate(IServiceCollection serviceCollection)
+        {
+            Container.Populate(serviceCollection);
+        }
+
+        /// <summary>
+        /// Populate the test class with the given configuration and services
+        /// </summary>
+        protected void Populate(IContainer container) => Container = container;
 
         /// <summary>
         /// A method that allows you to override and update the behavior of building the container
