@@ -19,7 +19,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
         {
             var test = _outputHelper.GetTest();
             test.Should().NotBeNull();
-            test.DisplayName.Should().Be("Rocket.Surgery.Extensions.Testing.Tests.XUnitExtensionsTests.GetTestTest");
+            test.DisplayName.Should().EndWith("GetTestTest");
         }
     }
 }

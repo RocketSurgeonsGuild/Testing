@@ -17,13 +17,14 @@ namespace Rocket.Surgery.Extensions.Testing
     /// </summary>
     public abstract class AutoMockTest : LoggerTest
     {
+        private static readonly IConfiguration ReadOnlyConfiguration = new ConfigurationBuilder().Build();
         private readonly MockBehavior _mockBehavior;
         private AutoMock _autoMock;
 
         /// <summary>
         /// The Configuration if defined otherwise empty.
         /// </summary>
-        protected IConfiguration Configuration { get; private set; } = new ConfigurationBuilder().Build();
+        protected IConfiguration Configuration => Container.GetService<IConfiguration>() ?? ReadOnlyConfiguration;
 
         /// <summary>
         /// The AutoMock instance
@@ -106,7 +107,15 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
-            Configuration = new ConfigurationBuilder().AddConfiguration(Configuration).AddConfiguration(configuration).Build();
+            Container.UseInstance(configuration);
+            Container.Populate(serviceCollection);
+        }
+
+        /// <summary>
+        /// Populate the test class with the given configuration and services
+        /// </summary>
+        protected void Populate(IServiceCollection serviceCollection)
+        {
             Container.Populate(serviceCollection);
         }
 
