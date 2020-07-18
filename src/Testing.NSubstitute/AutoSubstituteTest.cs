@@ -121,7 +121,7 @@ namespace Rocket.Surgery.Extensions.Testing
             container.RegisterInstance(LoggerFactory);
             container.RegisterInstance(Logger);
             container.RegisterInstance(SerilogLogger);
-            return BuildContainer(container).WithDependencyInjectionAdapter();
+            return BuildContainer(container.WithDependencyInjectionAdapter());
         }
     }
 }
