@@ -26,6 +26,7 @@ namespace Rocket.Surgery.Extensions.Testing
     {
         private readonly Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource, IObservable<LogEvent> logStream)> _values;
         private readonly List<string> _excludeSourceContexts = new List<string>();
+        private readonly List<string> _includeSourceContexts = new List<string>();
 
         /// <summary>
         /// The <see cref="ILoggerFactory" />
@@ -107,6 +108,7 @@ namespace Rocket.Surgery.Extensions.Testing
                     .WriteTo.Observers(x => x.Subscribe(subject))
                     .MinimumLevel.Is(minLevel)
                     .Enrich.FromLogContext();
+                FilterLogs(config);
                 configureLogger?.Invoke(config);
                 var logger = config.CreateLogger();
 
@@ -163,21 +165,37 @@ namespace Rocket.Surgery.Extensions.Testing
         /// Filter a given source context from serilog
         /// </summary>
         /// <param name="context"></param>
-        protected void FilterSourceContext(string context)
+        protected void ExcludeSourceContext(string context)
         {
             _excludeSourceContexts.Add(context);
         }
 
+        /// <summary>
+        /// Filter a given source context from serilog
+        /// </summary>
+        /// <param name="context"></param>
+        protected void IncludeSourceContext(string context)
+        {
+            _includeSourceContexts.Add(context);
+        }
+
         void FilterLogs(LoggerConfiguration loggerConfiguration)
         {
-            loggerConfiguration.Filter.ByExcluding(
-                x =>
+            loggerConfiguration
+               .Filter.ByExcluding(
+                    x =>
+                    {
+                        if (!x.Properties.TryGetValue("SourceContext", out var c) || !( c is ScalarValue sv ) || !( sv.Value is string sourceContext ))
+                            return false;
+                        return _excludeSourceContexts.Any(z => sourceContext != null && z?.Equals(sourceContext, StringComparison.Ordinal) == true);
+                    }
+                )
+               .Filter.ByIncludingOnly(x =>
                 {
                     if (!x.Properties.TryGetValue("SourceContext", out var c) || !( c is ScalarValue sv ) || !( sv.Value is string sourceContext ))
                         return false;
-                    return _excludeSourceContexts.Any(z => sourceContext != null && z?.Equals(sourceContext, StringComparison.Ordinal) == true);
-                }
-            );
+                    return _excludeSourceContexts.All(z => sourceContext != null && z?.Equals(sourceContext, StringComparison.Ordinal) == true);
+                });
         }
     }
 }

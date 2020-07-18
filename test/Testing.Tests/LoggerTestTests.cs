@@ -85,5 +85,39 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
                 yield return ( new[] { "1" }, 1 );
             }
         }
+
+        [Fact]
+        public void Should_Exclude_SourceContext_Messages()
+        {
+            using var listener = CaptureLogs(out var logs);
+            var logger = LoggerFactory.CreateLogger("MyLogger");
+            logger.LogInformation("Info");
+
+            logs.Should().HaveCount(1);
+
+            ExcludeSourceContext("MyLogger");
+            logger.LogInformation("Info");
+
+            logs.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void Should_Include_SourceContext_Messages()
+        {
+            using var listener = CaptureLogs(out var logs);
+            var logger = LoggerFactory.CreateLogger("MyLogger");
+            var otherLogger = LoggerFactory.CreateLogger("OtherLogger");
+
+            logger.LogInformation("Info");
+            otherLogger.LogInformation("Info");
+
+            logs.Should().HaveCount(2);
+
+            IncludeSourceContext("MyLogger");
+            logger.LogInformation("Info");
+            otherLogger.LogInformation("Info");
+
+            logs.Should().HaveCount(4);
+        }
     }
 }
