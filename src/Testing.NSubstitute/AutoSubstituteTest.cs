@@ -15,7 +15,8 @@ namespace Rocket.Surgery.Extensions.Testing
     public abstract class AutoSubstituteTest : LoggerTest
     {
         private static readonly IConfiguration ReadOnlyConfiguration = new ConfigurationBuilder().Build();
-        private AutoSubstitute _autoSubstitute;
+        private AutoSubstitute? _autoSubstitute;
+        private bool _building;
 
         protected AutoSubstituteTest(
             ITestOutputHelper outputHelper,
@@ -47,7 +48,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected AutoSubstitute AutoSubstitute => _autoSubstitute ??= new AutoSubstitute(configureAction: ConfigureContainer);
+        protected AutoSubstitute AutoSubstitute => _autoSubstitute ??= Rebuild();
 
         /// <summary>
         /// The DryIoc container
@@ -55,7 +56,21 @@ namespace Rocket.Surgery.Extensions.Testing
         protected IContainer Container
         {
             get => AutoSubstitute.Container;
-            private set => _autoSubstitute = new AutoSubstitute(configureAction: ConfigureContainer, container: value);
+            private set => _autoSubstitute = Rebuild(value);
+        }
+
+        /// <summary>
+        /// Force the container to rebuild from scratch
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        protected AutoSubstitute Rebuild(IContainer? container = null)
+        {
+            if (_building) throw new ApplicationException($"Unable to access {nameof(AutoSubstitute)} while the container is being constructed!");
+            _building = true;
+            var autoFake = new AutoSubstitute(configureAction: ConfigureContainer, container: container);
+            _building = false;
+            return autoFake;
         }
 
         /// <summary>
@@ -83,8 +98,8 @@ namespace Rocket.Surgery.Extensions.Testing
         [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
         protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
-            Container.UseInstance(configuration);
             Container.Populate(serviceCollection);
+            Container.UseInstance(configuration);
         }
 
         /// <summary>
@@ -106,7 +121,7 @@ namespace Rocket.Surgery.Extensions.Testing
             container.RegisterInstance(LoggerFactory);
             container.RegisterInstance(Logger);
             container.RegisterInstance(SerilogLogger);
-            return BuildContainer(container.WithDependencyInjectionAdapter());
+            return BuildContainer(container).WithDependencyInjectionAdapter();
         }
     }
 }

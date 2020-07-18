@@ -1,4 +1,5 @@
 using System;
+using DryIoc;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -7,6 +8,7 @@ using NSubstitute;
 using NSubstitute.ReceivedExtensions;
 using Xunit;
 using Xunit.Abstractions;
+using Arg = NSubstitute.Arg;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests
 {
@@ -21,6 +23,21 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
                 Logger.LogError("abcd");
                 Logger.LogError("abcd {something}", "somevalue");
             }
+        }
+
+        class DoubleAccess : AutoSubstituteTest
+        {
+            public DoubleAccess(ITestOutputHelper outputHelper) : base(outputHelper)
+            {
+            }
+
+            protected override IContainer BuildContainer(IContainer container)
+            {
+                // invalid do not touch ServiceProvider or Container while constructing the container....
+                return Container.GetRequiredService<IContainer>();
+            }
+
+            public IContainer Self => Container;
         }
 
         [Fact]
@@ -121,6 +138,14 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
                .Item
                .Should()
                .NotBeNull();
+        }
+
+        [Fact]
+        public void Should_Fail_If_Container_Is_Touched_When_Building()
+        {
+            var access = AutoSubstitute.Resolve<DoubleAccess>();
+            Action a = () => access.Self.Resolve<IContainer>();
+            a.Should().Throw<ApplicationException>();
         }
 
         class MyItem : IItem { }

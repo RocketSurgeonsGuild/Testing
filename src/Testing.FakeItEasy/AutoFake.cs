@@ -21,7 +21,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="container"></param>
         /// <param name="configureAction"></param>
         public AutoFake(
-            IContainer container = null,
+            IContainer? container = null,
             Func<IContainer, IContainer>? configureAction = null,
             Action<IFakeOptions>? fakeOptionsAction = null
         )
@@ -64,7 +64,6 @@ namespace Rocket.Surgery.Extensions.Testing
         /// </summary>
         /// <typeparam name="TService">The type of the service.</typeparam>
         /// <typeparam name="TImplementation">The implementation of the service.</typeparam>
-        /// <param name="parameters">Optional parameters.</param>
         /// <returns>The service.</returns>
         [SuppressMessage(
             "Microsoft.Reliability",

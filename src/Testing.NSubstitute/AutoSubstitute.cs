@@ -17,7 +17,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="container"></param>
         /// <param name="configureAction"></param>
         public AutoSubstitute(
-            IContainer container = null,
+            IContainer? container = null,
             Func<IContainer, IContainer>? configureAction = null)
         {
             Container = container ?? new Container();

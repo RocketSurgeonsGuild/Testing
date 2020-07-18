@@ -21,8 +21,9 @@ namespace Rocket.Surgery.Extensions.Testing
     public abstract class AutoFakeTest : LoggerTest
     {
         private static readonly IConfiguration ReadOnlyConfiguration = new ConfigurationBuilder().Build();
-        private readonly Action<IFakeOptions> _fakeOptionsAction;
-        private AutoFake _autoFake;
+        private readonly Action<IFakeOptions>? _fakeOptionsAction;
+        private AutoFake? _autoFake;
+        private bool _building;
 
         /// <summary>
         /// The Configuration if defined otherwise empty.
@@ -32,7 +33,7 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <summary>
         /// The AutoFake instance
         /// </summary>
-        protected AutoFake AutoFake => _autoFake ??= new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: _fakeOptionsAction);
+        protected AutoFake AutoFake => _autoFake ??= Rebuild();
 
         /// <summary>
         /// The DryIoc container
@@ -40,7 +41,21 @@ namespace Rocket.Surgery.Extensions.Testing
         protected IContainer Container
         {
             get => AutoFake.Container;
-            private set => _autoFake = new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: _fakeOptionsAction, container: value);
+            private set => _autoFake = Rebuild(value);
+        }
+
+        /// <summary>
+        /// Force the container to rebuild from scratch
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        protected AutoFake Rebuild(IContainer? container = null)
+        {
+            if (_building) throw new ApplicationException($"Unable to access {nameof(AutoFake)} while the container is being constructed!");
+            _building = true;
+            var autoFake = new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: _fakeOptionsAction, container: container);
+            _building = false;
+            return autoFake;
         }
 
         /// <summary>
@@ -60,7 +75,7 @@ namespace Rocket.Surgery.Extensions.Testing
             ITestOutputHelper outputHelper,
             string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
             Action<LoggerConfiguration>? configureLogger = null,
-            Action<IFakeOptions> fakeOptionsAction = null
+            Action<IFakeOptions>? fakeOptionsAction = null
         )
             : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger, fakeOptionsAction) { }
 
@@ -77,7 +92,7 @@ namespace Rocket.Surgery.Extensions.Testing
             LogLevel minLevel,
             string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
             Action<LoggerConfiguration>? configureLogger = null,
-            Action<IFakeOptions> fakeOptionsAction = null
+            Action<IFakeOptions>? fakeOptionsAction = null
         )
             : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger, fakeOptionsAction) { }
 
@@ -94,7 +109,7 @@ namespace Rocket.Surgery.Extensions.Testing
             LogEventLevel minLevel,
             string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
             Action<LoggerConfiguration>? configureLogger = null,
-            Action<IFakeOptions> fakeOptionsAction = null
+            Action<IFakeOptions>? fakeOptionsAction = null
         )
             : base(outputHelper, minLevel, logFormat, configureLogger)
         {
@@ -107,7 +122,7 @@ namespace Rocket.Surgery.Extensions.Testing
             container.RegisterInstance(LoggerFactory);
             container.RegisterInstance(Logger);
             container.RegisterInstance(SerilogLogger);
-            return BuildContainer(container.WithDependencyInjectionAdapter());
+            return BuildContainer(container).WithDependencyInjectionAdapter();
         }
 
         /// <summary>
@@ -125,8 +140,8 @@ namespace Rocket.Surgery.Extensions.Testing
         [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
         protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
         {
-            Container.UseInstance(configuration);
             Container.Populate(serviceCollection);
+            Container.UseInstance(configuration);
         }
 
         /// <summary>
