@@ -22,8 +22,8 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="configureAction"></param>
         public AutoMock(
             MockBehavior behavior,
-            IContainer container = null,
-            Func<IContainer, IContainer> configureAction = null
+            IContainer? container = null,
+            Func<IContainer, IContainer>? configureAction = null
         )
             : this(new MockRepository(behavior), container, configureAction) { }
 
@@ -35,8 +35,8 @@ namespace Rocket.Surgery.Extensions.Testing
         /// <param name="configureAction"></param>
         public AutoMock(
             MockRepository repository,
-            IContainer container = null,
-            Func<IContainer, IContainer> configureAction = null
+            IContainer? container = null,
+            Func<IContainer, IContainer>? configureAction = null
         )
         {
             Container = container ?? new Container();
