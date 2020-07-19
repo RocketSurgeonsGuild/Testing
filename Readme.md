@@ -23,6 +23,7 @@
 | Rocket.Surgery.Extensions.Testing.Moq | [![nuget-version-lgkm8pi65yea-badge]![nuget-downloads-lgkm8pi65yea-badge]][nuget-lgkm8pi65yea] |
 | Rocket.Surgery.Extensions.Testing.FakeItEasy | [![nuget-version-6rnnzg4ixtvq-badge]![nuget-downloads-6rnnzg4ixtvq-badge]][nuget-6rnnzg4ixtvq] |
 | Rocket.Surgery.Extensions.Testing.NSubstitute | [![nuget-version-fyo8rfzowxvg-badge]![nuget-downloads-fyo8rfzowxvg-badge]][nuget-fyo8rfzowxvg] |
+| Rocket.Surgery.Extensions.Testing.XUnit | [![nuget-version-8nuftac8whxa-badge]![nuget-downloads-8nuftac8whxa-badge]][nuget-8nuftac8whxa] |
 <!-- nuget packages -->
 
 # Whats next?
@@ -40,7 +41,7 @@ TBD
 [azurepipelines-history]: https://rocketsurgeonsguild.visualstudio.com/Libraries/_build?definitionId=1&branchName=master
 [azurepipelines-history-badge]: https://buildstats.info/azurepipelines/chart/rocketsurgeonsguild/Libraries/1?includeBuildsFromPullRequest=false "Azure Pipelines History"
 [github]: https://github.com/RocketSurgeonsGuild/Testing/actions?query=workflow%3Aci
-[github-badge]: https://img.shields.io/github/ci/RocketSurgeonsGuild/Testing.svg?label=github&logo=github&color=b845fc&logoColor=b845fc&style=flat "GitHub Actions Status"
+[github-badge]: https://img.shields.io/github/workflow/status/RocketSurgeonsGuild/Testing/ci.svg?label=github&logo=github&color=b845fc&logoColor=b845fc&style=flat "GitHub Actions Status"
 [github-history-badge]: https://buildstats.info/github/chart/RocketSurgeonsGuild/Testing?includeBuildsFromPullRequest=false "GitHub Actions History"
 [nuget-ingbk+ngdt+w]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing/
 [nuget-version-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
@@ -60,6 +61,9 @@ TBD
 [nuget-fyo8rfzowxvg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.NSubstitute/
 [nuget-version-fyo8rfzowxvg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.NSubstitute.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-fyo8rfzowxvg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.NSubstitute.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
+[nuget-8nuftac8whxa]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.XUnit/
+[nuget-version-8nuftac8whxa-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.XUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-8nuftac8whxa-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.XUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 <!-- generated references -->
 
 <!-- nuke-data
