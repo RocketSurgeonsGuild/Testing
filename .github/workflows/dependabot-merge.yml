@@ -1,7 +1,7 @@
 name: Dependabot Commenter
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - labeled
 
@@ -15,7 +15,7 @@ jobs:
       - name: Dependabot Commenter
         if: |
           (github.event.label.name == ':shipit: merge') && (github.event.pull_request.user.login == 'dependabot[bot]' || github.event.pull_request.user.login == 'dependabot-preview[bot]')
-        uses: david-driscoll/actions-label-commenter@temp
+        uses: peaceiris/actions-label-commenter@v1.3.7
         with:
           github_token: ${{ secrets.RSG_BOT_TOKEN }}
           config_file: .github/label-commenter-dependabot.yml
