@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <ItemGroup>
-    <GlobalPackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" />
-    <GlobalPackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.0.0" />
+    <GlobalPackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0" />
+    <GlobalPackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.0" />
     <GlobalPackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
     <GlobalPackageReference Include="Rocket.Surgery.MSBuild.CI" Version="1.0.0" />
@@ -14,7 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Update="GitVersion.Tool" Version="5.3.7" />
-    <PackageReference Update="JetBrains.ReSharper.CommandLineTools" Version="2020.1.4" />
+    <PackageReference Update="JetBrains.ReSharper.CommandLineTools" Version="2020.2.0" />
     <PackageReference Update="Nuke.Common" Version="0.25.0-alpha0334" />
     <PackageReference Update="ReportGenerator" Version="4.6.4" />
     <PackageReference Update="Rocket.Surgery.Nuke" Version="0.14.0-beta.8" />
@@ -33,8 +33,8 @@
     <PackageReference Update="System.Reactive" Version="4.4.1" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="DryIoc.dll" Version="4.2.5" />
-    <PackageReference Update="DryIoc.Microsoft.DependencyInjection" Version="4.0.0" />
+    <PackageReference Update="DryIoc.dll" Version="4.3.2" />
+    <PackageReference Update="DryIoc.Microsoft.DependencyInjection" Version="4.1.0" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" />
     <PackageReference Update="coverlet.msbuild" Version="2.9.0" />
     <PackageReference Update="FakeItEasy" Version="6.2.0" />
@@ -42,13 +42,13 @@
     <PackageReference Update="Autofac.Extras.FakeItEasy" Version="6.0.0" />
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
     <PackageReference Update="FluentAssertions.Analyzers" Version="0.11.4" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Update="Moq" Version="4.14.5" />
     <PackageReference Update="NSubstitute" Version="4.2.2" />
     <PackageReference Update="NSubstitute.Analyzers.CSharp" Version="1.0.13" />
     <PackageReference Update="xunit" Version="2.4.1" />
     <PackageReference Update="xunit.abstractions" Version="2.0.3" />
     <PackageReference Update="xunit.analyzers" Version="0.10.0" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.3" />
   </ItemGroup>
 </Project>
