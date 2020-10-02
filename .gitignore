@@ -207,7 +207,6 @@ codealike.json
 
 # Rider
 .idea/
-global.json
 
 # mac OS
 .DS_STORE
