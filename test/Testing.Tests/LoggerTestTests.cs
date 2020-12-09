@@ -117,7 +117,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests
             logger.LogInformation("Info");
             otherLogger.LogInformation("Info");
 
-            logs.Should().HaveCount(4);
+            logs.Should().HaveCount(3);
         }
     }
 }
