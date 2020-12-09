@@ -194,7 +194,7 @@ namespace Rocket.Surgery.Extensions.Testing
                 {
                     if (!x.Properties.TryGetValue("SourceContext", out var c) || !( c is ScalarValue sv ) || !( sv.Value is string sourceContext ))
                         return false;
-                    return _excludeSourceContexts.All(z => sourceContext != null && z?.Equals(sourceContext, StringComparison.Ordinal) == true);
+                    return _includeSourceContexts.All(z => sourceContext != null && z?.Equals(sourceContext, StringComparison.Ordinal) == true);
                 });
         }
     }
