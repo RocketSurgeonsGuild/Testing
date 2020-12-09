@@ -1,6 +1,7 @@
 # Rocket Surgeons - Testing
 
 # Status
+
 <!-- badges -->
 [![github-release-badge]][github-release]
 [![github-license-badge]][github-license]
@@ -8,10 +9,10 @@
 <!-- badges -->
 
 <!-- history badges -->
-| Azure Pipelines | GitHub Actions |
-| --------------- | -------------- |
-| [![azurepipelines-badge]][azurepipelines] | [![github-badge]][github] |
-| [![azurepipelines-history-badge]][azurepipelines-history] | [![github-history-badge]][github] |
+| GitHub Actions |
+| -------------- |
+| [![github-badge]][github] |
+| [![github-history-badge]][github] |
 <!-- history badges -->
 
 <!-- nuget packages -->
@@ -27,6 +28,7 @@
 <!-- nuget packages -->
 
 # Whats next?
+
 TBD
 
 <!-- generated references -->
@@ -36,10 +38,6 @@ TBD
 [github-license-badge]: https://img.shields.io/github/license/RocketSurgeonsGuild/Testing.svg?style=flat "License"
 [codecov]: https://codecov.io/gh/RocketSurgeonsGuild/Testing
 [codecov-badge]: https://img.shields.io/codecov/c/github/RocketSurgeonsGuild/Testing.svg?color=E03997&label=codecov&logo=codecov&logoColor=E03997&style=flat "Code Coverage"
-[azurepipelines]: https://dev.azure.com/rocketsurgeonsguild/Libraries/_build/latest?definitionId=1&branchName=master
-[azurepipelines-badge]: https://img.shields.io/azure-devops/build/rocketsurgeonsguild/Libraries/1.svg?color=98C6FF&label=azure%20pipelines&logo=azuredevops&logoColor=98C6FF&style=flat "Azure Pipelines Status"
-[azurepipelines-history]: https://dev.azure.com/rocketsurgeonsguild/Libraries/_build?definitionId=1&branchName=master
-[azurepipelines-history-badge]: https://buildstats.info/azurepipelines/chart/rocketsurgeonsguild/Libraries/1?includeBuildsFromPullRequest=false "Azure Pipelines History"
 [github]: https://github.com/RocketSurgeonsGuild/Testing/actions?query=workflow%3Aci
 [github-badge]: https://img.shields.io/github/workflow/status/RocketSurgeonsGuild/Testing/ci.svg?label=github&logo=github&color=b845fc&logoColor=b845fc&style=flat "GitHub Actions Status"
 [github-history-badge]: https://buildstats.info/github/chart/RocketSurgeonsGuild/Testing?includeBuildsFromPullRequest=false "GitHub Actions History"
@@ -70,8 +68,4 @@ TBD
 github:
   owner: RocketSurgeonsGuild
   repository: Testing
-azurepipelines:
-  account: rocketsurgeonsguild
-  teamproject: Libraries
-  builddefinition: 1
 -->
