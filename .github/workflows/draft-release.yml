@@ -17,6 +17,9 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: git fetch --prune
 
+      - run: rm global.json
+        name: 'Remove global json from workflow'
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.10
         with:
