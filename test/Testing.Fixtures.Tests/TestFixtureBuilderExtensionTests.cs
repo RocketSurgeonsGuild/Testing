@@ -1,7 +1,6 @@
-using Rocket.Surgery.Extensions.Testing.Fixtures.Tests;
 using Xunit;
 
-namespace Testing.Fixture.Tests;
+namespace Rocket.Surgery.Extensions.Testing.Fixtures.Tests;
 
 public sealed class TestFixtureBuilderExtensionTests
 {

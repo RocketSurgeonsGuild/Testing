@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Rocket.Surgery.Extensions.Testing.Tests;
+namespace Rocket.Surgery.Extensions.Testing.Tests.Fake;
 
 public class AutoFakeTestTests : AutoFakeTest
 {
@@ -19,7 +19,7 @@ public class AutoFakeTestTests : AutoFakeTest
         public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
         {
             Logger.LogError("abcd");
-            Logger.LogError("abcd {something}", "somevalue");
+            Logger.LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -41,7 +41,7 @@ public class AutoFakeTestTests : AutoFakeTest
     [Fact]
     public void Should_Create_Usable_Logger()
     {
-        var test = AutoFake.Resolve<Impl>();
+        AutoFake.Resolve<Impl>();
         A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
     }
 
@@ -54,7 +54,7 @@ public class AutoFakeTestTests : AutoFakeTest
         public void Write()
         {
             AutoFake.Resolve<ILogger>().LogError("abcd");
-            AutoFake.Resolve<ILogger>().LogError("abcd {something}", "somevalue");
+            AutoFake.Resolve<ILogger>().LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -75,7 +75,7 @@ public class AutoFakeTestTests : AutoFakeTest
         public void Write()
         {
             AutoFake.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd");
-            AutoFake.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd {something}", "somevalue");
+            AutoFake.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -96,7 +96,7 @@ public class AutoFakeTestTests : AutoFakeTest
         public void Write()
         {
             AutoFake.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd");
-            AutoFake.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd {something}", "somevalue");
+            AutoFake.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -132,7 +132,7 @@ public class AutoFakeTestTests : AutoFakeTest
     {
         AutoFake.Provide<IItem>(new MyItem());
         AutoFake.Resolve<Optional>().Item.Should().NotBeNull()
-                .And.Match(z => !Fake.IsFake(z));
+                .And.Match(z => !FakeItEasy.Fake.IsFake(z));
     }
 
     [Fact]

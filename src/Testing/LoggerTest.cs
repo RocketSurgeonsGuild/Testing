@@ -18,7 +18,9 @@ namespace Rocket.Surgery.Extensions.Testing;
 ///     A simple base test class with logger, logger factory and diagnostic source all wired into the <see cref="ITestOutputHelper" />.
 /// </summary>
 [PublicAPI]
+#pragma warning disable CA1063
 public abstract class LoggerTest : IDisposable
+#pragma warning restore CA1063
 {
     private readonly Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource, IObservable<LogEvent>
         logStream)> _values;
@@ -175,7 +177,13 @@ public abstract class LoggerTest : IDisposable
         return new SerilogLoggerFactory(logger, false, loggerProviderCollection);
     }
 
+#pragma warning disable CA1063
+#pragma warning disable CA1816
+#pragma warning disable CA1033
     void IDisposable.Dispose()
+#pragma warning restore CA1033
+#pragma warning restore CA1816
+#pragma warning restore CA1063
     {
         Disposables.Dispose();
     }
@@ -186,6 +194,7 @@ public abstract class LoggerTest : IDisposable
     /// <param name="context"></param>
     protected void ExcludeSourceContext(string context)
     {
+        if (string.IsNullOrWhiteSpace(context)) return;
         _excludeSourceContexts.Add(context);
     }
 
@@ -195,6 +204,7 @@ public abstract class LoggerTest : IDisposable
     /// <param name="context"></param>
     protected void IncludeSourceContext(string context)
     {
+        if (string.IsNullOrWhiteSpace(context)) return;
         _includeSourceContexts.Add(context);
     }
 
@@ -204,17 +214,17 @@ public abstract class LoggerTest : IDisposable
            .Filter.ByExcluding(
                 x =>
                 {
-                    if (!x.Properties.TryGetValue("SourceContext", out var c) || !( c is ScalarValue sv ) || !( sv.Value is string sourceContext ))
+                    if (!x.Properties.TryGetValue("SourceContext", out var c) || c is not ScalarValue { Value: string sourceContext })
                         return false;
-                    return _excludeSourceContexts.Any(z => sourceContext != null && z?.Equals(sourceContext, StringComparison.Ordinal) == true);
+                    return _excludeSourceContexts.Any(z => z.Equals(sourceContext, StringComparison.Ordinal));
                 }
             )
            .Filter.ByIncludingOnly(
                 x =>
                 {
-                    if (!x.Properties.TryGetValue("SourceContext", out var c) || !( c is ScalarValue sv ) || !( sv.Value is string sourceContext ))
+                    if (!x.Properties.TryGetValue("SourceContext", out var c) || c is not ScalarValue { Value: string sourceContext })
                         return false;
-                    return _includeSourceContexts.All(z => sourceContext != null && z?.Equals(sourceContext, StringComparison.Ordinal) == true);
+                    return _includeSourceContexts.All(z => z.Equals(sourceContext, StringComparison.Ordinal));
                 }
             );
     }

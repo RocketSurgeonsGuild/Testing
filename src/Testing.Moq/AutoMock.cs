@@ -42,7 +42,7 @@ public sealed class AutoMock : IDisposable
         Container = Container.With(
             rules =>
             {
-                var createMethod = typeof(MockRepository).GetMethod(nameof(MockRepository.Create), Array.Empty<Type>());
+                var createMethod = typeof(MockRepository).GetMethod(nameof(MockRepository.Create), Array.Empty<Type>())!;
                 return rules
                       .WithTestLoggerResolver(
                            (request, loggerType) => ActivatorUtilities.CreateInstance(request.Container, loggerType)
@@ -50,10 +50,10 @@ public sealed class AutoMock : IDisposable
                       .WithUndefinedTestDependenciesResolver(
                            request => ( (Mock)createMethod
                                              .MakeGenericMethod(request.ServiceType)
-                                             .Invoke(repository, Array.Empty<object>())
+                                             .Invoke(repository, Array.Empty<object>())!
                                ).Object
                        )
-                      .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient);
+                      .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient);
             }
         );
 
@@ -93,7 +93,6 @@ public sealed class AutoMock : IDisposable
     /// </summary>
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <typeparam name="TImplementation">The implementation of the service.</typeparam>
-    /// <param name="parameters">Optional parameters.</param>
     /// <returns>The service.</returns>
     [SuppressMessage(
         "Microsoft.Reliability",
@@ -124,7 +123,9 @@ public sealed class AutoMock : IDisposable
         return instance;
     }
 
+#pragma warning disable CA1063
     void IDisposable.Dispose()
+#pragma warning restore CA1063
     {
         Container.Dispose();
     }

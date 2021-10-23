@@ -5,10 +5,6 @@ using Serilog.Events;
 using Xunit;
 using Xunit.Abstractions;
 
-#pragma warning disable CA1034 // Nested types should not be visible
-#pragma warning disable CA2000 // Dispose objects before losing scope
-#pragma warning disable CA1062 // Validate arguments of public methods
-
 namespace Rocket.Surgery.Extensions.Testing.Tests;
 
 public class LoggerTestTests : LoggerTest
@@ -22,7 +18,7 @@ public class LoggerTestTests : LoggerTest
         public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
         {
             Logger.LogError("abcd");
-            Logger.LogError("abcd {something}", "somevalue");
+            Logger.LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -30,7 +26,6 @@ public class LoggerTestTests : LoggerTest
     public void Should_Create_Usable_Logger()
     {
         var helper = A.Fake<ITestOutputHelper>();
-        var test = new Impl(helper);
         A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
     }
 

@@ -27,7 +27,7 @@ public abstract class AutoFakeTest : LoggerTest
     /// <summary>
     ///     The Configuration if defined otherwise empty.
     /// </summary>
-    protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.GetService<IConfiguration>() : ReadOnlyConfiguration;
+    protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.Resolve<IConfiguration>() : ReadOnlyConfiguration;
 
     /// <summary>
     ///     The AutoFake instance
@@ -46,11 +46,12 @@ public abstract class AutoFakeTest : LoggerTest
     /// <summary>
     ///     Force the container to rebuild from scratch
     /// </summary>
+    /// <exception cref="ApplicationException"></exception>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="ApplicationException"></exception>
     protected AutoFake Rebuild(IContainer? container = null)
     {
-        if (_building) throw new ApplicationException($"Unable to access {nameof(AutoFake)} while the container is being constructed!");
+        if (_building) throw new TestBootstrapException($"Unable to access {nameof(AutoFake)} while the container is being constructed!");
         _building = true;
         var autoFake = new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: _fakeOptionsAction, container: container);
         _building = false;
