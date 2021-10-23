@@ -6,7 +6,7 @@ using Moq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Rocket.Surgery.Extensions.Testing.Tests;
+namespace Rocket.Surgery.Extensions.Testing.Tests.Mock;
 
 public class AutoMockTestTests : AutoMockTest
 {
@@ -19,7 +19,7 @@ public class AutoMockTestTests : AutoMockTest
         public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
         {
             Logger.LogError("abcd");
-            Logger.LogError("abcd {something}", "somevalue");
+            Logger.LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -41,7 +41,7 @@ public class AutoMockTestTests : AutoMockTest
     [Fact]
     public void Should_Create_Usable_Logger()
     {
-        var test = AutoMock.Resolve<Impl>();
+        AutoMock.Resolve<Impl>();
         AutoMock.Mock<ITestOutputHelper>().Verify(x => x.WriteLine(It.IsAny<string>()), Times.AtLeastOnce);
     }
 
@@ -70,7 +70,7 @@ public class AutoMockTestTests : AutoMockTest
         AutoMock.Provide<IItem>(new MyItem());
         var optional = AutoMock.Resolve<Optional>();
         optional.Item.Should().NotBeNull();
-        Action a = () => Mock.Get(optional);
+        Action a = () => Moq.Mock.Get(optional);
         a.Should().Throw<ArgumentException>();
     }
 
@@ -79,7 +79,7 @@ public class AutoMockTestTests : AutoMockTest
     {
         var access = AutoMock.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<ApplicationException>();
+        a.Should().Throw<TestBootstrapException>();
     }
 
     private class MyItem : IItem

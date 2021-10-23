@@ -1,11 +1,9 @@
 using FluentAssertions;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
-using NSubstitute;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Rocket.Surgery.Extensions.Testing.Tests;
+namespace Rocket.Surgery.Extensions.Testing.Tests.Substitute;
 
 public class AutoSubstituteEnumerableTests : AutoSubstituteTest
 {
@@ -32,7 +30,7 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest
     [Fact]
     public void Handle_One_Substitute_Item()
     {
-        var fake1 = AutoSubstitute.Provide(Substitute.For<Item>());
+        var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
         result.Should().HaveCount(1);
@@ -42,8 +40,8 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest
     [Fact]
     public void Handle_Two_Substitute_Item()
     {
-        var fake1 = AutoSubstitute.Provide(Substitute.For<Item>());
-        var fake2 = AutoSubstitute.Provide(Substitute.For<Item>());
+        var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
+        var fake2 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
         result.Should().HaveCount(2);
@@ -54,9 +52,9 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest
     [Fact]
     public void Handle_Three_Substitute_Item()
     {
-        var fake1 = AutoSubstitute.Provide(Substitute.For<Item>());
-        var fake2 = AutoSubstitute.Provide(Substitute.For<Item>());
-        var fake3 = AutoSubstitute.Provide(Substitute.For<Item>());
+        var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
+        var fake2 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
+        var fake3 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
         result.Should().HaveCount(3);
@@ -68,10 +66,10 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest
     [Fact]
     public void Handle_Four_Substitute_Item()
     {
-        var fake1 = AutoSubstitute.Provide(Substitute.For<Item>());
-        var fake2 = AutoSubstitute.Provide(Substitute.For<Item>());
-        var fake3 = AutoSubstitute.Provide(Substitute.For<Item>());
-        var fake4 = AutoSubstitute.Provide(Substitute.For<Item>());
+        var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
+        var fake2 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
+        var fake3 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
+        var fake4 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
         result.Should().HaveCount(4);
@@ -107,13 +105,7 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest
 
     private class LoggerTest : Item
     {
-#pragma warning disable IDE0060 // Remove unused parameter
-#pragma warning disable RCS1163 // Unused parameter.
-#pragma warning disable CS0436 // Type conflicts with imported type
-        public LoggerTest([NotNull] ILogger logger)
-#pragma warning restore CS0436 // Type conflicts with imported type
-#pragma warning restore RCS1163 // Unused parameter.
-#pragma warning restore IDE0060 // Remove unused parameter
+        public LoggerTest(ILogger logger)
         {
             if (logger == null)
             {

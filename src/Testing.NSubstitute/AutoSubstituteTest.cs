@@ -11,12 +11,21 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
+/// <summary>
+/// A test using NSubstitute
+/// </summary>
 public abstract class AutoSubstituteTest : LoggerTest
 {
     private static readonly IConfiguration ReadOnlyConfiguration = new ConfigurationBuilder().Build();
     private AutoSubstitute? _autoSubstitute;
     private bool _building;
 
+    /// <summary>
+    /// The default constructor
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
     protected AutoSubstituteTest(
         ITestOutputHelper outputHelper,
         string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
@@ -26,6 +35,13 @@ public abstract class AutoSubstituteTest : LoggerTest
     {
     }
 
+    /// <summary>
+    /// The default constructor
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="minLevel"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
     protected AutoSubstituteTest(
         ITestOutputHelper outputHelper,
         LogLevel minLevel,
@@ -36,6 +52,13 @@ public abstract class AutoSubstituteTest : LoggerTest
     {
     }
 
+    /// <summary>
+    /// The default constructor
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="minLevel"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
     protected AutoSubstituteTest(
         ITestOutputHelper outputHelper,
         LogEventLevel minLevel,
@@ -48,7 +71,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     /// <summary>
     ///     The Configuration if defined otherwise empty.
     /// </summary>
-    protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.GetService<IConfiguration>() : ReadOnlyConfiguration;
+    protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.Resolve<IConfiguration>() : ReadOnlyConfiguration;
 
     /// <summary>
     ///     The AutoFake instance
@@ -71,7 +94,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     /// <exception cref="Exception"></exception>
     protected AutoSubstitute Rebuild(IContainer? container = null)
     {
-        if (_building) throw new ApplicationException($"Unable to access {nameof(AutoSubstitute)} while the container is being constructed!");
+        if (_building) throw new TestBootstrapException($"Unable to access {nameof(AutoSubstitute)} while the container is being constructed!");
         _building = true;
         var autoFake = new AutoSubstitute(configureAction: ConfigureContainer, container: container);
         _building = false;

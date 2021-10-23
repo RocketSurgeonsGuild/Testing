@@ -8,7 +8,7 @@ namespace Rocket.Surgery.Extensions.Testing;
 /// <summary>
 ///     Automatically creates substitute for requested services that haven't been registered
 /// </summary>
-public class AutoSubstitute : IDisposable
+public sealed class AutoSubstitute : IDisposable
 {
     /// <summary>
     ///     Create a container that automatically substitutes unknown types.
@@ -32,7 +32,7 @@ public class AutoSubstitute : IDisposable
                              request =>
                                  Substitute.For(new[] { request.ServiceType }, null)
                          )
-                        .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient)
+                        .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
 
         if (configureAction != null)
@@ -91,8 +91,7 @@ public class AutoSubstitute : IDisposable
         return Container.Resolve<TService>();
     }
 
-    void IDisposable.Dispose()
-    {
-        Container.Dispose();
-    }
+#pragma warning disable CA1063
+    void IDisposable.Dispose() => Container.Dispose();
+#pragma warning restore CA1063
 }

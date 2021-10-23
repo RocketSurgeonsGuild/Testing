@@ -1,10 +1,11 @@
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
 internal static class TheoryCollectionHelpers
 {
-    internal static MethodInfo GetTupleMethodInfo(Type type)
+    private static MethodInfo GetTupleMethodInfo(Type type)
     {
         var methodInfo = typeof(TheoryCollectionHelpers)
                         .GetMethods(BindingFlags.Static | BindingFlags.NonPublic)
@@ -46,26 +47,31 @@ internal static class TheoryCollectionHelpers
         return x => new[] { x };
     }
 
+    [UsedImplicitly]
     private static object?[] FromValueTuple<T1>(ValueTuple<T1> value)
     {
         return new object?[] { value.Item1 };
     }
 
+    [UsedImplicitly]
     private static object?[] FromValueTuple<T1, T2>(ValueTuple<T1, T2> value)
     {
         return new object?[] { value.Item1, value.Item2 };
     }
 
+    [UsedImplicitly]
     private static object?[] FromValueTuple<T1, T2, T3>(ValueTuple<T1, T2, T3> value)
     {
         return new object?[] { value.Item1, value.Item2, value.Item3 };
     }
 
+    [UsedImplicitly]
     private static object?[] FromValueTuple<T1, T2, T3, T4>(ValueTuple<T1, T2, T3, T4> value)
     {
         return new object?[] { value.Item1, value.Item2, value.Item3, value.Item4 };
     }
 
+    [UsedImplicitly]
     private static object?[] FromValueTuple<T1, T2, T3, T4, T5>(ValueTuple<T1, T2, T3, T4, T5> value)
     {
         return new object?[] { value.Item1, value.Item2, value.Item3, value.Item4, value.Item5 };

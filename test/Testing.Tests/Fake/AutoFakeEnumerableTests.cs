@@ -1,14 +1,9 @@
 using FluentAssertions;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
-#pragma warning disable CA1034 // Nested types should not be visible
-#pragma warning disable CA1715 // Identifiers should have correct prefix
-#pragma warning disable CA1040 // Avoid empty interfaces
-
-namespace Rocket.Surgery.Extensions.Testing.Tests;
+namespace Rocket.Surgery.Extensions.Testing.Tests.Fake;
 
 public class AutoFakeEnumerableTests : AutoFakeTest
 {
@@ -110,13 +105,7 @@ public class AutoFakeEnumerableTests : AutoFakeTest
 
     private class LoggerTest : Item
     {
-#pragma warning disable IDE0060 // Remove unused parameter
-#pragma warning disable RCS1163 // Unused parameter.
-#pragma warning disable CS0436 // Type conflicts with imported type
-        public LoggerTest([NotNull] ILogger logger)
-#pragma warning restore CS0436 // Type conflicts with imported type
-#pragma warning restore RCS1163 // Unused parameter.
-#pragma warning restore IDE0060 // Remove unused parameter
+        public LoggerTest(ILogger logger)
         {
             if (logger == null)
             {

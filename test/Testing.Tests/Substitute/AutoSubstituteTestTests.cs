@@ -7,7 +7,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Arg = NSubstitute.Arg;
 
-namespace Rocket.Surgery.Extensions.Testing.Tests;
+namespace Rocket.Surgery.Extensions.Testing.Tests.Substitute;
 
 public class AutoSubstituteTestTests : AutoSubstituteTest
 {
@@ -20,7 +20,7 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
         public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
         {
             Logger.LogError("abcd");
-            Logger.LogError("abcd {something}", "somevalue");
+            Logger.LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -42,7 +42,7 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
     [Fact]
     public void Should_Create_Usable_Logger()
     {
-        var test = AutoSubstitute.Resolve<Impl>();
+        AutoSubstitute.Resolve<Impl>();
         AutoSubstitute.Resolve<ITestOutputHelper>().Received().WriteLine(Arg.Any<string>());
     }
 
@@ -55,7 +55,7 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
         public void Write()
         {
             AutoSubstitute.Resolve<ILogger>().LogError("abcd");
-            AutoSubstitute.Resolve<ILogger>().LogError("abcd {something}", "somevalue");
+            AutoSubstitute.Resolve<ILogger>().LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -76,7 +76,7 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
         public void Write()
         {
             AutoSubstitute.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd");
-            AutoSubstitute.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd {something}", "somevalue");
+            AutoSubstitute.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -100,7 +100,7 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
         public void Write()
         {
             AutoSubstitute.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd");
-            AutoSubstitute.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd {something}", "somevalue");
+            AutoSubstitute.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd {Something}", "somevalue");
         }
     }
 
@@ -147,7 +147,7 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
     {
         var access = AutoSubstitute.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<ApplicationException>();
+        a.Should().Throw<TestBootstrapException>();
     }
 
     private class MyItem : IItem

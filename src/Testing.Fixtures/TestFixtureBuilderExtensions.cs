@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+using System.Collections.ObjectModel;
 
 namespace Rocket.Surgery.Extensions.Testing.Fixtures;
 
@@ -33,7 +33,7 @@ public static class TestFixtureBuilderExtensions
     /// <param name="field">The field.</param>
     /// <param name="values">The values.</param>
     /// <returns></returns>
-    public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, IEnumerable<TField> values)
+    public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref Collection<TField>? field, IEnumerable<TField>? values)
         where TBuilder : ITestFixtureBuilder
     {
         if (values == null)
@@ -42,7 +42,35 @@ public static class TestFixtureBuilderExtensions
         }
         else if (field != null)
         {
-            field.AddRange(values);
+            foreach (var item in values)
+                field.Add(item);
+        }
+
+        return @this;
+    }
+
+    /// <summary>
+    ///     Adds the specified list of fields to the builder.
+    /// </summary>
+    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
+    /// <typeparam name="TField">The type of the field.</typeparam>
+    /// <param name="this">The this.</param>
+    /// <param name="field">The field.</param>
+    /// <param name="values">The values.</param>
+    /// <returns></returns>
+#pragma warning disable CA1002
+    public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, IEnumerable<TField>? values)
+#pragma warning restore CA1002
+        where TBuilder : ITestFixtureBuilder
+    {
+        if (values == null)
+        {
+            field = null;
+        }
+        else if (field != null)
+        {
+            foreach (var item in values)
+                field.Add(item);
         }
 
         return @this;
@@ -57,7 +85,25 @@ public static class TestFixtureBuilderExtensions
     /// <param name="field">The field.</param>
     /// <param name="value">The value.</param>
     /// <returns></returns>
+    public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref Collection<TField>? field, TField value)
+        where TBuilder : ITestFixtureBuilder
+    {
+        field?.Add(value);
+        return @this;
+    }
+
+    /// <summary>
+    ///     Adds the specified field to the builder.
+    /// </summary>
+    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
+    /// <typeparam name="TField">The type of the field.</typeparam>
+    /// <param name="this">The this.</param>
+    /// <param name="field">The field.</param>
+    /// <param name="value">The value.</param>
+    /// <returns></returns>
+#pragma warning disable CA1002
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, TField value)
+#pragma warning restore CA1002
         where TBuilder : ITestFixtureBuilder
     {
         field?.Add(value);
@@ -75,8 +121,9 @@ public static class TestFixtureBuilderExtensions
     /// <param name="keyValuePair">The key value pair.</param>
     /// <returns></returns>
     public static TBuilder With<TBuilder, TKey, TField>(
-        this TBuilder @this, [NotNull] ref Dictionary<TKey, TField> dictionary, KeyValuePair<TKey, TField> keyValuePair
+        this TBuilder @this, ref Dictionary<TKey, TField> dictionary, KeyValuePair<TKey, TField> keyValuePair
     )
+        where TKey : notnull
         where TBuilder : ITestFixtureBuilder
     {
         if (dictionary == null)
@@ -99,7 +146,8 @@ public static class TestFixtureBuilderExtensions
     /// <param name="key">The key.</param>
     /// <param name="value">The value.</param>
     /// <returns></returns>
-    public static TBuilder With<TBuilder, TKey, TField>(this TBuilder @this, [NotNull] ref Dictionary<TKey, TField> dictionary, TKey key, TField value)
+    public static TBuilder With<TBuilder, TKey, TField>(this TBuilder @this, ref Dictionary<TKey, TField> dictionary, TKey key, TField value)
+        where TKey : notnull
         where TBuilder : ITestFixtureBuilder
     {
         if (dictionary == null)
@@ -123,11 +171,13 @@ public static class TestFixtureBuilderExtensions
     /// <returns></returns>
     public static TBuilder With<TBuilder, TKey, TField>(
         this TBuilder @this,
+        // ReSharper disable once RedundantAssignment
         ref Dictionary<TKey, TField> dictionary,
-        IDictionary<TKey, TField> keyValuePair
+        Dictionary<TKey, TField> keyValuePair
     )
+        where TKey : notnull
     {
-        dictionary = (Dictionary<TKey, TField>)keyValuePair;
+        dictionary = keyValuePair;
         return @this;
     }
 }

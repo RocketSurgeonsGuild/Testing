@@ -11,7 +11,7 @@ public abstract class TheoryCollection<T> : IEnumerable<object?[]>
         return InternalGetData().GetEnumerator();
     }
 
-    global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
         return InternalGetData().GetEnumerator();
     }

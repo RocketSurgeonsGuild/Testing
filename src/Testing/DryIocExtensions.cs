@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
+/// <summary>
+/// Extensions to support testing classes with DryIoc
+/// </summary>
 public static class DryIocExtensions
 {
     /// <summary>

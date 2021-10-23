@@ -25,7 +25,7 @@ public sealed class AutoFake : IDisposable
     {
         Container = container ?? new Container();
         if (fakeOptionsAction == null)
-            fakeOptionsAction = options => { };
+            fakeOptionsAction = _ => { };
         Container = Container
            .With(
                 rules => rules
@@ -37,7 +37,7 @@ public sealed class AutoFake : IDisposable
                              )
                          )
                         .WithUndefinedTestDependenciesResolver(request => Create.Fake(request.ServiceType, fakeOptionsAction))
-                        .WithConcreteTypeDynamicRegistrations((type, o) => true, Reuse.Transient)
+                        .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
         if (configureAction != null)
             Container = configureAction.Invoke(Container);
@@ -94,7 +94,9 @@ public sealed class AutoFake : IDisposable
         return instance;
     }
 
+#pragma warning disable CA1063
     void IDisposable.Dispose()
+#pragma warning restore CA1063
     {
         Container.Dispose();
     }
