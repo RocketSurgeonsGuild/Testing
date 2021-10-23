@@ -147,7 +147,7 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
     {
         var access = AutoSubstitute.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<ApplicationException>();
+        a.Should().Throw<TestBootstrapException>();
     }
 
     private class MyItem : IItem

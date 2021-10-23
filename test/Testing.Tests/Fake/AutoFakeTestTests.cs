@@ -140,7 +140,7 @@ public class AutoFakeTestTests : AutoFakeTest
     {
         var access = AutoFake.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<ApplicationException>();
+        a.Should().Throw<TestBootstrapException>();
     }
 
     private class MyItem : IItem

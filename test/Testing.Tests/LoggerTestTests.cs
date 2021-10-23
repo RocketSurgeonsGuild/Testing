@@ -26,6 +26,7 @@ public class LoggerTestTests : LoggerTest
     public void Should_Create_Usable_Logger()
     {
         var helper = A.Fake<ITestOutputHelper>();
+        using var _ = new Impl(helper);
         A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
     }
 
