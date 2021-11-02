@@ -24,7 +24,7 @@
     <PackageReference Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.10" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Update="Serilog" Version="2.10.0" />
-    <PackageReference Update="Serilog.Extensions.Logging" Version="3.0.1" />
+    <PackageReference Update="Serilog.Extensions.Logging" Version="3.1.0" />
     <PackageReference Update="Serilog.Sinks.Observable" Version="2.0.2" />
     <PackageReference Update="Serilog.Sinks.XUnit" Version="2.0.4" />
     <PackageReference Update="System.Collections.Immutable" Version="5.0.0" />
