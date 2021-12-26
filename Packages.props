@@ -33,14 +33,14 @@
     <PackageReference Update="System.Reactive" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="DryIoc.dll" Version="4.8.3" />
+    <PackageReference Update="DryIoc.dll" Version="4.8.4" />
     <PackageReference Update="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
     <PackageReference Update="coverlet.collector" Version="3.1.0" />
     <PackageReference Update="coverlet.msbuild" Version="3.1.0" />
     <PackageReference Update="FakeItEasy" Version="7.2.0" />
     <PackageReference Update="FakeItEasy.Analyzer.CSharp" Version="6.1.0" />
     <PackageReference Update="Autofac.Extras.FakeItEasy" Version="7.0.0" />
-    <PackageReference Update="FluentAssertions" Version="6.1.0" />
+    <PackageReference Update="FluentAssertions" Version="6.2.0" />
     <PackageReference Update="FluentAssertions.Analyzers" Version="0.12.1" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Update="Moq" Version="4.16.1" />
