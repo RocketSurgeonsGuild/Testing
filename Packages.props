@@ -26,7 +26,7 @@
     <PackageReference Update="Serilog" Version="2.10.0" />
     <PackageReference Update="Serilog.Extensions.Logging" Version="3.1.0" />
     <PackageReference Update="Serilog.Sinks.Observable" Version="2.0.2" />
-    <PackageReference Update="Serilog.Sinks.XUnit" Version="2.0.4" />
+    <PackageReference Update="Serilog.Sinks.XUnit" Version="3.0.3" />
     <PackageReference Update="System.Collections.Immutable" Version="6.0.0" />
     <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="6.0.0" />
     <PackageReference Update="System.Interactive" Version="5.1.0" />
