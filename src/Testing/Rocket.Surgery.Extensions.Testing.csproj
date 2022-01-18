@@ -27,5 +27,13 @@
     <ItemGroup>
         <None Include="build/*.*" Pack="true" PackagePath="build" />
         <None Include="buildMultiTargeting/*.*" Pack="true" PackagePath="buildMultiTargeting" />
+
+        <ProjectReference
+            Include="..\Analyzers\Rocket.Surgery.Extensions.Testing.Analyzers.csproj"
+            IncludeAssets="analyzers"
+            ExcludeAssets="compile;runtime;native"
+            PrivateAssets="contentfiles;build;buildMultitargeting;buildTransitive"
+            OutputItemType="Analyzer"
+        />
     </ItemGroup>
 </Project>

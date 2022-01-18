@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <NoPackageAnalysis>true</NoPackageAnalysis>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <EmbeddedResource Include="data.xml" LogicalName="data.xml" />
+        <EmbeddedResource
+            Include="$(MSBuildThisFileDirectory)\..\Testing.FakeItEasy\**\*.cs"
+            Exclude="$(MSBuildThisFileDirectory)\..\Testing.FakeItEasy\obj\**\*.cs;$(MSBuildThisFileDirectory)\..\Testing.FakeItEasy\bin\**\*.cs"
+        >
+                        <LogicalName
+            >Rocket.Surgery.Extensions.Testing.FakeItEasy/$([MSBuild]::MakeRelative("$(MSBuildThisFileDirectory)\..\Testing.FakeItEasy\", "%(EmbeddedResource.FullPath)"))</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource
+            Include="$(MSBuildThisFileDirectory)\..\Testing.Moq\**\*.cs"
+            Exclude="$(MSBuildThisFileDirectory)\..\Testing.Moq\obj\**\*.cs;$(MSBuildThisFileDirectory)\..\Testing.Moq\bin\**\*.cs"
+        >
+                        <LogicalName
+            >Rocket.Surgery.Extensions.Testing.Moq/$([MSBuild]::MakeRelative("$(MSBuildThisFileDirectory)\..\Testing.Moq\", "%(EmbeddedResource.FullPath)"))</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource
+            Include="$(MSBuildThisFileDirectory)\..\Testing.NSubstitute\**\*.cs"
+            Exclude="$(MSBuildThisFileDirectory)\..\Testing.NSubstitute\obj\**\*.cs;$(MSBuildThisFileDirectory)\..\Testing.NSubstitute\bin\**\*.cs"
+        >
+                        <LogicalName
+            >Rocket.Surgery.Extensions.Testing.NSubstitute/$([MSBuild]::MakeRelative("$(MSBuildThisFileDirectory)\..\Testing.NSubstitute\", "%(EmbeddedResource.FullPath)"))</LogicalName>
+        </EmbeddedResource>
+        <EmbeddedResource
+            Include="$(MSBuildThisFileDirectory)\..\Testing.XUnit\**\*.cs"
+            Exclude="$(MSBuildThisFileDirectory)\..\Testing.XUnit\obj\**\*.cs;$(MSBuildThisFileDirectory)\..\Testing.XUnit\bin\**\*.cs"
+        >
+                        <LogicalName
+            >Rocket.Surgery.Extensions.Testing.XUnit/$([MSBuild]::MakeRelative("$(MSBuildThisFileDirectory)\..\Testing.XUnit\", "%(EmbeddedResource.FullPath)"))</LogicalName>
+        </EmbeddedResource>
+    </ItemGroup>
+</Project>

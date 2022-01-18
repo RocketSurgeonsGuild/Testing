@@ -6,7 +6,6 @@ using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
-using Rocket.Surgery.Nuke;
 using Rocket.Surgery.Nuke.DotNetCore;
 
 [PublicAPI]
@@ -14,60 +13,59 @@ using Rocket.Surgery.Nuke.DotNetCore;
 [UnsetVisualStudioEnvironmentVariables]
 [PackageIcon("https://raw.githubusercontent.com/RocketSurgeonsGuild/graphics/master/png/social-square-thrust-rounded.png")]
 [EnsureGitHooks(GitHook.PreCommit)]
-[EnsureReadmeIsUpdated("Readme.md")]
+//[EnsureReadmeIsUpdated("Readme.md")]
 [DotNetVerbosityMapping]
 [MSBuildVerbosityMapping]
 [NuGetVerbosityMapping]
 [ShutdownDotNetAfterServerBuild]
-public partial class Solution : NukeBuild,
-                                ICanRestoreWithDotNetCore,
-                                ICanBuildWithDotNetCore,
-                                ICanTestWithDotNetCore,
-                                ICanPackWithDotNetCore,
-                                IHaveDataCollector,
-                                ICanClean,
-                                ICanUpdateReadme,
-                                IGenerateCodeCoverageReport,
-                                IGenerateCodeCoverageSummary,
-                                IGenerateCodeCoverageBadges,
-                                IHaveConfiguration<Configuration>,
-                                ICanLint
+public partial class NukeSolution : NukeBuild,
+                                    ICanRestoreWithDotNetCore,
+                                    ICanBuildWithDotNetCore,
+                                    ICanTestWithDotNetCore,
+                                    ICanPackWithDotNetCore,
+                                    IHaveDataCollector,
+                                    ICanClean,
+                                    ICanUpdateReadme,
+                                    IGenerateCodeCoverageReport,
+                                    IGenerateCodeCoverageSummary,
+                                    IGenerateCodeCoverageBadges,
+                                    IHaveConfiguration<Configuration>
+
 {
     /// <summary>
-    /// Support plugins are available for:
-    /// - JetBrains ReSharper        https://nuke.build/resharper
-    /// - JetBrains Rider            https://nuke.build/rider
-    /// - Microsoft VisualStudio     https://nuke.build/visualstudio
-    /// - Microsoft VSCode           https://nuke.build/vscode
+    ///     Support plugins are available for:
+    ///     - JetBrains ReSharper        https://nuke.build/resharper
+    ///     - JetBrains Rider            https://nuke.build/rider
+    ///     - Microsoft VisualStudio     https://nuke.build/visualstudio
+    ///     - Microsoft VSCode           https://nuke.build/vscode
     /// </summary>
-    public static int Main() => Execute<Solution>(x => x.Default);
+    public static int Main()
+    {
+        return Execute<NukeSolution>(x => x.Default);
+    }
 
-    [OptionalGitRepository]
-    public GitRepository? GitRepository { get; }
+    [OptionalGitRepository] public GitRepository? GitRepository { get; }
 
     private Target Default => _ => _
-       .DependsOn(Restore)
-       .DependsOn(Build)
-       .DependsOn(Test)
-       .DependsOn(Pack);
+                                  .DependsOn(Restore)
+                                  .DependsOn(Build)
+                                  .DependsOn(Test)
+                                  .DependsOn(Pack);
 
     public Target Build => _ => _.Inherit<ICanBuildWithDotNetCore>(x => x.CoreBuild);
 
     public Target Pack => _ => _.Inherit<ICanPackWithDotNetCore>(x => x.CorePack)
-       .DependsOn(Clean);
+                                .DependsOn(Clean);
 
-    [ComputedGitVersion]
-    public GitVersion GitVersion { get; } = null!;
+    [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
 
     public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean);
-    public Target Lint => _ => _.Inherit<ICanLint>(x => x.Lint);
     public Target Restore => _ => _.Inherit<ICanRestoreWithDotNetCore>(x => x.CoreRestore);
     public Target Test => _ => _.Inherit<ICanTestWithDotNetCore>(x => x.CoreTest);
 
     public Target BuildVersion => _ => _.Inherit<IHaveBuildVersion>(x => x.BuildVersion)
-       .Before(Default)
-       .Before(Clean);
+                                        .Before(Default)
+                                        .Before(Clean);
 
-    [Parameter("Configuration to build")]
-    public Configuration Configuration { get; } = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    [Parameter("Configuration to build")] public Configuration Configuration { get; } = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 }

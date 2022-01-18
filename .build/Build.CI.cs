@@ -64,7 +64,7 @@ internal class LocalConstants
 [PrintCIEnvironment]
 [UploadLogs]
 [TitleEvents]
-public partial class Solution
+public partial class NukeSolution
 {
     public static RocketSurgeonGitHubActionsConfiguration CiIgnoreMiddleware(
         RocketSurgeonGitHubActionsConfiguration configuration

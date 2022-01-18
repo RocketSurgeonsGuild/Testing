@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArrayOfGeneratorItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><GeneratorItem><AssemblyName
+        >Rocket.Surgery.Extensions.Testing.Moq</AssemblyName><Files>AutoMock.cs</Files><Files>AutoMockTest.cs</Files><PackageReferences><PackageReferenceItem
+            ><Name>Moq</Name><MajorVersion>4</MajorVersion></PackageReferenceItem></PackageReferences></GeneratorItem><GeneratorItem><AssemblyName
+        >Rocket.Surgery.Extensions.Testing.FakeItEasy</AssemblyName><Files>AutoFake.cs</Files><Files>AutoFakeTest.cs</Files><Files
+        >FakeItEasyLoggerFactory.cs</Files><PackageReferences><PackageReferenceItem><Name>FakeItEasy</Name><MajorVersion
+                >7</MajorVersion></PackageReferenceItem></PackageReferences></GeneratorItem><GeneratorItem><AssemblyName
+        >Rocket.Surgery.Extensions.Testing.NSubstitute</AssemblyName><Files>AutoSubstitute.cs</Files><Files>AutoSubstituteTest.cs</Files><PackageReferences
+        ><PackageReferenceItem><Name>NSubstitute</Name><MajorVersion>4</MajorVersion></PackageReferenceItem></PackageReferences></GeneratorItem><GeneratorItem
+    ><AssemblyName>Rocket.Surgery.Extensions.Testing.XUnit</AssemblyName><Files>XUnitExtensions.cs</Files><PackageReferences><PackageReferenceItem><Name
+                >xunit.abstractions</Name><MajorVersion>2</MajorVersion></PackageReferenceItem></PackageReferences></GeneratorItem></ArrayOfGeneratorItem>
