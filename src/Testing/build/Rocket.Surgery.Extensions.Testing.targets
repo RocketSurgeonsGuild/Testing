@@ -1,7 +1,3 @@
 ﻿<Project>
-    <ItemGroup>
-        <Content Update="xunit.runner.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
+    <Import Project="$(MSBuildThisFileDirectory)/ImplicitReferences.targets" />
 </Project>

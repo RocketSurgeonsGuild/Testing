@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project>
+  <PropertyGroup>
+    <ImplicitReferencePackages Condition="'$(ImplicitReferencePackages)' == ''">true</ImplicitReferencePackages>
+    <ImplicitReferenceWarning Condition="'$(ImplicitReferenceWarning)' == ''">true</ImplicitReferenceWarning>
+    <ImplicitReferenceRocketSurgeryExtensionsTestingMoq
+            Condition="'$(ImplicitReferenceRocketSurgeryExtensionsTestingMoq)' == ''"
+        >true</ImplicitReferenceRocketSurgeryExtensionsTestingMoq>
+    <ImplicitReferenceRocketSurgeryExtensionsTestingFakeItEasy
+            Condition="'$(ImplicitReferenceRocketSurgeryExtensionsTestingFakeItEasy)' == ''"
+        >true</ImplicitReferenceRocketSurgeryExtensionsTestingFakeItEasy>
+    <ImplicitReferenceRocketSurgeryExtensionsTestingNSubstitute
+            Condition="'$(ImplicitReferenceRocketSurgeryExtensionsTestingNSubstitute)' == ''"
+        >true</ImplicitReferenceRocketSurgeryExtensionsTestingNSubstitute>
+    <ImplicitReferenceRocketSurgeryExtensionsTestingXUnit
+            Condition="'$(ImplicitReferenceRocketSurgeryExtensionsTestingXUnit)' == ''"
+        >true</ImplicitReferenceRocketSurgeryExtensionsTestingXUnit>
+  </PropertyGroup>
+</Project>

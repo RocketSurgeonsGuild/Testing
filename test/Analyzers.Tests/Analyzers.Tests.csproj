@@ -11,6 +11,6 @@
         <ProjectReference Include="..\..\src\Testing.NSubstitute\Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />
         <ProjectReference Include="..\..\src\Testing.FakeItEasy\Rocket.Surgery.Extensions.Testing.FakeItEasy.csproj" />
         <ProjectReference Include="..\..\src\Testing.XUnit\Rocket.Surgery.Extensions.Testing.XUnit.csproj" />
-        <ProjectReference Include="..\..\src\Testing\Rocket.Surgery.Extensions.Testing.csproj" /> 
+        <ProjectReference Include="..\..\src\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
     </ItemGroup>
 </Project>
