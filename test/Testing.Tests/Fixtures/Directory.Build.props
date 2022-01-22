@@ -1,0 +1,9 @@
+<Project>
+    <PropertyGroup>
+        <RestoreAdditionalProjectSources
+            Condition="'$(RestoreAdditionalProjectSources)' == ''"
+        >$(MSBuildThisFileDirectory)\..\..\..\artifacts\nuget\</RestoreAdditionalProjectSources>
+        <RestorePackagesPath Condition="'$(RestorePackagesPath)' == ''">$(MSBuildThisFileDirectory)\..\..\..\.nuke\temp\packages\</RestorePackagesPath>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+</Project>

@@ -100,12 +100,15 @@ jobs:
       - name: ⚙ Build
         run: |
           dotnet nuke Build --skip
-      - name: 🚦 Test
-        run: |
-          dotnet nuke Test TriggerCodeCoverageReports GenerateCodeCoverageReportCobertura GenerateCodeCoverageBadges GenerateCodeCoverageSummary GenerateCodeCoverageReport --skip
       - name: 📦 Pack
         run: |
           dotnet nuke Pack --skip
+      - name: 🚦 Setup Magic Project Test Data
+        run: |
+          dotnet nuke SetupMagicProjectTestData --skip
+      - name: 🚦 Test
+        run: |
+          dotnet nuke Test TriggerCodeCoverageReports GenerateCodeCoverageReportCobertura GenerateCodeCoverageBadges GenerateCodeCoverageSummary GenerateCodeCoverageReport --skip
       - name: 🐿 Publish Coverage
         uses: codecov/codecov-action@v2.1.0
         with:

@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using xunit;
 using Xunit;
 using Xunit.Abstractions;
 

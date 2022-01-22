@@ -1,9 +1,11 @@
-﻿using System.Text;
+﻿using System.Collections.Immutable;
+using System.Text;
 using System.Xml.Linq;
 using NuGet.LibraryModel;
 using NuGet.ProjectModel;
 using NuGet.Versioning;
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 
@@ -39,7 +41,8 @@ public partial class NukeSolution : IParseGeneratorMetadata
  */
 
 
-public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHaveBuildTarget, IHaveRestoreTarget, IComprehendSources, IHaveGitVersion
+public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHaveBuildTarget, IHaveRestoreTarget, IComprehendSources, IHaveGitVersion,
+                                           IComprehendTests, IHaveTestTarget, IHavePackTarget
 {
     public Target LoadProjectData => _ =>
         _
@@ -70,22 +73,26 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                                               .Where(z => z.Count() == lockFile.PackageSpec.TargetFrameworks.Count)
                                               .Select(z => z.First().dependency)
                                               .Select(
-                                                   z => new PackageReferenceItem
-                                                   {
-                                                       Name = z.Name,
-                                                       Version = lockFile.Libraries.First(x => x.Name == z.Name).Version
-                                                   }
+                                                   z => new PackageReferenceItem(
+                                                       z.Name,
+                                                       lockFile.Libraries.First(x => x.Name == z.Name).Version
+                                                   )
                                                )
                                               .ToList();
 
 
-                        projects.Add(
-                            new GeneratorItem
-                            {
-                                AssemblyName = lockFile.PackageSpec.Name,
-                                PackageReferences = results
-                            }
-                        );
+                        projects.Add(new GeneratorItem(lockFile.PackageSpec.Name, results.ToImmutableArray()));
+                        if (lockFile.PackageSpec.Name == "Rocket.Surgery.Extensions.Testing.XUnit")
+                        {
+                            projects.Add(
+                                new GeneratorItem(
+                                    lockFile.PackageSpec.Name,
+                                    results
+                                       .Select(z => z with { Name = z.Name.Replace("xunit.abstractions", "xunit") })
+                                       .ToImmutableArray()
+                                )
+                            );
+                        }
                     }
 
                     var targetsDoc = new XDocument();
@@ -101,7 +108,7 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                         implicitPackageReferencesTarget.SetAttributeValue("Name", "AddRsgImplicitPackageReferences");
                         implicitPackageReferencesTarget.SetAttributeValue("BeforeTargets", "CollectPackageReferences");
                         implicitPackageReferencesTarget.SetAttributeValue(
-                            "Condition", "'$(ManagePackageVersionsCentrally)' == 'true' and '$(ImplicitReferencePackages)' == 'true'"
+                            "Condition", "'$(ManagePackageVersionsCentrally)' == 'true' and '$(ImplicitPackageReferences)' == 'true'"
                         );
                         implicitPackageReferencesTarget.Add(propertyGroup.Clone());
 
@@ -109,7 +116,7 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                         implicitCentralPackageVersionsTarget.SetAttributeValue("BeforeTargets", "CollectCentralPackageVersions");
                         implicitCentralPackageVersionsTarget.SetAttributeValue("AfterTargets", "CollectPackageReferences");
                         implicitCentralPackageVersionsTarget.SetAttributeValue(
-                            "Condition", "'$(ManagePackageVersionsCentrally)' == 'true' and '$(ImplicitReferencePackages)' == 'true'"
+                            "Condition", "'$(ManagePackageVersionsCentrally)' == 'true' and '$(ImplicitPackageReferences)' == 'true'"
                         );
                         implicitCentralPackageVersionsTarget.Add(propertyGroup.Clone());
 
@@ -123,39 +130,44 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                         propsDoc.Add(xProject);
                         xProject.Add(xProperties);
                         {
-                            var prop = new XElement("ImplicitReferencePackages");
+                            var prop = new XElement("ImplicitPackageReferences");
                             xProperties.Add(prop);
                             prop.SetValue("true");
-                            prop.SetAttributeValue("Condition", "'$(ImplicitReferencePackages)' == ''");
+                            prop.SetAttributeValue("Condition", "'$(ImplicitPackageReferences)' == ''");
                         }
                         {
-                            var prop = new XElement("ImplicitReferenceWarning");
+                            var prop = new XElement("ImplicitPackageReferenceWarning");
                             xProperties.Add(prop);
                             prop.SetValue("true");
-                            prop.SetAttributeValue("Condition", "'$(ImplicitReferenceWarning)' == ''");
+                            prop.SetAttributeValue("Condition", "'$(ImplicitPackageReferenceWarning)' == ''");
                         }
                     }
 
+                    var addedItems = new HashSet<string>();
                     foreach (var project in projects)
                     {
                         if (!project.PackageReferences.Any()) continue;
 
-                        var version = GitVersion.NuGetVersionV2;
+                        var version = GitVersion.FullSemVer;
 
-                        var conditionPropertyName = $"ImplicitReference{project.AssemblyName.Replace(".", "")}";
-                        var enabledProperty = new XElement(conditionPropertyName);
-                        enabledProperty.SetValue("true");
-                        enabledProperty.SetAttributeValue("Condition", $"'$({conditionPropertyName})' == ''");
-                        xProperties.Add(enabledProperty);
+                        var conditionPropertyName = $"ImplicitPackageReference{project.AssemblyName.Replace(".", "")}";
+                        if (!addedItems.Contains(project.AssemblyName))
+                        {
+                            var enabledProperty = new XElement(conditionPropertyName);
+                            enabledProperty.SetValue("true");
+                            enabledProperty.SetAttributeValue("Condition", $"'$({conditionPropertyName})' == ''");
+                            xProperties.Add(enabledProperty);
+                        }
 
                         var packageReferenceItemGroup = new XElement("ItemGroup");
                         var conditionBuilder = new StringBuilder();
-                        conditionBuilder.Append("'$(ImplicitReferencePackages)' == 'true' and ")
-                                        .Append("'$(").Append(conditionPropertyName).Append(")' == 'true' and ")
-                                        .Append(
-                                             string.Join(" and ", project.PackageReferences.Select(z => $"$(_rsgPackageReferenceList.Contains('{z.Name}'))"))
-                                         );
-                        packageReferenceItemGroup.SetAttributeValue("Condition", conditionBuilder);
+                        conditionBuilder
+                           .Append("'$(").Append(conditionPropertyName).Append(")' == 'true' and ")
+                           .AppendJoin(" and ", project.PackageReferences.Select(z => $"$(_rsgPackageReferenceList.Contains('{z.Name}'))"))
+                            ;
+                        packageReferenceItemGroup.SetAttributeValue(
+                            "Condition", conditionBuilder + $" and !$(_rsgPackageReferenceList.Contains('{project.AssemblyName}'))"
+                        );
 
                         var packageReference = new XElement("PackageReference");
                         packageReferenceItemGroup.Add(packageReference);
@@ -165,39 +177,58 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                         conditionBuilder.Append(" and !$(_rsgPackageVersionList.Contains('").Append(project.AssemblyName).Append("'))");
 
                         var packageVersionWarning = new XElement("Warning");
-                        packageVersionWarning.SetAttributeValue("Condition", $"'$(ImplicitReferenceWarning)' == 'true' and {conditionBuilder}");
+                        packageVersionWarning.SetAttributeValue("Condition", $"'$(ImplicitPackageReferenceWarning)' == 'true' and {conditionBuilder}");
                         packageVersionWarning.SetAttributeValue(
                             "Text",
-                            $"PackageReference to {project.AssemblyName} has been added implicitly using default version {version}. Add <PackageVersion Include=\"{project.AssemblyName}\" Version=\"{version}\" /> or disable this warning with <ImplicitReferenceWarning>false</ImplicitReferenceWarning>.  Use <ImplicitReferencePackages>false</ImplicitReferencePackages> to disable all implicit package references or <{conditionPropertyName}>false</{conditionPropertyName}> to disable only this implicit reference."
+                            $"PackageReference to {project.AssemblyName} has been added implicitly using default version {version}. Add <PackageVersion Include=\"{project.AssemblyName}\" Version=\"{version}\" /> or disable this warning with <ImplicitPackageReferenceWarning>false</ImplicitPackageReferenceWarning>.  Use <ImplicitPackageReferences>false</ImplicitPackageReferences> to disable all implicit package references or <{conditionPropertyName}>false</{conditionPropertyName}> to disable only this implicit reference."
                         );
                         var packageVersionItemGroup = new XElement("ItemGroup");
-                        packageReferenceItemGroup.SetAttributeValue("Condition", $"{conditionBuilder}");
+                        packageVersionItemGroup.SetAttributeValue("Condition", conditionBuilder);
                         var packageVersion = new XElement("PackageVersion");
                         packageVersion.SetAttributeValue("Include", project.AssemblyName);
                         packageVersion.SetAttributeValue("Version", version);
                         packageVersionItemGroup.Add(packageVersion);
                         implicitCentralPackageVersionsTarget.Add(packageVersionWarning);
                         implicitCentralPackageVersionsTarget.Add(packageVersionItemGroup);
+                        addedItems.Add(project.AssemblyName);
                     }
 
                     // src/Testing/build/Rocket.Surgery.Extensions.Testing.props
 
+                    propsDoc.Save(SourceDirectory / "Testing" / "Sdk" / "ImplicitPackageReferences.props");
+                    targetsDoc.Save(SourceDirectory / "Testing" / "Sdk" / "ImplicitPackageReferences.targets");
+                }
+            );
 
-                    propsDoc.Save(SourceDirectory / "Testing" / "build" / "ImplicitReferences.props");
-                    targetsDoc.Save(SourceDirectory / "Testing" / "build" / "ImplicitReferences.targets");
+
+    public Target SetupMagicProjectTestData => _ =>
+        _
+           .After(Pack)
+           .DependentFor(Test)
+           .Executes(
+                () =>
+                {
+                    FileSystemTasks.EnsureCleanDirectory(TemporaryDirectory / "packages");
+                    var packagesProps = XDocument.Load(File.OpenRead(RootDirectory / "Directory.Packages.props"));
+                    var packagesProject = packagesProps.Descendants("Project").Single();
+
+                    var testPackagesItemGroup = new XElement("ItemGroup");
+                    packagesProject.Add(testPackagesItemGroup);
+                    foreach (var project in Solution
+                                           .AllProjects
+                                           .Where(z => z.GetProperty<bool?>("IsPackable") == true && z.GetProperty<bool?>("IsMagicProject") != true))
+                    {
+                        var element = new XElement("PackageVersion");
+                        element.SetAttributeValue("Include", project.GetProperty("AssemblyName"));
+                        element.SetAttributeValue("Version", GitVersion!.FullSemVer);
+                        testPackagesItemGroup.Add(element);
+                    }
+
+                    packagesProps.Save(TestsDirectory / "Testing.Tests" / "Fixtures" / "Directory.Packages.props");
                 }
             );
 }
 
-public class GeneratorItem
-{
-//    [XmlAttribute]
-    public string AssemblyName { get; init; }
-    public List<PackageReferenceItem> PackageReferences { get; init; }
-}
+public record GeneratorItem(string AssemblyName, ImmutableArray<PackageReferenceItem> PackageReferences);
 
-public class PackageReferenceItem
-{
-    public string Name { get; set; }
-    public NuGetVersion Version { get; set; }
-}
+public record PackageReferenceItem(string Name, NuGetVersion Version);

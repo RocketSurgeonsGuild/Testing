@@ -12,6 +12,4 @@
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
     </PropertyGroup>
-
-    <Import Project="$(MSBuildThisFileDirectory)/ImplicitReferences.props" />
 </Project>

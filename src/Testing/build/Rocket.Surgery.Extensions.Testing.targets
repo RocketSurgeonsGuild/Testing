@@ -1,3 +1,2 @@
 ﻿<Project>
-    <Import Project="$(MSBuildThisFileDirectory)/ImplicitReferences.targets" />
 </Project>

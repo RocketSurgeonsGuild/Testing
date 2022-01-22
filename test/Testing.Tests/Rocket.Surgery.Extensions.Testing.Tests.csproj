@@ -4,10 +4,15 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="Buildalyzer" />
         <ProjectReference Include="..\..\src\Testing.NSubstitute\Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />
         <ProjectReference Include="..\..\src\Testing.XUnit\Rocket.Surgery.Extensions.Testing.XUnit.csproj" />
         <ProjectReference Include="..\..\src\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
         <ProjectReference Include="..\..\src\Testing.Moq\Rocket.Surgery.Extensions.Testing.Moq.csproj" />
         <ProjectReference Include="..\..\src\Testing.FakeItEasy\Rocket.Surgery.Extensions.Testing.FakeItEasy.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content CopyToOutputDirectory="PreserveNewest" Include="Fixtures/**/*.csproj;Fixtures/**/*.props;Fixtures/**/*.targets" />
+        <Compile Remove="Fixtures/**/*.cs" />
     </ItemGroup>
 </Project>
