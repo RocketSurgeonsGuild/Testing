@@ -53,6 +53,8 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                 () =>
                 {
                     var projects = new List<GeneratorItem>();
+
+                    projects.Add(new GeneratorItem("Rocket.Surgery.Extensions.Testing", ImmutableArray<PackageReferenceItem>.Empty));
                     var lockFileFormat = new LockFileFormat();
                     foreach (var project in Solution
                                            .AllProjects
@@ -120,6 +122,17 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                         );
                         implicitCentralPackageVersionsTarget.Add(propertyGroup.Clone());
 
+
+                        var implicitTestingReferenceItemGroup = new XElement("ItemGroup");
+                        implicitTestingReferenceItemGroup.SetAttributeValue(
+                            "Condition", "'$(ManagePackageVersionsCentrally)' == 'true' and '$(ImplicitPackageReferences)' == 'true'"
+                        );
+
+                        var defaultPackageReference = new XElement("PackageReference");
+                        defaultPackageReference.SetAttributeValue("Include", "Rocket.Surgery.Extensions.Testing");
+                        implicitTestingReferenceItemGroup.Add(defaultPackageReference);
+                        xProject.Add(implicitTestingReferenceItemGroup);
+
                         xProject.Add(implicitPackageReferencesTarget);
                         xProject.Add(implicitCentralPackageVersionsTarget);
                         targetsDoc.Add(xProject);
@@ -146,8 +159,6 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                     var addedItems = new HashSet<string>();
                     foreach (var project in projects)
                     {
-                        if (!project.PackageReferences.Any()) continue;
-
                         var version = GitVersion.FullSemVer;
 
                         var conditionPropertyName = $"ImplicitPackageReference{project.AssemblyName.Replace(".", "")}";
@@ -162,9 +173,14 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
                         var packageReferenceItemGroup = new XElement("ItemGroup");
                         var conditionBuilder = new StringBuilder();
                         conditionBuilder
-                           .Append("'$(").Append(conditionPropertyName).Append(")' == 'true' and ")
-                           .AppendJoin(" and ", project.PackageReferences.Select(z => $"$(_rsgPackageReferenceList.Contains('{z.Name}'))"))
-                            ;
+                           .Append("'$(").Append(conditionPropertyName).Append(")' == 'true' ");
+                        if (project.PackageReferences.Length > 0)
+                        {
+                            conditionBuilder
+                               .Append("and ")
+                               .AppendJoin(" and ", project.PackageReferences.Select(z => $"$(_rsgPackageReferenceList.Contains('{z.Name}'))"));
+                        }
+
                         packageReferenceItemGroup.SetAttributeValue(
                             "Condition", conditionBuilder + $" and !$(_rsgPackageReferenceList.Contains('{project.AssemblyName}'))"
                         );

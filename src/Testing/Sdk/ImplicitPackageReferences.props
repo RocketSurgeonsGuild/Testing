@@ -3,6 +3,9 @@
   <PropertyGroup>
     <ImplicitPackageReferences Condition="'$(ImplicitPackageReferences)' == ''">true</ImplicitPackageReferences>
     <ImplicitPackageReferenceWarning Condition="'$(ImplicitPackageReferenceWarning)' == ''">true</ImplicitPackageReferenceWarning>
+    <ImplicitPackageReferenceRocketSurgeryExtensionsTesting
+            Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTesting)' == ''"
+        >true</ImplicitPackageReferenceRocketSurgeryExtensionsTesting>
     <ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq)' == ''"
         >true</ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq>
