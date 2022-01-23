@@ -19,6 +19,7 @@
 | Package | NuGet |
 | ------- | ----- |
 | Rocket.Surgery.Extensions.Testing | [![nuget-version-ingbk+ngdt+w-badge]![nuget-downloads-ingbk+ngdt+w-badge]][nuget-ingbk+ngdt+w] |
+| Rocket.Surgery.Extensions.Testing.Analyzers | [![nuget-version-is2d/pp3l2nq-badge]![nuget-downloads-is2d/pp3l2nq-badge]][nuget-is2d/pp3l2nq] |
 | Rocket.Surgery.Extensions.Testing.Coverlet | [![nuget-version-2jdbmqdcrhfg-badge]![nuget-downloads-2jdbmqdcrhfg-badge]][nuget-2jdbmqdcrhfg] |
 | Rocket.Surgery.Extensions.Testing.FakeItEasy | [![nuget-version-6rnnzg4ixtvq-badge]![nuget-downloads-6rnnzg4ixtvq-badge]][nuget-6rnnzg4ixtvq] |
 | Rocket.Surgery.Extensions.Testing.Fixtures | [![nuget-version-xegxxxxh/pzg-badge]![nuget-downloads-xegxxxxh/pzg-badge]][nuget-xegxxxxh/pzg] |
@@ -44,6 +45,9 @@ TBD
 [nuget-ingbk+ngdt+w]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing/
 [nuget-version-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
+[nuget-is2d/pp3l2nq]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Analyzers/
+[nuget-version-is2d/pp3l2nq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Analyzers.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-is2d/pp3l2nq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Analyzers.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 [nuget-2jdbmqdcrhfg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Coverlet/
 [nuget-version-2jdbmqdcrhfg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Coverlet.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-2jdbmqdcrhfg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Coverlet.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"

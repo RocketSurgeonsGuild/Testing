@@ -48,6 +48,8 @@ public abstract class LoggerTest : IDisposable
     /// </summary>
     protected DiagnosticSource DiagnosticSource => _values.Value.diagnosticSource;
 
+    protected ITestOutputHelper TestOutputHelper { get; }
+
     /// <summary>
     ///     The <see cref="IObservable{LogEvent}" />
     /// </summary>
@@ -108,6 +110,7 @@ public abstract class LoggerTest : IDisposable
     )
     {
         Disposables = new CompositeDisposable();
+        TestOutputHelper = outputHelper;
 
         _values =
             new Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource, IObservable<LogEvent>

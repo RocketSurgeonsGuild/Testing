@@ -21,11 +21,18 @@
         <PackageReference Include="System.Interactive" />
         <PackageReference Include="System.Reactive" />
         <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles" />
-        <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.FakeItEasy" />
-        <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.Moq" />
     </ItemGroup>
     <ItemGroup>
         <None Include="build/*.*" Pack="true" PackagePath="build" />
         <None Include="buildMultiTargeting/*.*" Pack="true" PackagePath="buildMultiTargeting" />
+        <None Include="Sdk/*.*" Pack="true" PackagePath="Sdk" />
+
+        <ProjectReference
+            Include="..\Analyzers\Rocket.Surgery.Extensions.Testing.Analyzers.csproj"
+            IncludeAssets="analyzers"
+            ExcludeAssets="compile;runtime;native"
+            PrivateAssets="contentfiles;build;buildMultitargeting;buildTransitive"
+            OutputItemType="Analyzer"
+        />
     </ItemGroup>
 </Project>

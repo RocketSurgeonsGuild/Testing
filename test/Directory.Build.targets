@@ -12,7 +12,6 @@
         <PackageReference Include="xunit.analyzers" />
         <PackageReference Include="xunit.runner.visualstudio" />
     </ItemGroup>
-    <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.targets" />
     <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 </Project>

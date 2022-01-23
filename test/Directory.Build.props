@@ -1,7 +1,19 @@
 <Project>
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
     <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.props" />
-    <Import Project="../src/Testing/build/Rocket.Surgery.Extensions.Testing.props" />
+    <PropertyGroup>
+        <Exclude
+            Condition="'$(Exclude)'==''"
+        >[Bogus*]*,[Autofac*]*,[FakeItEasy*]*,[Moq*]*,[FluentValidation*]*,[Ben.Demystifier*]*,[Humanizer*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*,[*]JetBrains.Annotations*</Exclude>
+        <Exclude
+            Condition="'$(Exclude)'!=''"
+        >[Bogus*]*,[Autofac*]*,[FakeItEasy*]*,[Moq*]*,[FluentValidation*]*,[Ben.Demystifier*]*,[Humanizer*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*,[*]JetBrains.Annotations*,$(Exclude)</Exclude>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
     <PropertyGroup>
         <MergeCoverage>true</MergeCoverage>
         <IncludeTestAssembly>true</IncludeTestAssembly>

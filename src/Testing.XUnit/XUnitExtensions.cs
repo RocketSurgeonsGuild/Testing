@@ -2,7 +2,7 @@
 using Xunit.Abstractions;
 
 // ReSharper disable once CheckNamespace
-namespace xunit;
+namespace Xunit;
 
 /// <summary>
 ///     Helpful XUnit Extensions
