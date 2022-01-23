@@ -1,7 +1,3 @@
 ﻿<Project>
     <Import Project="$(MSBuildThisFileDirectory)/ImplicitPackageReferences.props" />
-    <ItemGroup Condition="'$(ManagePackageVersionsCentrally)' == 'true'">
-        <PackageReference Include="Rocket.Surgery.Extensions.Testing" />
-        <PackageVersion Include="Rocket.Surgery.Extensions.Testing.NSubstitute" Version="6.0.4-magic-dependencies.48" />
-    </ItemGroup>
 </Project>
