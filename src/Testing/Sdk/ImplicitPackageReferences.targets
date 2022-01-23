@@ -55,57 +55,57 @@
     </PropertyGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTesting)' == 'true'  and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing'))"
-            Text="PackageReference to Rocket.Surgery.Extensions.Testing has been added implicitly using default version 6.0.4-magic-dependencies.50. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing&quot; Version=&quot;6.0.4-magic-dependencies.50&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTesting&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTesting&gt; to disable only this implicit reference."
+            Text="PackageReference to Rocket.Surgery.Extensions.Testing has been added implicitly using default version 6.0.4-magic-dependencies.52. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing&quot; Version=&quot;6.0.4-magic-dependencies.52&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTesting&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTesting&gt; to disable only this implicit reference."
         />
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTesting)' == 'true'  and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing" Version="6.0.4-magic-dependencies.50" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing" Version="6.0.4-magic-dependencies.52" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq)' == 'true' and $(_rsgPackageReferenceList.Contains('Moq')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.Moq'))"
-            Text="PackageReference to Rocket.Surgery.Extensions.Testing.Moq has been added implicitly using default version 6.0.4-magic-dependencies.50. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.Moq&quot; Version=&quot;6.0.4-magic-dependencies.50&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq&gt; to disable only this implicit reference."
+            Text="PackageReference to Rocket.Surgery.Extensions.Testing.Moq has been added implicitly using default version 6.0.4-magic-dependencies.52. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.Moq&quot; Version=&quot;6.0.4-magic-dependencies.52&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq&gt; to disable only this implicit reference."
         />
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq)' == 'true' and $(_rsgPackageReferenceList.Contains('Moq')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.Moq'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.Moq" Version="6.0.4-magic-dependencies.50" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.Moq" Version="6.0.4-magic-dependencies.52" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingFakeItEasy)' == 'true' and $(_rsgPackageReferenceList.Contains('FakeItEasy')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.FakeItEasy'))"
-            Text="PackageReference to Rocket.Surgery.Extensions.Testing.FakeItEasy has been added implicitly using default version 6.0.4-magic-dependencies.50. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.FakeItEasy&quot; Version=&quot;6.0.4-magic-dependencies.50&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingFakeItEasy&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingFakeItEasy&gt; to disable only this implicit reference."
+            Text="PackageReference to Rocket.Surgery.Extensions.Testing.FakeItEasy has been added implicitly using default version 6.0.4-magic-dependencies.52. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.FakeItEasy&quot; Version=&quot;6.0.4-magic-dependencies.52&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingFakeItEasy&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingFakeItEasy&gt; to disable only this implicit reference."
         />
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingFakeItEasy)' == 'true' and $(_rsgPackageReferenceList.Contains('FakeItEasy')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.FakeItEasy'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.FakeItEasy" Version="6.0.4-magic-dependencies.50" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.FakeItEasy" Version="6.0.4-magic-dependencies.52" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingNSubstitute)' == 'true' and $(_rsgPackageReferenceList.Contains('NSubstitute')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.NSubstitute'))"
-            Text="PackageReference to Rocket.Surgery.Extensions.Testing.NSubstitute has been added implicitly using default version 6.0.4-magic-dependencies.50. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.NSubstitute&quot; Version=&quot;6.0.4-magic-dependencies.50&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingNSubstitute&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingNSubstitute&gt; to disable only this implicit reference."
+            Text="PackageReference to Rocket.Surgery.Extensions.Testing.NSubstitute has been added implicitly using default version 6.0.4-magic-dependencies.52. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.NSubstitute&quot; Version=&quot;6.0.4-magic-dependencies.52&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingNSubstitute&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingNSubstitute&gt; to disable only this implicit reference."
         />
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingNSubstitute)' == 'true' and $(_rsgPackageReferenceList.Contains('NSubstitute')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.NSubstitute'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.NSubstitute" Version="6.0.4-magic-dependencies.50" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.NSubstitute" Version="6.0.4-magic-dependencies.52" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit)' == 'true' and $(_rsgPackageReferenceList.Contains('xunit.abstractions')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.XUnit'))"
-            Text="PackageReference to Rocket.Surgery.Extensions.Testing.XUnit has been added implicitly using default version 6.0.4-magic-dependencies.50. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.XUnit&quot; Version=&quot;6.0.4-magic-dependencies.50&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit&gt; to disable only this implicit reference."
+            Text="PackageReference to Rocket.Surgery.Extensions.Testing.XUnit has been added implicitly using default version 6.0.4-magic-dependencies.52. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.XUnit&quot; Version=&quot;6.0.4-magic-dependencies.52&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit&gt; to disable only this implicit reference."
         />
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit)' == 'true' and $(_rsgPackageReferenceList.Contains('xunit.abstractions')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.XUnit'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.XUnit" Version="6.0.4-magic-dependencies.50" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.XUnit" Version="6.0.4-magic-dependencies.52" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit)' == 'true' and $(_rsgPackageReferenceList.Contains('xunit')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.XUnit'))"
-            Text="PackageReference to Rocket.Surgery.Extensions.Testing.XUnit has been added implicitly using default version 6.0.4-magic-dependencies.50. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.XUnit&quot; Version=&quot;6.0.4-magic-dependencies.50&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit&gt; to disable only this implicit reference."
+            Text="PackageReference to Rocket.Surgery.Extensions.Testing.XUnit has been added implicitly using default version 6.0.4-magic-dependencies.52. Add &lt;PackageVersion Include=&quot;Rocket.Surgery.Extensions.Testing.XUnit&quot; Version=&quot;6.0.4-magic-dependencies.52&quot; /&gt; or disable this warning with &lt;ImplicitPackageReferenceWarning&gt;false&lt;/ImplicitPackageReferenceWarning&gt;.  Use &lt;ImplicitPackageReferences&gt;false&lt;/ImplicitPackageReferences&gt; to disable all implicit package references or &lt;ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit&gt;false&lt;/ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit&gt; to disable only this implicit reference."
         />
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit)' == 'true' and $(_rsgPackageReferenceList.Contains('xunit')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.XUnit'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.XUnit" Version="6.0.4-magic-dependencies.50" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.XUnit" Version="6.0.4-magic-dependencies.52" />
     </ItemGroup>
   </Target>
 </Project>

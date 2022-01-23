@@ -5,7 +5,6 @@ using NuGet.LibraryModel;
 using NuGet.ProjectModel;
 using NuGet.Versioning;
 using Nuke.Common;
-using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 
@@ -46,9 +45,7 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
 {
     public Target LoadProjectData => _ =>
         _
-           .Before(Build)
-           .DependsOn(Restore)
-           .TriggeredBy(Restore)
+           .DependentFor(Pack)
            .Executes(
                 () =>
                 {
@@ -213,34 +210,6 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
 
                     propsDoc.Save(SourceDirectory / "Testing" / "Sdk" / "ImplicitPackageReferences.props");
                     targetsDoc.Save(SourceDirectory / "Testing" / "Sdk" / "ImplicitPackageReferences.targets");
-                }
-            );
-
-
-    public Target SetupMagicProjectTestData => _ =>
-        _
-           .After(Pack)
-           .DependentFor(Test)
-           .Executes(
-                () =>
-                {
-                    FileSystemTasks.EnsureCleanDirectory(TemporaryDirectory / "packages");
-                    var packagesProps = XDocument.Load(File.OpenRead(RootDirectory / "Directory.Packages.props"));
-                    var packagesProject = packagesProps.Descendants("Project").Single();
-
-                    var testPackagesItemGroup = new XElement("ItemGroup");
-                    packagesProject.Add(testPackagesItemGroup);
-                    foreach (var project in Solution
-                                           .AllProjects
-                                           .Where(z => z.GetProperty<bool?>("IsPackable") == true && z.GetProperty<bool?>("IsMagicProject") != true))
-                    {
-                        var element = new XElement("PackageVersion");
-                        element.SetAttributeValue("Include", project.GetProperty("AssemblyName"));
-                        element.SetAttributeValue("Version", GitVersion!.FullSemVer);
-                        testPackagesItemGroup.Add(element);
-                    }
-
-                    packagesProps.Save(TestsDirectory / "Testing.Tests" / "Fixtures" / "Directory.Packages.props");
                 }
             );
 }

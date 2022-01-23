@@ -97,7 +97,6 @@
                             "LoadProjectData",
                             "Pack",
                             "Restore",
-                            "SetupMagicProjectTestData",
                             "Test",
                             "Trigger_Code_Coverage_Reports",
                             "TriggerCodeCoverageReports"
@@ -135,7 +134,6 @@
                             "LoadProjectData",
                             "Pack",
                             "Restore",
-                            "SetupMagicProjectTestData",
                             "Test",
                             "Trigger_Code_Coverage_Reports",
                             "TriggerCodeCoverageReports"

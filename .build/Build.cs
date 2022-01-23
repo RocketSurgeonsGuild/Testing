@@ -55,7 +55,8 @@ public partial class NukeSolution : NukeBuild,
     public Target Build => _ => _.Inherit<ICanBuildWithDotNetCore>(x => x.CoreBuild);
 
     public Target Pack => _ => _.Inherit<ICanPackWithDotNetCore>(x => x.CorePack)
-                                .DependsOn(Clean);
+                                .DependsOn(Clean)
+                                .After(Test);
 
     [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
 

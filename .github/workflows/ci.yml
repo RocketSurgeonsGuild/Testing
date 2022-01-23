@@ -91,24 +91,21 @@ jobs:
       - name: 🎁 dotnet tool restore
         run: |
           dotnet tool restore
-      - name: 🎁 Restore
-        run: |
-          dotnet nuke Restore --skip
       - name: Load Project Data
         run: |
           dotnet nuke LoadProjectData --skip
+      - name: 🎁 Restore
+        run: |
+          dotnet nuke Restore --skip
       - name: ⚙ Build
         run: |
           dotnet nuke Build --skip
-      - name: 📦 Pack
-        run: |
-          dotnet nuke Pack --skip
-      - name: 🚦 Setup Magic Project Test Data
-        run: |
-          dotnet nuke SetupMagicProjectTestData --skip
       - name: 🚦 Test
         run: |
           dotnet nuke Test TriggerCodeCoverageReports GenerateCodeCoverageReportCobertura GenerateCodeCoverageBadges GenerateCodeCoverageSummary GenerateCodeCoverageReport --skip
+      - name: 📦 Pack
+        run: |
+          dotnet nuke Pack --skip
       - name: 🐿 Publish Coverage
         uses: codecov/codecov-action@v2.1.0
         with:
