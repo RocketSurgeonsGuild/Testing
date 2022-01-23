@@ -91,12 +91,12 @@ jobs:
       - name: 🎁 dotnet tool restore
         run: |
           dotnet tool restore
-      - name: Load Project Data
-        run: |
-          dotnet nuke LoadProjectData --skip
       - name: 🎁 Restore
         run: |
           dotnet nuke Restore --skip
+      - name: Load Project Data
+        run: |
+          dotnet nuke LoadProjectData --skip
       - name: ⚙ Build
         run: |
           dotnet nuke Build --skip

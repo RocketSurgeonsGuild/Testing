@@ -45,6 +45,7 @@ public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHave
 {
     public Target LoadProjectData => _ =>
         _
+           .After(Restore)
            .DependentFor(Pack)
            .Executes(
                 () =>
