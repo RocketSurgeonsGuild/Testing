@@ -33,7 +33,7 @@
     <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.3" />
     <PackageVersion Include="System.Collections.Immutable" Version="6.0.0" />
     <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="6.0.0" />
-    <PackageVersion Include="System.Interactive" Version="5.1.0" />
+    <PackageVersion Include="System.Interactive" Version="6.0.1" />
     <PackageVersion Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
