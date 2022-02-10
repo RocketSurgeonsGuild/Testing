@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Project>
   <ItemGroup>
     <!--    <PackageVersion Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.2" />-->
@@ -33,7 +33,8 @@
     <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.3" />
     <PackageVersion Include="System.Collections.Immutable" Version="6.0.0" />
     <PackageVersion Include="System.Diagnostics.DiagnosticSource" Version="6.0.0" />
-    <PackageVersion Include="System.Interactive" Version="5.1.0" />
+    <PackageVersion Include="System.Interactive" Version="6.0.1" />
+    <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
     <PackageVersion Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
@@ -48,12 +49,15 @@
     <PackageVersion Include="FluentAssertions.Analyzers" Version="0.15.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageVersion Include="Moq" Version="4.16.1" />
-    <PackageVersion Include="NSubstitute" Version="4.2.2" />
+    <PackageVersion Include="NSubstitute" Version="4.3.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.15" />
     <PackageVersion Include="xunit" Version="2.4.1" />
     <PackageVersion Include="xunit.abstractions" Version="2.0.3" />
     <PackageVersion Include="xunit.analyzers" Version="0.10.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.3" />
   </ItemGroup>
-  <Import Project="$(MSBuildThisFileDirectory)/Directory.Packages.support.props" Condition="Exists('$(MSBuildThisFileDirectory)/Directory.Packages.support.props')" />
+  <Import
+        Project="$(MSBuildThisFileDirectory)/Directory.Packages.support.props"
+        Condition="Exists('$(MSBuildThisFileDirectory)/Directory.Packages.support.props')"
+    />
 </Project>
