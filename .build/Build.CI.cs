@@ -23,7 +23,11 @@ internal class LocalConstants
         "omnisharp.json",
         "package-lock.json",
         "package.json",
-        "Readme.md"
+        "Readme.md",
+        ".github/dependabot.yml",
+        ".github/labels.yml",
+        ".github/release.yml",
+        ".github/renovate.json",
     };
 }
 
@@ -103,6 +107,7 @@ public partial class NukeSolution
         var checkoutStep = buildJob.Steps.OfType<CheckoutStep>().Single();
         // For fetch all
         checkoutStep.FetchDepth = 0;
+        buildJob.Environment["NUGET_PACKAGES"] = "${{ github.workspace }}/.nuget/packages";
         buildJob.Steps.InsertRange(
             buildJob.Steps.IndexOf(checkoutStep) + 1,
             new BaseGitHubActionsStep[]
@@ -111,9 +116,18 @@ public partial class NukeSolution
                 {
                     Run = "git fetch --prune"
                 },
-                new SetupDotNetStep("Use .NET Core 2.1 SDK")
+                new UsingStep("NuGet Cache")
                 {
-                    DotNetVersion = "2.1.x"
+                    Uses = "actions/cache@v2",
+                    With =
+                    {
+                        ["path"] = "${{ github.workspace }}/.nuget/packages",
+                        // keep in mind using central package versioning here
+                        ["key"] =
+                            "${{ runner.os }}-nuget-${{ hashFiles('**/Directory.Packages.props') }}-${{ hashFiles('**/Directory.Packages.support.props') }}",
+                        ["restore-keys"] = @"|
+              ${{ runner.os }}-nuget-"
+                    }
                 },
                 new SetupDotNetStep("Use .NET Core 3.1 SDK")
                 {
