@@ -60,7 +60,7 @@
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTesting)' == 'true'  and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing" Version="6.0.5-ci.11" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing" Version="6.1.0" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq)' == 'true' and $(_rsgPackageReferenceList.Contains('Moq')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.Moq'))"
@@ -69,7 +69,7 @@
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingMoq)' == 'true' and $(_rsgPackageReferenceList.Contains('Moq')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.Moq'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.Moq" Version="6.0.5-ci.11" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.Moq" Version="6.1.0" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingFakeItEasy)' == 'true' and $(_rsgPackageReferenceList.Contains('FakeItEasy')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.FakeItEasy'))"
@@ -78,7 +78,7 @@
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingFakeItEasy)' == 'true' and $(_rsgPackageReferenceList.Contains('FakeItEasy')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.FakeItEasy'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.FakeItEasy" Version="6.0.5-ci.11" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.FakeItEasy" Version="6.1.0" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingNSubstitute)' == 'true' and $(_rsgPackageReferenceList.Contains('NSubstitute')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.NSubstitute'))"
@@ -87,7 +87,7 @@
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingNSubstitute)' == 'true' and $(_rsgPackageReferenceList.Contains('NSubstitute')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.NSubstitute'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.NSubstitute" Version="6.0.5-ci.11" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.NSubstitute" Version="6.1.0" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit)' == 'true' and $(_rsgPackageReferenceList.Contains('xunit.abstractions')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.XUnit'))"
@@ -96,7 +96,7 @@
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit)' == 'true' and $(_rsgPackageReferenceList.Contains('xunit.abstractions')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.XUnit'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.XUnit" Version="6.0.5-ci.11" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.XUnit" Version="6.1.0" />
     </ItemGroup>
     <Warning
             Condition="'$(ImplicitPackageReferenceWarning)' == 'true' and '$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit)' == 'true' and $(_rsgPackageReferenceList.Contains('xunit')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.XUnit'))"
@@ -105,7 +105,7 @@
     <ItemGroup
             Condition="'$(ImplicitPackageReferenceRocketSurgeryExtensionsTestingXUnit)' == 'true' and $(_rsgPackageReferenceList.Contains('xunit')) and !$(_rsgPackageVersionList.Contains('Rocket.Surgery.Extensions.Testing.XUnit'))"
         >
-      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.XUnit" Version="6.0.5-ci.11" />
+      <PackageVersion Include="Rocket.Surgery.Extensions.Testing.XUnit" Version="6.1.0" />
     </ItemGroup>
   </Target>
 </Project>
