@@ -12,34 +12,6 @@ public partial class NukeSolution : IParseGeneratorMetadata
 {
 }
 
-/*
- <Project>
-    <Target Name="AddRsgImplicitPackageReferences" BeforeTargets="CollectPackageReferences" Condition="$(ManagePackageVersionsCentrally) == 'true'">
-        <PropertyGroup>
-            <_rsgPackageReferenceList>@(PackageReference)</_rsgPackageReferenceList>
-            <_rsgPackageVersionList>@(PackageVersion)</_rsgPackageVersionList>
-        </PropertyGroup>
-
-        <ItemGroup Condition="$(_rsgPackageReferenceList.Contains('Microsoft.Extensions.Logging')) and $(_rsgPackageReferenceList.Contains('Serilog'))">
-            <PackageReference Include="Serilog.Extensions.Logging" />
-        </ItemGroup>
-    </Target>
-    <Target Name="AddRsgImplicitCentralPackageVersions" BeforeTargets="CollectCentralPackageVersions" AfterTargets="CollectPackageReferences">
-        <PropertyGroup>
-            <_rsgPackageReferenceList>@(PackageReference)</_rsgPackageReferenceList>
-            <_rsgPackageVersionList>@(PackageVersion)</_rsgPackageVersionList>
-        </PropertyGroup>
-
-        <Warning Text="PackageReference to Serilog.Extensions.Logging has been implicitly added but the PackageVersion is missing using default 3.1.0" Condition="$(_rsgPackageReferenceList.Contains('Microsoft.Extensions.Logging')) and $(_rsgPackageReferenceList.Contains('Serilog')) and !$(_rsgPackageVersionList.Contains('Serilog.Extensions.Logging'))" />
-
-        <ItemGroup Condition="$(_rsgPackageReferenceList.Contains('Microsoft.Extensions.Logging')) and $(_rsgPackageReferenceList.Contains('Serilog')) and !$(_rsgPackageVersionList.Contains('Serilog.Extensions.Logging'))">
-            <PackageVersion Include="Serilog.Extensions.Logging" Version="3.1.0" />
-        </ItemGroup>
-    </Target>
-</Project>
- */
-
-
 public interface IParseGeneratorMetadata : IHaveSolution, IHaveOutputLogs, IHaveBuildTarget, IHaveRestoreTarget, IComprehendSources, IHaveGitVersion,
                                            IComprehendTests, IHaveTestTarget, IHavePackTarget
 {
