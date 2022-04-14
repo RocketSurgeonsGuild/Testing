@@ -12,7 +12,7 @@ using Xunit.Abstractions;
 namespace Rocket.Surgery.Extensions.Testing;
 
 /// <summary>
-/// A test using NSubstitute
+///     A test using NSubstitute
 /// </summary>
 public abstract class AutoSubstituteTest : LoggerTest
 {
@@ -21,7 +21,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     private bool _building;
 
     /// <summary>
-    /// The default constructor
+    ///     The default constructor
     /// </summary>
     /// <param name="outputHelper"></param>
     /// <param name="logFormat"></param>
@@ -36,7 +36,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     }
 
     /// <summary>
-    /// The default constructor
+    ///     The default constructor
     /// </summary>
     /// <param name="outputHelper"></param>
     /// <param name="minLevel"></param>
@@ -53,7 +53,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     }
 
     /// <summary>
-    /// The default constructor
+    ///     The default constructor
     /// </summary>
     /// <param name="outputHelper"></param>
     /// <param name="minLevel"></param>
@@ -132,7 +132,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
     {
         Container.Populate(serviceCollection);
-        Container.UseInstance(configuration);
+        Container.RegisterInstance(configuration);
     }
 
     /// <summary>

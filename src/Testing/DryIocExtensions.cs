@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace Rocket.Surgery.Extensions.Testing;
 
 /// <summary>
-/// Extensions to support testing classes with DryIoc
+///     Extensions to support testing classes with DryIoc
 /// </summary>
 public static class DryIocExtensions
 {
@@ -35,7 +35,11 @@ public static class DryIocExtensions
                         var loggerType = typeof(Logger<>).MakeGenericType(
                             request.ServiceType.GetGenericArguments()[0]
                         );
+#if NET6_0_OR_GREATER
+                        instance = DelegateFactory.Of(_ => creator(request, loggerType), Reuse.Singleton);
+#else
                         instance = new DelegateFactory(_ => creator(request, loggerType), Reuse.Singleton);
+#endif
                         dictionary.TryAdd(serviceType, instance);
                     }
 
@@ -67,7 +71,11 @@ public static class DryIocExtensions
 
                     if (!dictionary.TryGetValue(serviceType, out var instance))
                     {
+#if NET6_0_OR_GREATER
+                        instance = DelegateFactory.Of(_ => creator(request), Reuse.Singleton);
+#else
                         instance = new DelegateFactory(_ => creator(request), Reuse.Singleton);
+#endif
                         dictionary.TryAdd(serviceType, instance);
                     }
 
