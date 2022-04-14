@@ -139,7 +139,7 @@ public abstract class AutoMockTest : LoggerTest
     protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
     {
         Container.Populate(serviceCollection);
-        Container.UseInstance(configuration);
+        Container.RegisterInstance(configuration);
     }
 
     /// <summary>

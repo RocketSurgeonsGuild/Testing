@@ -18,7 +18,7 @@ public class AutoFakePopulateTests : AutoFakeTest
     public void Should_Populate_Configuration_And_Services()
     {
         Container.Populate(new ServiceCollection().AddSingleton(new A()));
-        Container.UseInstance<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1" }).Build());
+        Container.RegisterInstance<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1" }).Build());
         Configuration.GetValue<string>("a").Should().Be("1");
         ServiceProvider.GetRequiredService<A>().Should().BeSameAs(ServiceProvider.GetService<A>());
     }
