@@ -27,7 +27,7 @@
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.24" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-    <PackageVersion Include="Serilog" Version="2.10.0" />
+    <PackageVersion Include="Serilog" Version="2.11.0" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="3.1.0" />
     <PackageVersion Include="Serilog.Sinks.Observable" Version="2.0.2" />
     <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.3" />
