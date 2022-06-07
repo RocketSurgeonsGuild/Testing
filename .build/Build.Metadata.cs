@@ -8,7 +8,7 @@ using Nuke.Common;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 
-public partial class NukeSolution : IParseGeneratorMetadata
+public partial class Pipeline : IParseGeneratorMetadata
 {
 }
 

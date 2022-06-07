@@ -3,6 +3,7 @@ using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
@@ -18,18 +19,18 @@ using Rocket.Surgery.Nuke.DotNetCore;
 [MSBuildVerbosityMapping]
 [NuGetVerbosityMapping]
 [ShutdownDotNetAfterServerBuild]
-public partial class NukeSolution : NukeBuild,
-                                    ICanRestoreWithDotNetCore,
-                                    ICanBuildWithDotNetCore,
-                                    ICanTestWithDotNetCore,
-                                    ICanPackWithDotNetCore,
-                                    IHaveDataCollector,
-                                    ICanClean,
-                                    ICanUpdateReadme,
-                                    IGenerateCodeCoverageReport,
-                                    IGenerateCodeCoverageSummary,
-                                    IGenerateCodeCoverageBadges,
-                                    IHaveConfiguration<Configuration>
+public partial class Pipeline : NukeBuild,
+                                ICanRestoreWithDotNetCore,
+                                ICanBuildWithDotNetCore,
+                                ICanTestWithDotNetCore,
+                                ICanPackWithDotNetCore,
+                                IHaveDataCollector,
+                                ICanClean,
+                                ICanUpdateReadme,
+                                IGenerateCodeCoverageReport,
+                                IGenerateCodeCoverageSummary,
+                                IGenerateCodeCoverageBadges,
+                                IHaveConfiguration<Configuration>
 
 {
     /// <summary>
@@ -41,24 +42,20 @@ public partial class NukeSolution : NukeBuild,
     /// </summary>
     public static int Main()
     {
-        return Execute<NukeSolution>(x => x.Default);
+        return Execute<Pipeline>(x => x.Default);
     }
 
-    [OptionalGitRepository] public GitRepository? GitRepository { get; }
-
     public Target Default => _ => _
-                                  .DependsOn(Restore)
-                                  .DependsOn(Build)
-                                  .DependsOn(Test)
-                                  .DependsOn(Pack);
+                                 .DependsOn(Restore)
+                                 .DependsOn(Build)
+                                 .DependsOn(Test)
+                                 .DependsOn(Pack);
 
     public Target Build => _ => _.Inherit<ICanBuildWithDotNetCore>(x => x.CoreBuild);
 
     public Target Pack => _ => _.Inherit<ICanPackWithDotNetCore>(x => x.CorePack)
                                 .DependsOn(Clean)
                                 .After(Test);
-
-    [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
 
     public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean);
     public Target Restore => _ => _.Inherit<ICanRestoreWithDotNetCore>(x => x.CoreRestore);
@@ -68,5 +65,10 @@ public partial class NukeSolution : NukeBuild,
                                         .Before(Default)
                                         .Before(Clean);
 
+    [Solution(GenerateProjects = true)] private Solution Solution { get; } = null!;
+    Nuke.Common.ProjectModel.Solution IHaveSolution.Solution => Solution;
+
+    [OptionalGitRepository] public GitRepository? GitRepository { get; }
+    [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
     [Parameter("Configuration to build")] public Configuration Configuration { get; } = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 }
