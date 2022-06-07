@@ -46,7 +46,7 @@ public partial class NukeSolution : NukeBuild,
 
     [OptionalGitRepository] public GitRepository? GitRepository { get; }
 
-    private Target Default => _ => _
+    public Target Default => _ => _
                                   .DependsOn(Restore)
                                   .DependsOn(Build)
                                   .DependsOn(Test)
