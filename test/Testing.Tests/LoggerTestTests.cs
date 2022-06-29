@@ -63,6 +63,39 @@ public class LoggerTestTests : LoggerTest
         logs.Should().HaveCount(3);
     }
 
+    [Fact]
+    public void Should_Create_A_Serilog_Stream()
+    {
+        SerilogLogger.Information("this is a test 1");
+
+        using var listener = CaptureLogs(out var logs);
+        using (listener)
+        {
+            SerilogLogger.Information("this is a test 2");
+        }
+
+        SerilogLogger.Information("this is a test 3");
+        logs.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public void Should_Create_A_Log_Serilog_Stream()
+    {
+        SerilogLogger.Information("this is a test 1");
+
+        using var listener = CaptureLogs(log => log.Level >= LogEventLevel.Warning, out var logs);
+        using (listener)
+        {
+            SerilogLogger.Information("this is a test 2");
+            SerilogLogger.Warning("this is a test 2");
+            SerilogLogger.Error("this is a test 2");
+            SerilogLogger.Fatal("this is a test 2");
+        }
+
+        SerilogLogger.Information("this is a test 3");
+        logs.Should().HaveCount(3);
+    }
+
     [Theory]
     [ClassData(typeof(LoggerTheoryCollection))]
     public void Should_Support_Theory_Data(IEnumerable<string> messages, int count)

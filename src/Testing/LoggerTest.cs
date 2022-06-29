@@ -217,15 +217,19 @@ public abstract class LoggerTest : IDisposable
            .Filter.ByExcluding(
                 x =>
                 {
-                    if (!x.Properties.TryGetValue("SourceContext", out var c) || c is not ScalarValue { Value: string sourceContext })
+                    if (!x.Properties.TryGetValue("SourceContext", out var c))
                         return false;
+                    if (c is not ScalarValue { Value: string sourceContext })
+                        return true;
                     return _excludeSourceContexts.Any(z => z.Equals(sourceContext, StringComparison.Ordinal));
                 }
             )
            .Filter.ByIncludingOnly(
                 x =>
                 {
-                    if (!x.Properties.TryGetValue("SourceContext", out var c) || c is not ScalarValue { Value: string sourceContext })
+                    if (!x.Properties.TryGetValue("SourceContext", out var c))
+                        return true;
+                    if (c is not ScalarValue { Value: string sourceContext })
                         return false;
                     return _includeSourceContexts.All(z => z.Equals(sourceContext, StringComparison.Ordinal));
                 }
