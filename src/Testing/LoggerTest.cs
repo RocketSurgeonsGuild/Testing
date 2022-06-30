@@ -73,7 +73,7 @@ public abstract class LoggerTest : IDisposable
     /// <param name="configureLogger"></param>
     /// <returns></returns>
     protected LoggerTest(
-        ITestOutputHelper outputHelper, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        ITestOutputHelper outputHelper, string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null
     )
         : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger)
@@ -89,7 +89,7 @@ public abstract class LoggerTest : IDisposable
     /// <param name="configureLogger"></param>
     /// <returns></returns>
     protected LoggerTest(
-        ITestOutputHelper outputHelper, LogLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        ITestOutputHelper outputHelper, LogLevel minLevel, string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null
     )
         : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger)
@@ -105,7 +105,7 @@ public abstract class LoggerTest : IDisposable
     /// <param name="configureLogger"></param>
     /// <returns></returns>
     protected LoggerTest(
-        ITestOutputHelper outputHelper, LogEventLevel minLevel, string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        ITestOutputHelper outputHelper, LogEventLevel minLevel, string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null
     )
     {
@@ -119,11 +119,12 @@ public abstract class LoggerTest : IDisposable
                 {
                     var subject = new Subject<LogEvent>();
                     var config = new LoggerConfiguration()
-                                .WriteTo.TestOutput(outputHelper, LogEventLevel.Verbose, logFormat)
+                                .WriteTo.TestOutput(outputHelper, LogEventLevel.Verbose, logFormat ?? RocketSurgeonsTestingDefaults.LogFormat)
                                 .WriteTo.Observers(x => x.Subscribe(subject))
                                 .MinimumLevel.Is(minLevel)
                                 .Enrich.FromLogContext();
                     FilterLogs(config);
+                    RocketSurgeonsTestingDefaults.ConfigureLogging?.Invoke(config);
                     configureLogger?.Invoke(config);
                     var logger = config.CreateLogger();
 
