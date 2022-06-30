@@ -73,7 +73,7 @@ public abstract class AutoFakeTest : LoggerTest
     /// <param name="fakeOptionsAction"></param>
     protected AutoFakeTest(
         ITestOutputHelper outputHelper,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null,
         Action<IFakeOptions>? fakeOptionsAction = null
     )
@@ -92,7 +92,7 @@ public abstract class AutoFakeTest : LoggerTest
     protected AutoFakeTest(
         ITestOutputHelper outputHelper,
         LogLevel minLevel,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null,
         Action<IFakeOptions>? fakeOptionsAction = null
     )
@@ -111,7 +111,7 @@ public abstract class AutoFakeTest : LoggerTest
     protected AutoFakeTest(
         ITestOutputHelper outputHelper,
         LogEventLevel minLevel,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null,
         Action<IFakeOptions>? fakeOptionsAction = null
     )

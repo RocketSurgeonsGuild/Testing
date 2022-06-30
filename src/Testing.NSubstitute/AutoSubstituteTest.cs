@@ -28,7 +28,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     /// <param name="configureLogger"></param>
     protected AutoSubstituteTest(
         ITestOutputHelper outputHelper,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null
     )
         : this(outputHelper, LogLevel.Information, logFormat, configureLogger)
@@ -45,7 +45,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     protected AutoSubstituteTest(
         ITestOutputHelper outputHelper,
         LogLevel minLevel,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null
     )
         : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger)
@@ -62,7 +62,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     protected AutoSubstituteTest(
         ITestOutputHelper outputHelper,
         LogEventLevel minLevel,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null
     ) : base(outputHelper, minLevel, logFormat, configureLogger)
     {

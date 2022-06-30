@@ -70,7 +70,7 @@ public abstract class AutoMockTest : LoggerTest
     /// <param name="configureLogger"></param>
     protected AutoMockTest(
         ITestOutputHelper outputHelper, MockBehavior mockBehavior = MockBehavior.Default,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null
+        string? logFormat = null, Action<LoggerConfiguration>? configureLogger = null
     )
         : this(outputHelper, LogEventLevel.Information, mockBehavior, logFormat, configureLogger)
     {
@@ -86,7 +86,7 @@ public abstract class AutoMockTest : LoggerTest
     /// <param name="configureLogger"></param>
     protected AutoMockTest(
         ITestOutputHelper outputHelper, LogLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}", Action<LoggerConfiguration>? configureLogger = null
+        string? logFormat = null, Action<LoggerConfiguration>? configureLogger = null
     )
         : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), mockBehavior, logFormat, configureLogger)
     {
@@ -104,7 +104,7 @@ public abstract class AutoMockTest : LoggerTest
         ITestOutputHelper outputHelper,
         LogEventLevel minLevel,
         MockBehavior mockBehavior = MockBehavior.Default,
-        string logFormat = "[{Timestamp:HH:mm:ss} {Level:w4}] {Message}{NewLine}{Exception}",
+        string? logFormat = null,
         Action<LoggerConfiguration>? configureLogger = null
     )
         : base(outputHelper, minLevel, logFormat, configureLogger)
