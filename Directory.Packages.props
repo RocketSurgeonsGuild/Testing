@@ -19,7 +19,7 @@
     <PackageVersion Include="ReportGenerator" Version="5.1.12" />
     <PackageVersion Include="Rocket.Surgery.Nuke" Version="0.17.19" />
     <PackageVersion Include="NuGet.ProjectModel" Version="6.4.0" />
-    <PackageVersion Include="Buildalyzer" Version="4.1.6" />
+    <PackageVersion Include="Buildalyzer" Version="4.1.7" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" />
