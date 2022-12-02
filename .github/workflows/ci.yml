@@ -75,7 +75,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macOS-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest, windows-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -104,9 +104,6 @@ jobs:
       - name: 🎁 Restore
         run: |
           dotnet nuke Restore --skip
-      - name: Load Project Data
-        run: |
-          dotnet nuke LoadProjectData --skip
       - name: ⚙ Build
         run: |
           dotnet nuke Build --skip
