@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1' or '$(TargetFramework)' == 'netcoreapp3.1'">
-        <PackageVersion Update="DryIoc.dll" Version="5.4.0" />
-        <PackageVersion Update="DryIoc.Microsoft.DependencyInjection" Version="6.2.0" />
         <PackageVersion Update="Microsoft.Extensions.Configuration" Version="3.1.32" />
         <PackageVersion Update="Microsoft.Extensions.Configuration.Binder" Version="3.1.32" />
         <PackageVersion Update="Microsoft.Extensions.DiagnosticAdapter" Version="3.1.32" />
         <PackageVersion Update="Microsoft.Extensions.Logging" Version="3.1.32" />
-        <PackageVersion Update="System.Diagnostics.DiagnosticSource" Version="4.7.1" />
+        <PackageVersion Update="Serilog.Extensions.Logging" Version="3.1.0" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+        <PackageVersion Update="Microsoft.Extensions.Configuration" Version="6.0.1" />
+        <PackageVersion Update="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+        <PackageVersion Update="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
+        <PackageVersion Update="Microsoft.Extensions.Logging" Version="6.0.0" />
+        <PackageVersion Update="Serilog.Extensions.Logging" Version="3.1.0" />
     </ItemGroup>
 </Project>
