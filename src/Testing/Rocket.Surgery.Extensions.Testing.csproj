@@ -15,7 +15,6 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="Microsoft.Extensions.Logging" />
-        <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" />
         <PackageReference Include="System.Collections.Immutable" />
         <PackageReference Include="System.Diagnostics.DiagnosticSource" />
         <PackageReference Include="System.Interactive" />

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -22,7 +21,7 @@ namespace Rocket.Surgery.Extensions.Testing;
 public abstract class LoggerTest : IDisposable
 #pragma warning restore CA1063
 {
-    private readonly Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource, IObservable<LogEvent>
+    private readonly Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, IObservable<LogEvent>
         logStream)> _values;
 
     private readonly List<string> _excludeSourceContexts = new List<string>();
@@ -42,11 +41,6 @@ public abstract class LoggerTest : IDisposable
     ///     The <see cref="Microsoft.Extensions.Logging.ILogger" />
     /// </summary>
     protected ISeriLogger SerilogLogger => _values.Value.serilogLogger;
-
-    /// <summary>
-    ///     The <see cref="DiagnosticSource" />
-    /// </summary>
-    protected DiagnosticSource DiagnosticSource => _values.Value.diagnosticSource;
 
     protected ITestOutputHelper TestOutputHelper { get; }
 
@@ -113,7 +107,7 @@ public abstract class LoggerTest : IDisposable
         TestOutputHelper = outputHelper;
 
         _values =
-            new Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, DiagnosticSource diagnosticSource, IObservable<LogEvent>
+            new Lazy<(IMsftLogger logger, ILoggerFactory loggerFactory, ISeriLogger serilogLogger, IObservable<LogEvent>
                 logStream)>(
                 () =>
                 {
@@ -134,12 +128,7 @@ public abstract class LoggerTest : IDisposable
                     Disposables.Add(container);
                     Disposables.Add(logger);
 
-                    var diagnosticListener = new DiagnosticListener("Test");
-                    Disposables.Add(
-                        diagnosticListener.SubscribeWithAdapter(new TestDiagnosticListenerLoggingAdapter(factory.CreateLogger("DiagnosticSource")))
-                    );
-
-                    return ( factory.CreateLogger("Default"), factory, logger, diagnosticListener, subject );
+                    return ( factory.CreateLogger("Default"), factory, logger, subject );
                 }
             );
     }
