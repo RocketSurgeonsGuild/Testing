@@ -28,7 +28,7 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-    <PackageVersion Include="Serilog" Version="2.12.0" />
+    <PackageVersion Include="Serilog" Version="3.0.1" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="7.0.0" />
     <PackageVersion Include="Serilog.Sinks.Observable" Version="2.0.2" />
     <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.5" />
