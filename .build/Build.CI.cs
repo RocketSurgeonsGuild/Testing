@@ -50,7 +50,7 @@ public partial class Pipeline
 {
     public static RocketSurgeonGitHubActionsConfiguration CiIgnoreMiddleware(RocketSurgeonGitHubActionsConfiguration configuration)
     {
-        ( (RocketSurgeonsGithubActionsJob)configuration.Jobs[0] ).Steps = new List<GitHubActionsStep>
+        ((RocketSurgeonsGithubActionsJob)configuration.Jobs[0]).Steps = new List<GitHubActionsStep>
         {
             new RunStep("N/A")
             {
@@ -67,10 +67,10 @@ public partial class Pipeline
            .ExcludeRepositoryConfigurationFiles()
            .AddNugetPublish()
            .Jobs.OfType<RocketSurgeonsGithubActionsJob>()
-           .First(z => z.Name == "Build")
+           .First(z => z.Name.Equals("build", StringComparison.OrdinalIgnoreCase))
            .UseDotNetSdks("6.0", "7.0")
            .AddNuGetCache()
-            // .ConfigureForGitVersion()
+           // .ConfigureForGitVersion()
            .ConfigureStep<CheckoutStep>(step => step.FetchDepth = 0)
            .PublishLogs<Pipeline>()
            .FailFast = false;
