@@ -8,7 +8,6 @@ using Rocket.Surgery.Nuke.GithubActions;
 
 [GitHubActionsSteps(
     "ci-ignore",
-    GitHubActionsImage.WindowsLatest,
     GitHubActionsImage.UbuntuLatest,
     AutoGenerate = false,
     On = new[] { RocketSurgeonGitHubActionsTrigger.Push },
@@ -19,8 +18,6 @@ using Rocket.Surgery.Nuke.GithubActions;
 )]
 [GitHubActionsSteps(
     "ci",
-    GitHubActionsImage.MacOsLatest,
-    GitHubActionsImage.WindowsLatest,
     GitHubActionsImage.UbuntuLatest,
     AutoGenerate = false,
     On = new[] { RocketSurgeonGitHubActionsTrigger.Push },
@@ -68,7 +65,7 @@ public partial class Pipeline
            .AddNugetPublish()
            .Jobs.OfType<RocketSurgeonsGithubActionsJob>()
            .First(z => z.Name.Equals("build", StringComparison.OrdinalIgnoreCase))
-           .UseDotNetSdks("6.0", "7.0")
+           .UseDotNetSdks("6.0", "8.0")
            .AddNuGetCache()
            // .ConfigureForGitVersion()
            .ConfigureStep<CheckoutStep>(step => step.FetchDepth = 0)
