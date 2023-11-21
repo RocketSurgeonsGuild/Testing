@@ -55,7 +55,9 @@ public static class DryIocExtensions
     {
         var dictionary = new ConcurrentDictionary<Type, Factory>();
         return rules.WithUnknownServiceResolvers(
-            ( rules.UnknownServiceResolvers ?? Array.Empty<Rules.UnknownServiceResolver>() ).ToImmutableList().Add(
+            ( rules.UnknownServiceResolvers ?? Array.Empty<Rules.UnknownServiceResolver>() )
+           .ToImmutableList()
+                                                            .Add(
                 request =>
                 {
                     var serviceType = request.ServiceType;
