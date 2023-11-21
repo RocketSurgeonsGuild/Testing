@@ -6,25 +6,16 @@
   "arrowParens": "avoid",
   "bracketSpacing": true,
   "printWidth": 160,
-  "plugins": [
-    "@prettier/plugin-xml"
-  ],
+  "plugins": ["@prettier/plugin-xml"],
   "overrides": [
     {
-      "files": [
-        "*.props",
-        "*.targets",
-        "*.*proj"
-      ],
+      "files": ["*.props", "*.targets", "*.*proj"],
       "options": {
         "parser": "xml"
       }
     },
     {
-      "files": [
-        "*.yml",
-        "*.yaml"
-      ],
+      "files": ["*.yml", "*.yaml"],
       "options": {
         "tabWidth": 2
       }

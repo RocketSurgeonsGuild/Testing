@@ -3,7 +3,6 @@
         <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="Buildalyzer" />
         <ProjectReference Include="..\..\src\Testing.NSubstitute\Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />
         <ProjectReference Include="..\..\src\Testing.XUnit\Rocket.Surgery.Extensions.Testing.XUnit.csproj" />
