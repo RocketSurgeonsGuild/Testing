@@ -1,0 +1,11 @@
+#nullable enable
+Rocket.Surgery.Extensions.Testing.Fixtures.ITestFixtureBuilder
+Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions
+static Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions.With<TBuilder, TField>(this TBuilder this, ref System.Collections.Generic.List<TField>? field, System.Collections.Generic.IEnumerable<TField>? values) -> TBuilder
+static Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions.With<TBuilder, TField>(this TBuilder this, ref System.Collections.Generic.List<TField>? field, TField value) -> TBuilder
+static Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions.With<TBuilder, TField>(this TBuilder this, ref System.Collections.ObjectModel.Collection<TField>? field, System.Collections.Generic.IEnumerable<TField>? values) -> TBuilder
+static Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions.With<TBuilder, TField>(this TBuilder this, ref System.Collections.ObjectModel.Collection<TField>? field, TField value) -> TBuilder
+static Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions.With<TBuilder, TField>(this TBuilder this, ref TField field, TField value) -> TBuilder
+static Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions.With<TBuilder, TKey, TField>(this TBuilder this, ref System.Collections.Generic.Dictionary<TKey, TField>! dictionary, System.Collections.Generic.Dictionary<TKey, TField>! keyValuePair) -> TBuilder
+static Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions.With<TBuilder, TKey, TField>(this TBuilder this, ref System.Collections.Generic.Dictionary<TKey, TField>! dictionary, System.Collections.Generic.KeyValuePair<TKey, TField> keyValuePair) -> TBuilder
+static Rocket.Surgery.Extensions.Testing.Fixtures.TestFixtureBuilderExtensions.With<TBuilder, TKey, TField>(this TBuilder this, ref System.Collections.Generic.Dictionary<TKey, TField>! dictionary, TKey key, TField value) -> TBuilder

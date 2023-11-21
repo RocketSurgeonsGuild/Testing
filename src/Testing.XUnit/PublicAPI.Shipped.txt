@@ -1,0 +1,3 @@
+#nullable enable
+static Xunit.XUnitExtensions.GetTest(this Xunit.Abstractions.ITestOutputHelper! output) -> Xunit.Abstractions.ITest!
+Xunit.XUnitExtensions

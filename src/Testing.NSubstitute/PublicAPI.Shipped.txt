@@ -1,0 +1,21 @@
+#nullable enable
+Rocket.Surgery.Extensions.Testing.AutoSubstitute
+Rocket.Surgery.Extensions.Testing.AutoSubstitute.AutoSubstitute(DryIoc.IContainer? container = null, System.Func<DryIoc.IContainer!, DryIoc.IContainer!>? configureAction = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoSubstitute.Container.get -> DryIoc.IContainer!
+Rocket.Surgery.Extensions.Testing.AutoSubstitute.Provide<TService, TImplementation>() -> TService
+Rocket.Surgery.Extensions.Testing.AutoSubstitute.Provide<TService>(TService! instance) -> TService!
+Rocket.Surgery.Extensions.Testing.AutoSubstitute.Resolve<T>() -> T
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.AutoSubstitute.get -> Rocket.Surgery.Extensions.Testing.AutoSubstitute!
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.AutoSubstituteTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Microsoft.Extensions.Logging.LogLevel minLevel, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.AutoSubstituteTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Serilog.Events.LogEventLevel minLevel, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.AutoSubstituteTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.Configuration.get -> Microsoft.Extensions.Configuration.IConfiguration!
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.Container.get -> DryIoc.IContainer!
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.Populate((Microsoft.Extensions.Configuration.IConfiguration! configuration, Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) context) -> void
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.Populate(DryIoc.IContainer! container) -> void
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.Populate(Microsoft.Extensions.Configuration.IConfiguration! configuration, Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) -> void
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.Populate(Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) -> void
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.Rebuild(DryIoc.IContainer? container = null) -> Rocket.Surgery.Extensions.Testing.AutoSubstitute!
+Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.ServiceProvider.get -> System.IServiceProvider!
+virtual Rocket.Surgery.Extensions.Testing.AutoSubstituteTest.BuildContainer(DryIoc.IContainer! container) -> DryIoc.IContainer!

@@ -1,0 +1,22 @@
+#nullable enable
+override Rocket.Surgery.Extensions.Testing.AutoFakeTest.CreateLoggerFactory(Serilog.ILogger! logger, Serilog.Extensions.Logging.LoggerProviderCollection! loggerProviderCollection) -> Microsoft.Extensions.Logging.ILoggerFactory!
+Rocket.Surgery.Extensions.Testing.AutoFake
+Rocket.Surgery.Extensions.Testing.AutoFake.AutoFake(DryIoc.IContainer? container = null, System.Func<DryIoc.IContainer!, DryIoc.IContainer!>? configureAction = null, System.Action<FakeItEasy.Creation.IFakeOptions!>? fakeOptionsAction = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoFake.Container.get -> DryIoc.IContainer!
+Rocket.Surgery.Extensions.Testing.AutoFake.Provide<TService, TImplementation>() -> TService
+Rocket.Surgery.Extensions.Testing.AutoFake.Provide<TService>(TService! instance) -> TService!
+Rocket.Surgery.Extensions.Testing.AutoFake.Resolve<T>() -> T
+Rocket.Surgery.Extensions.Testing.AutoFakeTest
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.AutoFake.get -> Rocket.Surgery.Extensions.Testing.AutoFake!
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.AutoFakeTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Microsoft.Extensions.Logging.LogLevel minLevel, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null, System.Action<FakeItEasy.Creation.IFakeOptions!>? fakeOptionsAction = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.AutoFakeTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Serilog.Events.LogEventLevel minLevel, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null, System.Action<FakeItEasy.Creation.IFakeOptions!>? fakeOptionsAction = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.AutoFakeTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null, System.Action<FakeItEasy.Creation.IFakeOptions!>? fakeOptionsAction = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Configuration.get -> Microsoft.Extensions.Configuration.IConfiguration!
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Container.get -> DryIoc.IContainer!
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Populate((Microsoft.Extensions.Configuration.IConfiguration! configuration, Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) context) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Populate(DryIoc.IContainer! container) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Populate(Microsoft.Extensions.Configuration.IConfiguration! configuration, Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Populate(Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) -> void
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.Rebuild(DryIoc.IContainer? container = null) -> Rocket.Surgery.Extensions.Testing.AutoFake!
+Rocket.Surgery.Extensions.Testing.AutoFakeTest.ServiceProvider.get -> System.IServiceProvider!
+virtual Rocket.Surgery.Extensions.Testing.AutoFakeTest.BuildContainer(DryIoc.IContainer! container) -> DryIoc.IContainer!

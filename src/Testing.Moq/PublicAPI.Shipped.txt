@@ -1,0 +1,23 @@
+#nullable enable
+Rocket.Surgery.Extensions.Testing.AutoMock
+Rocket.Surgery.Extensions.Testing.AutoMock.AutoMock(Moq.MockBehavior behavior, DryIoc.IContainer? container = null, System.Func<DryIoc.IContainer!, DryIoc.IContainer!>? configureAction = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoMock.AutoMock(Moq.MockRepository! repository, DryIoc.IContainer? container = null, System.Func<DryIoc.IContainer!, DryIoc.IContainer!>? configureAction = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoMock.Container.get -> DryIoc.IContainer!
+Rocket.Surgery.Extensions.Testing.AutoMock.Mock<T>() -> Moq.Mock<T!>!
+Rocket.Surgery.Extensions.Testing.AutoMock.Provide<TService, TImplementation>() -> TService
+Rocket.Surgery.Extensions.Testing.AutoMock.Provide<TService>(TService! instance) -> TService!
+Rocket.Surgery.Extensions.Testing.AutoMock.Resolve<T>() -> T
+Rocket.Surgery.Extensions.Testing.AutoMockTest
+Rocket.Surgery.Extensions.Testing.AutoMockTest.AutoMock.get -> Rocket.Surgery.Extensions.Testing.AutoMock!
+Rocket.Surgery.Extensions.Testing.AutoMockTest.AutoMockTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Microsoft.Extensions.Logging.LogLevel minLevel, Moq.MockBehavior mockBehavior = Moq.MockBehavior.Default, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoMockTest.AutoMockTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Moq.MockBehavior mockBehavior = Moq.MockBehavior.Default, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoMockTest.AutoMockTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Serilog.Events.LogEventLevel minLevel, Moq.MockBehavior mockBehavior = Moq.MockBehavior.Default, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.AutoMockTest.Configuration.get -> Microsoft.Extensions.Configuration.IConfiguration!
+Rocket.Surgery.Extensions.Testing.AutoMockTest.Container.get -> DryIoc.IContainer!
+Rocket.Surgery.Extensions.Testing.AutoMockTest.Populate((Microsoft.Extensions.Configuration.IConfiguration! configuration, Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) context) -> void
+Rocket.Surgery.Extensions.Testing.AutoMockTest.Populate(DryIoc.IContainer! container) -> void
+Rocket.Surgery.Extensions.Testing.AutoMockTest.Populate(Microsoft.Extensions.Configuration.IConfiguration! configuration, Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) -> void
+Rocket.Surgery.Extensions.Testing.AutoMockTest.Populate(Microsoft.Extensions.DependencyInjection.IServiceCollection! serviceCollection) -> void
+Rocket.Surgery.Extensions.Testing.AutoMockTest.Rebuild(DryIoc.IContainer? container = null) -> Rocket.Surgery.Extensions.Testing.AutoMock!
+Rocket.Surgery.Extensions.Testing.AutoMockTest.ServiceProvider.get -> System.IServiceProvider!
+virtual Rocket.Surgery.Extensions.Testing.AutoMockTest.BuildContainer(DryIoc.IContainer! container) -> DryIoc.IContainer!
