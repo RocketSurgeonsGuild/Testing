@@ -1,4 +1,4 @@
-﻿namespace Rocket.Surgery.Extensions.Testing;
+namespace Rocket.Surgery.Extensions.Testing;
 
 /// <summary>
 /// Exception when trying to boot strap the tests

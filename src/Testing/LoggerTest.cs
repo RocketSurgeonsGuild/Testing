@@ -128,7 +128,7 @@ public abstract class LoggerTest : IDisposable
                     Disposables.Add(container);
                     Disposables.Add(logger);
 
-                    return ( factory.CreateLogger("Default"), factory, logger, subject );
+                    return (factory.CreateLogger("Default"), factory, logger, subject);
                 }
             );
     }

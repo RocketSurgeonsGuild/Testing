@@ -1,0 +1,32 @@
+#nullable enable
+abstract Rocket.Surgery.Extensions.Testing.TheoryCollection<T>.GetData() -> System.Collections.Generic.IEnumerable<T>!
+readonly Rocket.Surgery.Extensions.Testing.LoggerTest.Disposables -> System.Reactive.Disposables.CompositeDisposable!
+Rocket.Surgery.Extensions.Testing.DryIocExtensions
+Rocket.Surgery.Extensions.Testing.LoggerTest
+Rocket.Surgery.Extensions.Testing.LoggerTest.CaptureLogs(out System.Collections.Generic.IEnumerable<Serilog.Events.LogEvent!>! logs) -> System.IDisposable!
+Rocket.Surgery.Extensions.Testing.LoggerTest.CaptureLogs(System.Func<Serilog.Events.LogEvent!, bool>! filterLogs, out System.Collections.Generic.IEnumerable<Serilog.Events.LogEvent!>! logs) -> System.IDisposable!
+Rocket.Surgery.Extensions.Testing.LoggerTest.ExcludeSourceContext(string! context) -> void
+Rocket.Surgery.Extensions.Testing.LoggerTest.IncludeSourceContext(string! context) -> void
+Rocket.Surgery.Extensions.Testing.LoggerTest.Logger.get -> Microsoft.Extensions.Logging.ILogger!
+Rocket.Surgery.Extensions.Testing.LoggerTest.LoggerFactory.get -> Microsoft.Extensions.Logging.ILoggerFactory!
+Rocket.Surgery.Extensions.Testing.LoggerTest.LoggerTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Microsoft.Extensions.Logging.LogLevel minLevel, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.LoggerTest.LoggerTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, Serilog.Events.LogEventLevel minLevel, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.LoggerTest.LoggerTest(Xunit.Abstractions.ITestOutputHelper! outputHelper, string? logFormat = null, System.Action<Serilog.LoggerConfiguration!>? configureLogger = null) -> void
+Rocket.Surgery.Extensions.Testing.LoggerTest.LogStream.get -> System.IObservable<Serilog.Events.LogEvent!>!
+Rocket.Surgery.Extensions.Testing.LoggerTest.SerilogLogger.get -> Serilog.ILogger!
+Rocket.Surgery.Extensions.Testing.LoggerTest.TestOutputHelper.get -> Xunit.Abstractions.ITestOutputHelper!
+Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults
+Rocket.Surgery.Extensions.Testing.TestBootstrapException
+Rocket.Surgery.Extensions.Testing.TestBootstrapException.TestBootstrapException() -> void
+Rocket.Surgery.Extensions.Testing.TestBootstrapException.TestBootstrapException(string! message, System.Exception! innerException) -> void
+Rocket.Surgery.Extensions.Testing.TestBootstrapException.TestBootstrapException(string! message) -> void
+Rocket.Surgery.Extensions.Testing.TheoryCollection<T>
+Rocket.Surgery.Extensions.Testing.TheoryCollection<T>.GetEnumerator() -> System.Collections.Generic.IEnumerator<object?[]!>!
+Rocket.Surgery.Extensions.Testing.TheoryCollection<T>.TheoryCollection() -> void
+static Rocket.Surgery.Extensions.Testing.DryIocExtensions.WithTestLoggerResolver(this DryIoc.Rules! rules, System.Func<DryIoc.Request!, System.Type!, object!>! creator) -> DryIoc.Rules!
+static Rocket.Surgery.Extensions.Testing.DryIocExtensions.WithUndefinedTestDependenciesResolver(this DryIoc.Rules! rules, System.Func<DryIoc.Request!, object!>! creator) -> DryIoc.Rules!
+static Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults.ConfigureLogging.get -> System.Action<Serilog.LoggerConfiguration!>?
+static Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults.ConfigureLogging.set -> void
+static Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults.LogFormat.get -> string!
+static Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults.LogFormat.set -> void
+virtual Rocket.Surgery.Extensions.Testing.LoggerTest.CreateLoggerFactory(Serilog.ILogger! logger, Serilog.Extensions.Logging.LoggerProviderCollection! loggerProviderCollection) -> Microsoft.Extensions.Logging.ILoggerFactory!
