@@ -2,6 +2,8 @@
 abstract Rocket.Surgery.Extensions.Testing.TheoryCollection<T>.GetData() -> System.Collections.Generic.IEnumerable<T>!
 readonly Rocket.Surgery.Extensions.Testing.LoggerTest.Disposables -> System.Reactive.Disposables.CompositeDisposable!
 Rocket.Surgery.Extensions.Testing.DryIocExtensions
+Rocket.Surgery.Extensions.Testing.IHasTestOutputHelper
+Rocket.Surgery.Extensions.Testing.IHasTestOutputHelper.TestOutputHelper.get -> Xunit.Abstractions.ITestOutputHelper!
 Rocket.Surgery.Extensions.Testing.LoggerTest
 Rocket.Surgery.Extensions.Testing.LoggerTest.CaptureLogs(out System.Collections.Generic.IEnumerable<Serilog.Events.LogEvent!>! logs) -> System.IDisposable!
 Rocket.Surgery.Extensions.Testing.LoggerTest.CaptureLogs(System.Func<Serilog.Events.LogEvent!, bool>! filterLogs, out System.Collections.Generic.IEnumerable<Serilog.Events.LogEvent!>! logs) -> System.IDisposable!
@@ -29,4 +31,11 @@ static Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults.Configure
 static Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults.ConfigureLogging.set -> void
 static Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults.LogFormat.get -> string!
 static Rocket.Surgery.Extensions.Testing.RocketSurgeonsTestingDefaults.LogFormat.set -> void
+static Xunit.XUnitExtensions.GetTest(this Rocket.Surgery.Extensions.Testing.IHasTestOutputHelper! output) -> Xunit.Abstractions.ITest!
+static Xunit.XUnitExtensions.GetTest(this Xunit.Abstractions.ITestOutputHelper! output) -> Xunit.Abstractions.ITest!
+static Xunit.XUnitExtensions.GetTestHashId(this Rocket.Surgery.Extensions.Testing.IHasTestOutputHelper! output) -> int
+static Xunit.XUnitExtensions.GetTestHashId(this Xunit.Abstractions.ITestOutputHelper! output) -> int
+static Xunit.XUnitExtensions.GetTestUniqueId(this Rocket.Surgery.Extensions.Testing.IHasTestOutputHelper! output) -> string!
+static Xunit.XUnitExtensions.GetTestUniqueId(this Xunit.Abstractions.ITestOutputHelper! output) -> string!
 virtual Rocket.Surgery.Extensions.Testing.LoggerTest.CreateLoggerFactory(Serilog.ILogger! logger, Serilog.Extensions.Logging.LoggerProviderCollection! loggerProviderCollection) -> Microsoft.Extensions.Logging.ILoggerFactory!
+Xunit.XUnitExtensions
