@@ -35,8 +35,9 @@ public static class XUnitExtensions
     }
 
     /// <summary>
-    ///     Gets the test from the ITestOutputHelper
+    ///     Gets a hashed id for the test
     /// </summary>
+    /// <remarks>may be unstable depending on your test runner</remarks>
     /// <param name="output"></param>
     /// <returns></returns>
     public static int GetTestHashId(this ITestOutputHelper output)
@@ -48,8 +49,9 @@ public static class XUnitExtensions
     }
 
     /// <summary>
-    ///     Gets the test from the ITestOutputHelper
+    ///     Gets a hashed id for the test
     /// </summary>
+    /// <remarks>may be unstable depending on your test runner</remarks>
     /// <param name="output"></param>
     /// <returns></returns>
     public static int GetTestHashId(this IHasTestOutputHelper output)
@@ -58,8 +60,9 @@ public static class XUnitExtensions
     }
 
     /// <summary>
-    ///     Gets the test from the ITestOutputHelper
+    ///     Gets unique id for the test
     /// </summary>
+    /// <remarks>may be unstable depending on your test runner</remarks>
     /// <param name="output"></param>
     /// <returns></returns>
     public static string GetTestUniqueId(this ITestOutputHelper output)
@@ -68,8 +71,9 @@ public static class XUnitExtensions
     }
 
     /// <summary>
-    ///     Gets the test from the ITestOutputHelper
+    ///     Gets unique id for the test
     /// </summary>
+    /// <remarks>may be unstable depending on your test runner</remarks>
     /// <param name="output"></param>
     /// <returns></returns>
     public static string GetTestUniqueId(this IHasTestOutputHelper output)
