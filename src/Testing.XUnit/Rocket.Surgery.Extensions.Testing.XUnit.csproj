@@ -8,4 +8,7 @@
   <ItemGroup>
     <PackageReference Include="xunit.abstractions" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
+  </ItemGroup>
 </Project>
