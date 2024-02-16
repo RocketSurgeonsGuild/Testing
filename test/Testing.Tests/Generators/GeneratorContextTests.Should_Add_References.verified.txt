@@ -1,0 +1,16 @@
+﻿{
+  ParseOptions: {
+    LanguageVersion: CSharp10,
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    Rocket.Surgery.Extensions.Testing.SourceGenerators.dll,
+    Rocket.Surgery.Extensions.Testing.Tests.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

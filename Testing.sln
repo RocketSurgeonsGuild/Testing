@@ -96,6 +96,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".vscode", ".vscode", "{2E4E
 		.vscode/settings.json = .vscode/settings.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.SourceGenerators", "src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj", "{14E1380D-30CE-4EA6-8392-C9744B3548CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -244,6 +246,18 @@ Global
 		{DFB78690-0AC5-4B48-9A07-5D321CA4A865}.Release|x64.Build.0 = Release|Any CPU
 		{DFB78690-0AC5-4B48-9A07-5D321CA4A865}.Release|x86.ActiveCfg = Release|Any CPU
 		{DFB78690-0AC5-4B48-9A07-5D321CA4A865}.Release|x86.Build.0 = Release|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Debug|x64.Build.0 = Debug|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Debug|x86.Build.0 = Debug|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Release|x64.ActiveCfg = Release|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Release|x64.Build.0 = Release|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Release|x86.ActiveCfg = Release|Any CPU
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -265,6 +279,7 @@ Global
 		{FAEA2F97-7CBA-4B76-BFBE-162D54ADDEC6} = {208281D0-21C1-4AD2-BC42-84D8929E08CA}
 		{13ED04AE-B6C9-4D28-B768-2740E053BC69} = {A3232EC4-8418-4188-8EB8-DD463C031533}
 		{2E4EA52F-4835-4D34-A6F5-650042213443} = {A3232EC4-8418-4188-8EB8-DD463C031533}
+		{14E1380D-30CE-4EA6-8392-C9744B3548CC} = {8FFDF555-DB50-45F9-9A2D-6410F39151C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {439897C2-CCBD-44FE-B2DC-A3E4670ADA59}

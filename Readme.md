@@ -25,6 +25,7 @@
 | Rocket.Surgery.Extensions.Testing.Fixtures | [![nuget-version-xegxxxxh/pzg-badge]![nuget-downloads-xegxxxxh/pzg-badge]][nuget-xegxxxxh/pzg] |
 | Rocket.Surgery.Extensions.Testing.Moq | [![nuget-version-lgkm8pi65yea-badge]![nuget-downloads-lgkm8pi65yea-badge]][nuget-lgkm8pi65yea] |
 | Rocket.Surgery.Extensions.Testing.NSubstitute | [![nuget-version-fyo8rfzowxvg-badge]![nuget-downloads-fyo8rfzowxvg-badge]][nuget-fyo8rfzowxvg] |
+| Rocket.Surgery.Extensions.Testing.SourceGenerators | [![nuget-version-m2gtxx+rpfoa-badge]![nuget-downloads-m2gtxx+rpfoa-badge]][nuget-m2gtxx+rpfoa] |
 | Rocket.Surgery.Extensions.Testing.XUnit | [![nuget-version-8nuftac8whxa-badge]![nuget-downloads-8nuftac8whxa-badge]][nuget-8nuftac8whxa] |
 <!-- nuget packages -->
 
@@ -63,6 +64,9 @@ TBD
 [nuget-fyo8rfzowxvg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.NSubstitute/
 [nuget-version-fyo8rfzowxvg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.NSubstitute.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-fyo8rfzowxvg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.NSubstitute.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
+[nuget-m2gtxx+rpfoa]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.SourceGenerators/
+[nuget-version-m2gtxx+rpfoa-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.SourceGenerators.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-m2gtxx+rpfoa-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.SourceGenerators.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 [nuget-8nuftac8whxa]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.XUnit/
 [nuget-version-8nuftac8whxa-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.XUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-8nuftac8whxa-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.XUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
