@@ -6,11 +6,13 @@ public static class VerifyGeneratorTextContext
 {
     public static void Initialize(
         bool includeInputs = true,
-        bool includeOptions = true
+        bool includeOptions = true,
+        DiagnosticSeverity diagnosticSeverityFilter = DiagnosticSeverity.Warning
     )
     {
         VerifyGeneratorTextContext.includeInputs = includeInputs;
         VerifyGeneratorTextContext.includeOptions = includeOptions;
+        VerifyGeneratorTextContext.diagnosticSeverityFilter = diagnosticSeverityFilter;
         VerifySourceGenerators.Initialize();
         VerifierSettings.RegisterFileConverter<GeneratorTestResult>(Convert);
         VerifierSettings.RegisterFileConverter<GeneratorTestResults>(Convert);
@@ -25,6 +27,7 @@ public static class VerifyGeneratorTextContext
 
     private static bool includeInputs;
     private static bool includeOptions;
+    private static DiagnosticSeverity diagnosticSeverityFilter;
 
     private static ConversionResult Convert(GeneratorTestResults target, IReadOnlyDictionary<string, object> context)
     {
@@ -42,7 +45,7 @@ public static class VerifyGeneratorTextContext
         var data = new Dictionary<string, object>();
         if (includeInputs)
         {
-            data["InputDiagnostics"] = target.InputDiagnostics.OrderDiagnosticResults();
+            data["InputDiagnostics"] = target.InputDiagnostics.OrderDiagnosticResults(diagnosticSeverityFilter);
             data["InputAdditionalTexts"] = target.InputAdditionalTexts;
         }
 
@@ -68,10 +71,10 @@ public static class VerifyGeneratorTextContext
                                 .OrderBy(z => z);
         }
 
-        data["FinalDiagnostics"] = target.FinalDiagnostics.OrderDiagnosticResults();
+        data["FinalDiagnostics"] = target.FinalDiagnostics.OrderDiagnosticResults(diagnosticSeverityFilter);
         data["GeneratorDiagnostics"] = target.Results.ToDictionary(
             z => z.Key.FullName!,
-            z => z.Value.Diagnostics.OrderDiagnosticResults()
+            z => z.Value.Diagnostics.OrderDiagnosticResults(diagnosticSeverityFilter)
         );
 
         return new(data, targets);
