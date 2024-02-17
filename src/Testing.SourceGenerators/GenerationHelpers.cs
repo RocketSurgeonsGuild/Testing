@@ -10,7 +10,7 @@ internal static class GenerationHelpers
         string projectName,
         IEnumerable<MetadataReference> metadataReferences,
         CSharpParseOptions parseOptions,
-        params SourceText[] sources
+        NamedSourceText[] sources
     )
     {
         var projectId = ProjectId.CreateNewId(projectName);
@@ -27,9 +27,14 @@ internal static class GenerationHelpers
         var count = 0;
         foreach (var source in sources)
         {
-            var newFileName = DefaultFilePathPrefix + count + "." + CSharpDefaultFileExt;
+            var newFileName = source.Name ?? DefaultFilePathPrefix + count + "." + CSharpDefaultFileExt;
+            if (!newFileName.EndsWith(CSharpDefaultFileExt))
+            {
+                newFileName += "." + CSharpDefaultFileExt;
+            }
+
             var documentId = DocumentId.CreateNewId(projectId, newFileName);
-            solution = solution.AddDocument(documentId, newFileName, source);
+            solution = solution.AddDocument(documentId, newFileName, source.SourceText);
             count++;
         }
 
@@ -42,18 +47,11 @@ internal static class GenerationHelpers
         return project;
     }
 
-    public static Project CreateProject(
-        IEnumerable<MetadataReference> metadataReferences,
-        CSharpParseOptions parseOptions,
-        params SourceText[] sources
-    )
-    {
-        return CreateProject(TestProjectName, metadataReferences, parseOptions, sources);
-    }
-
-    internal const string CrLf = "\r\n";
-    internal const string Lf = "\n";
-    internal const string DefaultFilePathPrefix = "Test";
+    internal const string DefaultFilePathPrefix = "Input";
     internal const string CSharpDefaultFileExt = "cs";
-    internal const string TestProjectName = "TestProject";
+}
+
+internal record NamedSourceText(SourceText SourceText)
+{
+    public string? Name { get; init; }
 }

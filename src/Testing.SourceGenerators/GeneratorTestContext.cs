@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Runtime.Loader;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -16,7 +15,7 @@ public class GeneratorTestContext
     private readonly ILogger _logger;
     private readonly ImmutableHashSet<MetadataReference> _metadataReferences;
     private readonly ImmutableHashSet<Type> _generators;
-    private readonly ImmutableArray<SourceText> _sources;
+    private readonly ImmutableArray<NamedSourceText> _sources;
     private readonly ImmutableHashSet<string> _ignoredFilePaths;
     private readonly ImmutableDictionary<string, ImmutableDictionary<string, string>> _fileOptions;
     private readonly ImmutableDictionary<string, string> _globalOptions;
@@ -30,7 +29,7 @@ public class GeneratorTestContext
         AssemblyLoadContext assemblyLoadContext,
         ImmutableHashSet<MetadataReference> metadataReferences,
         ImmutableHashSet<Type> generators,
-        ImmutableArray<SourceText> sources,
+        ImmutableArray<NamedSourceText> sources,
         ImmutableHashSet<string> ignoredFilePaths,
         ImmutableDictionary<string, ImmutableDictionary<string, string>> fileOptions,
         ImmutableDictionary<string, string> globalOptions,
@@ -75,7 +74,7 @@ public class GeneratorTestContext
         _logger.LogInformation("Starting Generation for {SourceCount}", _sources.Length);
         if (_logger.IsEnabled(LogLevel.Trace))
         {
-            _logger.LogTrace("--- References --- {Count}", _sources.Length);
+            _logger.LogTrace("--- References --- {Count}", _metadataReferences.Count);
             foreach (var reference in _metadataReferences)
             {
                 _logger.LogTrace("    Reference: {Name}", reference.Display);
@@ -90,7 +89,7 @@ public class GeneratorTestContext
         var diagnostics = compilation.GetDiagnostics();
         if (_logger.IsEnabled(LogLevel.Trace) && diagnostics is { Length: > 0, })
         {
-            _logger.LogTrace("--- Input Diagnostics --- {Count}", _sources.Length);
+            _logger.LogTrace("--- Input Diagnostics --- {Count}", diagnostics.Length);
             foreach (var d in diagnostics)
             {
                 _logger.LogTrace("    Reference: {Name}", d.ToString());
@@ -120,13 +119,14 @@ public class GeneratorTestContext
             _logger.LogInformation("--- {Generator} ---", generatorType.FullName);
             var generators = new List<ISourceGenerator>();
             var generator = Activator.CreateInstance(generatorType)!;
-            if (generator is IIncrementalGenerator g)
+            switch (generator)
             {
-                generators.Add(g.AsSourceGenerator());
-            }
-            else if (generator is ISourceGenerator sg)
-            {
-                generators.Add(sg);
+                case IIncrementalGenerator g:
+                    generators.Add(g.AsSourceGenerator());
+                    break;
+                case ISourceGenerator sg:
+                    generators.Add(sg);
+                    break;
             }
 
             var driver = CSharpGeneratorDriver.Create(generators, _additionalTexts, _parseOptions, new OptionsProvider(_fileOptions, _globalOptions), default);
@@ -135,7 +135,7 @@ public class GeneratorTestContext
 
             if (_logger.IsEnabled(LogLevel.Trace) && diagnostics is { Length: > 0, })
             {
-                _logger.LogTrace("--- Diagnostics --- {Count}", _sources.Length);
+                _logger.LogTrace("--- Diagnostics --- {Count}", diagnostics.Length);
                 foreach (var d in diagnostics)
                 {
                     _logger.LogTrace("    Reference: {Name}", d.ToString());
@@ -148,7 +148,7 @@ public class GeneratorTestContext
                        .ToImmutableArray();
             if (_logger.IsEnabled(LogLevel.Trace) && trees is { Length: > 0, })
             {
-                _logger.LogTrace("--- Syntax Trees --- {Count}", _sources.Length);
+                _logger.LogTrace("--- Syntax Trees --- {Count}", trees.Length);
                 foreach (var t in trees)
                 {
                     _logger.LogTrace("    FilePath: {Name}", t.FilePath);
