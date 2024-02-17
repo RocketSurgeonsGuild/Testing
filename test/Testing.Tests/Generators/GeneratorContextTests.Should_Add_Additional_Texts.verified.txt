@@ -1,0 +1,28 @@
+﻿{
+  InputAdditionalTexts: [
+    {
+      Path: some.csv,
+      Text: a,b,c
+    },
+    {
+      Path: some-other.csv,
+      Text: d,e,f
+    },
+    {
+      Path: custom.txt,
+      Text: this is a text file
+    }
+  ],
+  ParseOptions: {
+    LanguageVersion: CSharp10,
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

@@ -1,0 +1,77 @@
+#nullable enable
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContext
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContext.AssemblyLoadContext.get -> System.Runtime.Loader.AssemblyLoadContext!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContext.Compile() -> Microsoft.CodeAnalysis.CSharp.CSharpCompilation!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContext.GenerateAsync() -> System.Threading.Tasks.Task<Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults!>!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddAdditionalText(string! path, Microsoft.CodeAnalysis.Text.SourceText! source) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddAdditionalText(string! path, string! source) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddAdditionalTexts(params Microsoft.CodeAnalysis.AdditionalText![]! additionalTexts) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddCompilationReferences(params Microsoft.CodeAnalysis.CSharp.CSharpCompilation![]! additionalCompilations) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddGlobalOption(string! key, string! value) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddOption(Microsoft.CodeAnalysis.AdditionalText! tree, string! key, string! value) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddOption(Microsoft.CodeAnalysis.SyntaxTree! tree, string! key, string! value) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddOption(string! path, string! key, string! value) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddPreprocessorSymbol(params string![]! preprocessorSymbolNames) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddReferences(params Microsoft.CodeAnalysis.MetadataReference![]! references) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddReferences(params string![]! assemblyNames) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddReferences(params System.Reflection.Assembly![]! references) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddReferences(params System.Type![]! references) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddSources(params Microsoft.CodeAnalysis.Text.SourceText![]! additionalSources) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.AddSources(params string![]! additionalSources) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.Build() -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContext!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.IgnoreOutputFile(string! path) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithAssemblyLoadContext(System.Runtime.Loader.AssemblyLoadContext! assemblyLoadContext) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithDefaultReferences() -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithDocumentationMode(Microsoft.CodeAnalysis.DocumentationMode documentationMode) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithFeature(string! key, string? value = null) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithGenerator(System.Type! type) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithGenerator<T>() -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithLanguageVersion(Microsoft.CodeAnalysis.CSharp.LanguageVersion languageVersion) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithLogger(Microsoft.Extensions.Logging.ILogger! logger) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithProjectName(string! projectName) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.WithSourceCodeKind(Microsoft.CodeAnalysis.SourceCodeKind sourceCodeKind) -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult.Compilation.get -> Microsoft.CodeAnalysis.CSharp.CSharpCompilation!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult.Compilation.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult.Diagnostics.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Diagnostic!>
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult.Diagnostics.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult.EnsureDiagnosticSeverity(Microsoft.CodeAnalysis.DiagnosticSeverity severity = Microsoft.CodeAnalysis.DiagnosticSeverity.Warning) -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult.GeneratorTestResult(Microsoft.CodeAnalysis.CSharp.CSharpCompilation! Compilation, System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Diagnostic!> Diagnostics, System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.SyntaxTree!> SyntaxTrees) -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult.SyntaxTrees.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.SyntaxTree!>
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult.SyntaxTrees.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.Assembly.get -> System.Reflection.Assembly?
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.Assembly.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.AssertCompilationWasSuccessful() -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.AssertGenerationWasSuccessful() -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.EnsureDiagnosticSeverity(Microsoft.CodeAnalysis.DiagnosticSeverity severity = Microsoft.CodeAnalysis.DiagnosticSeverity.Warning) -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.FileOptions.get -> System.Collections.Immutable.ImmutableDictionary<string!, System.Collections.Immutable.ImmutableDictionary<string!, string!>!>!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.FileOptions.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.FinalCompilation.get -> Microsoft.CodeAnalysis.CSharp.CSharpCompilation!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.FinalCompilation.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.FinalDiagnostics.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Diagnostic!>
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.FinalDiagnostics.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.GeneratorTestResults(Microsoft.CodeAnalysis.CSharp.CSharpCompilation! InputCompilation, System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Diagnostic!> InputDiagnostics, System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.SyntaxTree!> InputSyntaxTrees, System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.AdditionalText!> InputAdditionalTexts, Microsoft.CodeAnalysis.CSharp.CSharpParseOptions! ParseOptions, System.Collections.Immutable.ImmutableDictionary<string!, string!>! GlobalOptions, System.Collections.Immutable.ImmutableDictionary<string!, System.Collections.Immutable.ImmutableDictionary<string!, string!>!>! FileOptions, System.Collections.Immutable.ImmutableDictionary<System.Type!, Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult!>! Results, Microsoft.CodeAnalysis.CSharp.CSharpCompilation! FinalCompilation, System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Diagnostic!> FinalDiagnostics, System.Reflection.Assembly? Assembly) -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.GlobalOptions.get -> System.Collections.Immutable.ImmutableDictionary<string!, string!>!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.GlobalOptions.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.InputAdditionalTexts.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.AdditionalText!>
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.InputAdditionalTexts.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.InputCompilation.get -> Microsoft.CodeAnalysis.CSharp.CSharpCompilation!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.InputCompilation.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.InputDiagnostics.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Diagnostic!>
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.InputDiagnostics.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.InputSyntaxTrees.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.SyntaxTree!>
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.InputSyntaxTrees.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.ParseOptions.get -> Microsoft.CodeAnalysis.CSharp.CSharpParseOptions!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.ParseOptions.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.Results.get -> System.Collections.Immutable.ImmutableDictionary<System.Type!, Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult!>!
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.Results.init -> void
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.TryGetResult(System.Type! type, out Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult? result) -> bool
+Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.TryGetResult<T>(out Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResult? result) -> bool
+Rocket.Surgery.Extensions.Testing.SourceGenerators.VerifyGeneratorTextContext
+static Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.Create() -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+static Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder.CreateWithoutDefaultReferences() -> Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestContextBuilder!
+static Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.implicit operator Microsoft.CodeAnalysis.CSharp.CSharpCompilation!(Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults! results) -> Microsoft.CodeAnalysis.CSharp.CSharpCompilation!
+static Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults.implicit operator System.Reflection.Assembly?(Rocket.Surgery.Extensions.Testing.SourceGenerators.GeneratorTestResults! results) -> System.Reflection.Assembly?
+static Rocket.Surgery.Extensions.Testing.SourceGenerators.VerifyGeneratorTextContext.Initialize(bool includeInputs = true, bool includeOptions = true) -> void

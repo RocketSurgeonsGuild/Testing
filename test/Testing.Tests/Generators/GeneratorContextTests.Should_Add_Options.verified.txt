@@ -1,0 +1,28 @@
+﻿{
+  FileOptions: {
+    custom.cs: {
+      custom_option: custom_value
+    },
+    custom.txt: {
+      custom_option: custom_value
+    },
+    my_file.cs: {
+      my_option: my_local_value
+    }
+  },
+  GlobalOptions: {
+    my_option: my_value
+  },
+  ParseOptions: {
+    LanguageVersion: CSharp10,
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}
