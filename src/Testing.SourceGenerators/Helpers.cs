@@ -17,12 +17,12 @@ internal static class Helpers
         return MetadataReference.CreateFromStream(assemblyStream, MetadataReferenceProperties.Assembly);
     }
 
-    internal static IEnumerable<Diagnostic> OrderDiagnosticResults(this IEnumerable<Diagnostic> diagnostics)
+    internal static IEnumerable<Diagnostic> OrderDiagnosticResults(this IEnumerable<Diagnostic> diagnostics, DiagnosticSeverity severity)
     {
         return diagnostics
-              .OrderBy(static z => z.Id)
+              .Where(s => s.Severity >= severity)
+              .OrderBy(static z => z.Location.GetMappedLineSpan().ToString())
               .ThenBy(static z => z.Severity)
-              .ThenBy(static z => z.Location.SourceSpan.Start)
-              .ThenBy(static z => z.Location.SourceSpan.End);
+              .ThenBy(static z => z.Id);
     }
 }
