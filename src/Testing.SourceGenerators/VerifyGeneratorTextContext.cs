@@ -42,7 +42,12 @@ public static class VerifyGeneratorTextContext
         var data = new Dictionary<string, object>();
         if (includeInputs)
         {
-            data["InputDiagnostics"] = target.InputDiagnostics;
+            data["InputDiagnostics"] = target
+                                      .InputDiagnostics
+                                      .OrderBy(z => z.Id)
+                                      .ThenBy(z => z.Severity)
+                                      .ThenBy(z => z.Location.SourceSpan.Start)
+                                      .ThenBy(z => z.Location.SourceSpan.End);
             data["InputAdditionalTexts"] = target.InputAdditionalTexts;
         }
 
@@ -67,10 +72,20 @@ public static class VerifyGeneratorTextContext
                                 .OrderBy(z => z);
         }
 
-        data["FinalDiagnostics"] = target.FinalDiagnostics;
+        data["FinalDiagnostics"] = target
+                                  .FinalDiagnostics
+                                  .OrderBy(static z => z.Id)
+                                  .ThenBy(static z => z.Severity)
+                                  .ThenBy(static z => z.Location.SourceSpan.Start)
+                                  .ThenBy(static z => z.Location.SourceSpan.End);
         data["GeneratorDiagnostics"] = target.Results.ToDictionary(
             z => z.Key.FullName!,
-            z => z.Value.Diagnostics
+            z => z
+                .Value.Diagnostics
+                .OrderBy(static z => z.Id)
+                .ThenBy(static z => z.Severity)
+                .ThenBy(static z => z.Location.SourceSpan.Start)
+                .ThenBy(static z => z.Location.SourceSpan.End)
         );
 
         return new(data, targets);
