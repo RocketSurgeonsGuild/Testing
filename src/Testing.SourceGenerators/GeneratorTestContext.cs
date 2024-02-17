@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Runtime.Loader;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -16,7 +15,7 @@ public class GeneratorTestContext
     private readonly ILogger _logger;
     private readonly ImmutableHashSet<MetadataReference> _metadataReferences;
     private readonly ImmutableHashSet<Type> _generators;
-    private readonly ImmutableArray<SourceText> _sources;
+    private readonly ImmutableArray<NamedSourceText> _sources;
     private readonly ImmutableHashSet<string> _ignoredFilePaths;
     private readonly ImmutableDictionary<string, ImmutableDictionary<string, string>> _fileOptions;
     private readonly ImmutableDictionary<string, string> _globalOptions;
@@ -30,7 +29,7 @@ public class GeneratorTestContext
         AssemblyLoadContext assemblyLoadContext,
         ImmutableHashSet<MetadataReference> metadataReferences,
         ImmutableHashSet<Type> generators,
-        ImmutableArray<SourceText> sources,
+        ImmutableArray<NamedSourceText> sources,
         ImmutableHashSet<string> ignoredFilePaths,
         ImmutableDictionary<string, ImmutableDictionary<string, string>> fileOptions,
         ImmutableDictionary<string, string> globalOptions,

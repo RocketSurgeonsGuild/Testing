@@ -46,7 +46,7 @@ public record GeneratorTestContextBuilder
         _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
 
     private ImmutableHashSet<Type> _generators = ImmutableHashSet<Type>.Empty;
-    private ImmutableArray<SourceText> _sources = ImmutableArray<SourceText>.Empty;
+    private ImmutableArray<NamedSourceText> _sources = ImmutableArray<NamedSourceText>.Empty;
     private ImmutableArray<AdditionalText> _additionalTexts = ImmutableArray<AdditionalText>.Empty;
     private ImmutableHashSet<string> _ignoredFilePaths = ImmutableHashSet<string>.Empty;
 
@@ -280,7 +280,7 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddSources(params SourceText[] additionalSources)
     {
-        return this with { _sources = _sources.AddRange(additionalSources), };
+        return this with { _sources = _sources.AddRange(additionalSources.Select(z => new NamedSourceText(z))), };
     }
 
     /// <summary>
@@ -290,7 +290,28 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddSources(params string[] additionalSources)
     {
-        return this with { _sources = _sources.AddRange(additionalSources.Select(s => SourceText.From(s, Encoding.UTF8))), };
+        return this with
+        {
+            _sources = _sources.AddRange(additionalSources.Select(s => SourceText.From(s, Encoding.UTF8)).Select(z => new NamedSourceText(z))),
+        };
+    }
+
+    /// <summary>
+    ///     Add the given source text to the compilation
+    /// </summary>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder AddSource(string name, SourceText source)
+    {
+        return this with { _sources = _sources.Add(new(source) { Name = name, }), };
+    }
+
+    /// <summary>
+    ///     Add the given source text to the compilation
+    /// </summary>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder AddSource(string name, string source)
+    {
+        return this with { _sources = _sources.Add(new(SourceText.From(source, Encoding.UTF8)) { Name = name, }), };
     }
 
     /// <summary>

@@ -43,6 +43,17 @@ public class GeneratorContextTests : LoggerTest
     }
 
     [Fact]
+    public async Task Should_Add_Named_Sources()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .AddSource("Test.cs", "public class Test { }")
+                     .AddSource("Test2.cs", SourceText.From("public class Test2 { }", Encoding.UTF8))
+                     .Build();
+        await Verify(context.GenerateAsync());
+    }
+
+    [Fact]
     public async Task Should_Add_Options()
     {
         var customText = A.Fake<AdditionalText>();
