@@ -1,4 +1,5 @@
 ﻿{
+  FinalDiagnostics: [],
   InputAdditionalTexts: [
     {
       Path: some.csv,
@@ -13,6 +14,7 @@
       Text: this is a text file
     }
   ],
+  InputDiagnostics: [],
   ParseOptions: {
     LanguageVersion: CSharp10,
     DocumentationMode: Parse

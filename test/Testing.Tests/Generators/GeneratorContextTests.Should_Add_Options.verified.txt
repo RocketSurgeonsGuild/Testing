@@ -10,9 +10,11 @@
       my_option: my_local_value
     }
   },
+  FinalDiagnostics: [],
   GlobalOptions: {
     my_option: my_value
   },
+  InputDiagnostics: [],
   ParseOptions: {
     LanguageVersion: CSharp10,
     DocumentationMode: Parse

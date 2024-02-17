@@ -1,4 +1,6 @@
 ﻿{
+  FinalDiagnostics: [],
+  InputDiagnostics: [],
   ParseOptions: {
     LanguageVersion: CSharp10,
     DocumentationMode: Parse

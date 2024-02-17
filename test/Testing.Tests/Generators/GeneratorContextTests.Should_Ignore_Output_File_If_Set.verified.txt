@@ -1,5 +1,8 @@
 ﻿{
-  GeneratorDiagnostics: {},
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.Tests.Generators.MySourceGenerator: []
+  },
   InputDiagnostics: [
     {
       Id: CS0246,
