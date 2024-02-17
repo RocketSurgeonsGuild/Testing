@@ -10,7 +10,7 @@ internal static class GenerationHelpers
         string projectName,
         IEnumerable<MetadataReference> metadataReferences,
         CSharpParseOptions parseOptions,
-        params SourceText[] sources
+        SourceText[] sources
     )
     {
         var projectId = ProjectId.CreateNewId(projectName);
@@ -42,18 +42,6 @@ internal static class GenerationHelpers
         return project;
     }
 
-    public static Project CreateProject(
-        IEnumerable<MetadataReference> metadataReferences,
-        CSharpParseOptions parseOptions,
-        params SourceText[] sources
-    )
-    {
-        return CreateProject(TestProjectName, metadataReferences, parseOptions, sources);
-    }
-
-    internal const string CrLf = "\r\n";
-    internal const string Lf = "\n";
-    internal const string DefaultFilePathPrefix = "Test";
+    internal const string DefaultFilePathPrefix = "Input";
     internal const string CSharpDefaultFileExt = "cs";
-    internal const string TestProjectName = "TestProject";
 }

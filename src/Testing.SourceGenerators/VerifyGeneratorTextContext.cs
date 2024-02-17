@@ -42,12 +42,7 @@ public static class VerifyGeneratorTextContext
         var data = new Dictionary<string, object>();
         if (includeInputs)
         {
-            data["InputDiagnostics"] = target
-                                      .InputDiagnostics
-                                      .OrderBy(z => z.Id)
-                                      .ThenBy(z => z.Severity)
-                                      .ThenBy(z => z.Location.SourceSpan.Start)
-                                      .ThenBy(z => z.Location.SourceSpan.End);
+            data["InputDiagnostics"] = target.InputDiagnostics.OrderDiagnosticResults();
             data["InputAdditionalTexts"] = target.InputAdditionalTexts;
         }
 
@@ -66,26 +61,17 @@ public static class VerifyGeneratorTextContext
             data["GlobalOptions"] = target.GlobalOptions;
             data["FileOptions"] = target.FileOptions;
             data["References"] = target
-                                .FinalCompilation.References
+                                .FinalCompilation
+                                .References
                                 .Select(x => x.Display ?? "")
                                 .Select(Path.GetFileName)
                                 .OrderBy(z => z);
         }
 
-        data["FinalDiagnostics"] = target
-                                  .FinalDiagnostics
-                                  .OrderBy(static z => z.Id)
-                                  .ThenBy(static z => z.Severity)
-                                  .ThenBy(static z => z.Location.SourceSpan.Start)
-                                  .ThenBy(static z => z.Location.SourceSpan.End);
+        data["FinalDiagnostics"] = target.FinalDiagnostics.OrderDiagnosticResults();
         data["GeneratorDiagnostics"] = target.Results.ToDictionary(
             z => z.Key.FullName!,
-            z => z
-                .Value.Diagnostics
-                .OrderBy(static z => z.Id)
-                .ThenBy(static z => z.Severity)
-                .ThenBy(static z => z.Location.SourceSpan.Start)
-                .ThenBy(static z => z.Location.SourceSpan.End)
+            z => z.Value.Diagnostics.OrderDiagnosticResults()
         );
 
         return new(data, targets);
@@ -96,7 +82,7 @@ public static class VerifyGeneratorTextContext
         var hintPath = source.FilePath;
         var data = $@"//HintName: {hintPath.Replace("\\", "/")}
 {source.GetText()}";
-        return new("cs", data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase));
+        return new("cs", data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase), Path.GetFileNameWithoutExtension(hintPath));
     }
 
     private static ConversionResult Convert(GeneratorTestResult target, IReadOnlyDictionary<string, object> context)

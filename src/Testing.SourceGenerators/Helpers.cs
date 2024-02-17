@@ -16,4 +16,13 @@ internal static class Helpers
         using var assemblyStream = new MemoryStream(data);
         return MetadataReference.CreateFromStream(assemblyStream, MetadataReferenceProperties.Assembly);
     }
+
+    internal static IEnumerable<Diagnostic> OrderDiagnosticResults(this IEnumerable<Diagnostic> diagnostics)
+    {
+        return diagnostics
+              .OrderBy(static z => z.Id)
+              .ThenBy(static z => z.Severity)
+              .ThenBy(static z => z.Location.SourceSpan.Start)
+              .ThenBy(static z => z.Location.SourceSpan.End);
+    }
 }
