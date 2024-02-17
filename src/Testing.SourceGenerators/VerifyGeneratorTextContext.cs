@@ -12,8 +12,8 @@ public static class VerifyGeneratorTextContext
         VerifyGeneratorTextContext.includeInputs = includeInputs;
         VerifyGeneratorTextContext.includeOptions = includeOptions;
         VerifySourceGenerators.Initialize();
-        VerifierSettings.RegisterFileConverter<GenerationTestResult>(Convert);
-        VerifierSettings.RegisterFileConverter<GenerationTestResults>(Convert);
+        VerifierSettings.RegisterFileConverter<GeneratorTestResult>(Convert);
+        VerifierSettings.RegisterFileConverter<GeneratorTestResults>(Convert);
         VerifierSettings.AddExtraSettings(
             serializer =>
             {
@@ -26,7 +26,7 @@ public static class VerifyGeneratorTextContext
     private static bool includeInputs;
     private static bool includeOptions;
 
-    private static ConversionResult Convert(GenerationTestResults target, IReadOnlyDictionary<string, object> context)
+    private static ConversionResult Convert(GeneratorTestResults target, IReadOnlyDictionary<string, object> context)
     {
         var targets = new List<Target>();
         if (includeInputs)
@@ -79,12 +79,12 @@ public static class VerifyGeneratorTextContext
     private static Target Selector(SyntaxTree source)
     {
         var hintPath = source.FilePath;
-        var data = $@"//HintName: {hintPath}
+        var data = $@"//HintName: {hintPath.Replace("\\", "/")}
 {source.GetText()}";
         return new("cs", data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase));
     }
 
-    private static ConversionResult Convert(GenerationTestResult target, IReadOnlyDictionary<string, object> context)
+    private static ConversionResult Convert(GeneratorTestResult target, IReadOnlyDictionary<string, object> context)
     {
         return new(new { target.Diagnostics, }, target.SyntaxTrees.Select(Selector));
     }

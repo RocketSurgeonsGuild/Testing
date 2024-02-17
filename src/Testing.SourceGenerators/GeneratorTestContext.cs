@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
+/// <summary>
+///     The context for running a set of generators against a set of sources
+/// </summary>
 public class GeneratorTestContext
 {
     private readonly ILogger _logger;
@@ -48,14 +51,26 @@ public class GeneratorTestContext
         AssemblyLoadContext = assemblyLoadContext;
     }
 
+    /// <summary>
+    ///     The related assembly load context
+    /// </summary>
     public AssemblyLoadContext AssemblyLoadContext { get; }
 
+    /// <summary>
+    ///     Create a C# compilation from the sources with all the generators being run.
+    /// </summary>
+    /// <returns></returns>
     public CSharpCompilation Compile()
     {
         return GenerateAsync().ConfigureAwait(false).GetAwaiter().GetResult().FinalCompilation;
     }
 
-    public async Task<GenerationTestResults> GenerateAsync()
+    /// <summary>
+    ///     Generate and return the results of the generators
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public async Task<GeneratorTestResults> GenerateAsync()
     {
         _logger.LogInformation("Starting Generation for {SourceCount}", _sources.Length);
         if (_logger.IsEnabled(LogLevel.Trace))
@@ -82,7 +97,7 @@ public class GeneratorTestContext
             }
         }
 
-        var results = new GenerationTestResults(
+        var results = new GeneratorTestResults(
             compilation,
             diagnostics,
             compilation.SyntaxTrees,
@@ -90,13 +105,13 @@ public class GeneratorTestContext
             _parseOptions,
             _globalOptions,
             _fileOptions,
-            ImmutableDictionary<Type, GenerationTestResult>.Empty,
+            ImmutableDictionary<Type, GeneratorTestResult>.Empty,
             null!,
             ImmutableArray<Diagnostic>.Empty,
             null!
         );
 
-        var builder = ImmutableDictionary<Type, GenerationTestResult>.Empty.ToBuilder();
+        var builder = ImmutableDictionary<Type, GeneratorTestResult>.Empty.ToBuilder();
 
         var inputCompilation = compilation;
 

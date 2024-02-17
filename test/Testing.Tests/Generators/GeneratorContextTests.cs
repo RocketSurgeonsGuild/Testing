@@ -85,7 +85,7 @@ public class GeneratorContextTests : LoggerTest
         var context = GeneratorTestContextBuilder
                      .Create()
                      .AddReferences(GetType().Assembly)
-                     .AddReferences(typeof(GenerationTestResult))
+                     .AddReferences(typeof(GeneratorTestResult))
                      .Build();
         await Verify(context.GenerateAsync());
     }
