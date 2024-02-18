@@ -21,6 +21,12 @@ public static class VerifyGeneratorTextContext
             {
                 var converters = serializer.Converters;
                 converters.Add(new AdditionalTextConverter());
+
+                serializer.Converters.Remove(serializer.Converters.Find(z => z.GetType().Name == "LocationConverter")!);
+                serializer.Converters.Add(new LocationConverter());
+
+                serializer.Converters.Remove(serializer.Converters.Find(z => z.GetType().Name == "DiagnosticConverter")!);
+                serializer.Converters.Add(new DiagnosticConverter());
             }
         );
     }
@@ -103,6 +109,46 @@ public static class VerifyGeneratorTextContext
             writer.WritePropertyName("Text");
             writer.WriteValue(value.GetText()?.ToString() ?? "");
             writer.WriteEndObject();
+        }
+    }
+
+    private class DiagnosticConverter : WriteOnlyJsonConverter<Diagnostic>
+    {
+        public override void Write(VerifyJsonWriter writer, Diagnostic value)
+        {
+            writer.WriteStartObject();
+            writer.WriteMember(value, value.Id, "Id");
+            var descriptor = value.Descriptor;
+            writer.WriteMember(value, descriptor.Title.ToString(), "Title");
+            writer.WriteMember(value, value.Severity.ToString(), "Severity");
+            writer.WriteMember(value, value.WarningLevel, "WarningLevel");
+            writer.WriteMember(value, value.Location.GetMappedLineSpan().ToString().Replace("\\", "/"), "Location");
+            var description = descriptor.Description.ToString();
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                writer.WriteMember(value, description, "Description");
+            }
+
+            var help = descriptor.HelpLinkUri;
+            if (!string.IsNullOrWhiteSpace(help))
+            {
+                writer.WriteMember(value, help, "HelpLink");
+            }
+
+            writer.WriteMember(value, descriptor.MessageFormat.ToString(), "MessageFormat");
+            writer.WriteMember(value, value.GetMessage(), "Message");
+            writer.WriteMember(value, descriptor.Category, "Category");
+            writer.WriteMember(value, descriptor.CustomTags, "CustomTags");
+            writer.WriteEndObject();
+        }
+    }
+
+    private class LocationConverter :
+        WriteOnlyJsonConverter<Location>
+    {
+        public override void Write(VerifyJsonWriter writer, Location value)
+        {
+            writer.WriteValue(value.GetMappedLineSpan().ToString().Replace("\\", "/"));
         }
     }
 }
