@@ -104,19 +104,19 @@ public class GeneratorContextTests : LoggerTest
     [Fact]
     public async Task Should_Add_Compilation_References()
     {
-        var assemblyA = GeneratorTestContextBuilder
-                       .Create()
-                       .WithProjectName("SampleDependencyOne")
-                       .AddSources(
-                            @"namespace Sample.DependencyOne;
+        var assemblyA = await GeneratorTestContextBuilder
+                             .Create()
+                             .WithProjectName("SampleDependencyOne")
+                             .AddSources(
+                                  @"namespace Sample.DependencyOne;
 
 public class Class1
 {
 }
 "
-                        )
-                       .Build()
-                       .Compile();
+                              )
+                             .Build()
+                             .GenerateAsync();
 
         var context = GeneratorTestContextBuilder
                      .Create()

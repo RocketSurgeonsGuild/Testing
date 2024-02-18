@@ -34,7 +34,9 @@ public record GeneratorTestResults
     ImmutableDictionary<Type, GeneratorTestResult> Results,
     CSharpCompilation FinalCompilation,
     ImmutableArray<Diagnostic> FinalDiagnostics,
-    Assembly? Assembly)
+    Assembly? Assembly,
+    MetadataReference? MetadataReference
+)
 {
     /// <summary>
     ///     Implicitly convert the results to the final compilation
@@ -54,6 +56,16 @@ public record GeneratorTestResults
     public static implicit operator Assembly?(GeneratorTestResults results)
     {
         return results.Assembly;
+    }
+
+    /// <summary>
+    ///     Implicitly convert the results to assembly from the final compilation
+    /// </summary>
+    /// <param name="results"></param>
+    /// <returns></returns>
+    public static implicit operator MetadataReference?(GeneratorTestResults results)
+    {
+        return results.MetadataReference;
     }
 
     /// <summary>

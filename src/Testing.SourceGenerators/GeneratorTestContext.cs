@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Reflection;
 using System.Runtime.Loader;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -56,15 +55,6 @@ public class GeneratorTestContext
     public AssemblyLoadContext AssemblyLoadContext { get; }
 
     /// <summary>
-    ///     Create a C# compilation from the sources with all the generators being run.
-    /// </summary>
-    /// <returns></returns>
-    public CSharpCompilation Compile()
-    {
-        return GenerateAsync().ConfigureAwait(false).GetAwaiter().GetResult().FinalCompilation;
-    }
-
-    /// <summary>
     ///     Generate and return the results of the generators
     /// </summary>
     /// <returns></returns>
@@ -107,7 +97,8 @@ public class GeneratorTestContext
             ImmutableDictionary<Type, GeneratorTestResult>.Empty,
             null!,
             ImmutableArray<Diagnostic>.Empty,
-            null!
+            null,
+            null
         );
 
         var builder = ImmutableDictionary<Type, GeneratorTestResult>.Empty.ToBuilder();
@@ -168,28 +159,35 @@ public class GeneratorTestContext
             );
         }
 
+        var assemblyStream = Emit(inputCompilation);
+
         results = results with
         {
             FinalCompilation = inputCompilation,
             FinalDiagnostics = inputCompilation.GetDiagnostics(),
-            Assembly = Emit(inputCompilation),
         };
+
+        if (assemblyStream is { Length: > 0, })
+        {
+            results = results with
+            {
+                MetadataReference = MetadataReference.CreateFromStream(new MemoryStream(assemblyStream)),
+                Assembly = AssemblyLoadContext.LoadFromStream(new MemoryStream(assemblyStream)),
+            };
+        }
 
         return results with { Results = builder.ToImmutable(), };
     }
 
-    private Assembly? Emit(CSharpCompilation compilation, string? outputName = null)
+    private byte[] Emit(CSharpCompilation compilation, string? outputName = null)
     {
         using var stream = new MemoryStream();
         var emitResult = compilation.Emit(
             stream,
             options: new(outputNameOverride: outputName ?? compilation.AssemblyName)
         );
-        if (!emitResult.Success) return null;
+        if (!emitResult.Success) return Array.Empty<byte>();
 
-        var data = stream.ToArray();
-
-        using var assemblyStream = new MemoryStream(data);
-        return AssemblyLoadContext.LoadFromStream(assemblyStream);
+        return stream.ToArray();
     }
 }
