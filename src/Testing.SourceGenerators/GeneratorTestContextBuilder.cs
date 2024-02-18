@@ -200,9 +200,9 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="additionalCompilations"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder AddCompilationReferences(params CSharpCompilation[] additionalCompilations)
+    public GeneratorTestContextBuilder AddCompilationReferences(params GeneratorTestResults[] additionalCompilations)
     {
-        return AddReferences(additionalCompilations.Select(z => z.CreateMetadataReference()).ToArray());
+        return AddReferences(additionalCompilations.Select(z => z.MetadataReference!).ToArray());
     }
 
     /// <summary>
