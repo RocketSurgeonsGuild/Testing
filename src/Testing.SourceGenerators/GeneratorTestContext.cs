@@ -1,7 +1,14 @@
 ﻿using System.Collections.Immutable;
 using System.Runtime.Loader;
+using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CodeRefactorings;
+using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -9,36 +16,40 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 /// <summary>
 ///     The context for running a set of generators against a set of sources
 /// </summary>
-public class GeneratorTestContext
+[PublicAPI]
+public record GeneratorTestContext
 {
-    private readonly ILogger _logger;
-    private readonly ImmutableHashSet<MetadataReference> _metadataReferences;
-    private readonly ImmutableHashSet<Type> _generators;
-    private readonly ImmutableArray<NamedSourceText> _sources;
-    private readonly ImmutableHashSet<string> _ignoredFilePaths;
-    private readonly ImmutableDictionary<string, ImmutableDictionary<string, string>> _fileOptions;
-    private readonly ImmutableDictionary<string, string> _globalOptions;
-    private readonly string _projectName;
-    private readonly CSharpParseOptions _parseOptions;
-    private readonly ImmutableArray<AdditionalText> _additionalTexts;
+    private readonly ImmutableDictionary<string, MarkedLocation> _markedLocations;
+    internal ILogger _logger { get; init; }
+    internal ImmutableHashSet<MetadataReference> _metadataReferences { get; init; }
+    internal ImmutableHashSet<Type> _relatedTypes { get; init; }
+    internal ImmutableArray<NamedSourceText> _sources { get; init; }
+    internal ImmutableHashSet<string> _ignoredFilePaths { get; init; }
+    internal ImmutableDictionary<string, ImmutableDictionary<string, string>> _fileOptions { get; init; }
+    internal ImmutableDictionary<string, string> _globalOptions { get; init; }
+    internal string _projectName { get; init; }
+    internal CSharpParseOptions _parseOptions { get; init; }
+    internal ImmutableArray<AdditionalText> _additionalTexts { get; init; }
 
     internal GeneratorTestContext(
         string projectName,
         ILogger logger,
         AssemblyLoadContext assemblyLoadContext,
         ImmutableHashSet<MetadataReference> metadataReferences,
-        ImmutableHashSet<Type> generators,
+        ImmutableHashSet<Type> relatedTypes,
         ImmutableArray<NamedSourceText> sources,
         ImmutableHashSet<string> ignoredFilePaths,
         ImmutableDictionary<string, ImmutableDictionary<string, string>> fileOptions,
         ImmutableDictionary<string, string> globalOptions,
         CSharpParseOptions parseOptions,
-        ImmutableArray<AdditionalText> additionalTexts
+        ImmutableArray<AdditionalText> additionalTexts,
+        ImmutableDictionary<string, MarkedLocation> markedLocations
     )
     {
+        _markedLocations = markedLocations;
         _logger = logger;
         _metadataReferences = metadataReferences;
-        _generators = generators;
+        _relatedTypes = relatedTypes;
         _sources = sources;
         _ignoredFilePaths = ignoredFilePaths;
         _fileOptions = fileOptions;
@@ -71,7 +82,7 @@ public class GeneratorTestContext
             }
         }
 
-        var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _parseOptions, _sources.ToArray());
+        var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _parseOptions, _sources, _additionalTexts);
 
         var compilation = (CSharpCompilation?)await project.GetCompilationAsync().ConfigureAwait(false);
         if (compilation is null) throw new InvalidOperationException("Could not compile the sources");
@@ -86,40 +97,37 @@ public class GeneratorTestContext
             }
         }
 
-        var results = new GeneratorTestResults(
-            compilation,
-            diagnostics,
-            compilation.SyntaxTrees,
-            _additionalTexts,
-            _parseOptions,
-            _globalOptions,
-            _fileOptions,
-            ImmutableDictionary<Type, GeneratorTestResult>.Empty,
-            null!,
-            ImmutableArray<Diagnostic>.Empty,
-            null,
-            null
-        );
-
         var builder = ImmutableDictionary<Type, GeneratorTestResult>.Empty.ToBuilder();
+        var analyzerBuilder = ImmutableDictionary<Type, AnalyzerTestResult>.Empty.ToBuilder();
 
         var inputCompilation = compilation;
+        var inputDiagnostics = diagnostics;
 
-        foreach (var generatorType in _generators)
+        TestProjectInformation projectInformation;
+
         {
-            _logger.LogInformation("--- {Generator} ---", generatorType.FullName);
-            var generators = new List<ISourceGenerator>();
-            var generator = Activator.CreateInstance(generatorType)!;
-            switch (generator)
-            {
-                case IIncrementalGenerator g:
-                    generators.Add(g.AsSourceGenerator());
-                    break;
-                case ISourceGenerator sg:
-                    generators.Add(sg);
-                    break;
-            }
+            var relatedInstances = _relatedTypes
+                                  .Select(Activator.CreateInstance)
+                                  .Where(z => z != null)
+                                  .Select(z => z!)
+                                  .ToImmutableArray()
+                ;
+            projectInformation = new TestProjectInformation(
+                _logger,
+                project,
+                relatedInstances.OfType<DiagnosticAnalyzer>().ToImmutableDictionary(z => z.GetType()),
+                relatedInstances.OfType<ISourceGenerator>().ToImmutableDictionary(z => z.GetType()),
+                relatedInstances.OfType<IIncrementalGenerator>().ToImmutableDictionary(z => z.GetType()),
+                relatedInstances.OfType<CodeFixProvider>().ToImmutableDictionary(z => z.GetType()),
+                relatedInstances.OfType<CodeRefactoringProvider>().ToImmutableDictionary(z => z.GetType()),
+                relatedInstances.OfType<CompletionProvider>().ToImmutableDictionary(z => z.GetType())
+            );
+        }
 
+        foreach (var instance in projectInformation.IncrementalGenerators.Values.Concat(projectInformation.SourceGenerators.Values.Cast<object>()))
+        {
+            _logger.LogInformation("--- {Generator} ---", instance.GetType().FullName);
+            var generators = new List<ISourceGenerator>() { instance switch { IIncrementalGenerator i => i.AsSourceGenerator(), ISourceGenerator s => s, _ => throw new ArgumentOutOfRangeException() } };
             var driver = CSharpGeneratorDriver.Create(generators, _additionalTexts, _parseOptions, new OptionsProvider(_fileOptions, _globalOptions), default);
 
             driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out diagnostics);
@@ -150,7 +158,7 @@ public class GeneratorTestContext
             inputCompilation = inputCompilation.AddSyntaxTrees(trees);
 
             builder.Add(
-                generatorType,
+                instance.GetType(),
                 new(
                     ( outputCompilation as CSharpCompilation )!,
                     diagnostics,
@@ -159,15 +167,85 @@ public class GeneratorTestContext
             );
         }
 
-        var assemblyStream = Emit(inputCompilation);
+        var analyzers = projectInformation.Analyzers;
 
-        results = results with
+        var finalDiagnostics = inputCompilation.GetDiagnostics();
+
+        AnalysisResult? analysisResult = null;
+        if (analyzers.Count > 0)
         {
-            FinalCompilation = inputCompilation,
-            FinalDiagnostics = inputCompilation.GetDiagnostics(),
-        };
+            _logger.LogInformation("--- Analyzers ---");
+            foreach (var analyzer in analyzers)
+            {
+                _logger.LogInformation("    {Analyzer}", analyzer.Key.FullName);
+            }
 
-        if (assemblyStream is { Length: > 0, })
+            var compilationWithAnalyzers = inputCompilation.WithAnalyzers(
+                analyzers.Values.ToImmutableArray(),
+                new AnalyzerOptions(_additionalTexts, new OptionsProvider(_fileOptions, _globalOptions))
+            );
+
+            analysisResult = compilationWithAnalyzers.GetAnalysisResultAsync(CancellationToken.None).GetAwaiter().GetResult();
+            foreach (var analyzer in analyzers)
+            {
+                var analyzerResults = analysisResult.GetAllDiagnostics(analyzer.Value);
+                analyzerBuilder.Add(analyzer.Key, new(analyzerResults));
+            }
+
+            finalDiagnostics = finalDiagnostics.AddRange(analysisResult.GetAllDiagnostics());
+        }
+
+        var results = new GeneratorTestResults(
+            projectInformation,
+            compilation,
+            inputDiagnostics,
+            compilation.SyntaxTrees,
+            _additionalTexts,
+            _parseOptions,
+            _globalOptions,
+            _fileOptions,
+            builder.ToImmutable(),
+            analyzerBuilder.ToImmutable(),
+            ImmutableDictionary<Type, CodeFixTestResult>.Empty,
+            ImmutableDictionary<Type, CodeRefactoringTestResult>.Empty,
+            ImmutableDictionary<Type, CompletionTestResult>.Empty,
+            _markedLocations,
+            inputCompilation,
+            finalDiagnostics,
+            null!,
+            null!
+        );
+
+        if (projectInformation.CodeFixProviders.Count > 0)
+        {
+            _logger.LogInformation("--- Code Fix Providers ---");
+            foreach (var provider in projectInformation.CodeFixProviders.Values)
+            {
+                results = await results.AddCodeFix(provider);
+            }
+        }
+
+        if (projectInformation.CodeRefactoringProviders.Count > 0)
+        {
+            _logger.LogInformation("--- Code Refactoring Providers ---");
+            foreach (var provider in projectInformation.CodeRefactoringProviders.Values)
+            {
+                results = await results.AddCodeRefactoring(provider);
+            }
+        }
+
+        if (projectInformation.CompletionProviders.Count > 0)
+        {
+            _logger.LogInformation("--- Completion Providers ---");
+            foreach (var provider in projectInformation.CompletionProviders.Values)
+            {
+                results = await results.AddCompletion(provider);
+            }
+        }
+
+        var assemblyStream = Emit(inputCompilation);
+        if (assemblyStream is { Length: > 0 })
+
         {
             results = results with
             {
@@ -176,7 +254,7 @@ public class GeneratorTestContext
             };
         }
 
-        return results with { Results = builder.ToImmutable(), };
+        return results;
     }
 
     private byte[] Emit(CSharpCompilation compilation, string? outputName = null)
@@ -191,3 +269,4 @@ public class GeneratorTestContext
         return stream.ToArray();
     }
 }
+

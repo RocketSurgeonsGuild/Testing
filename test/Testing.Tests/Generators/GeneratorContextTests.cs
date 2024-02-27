@@ -102,6 +102,39 @@ public class GeneratorContextTests : LoggerTest
     }
 
     [Fact]
+    public async Task Should_Add_Analyzer()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .WithAnalyzer(typeof(TestAnalyzer))
+                     .Build();
+        await Verify(context.GenerateAsync());
+    }
+
+    [Fact]
+    public async Task Should_Add_CodeFix()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .AddSources("")
+                     .WithAnalyzer<TestAnalyzer>()
+                     .WithCodeFix<TestCodeFix>()
+                     .Build();
+        await Verify(context.GenerateAsync());
+    }
+
+    [Fact]
+    public async Task Should_Add_CodeRefactoring()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .AddMarkup("Code.cs", "[*c*]")
+                     .WithCodeRefactoring<TestRefactoring>()
+                     .Build();
+        await Verify(context.GenerateAsync());
+    }
+
+    [Fact]
     public async Task Should_Add_Compilation_References()
     {
         var assemblyA = await GeneratorTestContextBuilder
@@ -141,6 +174,7 @@ public class Class1
     {
         var context = GeneratorTestContextBuilder
                      .Create()
+                     .WithLogger(Logger)
                      .WithGenerator<MySourceGenerator>()
                      .AddSources(@"public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
@@ -164,6 +198,7 @@ public class Class1
     {
         var context = GeneratorTestContextBuilder
                      .Create()
+                     .WithLogger(Logger)
                      .WithGenerator<MyIncrementalGenerator>()
                      .AddSources(@"public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
@@ -171,22 +206,4 @@ public class Class1
     }
 
     public GeneratorContextTests(ITestOutputHelper outputHelper) : base(outputHelper, LogLevel.Trace) { }
-}
-
-public class MyIncrementalGenerator : IIncrementalGenerator
-{
-    public void Initialize(IncrementalGeneratorInitializationContext context)
-    {
-        context.RegisterPostInitializationOutput(initializationContext => initializationContext.AddSource("test.g.cs", "public class GeneratorTest { }"));
-    }
-}
-
-public class MySourceGenerator : ISourceGenerator
-{
-    public void Initialize(GeneratorInitializationContext context)
-    {
-        context.RegisterForPostInitialization(z => z.AddSource("test.g.cs", "public class GeneratorTest { }"));
-    }
-
-    public void Execute(GeneratorExecutionContext context) { }
 }

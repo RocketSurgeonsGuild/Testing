@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Collections.Immutable;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
@@ -10,7 +11,8 @@ internal static class GenerationHelpers
         string projectName,
         IEnumerable<MetadataReference> metadataReferences,
         CSharpParseOptions parseOptions,
-        NamedSourceText[] sources
+        ImmutableArray<NamedSourceText> sources,
+        ImmutableArray<AdditionalText> additionalTexts
     )
     {
         var projectId = ProjectId.CreateNewId(projectName);
@@ -38,6 +40,13 @@ internal static class GenerationHelpers
             count++;
         }
 
+        foreach (var item in additionalTexts)
+        {
+            if (item.GetText() is not {} source) continue;
+            var documentId = DocumentId.CreateNewId(projectId, item.Path);
+            solution = solution.AddAdditionalDocument(documentId, item.Path, source);
+        }
+
         var project = solution.GetProject(projectId);
         if (project is null)
         {
@@ -51,7 +60,3 @@ internal static class GenerationHelpers
     internal const string CSharpDefaultFileExt = "cs";
 }
 
-internal record NamedSourceText(SourceText SourceText)
-{
-    public string? Name { get; init; }
-}

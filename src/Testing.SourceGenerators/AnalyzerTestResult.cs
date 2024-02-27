@@ -1,22 +1,17 @@
 ﻿using System.Collections.Immutable;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 /// <summary>
-///     The results of a specific generators execution
+///     The results of a specific analyzers execution
 /// </summary>
-/// <param name="Compilation">The resulting compilation</param>
-/// <param name="Diagnostics">The resulting diagnostics of the compilation</param>
-/// <param name="SyntaxTrees">The syntax trees that returned from the generator</param>
+/// <param name="Diagnostics">The resulting diagnostics of the analyzer</param>
 [PublicAPI]
-public record GeneratorTestResult
+public record AnalyzerTestResult
 (
-    CSharpCompilation Compilation,
-    ImmutableArray<Diagnostic> Diagnostics,
-    ImmutableArray<SyntaxTree> SyntaxTrees
+    ImmutableArray<Diagnostic> Diagnostics
 )
 {
     /// <summary>
