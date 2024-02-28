@@ -1,0 +1,21 @@
+﻿[
+  {
+    CodeActions: [
+      {
+        Title: Test Code Action,
+        Tags: null,
+        TextChanges: {
+          Code.cs: [
+            {
+              NewText: NewText
+            }
+          ]
+        }
+      }
+    ],
+    Document: Code.cs,
+    Location: [0..2),
+    TriggerCharacter: c,
+    TriggerKind: Insertion
+  }
+]

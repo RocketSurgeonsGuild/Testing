@@ -1,0 +1,101 @@
+﻿{
+  Completions: {
+    Rocket.Surgery.Extensions.Testing.Tests.Generators.TestCompletion: [
+      {
+        Document: Code.cs,
+        MarkedLocation: {
+          Location: {
+            Length: 2
+          },
+          Trigger: {
+            Kind: Insertion,
+            Character: "c"
+          }
+        },
+        Span: {},
+        Items: [
+          {
+            Item: {
+              DisplayText: Test Completion,
+              DisplayTextPrefix: ,
+              DisplayTextSuffix: ,
+              FilterText: Test Completion,
+              SortText: Test Completion,
+              InlineDescription: ,
+              Tags: null,
+              Rules: {
+                FilterCharacterRules: null,
+                CommitCharacterRules: null,
+                FormatOnCommit: false
+              },
+              IsComplexTextEdit: false
+            },
+            Description: {
+              TaggedParts: null,
+              Text: 
+            },
+            Change: {
+              TextChange: {
+                NewText: Test Completion
+              },
+              TextChanges: [
+                {
+                  NewText: Test Completion
+                }
+              ],
+              IncludesCommitCharacter: false
+            }
+          }
+        ]
+      }
+    ]
+  },
+  FinalDiagnostics: [
+    {
+      Id: CS0116,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,0)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0116),
+      MessageFormat: A namespace cannot directly contain members such as fields, methods or statements,
+      Message: A namespace cannot directly contain members such as fields, methods or statements,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    }
+  ],
+  InputDiagnostics: [
+    {
+      Id: CS0116,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,0)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0116),
+      MessageFormat: A namespace cannot directly contain members such as fields, methods or statements,
+      Message: A namespace cannot directly contain members such as fields, methods or statements,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    }
+  ],
+  ParseOptions: {
+    LanguageVersion: CSharp10,
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

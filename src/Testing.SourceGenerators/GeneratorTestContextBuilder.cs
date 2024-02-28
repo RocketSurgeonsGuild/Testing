@@ -3,7 +3,11 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CodeRefactorings;
+using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -45,10 +49,11 @@ public record GeneratorTestContextBuilder
     private ImmutableHashSet<MetadataReference>
         _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
 
-    private ImmutableHashSet<Type> _generators = ImmutableHashSet<Type>.Empty;
+    private ImmutableHashSet<Type> _relatedTypes = ImmutableHashSet<Type>.Empty;
     private ImmutableArray<NamedSourceText> _sources = ImmutableArray<NamedSourceText>.Empty;
     private ImmutableArray<AdditionalText> _additionalTexts = ImmutableArray<AdditionalText>.Empty;
     private ImmutableHashSet<string> _ignoredFilePaths = ImmutableHashSet<string>.Empty;
+    private ImmutableDictionary<string, MarkedLocation> _markedLocations = ImmutableDictionary<string, MarkedLocation>.Empty;
 
     private GeneratorTestContextBuilder() { }
 
@@ -181,7 +186,7 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder WithGenerator(Type type)
     {
-        return this with { _generators = _generators.Add(type), };
+        return this with { _relatedTypes = _relatedTypes.Add(type), };
     }
 
     /// <summary>
@@ -193,6 +198,90 @@ public record GeneratorTestContextBuilder
         where T : new()
     {
         return WithGenerator(typeof(T));
+    }
+
+    /// <summary>
+    ///     Add a analyzer to the compilation
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithAnalyzer(Type type)
+    {
+        return this with { _relatedTypes = _relatedTypes.Add(type), };
+    }
+
+    /// <summary>
+    ///     Add a analyzer to the compilation
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithAnalyzer<T>()
+        where T : DiagnosticAnalyzer, new()
+    {
+        return WithAnalyzer(typeof(T));
+    }
+
+    /// <summary>
+    ///     Add a codefix provider to the compilation
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithCodeFix(Type type)
+    {
+        return this with { _relatedTypes = _relatedTypes.Add(type), };
+    }
+
+    /// <summary>
+    ///     Add a codefix provider to the compilation
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithCodeFix<T>()
+        where T : CodeFixProvider, new()
+    {
+        return WithCodeFix(typeof(T));
+    }
+
+    /// <summary>
+    ///     Add a code refactoring provider to the compilation
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithCodeRefactoring(Type type)
+    {
+        return this with { _relatedTypes = _relatedTypes.Add(type), };
+    }
+
+    /// <summary>
+    ///     Add a code refactoring provider to the compilation
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithCodeRefactoring<T>()
+        where T : CodeRefactoringProvider, new()
+    {
+        return WithCodeFix(typeof(T));
+    }
+
+    /// <summary>
+    ///     Add a completion provider to the compilation
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithCompletion(Type type)
+    {
+        return this with { _relatedTypes = _relatedTypes.Add(type), };
+    }
+
+    /// <summary>
+    ///     Add a completion provider to the compilation
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithCompletion<T>()
+        where T : CompletionProvider, new()
+    {
+        return WithCompletion(typeof(T));
     }
 
     /// <summary>
@@ -315,6 +404,28 @@ public record GeneratorTestContextBuilder
     }
 
     /// <summary>
+    ///     Add the given source text to the compilation
+    /// </summary>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder AddMarkup(string name, CodeMarkup source)
+    {
+        return this with
+        {
+            _markedLocations = _markedLocations.Add(name, new(source.Location, source.Trigger)),
+            _sources = _sources.Add(new(SourceText.From(source.Code, Encoding.UTF8)) { Name = name, }),
+        };
+    }
+
+    /// <summary>
+    ///     Add the given source text to the compilation
+    /// </summary>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder AddMarkup(string name, string source)
+    {
+        return AddMarkup(name, new CodeMarkup(source));
+    }
+
+    /// <summary>
     ///     Add the given additional text to the compilation
     /// </summary>
     /// <param name="additionalTexts"></param>
@@ -416,13 +527,23 @@ public record GeneratorTestContextBuilder
             _logger ?? NullLogger.Instance,
             _assemblyLoadContext ?? new CollectibleTestAssemblyLoadContext(),
             _metadataReferences,
-            _generators,
+            _relatedTypes,
             _sources,
             _ignoredFilePaths,
             _options,
             _globalOptions,
             _parseOptions,
-            _additionalTexts
+            _additionalTexts,
+            _markedLocations
         );
+    }
+
+    /// <summary>
+    ///     Generate and return the results of the generators
+    /// </summary>
+    /// <returns></returns>
+    public Task<GeneratorTestResults> GenerateAsync()
+    {
+        return Build().GenerateAsync();
     }
 }
