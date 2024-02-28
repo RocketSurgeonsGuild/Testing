@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 

@@ -10,15 +10,15 @@ internal class TestCompletionService : CompletionServiceWithProviders
         : base(workspace)
     {
         Language = language;
-        this.TestProviders = new[] { provider }.ToImmutableArray();
+        TestProviders = new[] { provider, }.ToImmutableArray();
     }
 
     public ImmutableArray<CompletionProvider> TestProviders { get; }
+
+    public override string Language { get; }
 
     protected override ImmutableArray<CompletionProvider> GetProviders(ImmutableHashSet<string> roles, CompletionTrigger trigger)
     {
         return TestProviders;
     }
-
-    public override string Language { get; }
 }

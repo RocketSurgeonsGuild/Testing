@@ -2,12 +2,10 @@
 using System.Runtime.Loader;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.Logging;
 
@@ -20,16 +18,6 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 public record GeneratorTestContext
 {
     private readonly ImmutableDictionary<string, MarkedLocation> _markedLocations;
-    internal ILogger _logger { get; init; }
-    internal ImmutableHashSet<MetadataReference> _metadataReferences { get; init; }
-    internal ImmutableHashSet<Type> _relatedTypes { get; init; }
-    internal ImmutableArray<NamedSourceText> _sources { get; init; }
-    internal ImmutableHashSet<string> _ignoredFilePaths { get; init; }
-    internal ImmutableDictionary<string, ImmutableDictionary<string, string>> _fileOptions { get; init; }
-    internal ImmutableDictionary<string, string> _globalOptions { get; init; }
-    internal string _projectName { get; init; }
-    internal CSharpParseOptions _parseOptions { get; init; }
-    internal ImmutableArray<AdditionalText> _additionalTexts { get; init; }
 
     internal GeneratorTestContext(
         string projectName,
@@ -64,6 +52,17 @@ public record GeneratorTestContext
     ///     The related assembly load context
     /// </summary>
     public AssemblyLoadContext AssemblyLoadContext { get; }
+
+    internal ILogger _logger { get; init; }
+    internal ImmutableHashSet<MetadataReference> _metadataReferences { get; init; }
+    internal ImmutableHashSet<Type> _relatedTypes { get; init; }
+    internal ImmutableArray<NamedSourceText> _sources { get; init; }
+    internal ImmutableHashSet<string> _ignoredFilePaths { get; init; }
+    internal ImmutableDictionary<string, ImmutableDictionary<string, string>> _fileOptions { get; init; }
+    internal ImmutableDictionary<string, string> _globalOptions { get; init; }
+    internal string _projectName { get; init; }
+    internal CSharpParseOptions _parseOptions { get; init; }
+    internal ImmutableArray<AdditionalText> _additionalTexts { get; init; }
 
     /// <summary>
     ///     Generate and return the results of the generators
@@ -112,7 +111,7 @@ public record GeneratorTestContext
                                   .Select(z => z!)
                                   .ToImmutableArray()
                 ;
-            projectInformation = new TestProjectInformation(
+            projectInformation = new(
                 _logger,
                 project,
                 relatedInstances.OfType<DiagnosticAnalyzer>().ToImmutableDictionary(z => z.GetType()),
@@ -127,7 +126,10 @@ public record GeneratorTestContext
         foreach (var instance in projectInformation.IncrementalGenerators.Values.Concat(projectInformation.SourceGenerators.Values.Cast<object>()))
         {
             _logger.LogInformation("--- {Generator} ---", instance.GetType().FullName);
-            var generators = new List<ISourceGenerator>() { instance switch { IIncrementalGenerator i => i.AsSourceGenerator(), ISourceGenerator s => s, _ => throw new ArgumentOutOfRangeException() } };
+            var generators = new List<ISourceGenerator>
+            {
+                instance switch { IIncrementalGenerator i => i.AsSourceGenerator(), ISourceGenerator s => s, _ => throw new ArgumentOutOfRangeException(), },
+            };
             var driver = CSharpGeneratorDriver.Create(generators, _additionalTexts, _parseOptions, new OptionsProvider(_fileOptions, _globalOptions), default);
 
             driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out diagnostics);
@@ -244,7 +246,7 @@ public record GeneratorTestContext
         }
 
         var assemblyStream = Emit(inputCompilation);
-        if (assemblyStream is { Length: > 0 })
+        if (assemblyStream is { Length: > 0, })
 
         {
             results = results with
@@ -269,4 +271,3 @@ public record GeneratorTestContext
         return stream.ToArray();
     }
 }
-

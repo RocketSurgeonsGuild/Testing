@@ -539,9 +539,11 @@ public record GeneratorTestContextBuilder
     }
 
     /// <summary>
-    /// Generate and return the results of the generators
+    ///     Generate and return the results of the generators
     /// </summary>
     /// <returns></returns>
-    public Task<GeneratorTestResults> GenerateAsync() => Build().GenerateAsync();
+    public Task<GeneratorTestResults> GenerateAsync()
+    {
+        return Build().GenerateAsync();
+    }
 }
-

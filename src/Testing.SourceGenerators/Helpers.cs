@@ -1,5 +1,4 @@
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeActions;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -14,4 +13,3 @@ internal static class Helpers
               .ThenBy(static z => z.Id);
     }
 }
-

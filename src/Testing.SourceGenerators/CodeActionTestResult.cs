@@ -4,7 +4,9 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.Text;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
-public record CodeActionTestResult(
+
+public record CodeActionTestResult
+(
     ProjectChanges Changes,
     Document TargetDocument,
     CodeAction CodeAction,

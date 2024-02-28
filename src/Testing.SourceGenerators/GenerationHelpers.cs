@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -42,7 +41,7 @@ internal static class GenerationHelpers
 
         foreach (var item in additionalTexts)
         {
-            if (item.GetText() is not {} source) continue;
+            if (item.GetText() is not { } source) continue;
             var documentId = DocumentId.CreateNewId(projectId, item.Path);
             solution = solution.AddAdditionalDocument(documentId, item.Path, source);
         }
@@ -59,4 +58,3 @@ internal static class GenerationHelpers
     internal const string DefaultFilePathPrefix = "Input";
     internal const string CSharpDefaultFileExt = "cs";
 }
-

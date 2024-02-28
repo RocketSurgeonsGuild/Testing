@@ -5,32 +5,19 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 public class CodeMarkup
 {
-    public CodeMarkup(string markup)
-    {
-        Code = markup
-              .Replace("[|", "")
-              .Replace("|]", "")
-              .Replace("[|]", "")
-              .Replace("[*]", "")
-              .Replace("[*", "")
-              .Replace("*]", "")
-            ;
-        Location = GetLocation(markup);
-        Trigger = GetCompletionTrigger(markup);
-    }
-
     private static TextSpan GetLocation(string markupCode)
     {
         if (TryFindMarkedTextSpan(markupCode, out var textSpan))
         {
             return textSpan;
         }
+
         if (TryFindMarkedLocation(markupCode, out var ts))
         {
             return ts;
         }
 
-        return new TextSpan();
+        return new();
     }
 
     private static CompletionTrigger? GetCompletionTrigger(string markupCode)
@@ -39,6 +26,7 @@ public class CodeMarkup
         {
             return ts;
         }
+
         if (TryFindCompletionCharacter(markupCode, out var textSpan))
         {
             return textSpan;
@@ -97,7 +85,9 @@ public class CodeMarkup
             return false;
         }
 
-        trigger = markupCode[start+2] == '-' ? CompletionTrigger.CreateDeletionTrigger(markupCode[end - 1]) :  CompletionTrigger.CreateInsertionTrigger(markupCode[end - 1]);
+        trigger = markupCode[start + 2] == '-'
+            ? CompletionTrigger.CreateDeletionTrigger(markupCode[end - 1])
+            : CompletionTrigger.CreateInsertionTrigger(markupCode[end - 1]);
         return true;
     }
 
@@ -106,6 +96,20 @@ public class CodeMarkup
         trigger = CompletionTrigger.Invoke;
         var start = markupCode.IndexOf("[*]", StringComparison.InvariantCulture);
         return start >= 0;
+    }
+
+    public CodeMarkup(string markup)
+    {
+        Code = markup
+              .Replace("[|", "")
+              .Replace("|]", "")
+              .Replace("[|]", "")
+              .Replace("[*]", "")
+              .Replace("[*", "")
+              .Replace("*]", "")
+            ;
+        Location = GetLocation(markup);
+        Trigger = GetCompletionTrigger(markup);
     }
 
     public TextSpan Location { get; }

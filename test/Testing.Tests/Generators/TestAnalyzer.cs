@@ -4,20 +4,9 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
-class TestAnalyzer : DiagnosticAnalyzer
+internal class TestAnalyzer : DiagnosticAnalyzer
 {
-    public override void Initialize(AnalysisContext context)
-    {
-        context.RegisterCompilationAction(
-            c =>
-            {
-                c.ReportDiagnostic(Diagnostic.Create(_descriptor, null));
-            });
-    }
-
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray<DiagnosticDescriptor>.Empty.Add(_descriptor);
-
-    private static DiagnosticDescriptor _descriptor = new DiagnosticDescriptor(
+    private static readonly DiagnosticDescriptor _descriptor = new(
         "TEST0001",
         "title",
         "message",
@@ -25,4 +14,13 @@ class TestAnalyzer : DiagnosticAnalyzer
         DiagnosticSeverity.Warning,
         true
     );
+
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray<DiagnosticDescriptor>.Empty.Add(_descriptor);
+
+    public override void Initialize(AnalysisContext context)
+    {
+        context.RegisterCompilationAction(
+            c => { c.ReportDiagnostic(Diagnostic.Create(_descriptor, null)); }
+        );
+    }
 }
