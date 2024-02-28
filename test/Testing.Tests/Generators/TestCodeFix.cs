@@ -2,21 +2,12 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CodeRefactorings;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
-class TestCodeFix : CodeFixProvider
+internal class TestCodeFix : CodeFixProvider
 {
-    public override Task RegisterCodeFixesAsync(CodeFixContext context)
-    {
-        context.RegisterCodeFix(CodeAction.Create("Test Code Action", async ct => context.Document.WithText((await context.Document.GetTextAsync(ct)).Replace(0, 0, "NewText"))), context.Diagnostics);
-        return Task.CompletedTask;
-    }
-
-    public override ImmutableArray<string> FixableDiagnosticIds { get; } = ImmutableArray.Create("TEST0001");
-
-    private static DiagnosticDescriptor _descriptor = new DiagnosticDescriptor(
+    private static DiagnosticDescriptor _descriptor = new(
         "TEST0001",
         "title",
         "message",
@@ -24,13 +15,15 @@ class TestCodeFix : CodeFixProvider
         DiagnosticSeverity.Warning,
         true
     );
-}
 
-class TestRefactoring : CodeRefactoringProvider
-{
-    public override Task ComputeRefactoringsAsync(CodeRefactoringContext context)
+    public override ImmutableArray<string> FixableDiagnosticIds { get; } = ImmutableArray.Create("TEST0001");
+
+    public override Task RegisterCodeFixesAsync(CodeFixContext context)
     {
-        context.RegisterRefactoring(CodeAction.Create("Test Code Action", async ct => context.Document.WithText((await context.Document.GetTextAsync(ct)).Replace(0, 0, "NewText"))));
+        context.RegisterCodeFix(
+            CodeAction.Create("Test Code Action", async ct => context.Document.WithText(( await context.Document.GetTextAsync(ct) ).Replace(0, 0, "NewText"))),
+            context.Diagnostics
+        );
         return Task.CompletedTask;
     }
 }

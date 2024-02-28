@@ -1,0 +1,51 @@
+﻿{
+  CompletionLists: [
+    {
+      Document: Code.cs,
+      MarkedLocation: {
+        Location: {
+          Length: 2
+        },
+        Trigger: {
+          Kind: Insertion,
+          Character: "c"
+        }
+      },
+      Span: {},
+      Items: [
+        {
+          Item: {
+            DisplayText: Test Completion,
+            DisplayTextPrefix: ,
+            DisplayTextSuffix: ,
+            FilterText: Test Completion,
+            SortText: Test Completion,
+            InlineDescription: ,
+            Tags: null,
+            Rules: {
+              FilterCharacterRules: null,
+              CommitCharacterRules: null,
+              FormatOnCommit: false
+            },
+            IsComplexTextEdit: false
+          },
+          Description: {
+            TaggedParts: null,
+            Text: 
+          },
+          Change: {
+            TextChange: {
+              NewText: Test Completion
+            },
+            TextChanges: [
+              {
+                NewText: Test Completion
+              }
+            ],
+            IncludesCommitCharacter: false
+          }
+        }
+      ]
+    }
+  ]
+}

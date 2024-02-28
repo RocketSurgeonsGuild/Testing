@@ -135,6 +135,56 @@ public class GeneratorContextTests : LoggerTest
     }
 
     [Fact]
+    public async Task Should_Add_Completion()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .AddMarkup("Code.cs", "[*c*]")
+                     .WithCompletion<TestCompletion>()
+                     .Build();
+        await Verify(context.GenerateAsync());
+    }
+
+    [Fact]
+    public async Task Should_Generate_Analyzer()
+    {
+        var context = GeneratorTestContextBuilder
+           .Create();
+        await Verify(context.GenerateAnalyzer<TestAnalyzer>());
+    }
+
+    [Fact]
+    public async Task Should_Generate_CodeFix()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .AddSources("")
+                     .WithAnalyzer<TestAnalyzer>()
+                     .Build();
+        await Verify(context.GenerateCodeFix<TestCodeFix>());
+    }
+
+    [Fact]
+    public async Task Should_Generate_CodeRefactoring()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .AddMarkup("Code.cs", "[*c*]")
+                     .Build();
+        await Verify(context.GenerateCodeRefactoring<TestRefactoring>());
+    }
+
+    [Fact]
+    public async Task Should_Generate_Completion()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .AddMarkup("Code.cs", "[*c*]")
+                     .Build();
+        await Verify(context.GenerateCompletions<TestCompletion>());
+    }
+
+    [Fact]
     public async Task Should_Add_Compilation_References()
     {
         var assemblyA = await GeneratorTestContextBuilder

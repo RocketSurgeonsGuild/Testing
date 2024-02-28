@@ -16,9 +16,7 @@
           }
         ],
         Document: Code.cs,
-        Location: {
-          Length: 2
-        },
+        Location: [0..2),
         TriggerCharacter: c,
         TriggerKind: Insertion
       }

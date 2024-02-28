@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.CodeAnalysis.Completion;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -36,6 +35,7 @@ public static class VerifyGeneratorTextContext
                 converters.Add(new CodeActionConverter());
                 converters.Add(new ResolvedCodeRefactoringTestResultConverter());
                 converters.Add(new CompletionListTestResultConverter());
+                converters.Add(new CompletionItemTestResultConverter());
                 converters.Add(new ResolvedCodeFixTestResultConverter());
 
                 serializer.Converters.Remove(serializer.Converters.Find(z => z.GetType().Name == "LocationConverter")!);
@@ -112,6 +112,7 @@ public static class VerifyGeneratorTextContext
                 results[result.Key.FullName!] = converted.Info!;
                 targets.AddRange(converted.Targets);
             }
+
             data["CodeFixes"] = results;
         }
 
@@ -124,6 +125,7 @@ public static class VerifyGeneratorTextContext
                 results[result.Key.FullName!] = converted.Info!;
                 targets.AddRange(converted.Targets);
             }
+
             data["CodeRefactorings"] = results;
         }
 
@@ -142,7 +144,7 @@ public static class VerifyGeneratorTextContext
 
     private static ConversionResult Convert(AnalyzerTestResult target, IReadOnlyDictionary<string, object> context)
     {
-        return new(new { target.Diagnostics, target }, Enumerable.Empty<Target>());
+        return new(new { target.Diagnostics, }, Enumerable.Empty<Target>());
     }
 
     private static ConversionResult Convert(CompletionTestResult target, IReadOnlyDictionary<string, object> context)
@@ -161,20 +163,22 @@ public static class VerifyGeneratorTextContext
             data.Add(documentData);
             documentData["Document"] = result.Document.Name;
             documentData["Location"] = result.MarkedLocation.Location.ToString();
-            if (result.MarkedLocation.Trigger is {})
+            if (result.MarkedLocation.Trigger is { })
             {
                 documentData["TriggerKind"] = result.MarkedLocation.Trigger.Value.Kind.ToString();
                 documentData["TriggerCharacter"] = result.MarkedLocation.Trigger.Value.Character.ToString();
             }
+
             documentData["CodeActions"] = codeActions;
             foreach (var action in result.CodeActions)
             {
-                codeActions.Add(new { action.CodeAction.Title, action.CodeAction.Tags, action.TextChanges });
+                codeActions.Add(new { action.CodeAction.Title, action.CodeAction.Tags, action.TextChanges, });
                 foreach (var changedDocumentId in action.Changes.GetChangedDocuments(true))
                 {
                     action.Changes.NewProject.GetDocument(changedDocumentId)!.GetTextAsync().GetAwaiter().GetResult();
                     targets.Add(Selector(action.Changes.NewProject.GetDocument(changedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
                 }
+
                 foreach (var addedDocumentId in action.Changes.GetAddedDocuments())
                 {
                     action.Changes.NewProject.GetDocument(addedDocumentId)!.GetTextAsync().GetAwaiter().GetResult();
@@ -182,6 +186,7 @@ public static class VerifyGeneratorTextContext
                 }
             }
         }
+
         return new(data, targets);
 
         static Target Selector(Document source, string additionalHintPath)
@@ -189,7 +194,11 @@ public static class VerifyGeneratorTextContext
             var hintPath = source.FilePath;
             var data = $@"//HintName: {hintPath?.Replace("\\", "/")}
 {source.GetTextAsync().GetAwaiter().GetResult()}";
-            return new("cs", data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase), Path.GetFileNameWithoutExtension(hintPath) + "_" + additionalHintPath);
+            return new(
+                "cs",
+                data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase),
+                Path.GetFileNameWithoutExtension(hintPath) + "_" + additionalHintPath
+            );
         }
     }
 
@@ -207,12 +216,13 @@ public static class VerifyGeneratorTextContext
             documentData["CodeActions"] = codeActions;
             foreach (var action in result.CodeActions)
             {
-                codeActions.Add(new { action.CodeAction.Title, action.CodeAction.Tags, action.TextChanges });
+                codeActions.Add(new { action.CodeAction.Title, action.CodeAction.Tags, action.TextChanges, });
                 foreach (var changedDocumentId in action.Changes.GetChangedDocuments(true))
                 {
                     action.Changes.NewProject.GetDocument(changedDocumentId)!.GetTextAsync().GetAwaiter().GetResult();
                     targets.Add(Selector(action.Changes.NewProject.GetDocument(changedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
                 }
+
                 foreach (var addedDocumentId in action.Changes.GetAddedDocuments())
                 {
                     action.Changes.NewProject.GetDocument(addedDocumentId)!.GetTextAsync().GetAwaiter().GetResult();
@@ -220,6 +230,7 @@ public static class VerifyGeneratorTextContext
                 }
             }
         }
+
         return new(data, targets);
 
         static Target Selector(Document source, string additionalHintPath)
@@ -227,7 +238,11 @@ public static class VerifyGeneratorTextContext
             var hintPath = source.FilePath;
             var data = $@"//HintName: {hintPath?.Replace("\\", "/")}
 {source.GetTextAsync().GetAwaiter().GetResult()}";
-            return new("cs", data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase), Path.GetFileNameWithoutExtension(hintPath) + "_" + additionalHintPath);
+            return new(
+                "cs",
+                data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase),
+                Path.GetFileNameWithoutExtension(hintPath) + "_" + additionalHintPath
+            );
         }
     }
 
@@ -239,20 +254,23 @@ public static class VerifyGeneratorTextContext
         return new("cs", data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase), Path.GetFileNameWithoutExtension(hintPath));
     }
 
-    private class CodeFixTestResultConverter : WriteOnlyJsonConverter<CodeFixTestResult> {
+    private class CodeFixTestResultConverter : WriteOnlyJsonConverter<CodeFixTestResult>
+    {
         public override void Write(VerifyJsonWriter writer, CodeFixTestResult value)
         {
-            writer.WriteStartObject();
+            writer.WriteStartArray();
             foreach (var item in value.ResolvedFixes)
             {
                 writer.Serializer.Serialize(writer, item);
             }
-            writer.WriteEndObject();
+
+            writer.WriteStartObject();
         }
     }
 
 
-    private class ResolvedCodeFixTestResultConverter : WriteOnlyJsonConverter<ResolvedCodeFixTestResult> {
+    private class ResolvedCodeFixTestResultConverter : WriteOnlyJsonConverter<ResolvedCodeFixTestResult>
+    {
         public override void Write(VerifyJsonWriter writer, ResolvedCodeFixTestResult value)
         {
             writer.WriteStartObject();
@@ -262,7 +280,9 @@ public static class VerifyGeneratorTextContext
             writer.WriteEndObject();
         }
     }
-    private class CompletionTestResultConverter : WriteOnlyJsonConverter<CompletionTestResult> {
+
+    private class CompletionTestResultConverter : WriteOnlyJsonConverter<CompletionTestResult>
+    {
         public override void Write(VerifyJsonWriter writer, CompletionTestResult value)
         {
             writer.WriteStartObject();
@@ -270,7 +290,9 @@ public static class VerifyGeneratorTextContext
             writer.WriteEndObject();
         }
     }
-    private class CompletionListTestResultConverter : WriteOnlyJsonConverter<CompletionListTestResult> {
+
+    private class CompletionListTestResultConverter : WriteOnlyJsonConverter<CompletionListTestResult>
+    {
         public override void Write(VerifyJsonWriter writer, CompletionListTestResult value)
         {
             writer.WriteStartObject();
@@ -283,29 +305,53 @@ public static class VerifyGeneratorTextContext
             writer.WriteEndObject();
         }
     }
-    private class CodeRefactoringTestResultConverter : WriteOnlyJsonConverter<CodeRefactoringTestResult> {
+
+    private class CompletionItemTestResultConverter : WriteOnlyJsonConverter<CompletionItemTestResult>
+    {
+        public override void Write(VerifyJsonWriter writer, CompletionItemTestResult value)
+        {
+            writer.WriteStartObject();
+            writer.WriteMember(value, value.Item, nameof(value.Item));
+            writer.WriteMember(value, value.Description, nameof(value.Description));
+            writer.WriteMember(value, value.Change, nameof(value.Change));
+            writer.WriteEndObject();
+        }
+    }
+
+    private class CodeRefactoringTestResultConverter : WriteOnlyJsonConverter<CodeRefactoringTestResult>
+    {
         public override void Write(VerifyJsonWriter writer, CodeRefactoringTestResult value)
         {
-
-            writer.WriteStartObject();
+            writer.WriteStartArray();
             foreach (var item in value.ResolvedFixes)
             {
                 writer.Serializer.Serialize(writer, item);
             }
-            writer.WriteEndObject();
+
+            writer.WriteStartArray();
         }
     }
-    private class ResolvedCodeRefactoringTestResultConverter : WriteOnlyJsonConverter<ResolvedCodeRefactoringTestResult> {
+
+    private class ResolvedCodeRefactoringTestResultConverter : WriteOnlyJsonConverter<ResolvedCodeRefactoringTestResult>
+    {
         public override void Write(VerifyJsonWriter writer, ResolvedCodeRefactoringTestResult value)
         {
             writer.WriteStartObject();
             writer.WriteMember(value, value.Document.FilePath, nameof(value.Document));
-            writer.WriteMember(value, value.MarkedLocation, nameof(value.MarkedLocation));
+            writer.WriteMember(value, value.MarkedLocation.Location.ToString(), nameof(value.MarkedLocation.Location));
+            if (value.MarkedLocation.Trigger is { })
+            {
+                writer.WriteMember(value, value.MarkedLocation.Trigger.Value.Kind, "TriggerKind");
+                writer.WriteMember(value, value.MarkedLocation.Trigger.Value.Character, "TriggerCharacter");
+            }
+
             writer.WriteMember(value, value.CodeActions, nameof(value.CodeActions));
             writer.WriteEndObject();
         }
     }
-    private class GeneratorTestResultConverter : WriteOnlyJsonConverter<GeneratorTestResult> {
+
+    private class GeneratorTestResultConverter : WriteOnlyJsonConverter<GeneratorTestResult>
+    {
         public override void Write(VerifyJsonWriter writer, GeneratorTestResult value)
         {
             writer.WriteStartObject();
@@ -314,7 +360,9 @@ public static class VerifyGeneratorTextContext
             writer.WriteEndObject();
         }
     }
-    private class AnalyzerTestResultConverter : WriteOnlyJsonConverter<AnalyzerTestResult> {
+
+    private class AnalyzerTestResultConverter : WriteOnlyJsonConverter<AnalyzerTestResult>
+    {
         public override void Write(VerifyJsonWriter writer, AnalyzerTestResult value)
         {
             writer.WriteStartObject();
@@ -329,8 +377,8 @@ public static class VerifyGeneratorTextContext
         public override void Write(VerifyJsonWriter writer, CodeActionTestResult value)
         {
             writer.WriteStartObject();
-            writer.WriteMember(value, value.TextChanges , nameof(value.TextChanges));
-            writer.WriteMember(value, value.CodeAction , nameof(value.CodeAction));
+            writer.WriteMember(value, value.TextChanges, nameof(value.TextChanges));
+            writer.WriteMember(value, value.CodeAction, nameof(value.CodeAction));
             writer.WriteEndObject();
         }
     }
@@ -341,7 +389,7 @@ public static class VerifyGeneratorTextContext
         public override void Write(VerifyJsonWriter writer, CodeAction value)
         {
             writer.WriteStartObject();
-            writer.WriteMember(value, value.Title , nameof(value.Title));
+            writer.WriteMember(value, value.Title, nameof(value.Title));
             writer.WriteMember(value, value.Tags, nameof(value.Tags));
             writer.WriteEndObject();
         }
@@ -400,4 +448,3 @@ public static class VerifyGeneratorTextContext
         }
     }
 }
-

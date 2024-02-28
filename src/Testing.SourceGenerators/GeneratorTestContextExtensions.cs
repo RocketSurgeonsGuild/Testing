@@ -14,7 +14,7 @@ public static class GeneratorTestContextExtensions
 {
     public static GeneratorTestContext IncludeRelatedType(this GeneratorTestContext context, Type type)
     {
-        return context with { _relatedTypes = context._relatedTypes.Add(type) };
+        return context with { _relatedTypes = context._relatedTypes.Add(type), };
     }
 
     public static Task<AnalyzerTestResult> GenerateAnalyzer<T>(this GeneratorTestContext context)
@@ -88,7 +88,7 @@ public static class GeneratorTestContextExtensions
 
     public static async Task<CodeFixTestResult> GenerateCodeFix(this GeneratorTestContext context, Type type)
     {
-        var result = await ( context.IncludeRelatedType(type) ).GenerateAsync();
+        var result = await context.IncludeRelatedType(type).GenerateAsync();
 
         return result.CodeFixResults.TryGetValue(type, out var analyzerResult)
             ? analyzerResult
@@ -119,7 +119,7 @@ public static class GeneratorTestContextExtensions
                 var codeFixContext = new CodeFixContext(document, fixableDiagnostic, (a, _) => cab.Add(( document, a )), CancellationToken.None);
                 await provider.RegisterCodeFixesAsync(codeFixContext);
 
-                resolvedValues.Add(new ResolvedCodeFixTestResult(document, fixableDiagnostic, await CreateCodeActionTestResults(project, cab)));
+                resolvedValues.Add(new(document, fixableDiagnostic, await CreateCodeActionTestResults(project, cab)));
             }
             else if (fixableDiagnostic.Location.SourceTree is null)
             {
@@ -128,32 +128,37 @@ public static class GeneratorTestContextExtensions
                     var cab = ImmutableArray.CreateBuilder<(Document Document, CodeAction CodeAction)>();
                     var codeFixContext = new CodeFixContext(doc, fixableDiagnostic, (a, _) => cab.Add(( doc, a )), CancellationToken.None);
                     await provider.RegisterCodeFixesAsync(codeFixContext);
-                    resolvedValues.Add(new ResolvedCodeFixTestResult(doc, fixableDiagnostic, await CreateCodeActionTestResults(project, cab)));
+                    resolvedValues.Add(new(doc, fixableDiagnostic, await CreateCodeActionTestResults(project, cab)));
                 }
             }
         }
 
         context = context with
         {
-            CodeFixResults = context.CodeFixResults.Add(provider.GetType(), new(resolvedValues
-                                                                               .OrderBy(z => z.Document.Name)
-                                                                               .ThenBy(static z => z.Diagnostic.Location.GetMappedLineSpan().ToString())
-                                                                               .ThenBy(static z => z.Diagnostic.Severity)
-                                                                               .ThenBy(static z => z.Diagnostic.Id)
-               .ToImmutableArray()))
+            CodeFixResults = context.CodeFixResults.SetItem(
+                provider.GetType(),
+                new(
+                    resolvedValues
+                       .OrderBy(z => z.Document.Name)
+                       .ThenBy(static z => z.Diagnostic.Location.GetMappedLineSpan().ToString())
+                       .ThenBy(static z => z.Diagnostic.Severity)
+                       .ThenBy(static z => z.Diagnostic.Id)
+                       .ToImmutableArray()
+                )
+            ),
         };
 
         return context;
     }
 
     public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring<T>(this GeneratorTestContext context)
-        where T : CodeFixProvider, new()
+        where T : CodeRefactoringProvider, new()
     {
         return GenerateCodeRefactoring(context, typeof(T));
     }
 
     public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring<T>(this GeneratorTestContextBuilder builder)
-        where T : CodeFixProvider, new()
+        where T : CodeRefactoringProvider, new()
     {
         return GenerateCodeRefactoring(builder, typeof(T));
     }
@@ -165,7 +170,7 @@ public static class GeneratorTestContextExtensions
 
     public static async Task<CodeRefactoringTestResult> GenerateCodeRefactoring(this GeneratorTestContext context, Type type)
     {
-        var result = await ( context.IncludeRelatedType(type) ).GenerateAsync();
+        var result = await context.IncludeRelatedType(type).GenerateAsync();
 
         return result.CodeRefactoringResults.TryGetValue(type, out var analyzerResult)
             ? analyzerResult
@@ -185,18 +190,18 @@ public static class GeneratorTestContextExtensions
 
         var resolvedValues = ImmutableArray.CreateBuilder<ResolvedCodeRefactoringTestResult>();
         _logger.LogInformation("    {CodeRefactoring}", provider.GetType().FullName);
-        foreach (var (path, mark) in context.MarkedLocations)
+        foreach (( var path, var mark ) in context.MarkedLocations)
         {
             var cab = ImmutableArray.CreateBuilder<(Document Document, CodeAction CodeAction)>();
             var document = project.Documents.Single(z => z.Name == path);
-            var codeFixContext = new CodeRefactoringContext(document, mark.Location, (a) => cab.Add(( document, a )), CancellationToken.None);
+            var codeFixContext = new CodeRefactoringContext(document, mark.Location, a => cab.Add(( document, a )), CancellationToken.None);
             await provider.ComputeRefactoringsAsync(codeFixContext);
             resolvedValues.Add(new(document, mark, await CreateCodeActionTestResults(project, cab)));
         }
 
         context = context with
         {
-            CodeRefactoringResults = context.CodeRefactoringResults.Add(
+            CodeRefactoringResults = context.CodeRefactoringResults.SetItem(
                 provider.GetType(),
                 new(
                     resolvedValues
@@ -204,52 +209,54 @@ public static class GeneratorTestContextExtensions
                        .ThenBy(z => z.MarkedLocation)
                        .ToImmutableArray()
                 )
-            )
+            ),
         };
 
         return context;
     }
 
-    public static Task<CompletionTestResult> GenerateCompletions<T>(this GeneratorTestContext context)
+    public static Task<CompletionTestResult> GenerateCompletions<T>(this GeneratorTestContext context, char? commitKey = null)
         where T : CompletionProvider, new()
     {
-        return GenerateCompletions(context, typeof(T));
+        return GenerateCompletions(context, typeof(T), commitKey);
     }
 
-    public static Task<CompletionTestResult> GenerateCompletions<T>(this GeneratorTestContextBuilder builder)
+    public static Task<CompletionTestResult> GenerateCompletions<T>(this GeneratorTestContextBuilder builder, char? commitKey = null)
         where T : CompletionProvider, new()
     {
-        return GenerateCompletions(builder, typeof(T));
+        return GenerateCompletions(builder, typeof(T), commitKey);
     }
 
-    public static Task<CompletionTestResult> GenerateCompletions(this GeneratorTestContextBuilder builder, Type type)
+    public static Task<CompletionTestResult> GenerateCompletions(this GeneratorTestContextBuilder builder, Type type, char? commitKey = null)
     {
-        return builder.Build().GenerateCompletions(type);
+        return builder.Build().GenerateCompletions(type, commitKey);
     }
 
-    public static async Task<CompletionTestResult> GenerateCompletions(this GeneratorTestContext context, Type type)
+    public static async Task<CompletionTestResult> GenerateCompletions(this GeneratorTestContext context, Type type, char? commitKey = null)
     {
-        var result = await ( context.IncludeRelatedType(type) ).GenerateAsync();
+        var result = await context.GenerateAsync();
+
+        result = await result.AddCompletion(( Activator.CreateInstance(type) as CompletionProvider )!, commitKey);
 
         return result.CompletionsResults.TryGetValue(type, out var analyzerResult)
             ? analyzerResult
             : throw new InvalidOperationException("Generator not found");
     }
 
-    public static Task<GeneratorTestResults> AddCompletion<T>(this GeneratorTestResults context)
+    public static Task<GeneratorTestResults> AddCompletion<T>(this GeneratorTestResults context, char? commitKey = null)
         where T : CompletionProvider, new()
     {
-        return AddCompletion(context, new T());
+        return AddCompletion(context, new T(), commitKey);
     }
 
-    public static async Task<GeneratorTestResults> AddCompletion(this GeneratorTestResults context, CompletionProvider provider)
+    public static async Task<GeneratorTestResults> AddCompletion(this GeneratorTestResults context, CompletionProvider provider, char? commitKey = null)
     {
         var _logger = context.ProjectInformation.Logger;
         var project = context.ProjectInformation.SourceProject;
 
         _logger.LogInformation("    {Completion}", provider.GetType().FullName);
         var completionResults = ImmutableArray.CreateBuilder<CompletionListTestResult>();
-        foreach (var (path, mark) in context.MarkedLocations)
+        foreach (( var path, var mark ) in context.MarkedLocations)
         {
             var document = project.Documents.Single(z => z.Name == path);
             var options = await document.GetOptionsAsync(CancellationToken.None);
@@ -265,13 +272,21 @@ public static class GeneratorTestContextExtensions
                 );
             if (result is { })
             {
-                completionResults.Add(new(document, mark, result.SuggestionModeItem, result.Span, result.Items));
+                var items = new List<CompletionItemTestResult>();
+                foreach (var item in result.Items)
+                {
+                    var description = await provider.GetDescriptionAsync(document, item, CancellationToken.None);
+                    var change = await provider.GetChangeAsync(document, item, commitKey, CancellationToken.None);
+                    items.Add(new(item, description, change));
+                }
+
+                completionResults.Add(new(document, mark, result.SuggestionModeItem, result.Span, items.ToImmutableArray()));
             }
         }
 
         context = context with
         {
-            CompletionsResults = context.CompletionsResults.Add(
+            CompletionsResults = context.CompletionsResults.SetItem(
                 provider.GetType(),
                 new(
                     completionResults
@@ -280,7 +295,7 @@ public static class GeneratorTestContextExtensions
                        .ThenBy(z => z.Span)
                        .ToImmutableArray()
                 )
-            )
+            ),
         };
 
         return context;
@@ -293,7 +308,7 @@ public static class GeneratorTestContextExtensions
     {
         var originalSolution = project.Solution.Workspace.CurrentSolution;
         var results = ImmutableArray.CreateBuilder<CodeActionTestResult>();
-        foreach (var (targetDocument, codeAction) in cab)
+        foreach (( var targetDocument, var codeAction ) in cab)
         {
             var operations = await codeAction.GetOperationsAsync(CancellationToken.None);
             foreach (var o in operations)
