@@ -9,6 +9,7 @@
             TextChanges: {
               Code.cs: [
                 {
+                  Length: 0,
                   NewText: NewText
                 }
               ]

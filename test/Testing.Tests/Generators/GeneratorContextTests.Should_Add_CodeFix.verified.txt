@@ -23,6 +23,7 @@
             TextChanges: {
               Input0.cs: [
                 {
+                  Length: 0,
                   NewText: NewText
                 }
               ]
