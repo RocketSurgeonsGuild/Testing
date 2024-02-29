@@ -1,1 +1,2 @@
 #nullable enable
+Rocket.Surgery.Extensions.Testing.Fixtures.AutoFixtureBuilderAttribute

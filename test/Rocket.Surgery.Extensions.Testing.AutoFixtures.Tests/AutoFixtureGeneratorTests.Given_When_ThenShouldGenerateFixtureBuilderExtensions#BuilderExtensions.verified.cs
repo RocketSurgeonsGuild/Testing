@@ -1,11 +1,19 @@
+//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs
+using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
-namespace Rocket.Surgery.Extensions.Testing.Fixtures;
+namespace Rocket.Surgery.Extensions.Testing.AutoFixture;
+
+/// <summary>
+///     for the <see cref="TestFixtureBuilderExtensions" /> extension methods.
+/// </summary>
+public interface ITestFixtureBuilder;
 
 /// <summary>
 ///     Default methods for the <see cref="ITestFixtureBuilder" /> abstraction.
 /// </summary>
-public static class TestFixtureBuilderExtensions
+internal static class TestFixtureBuilderExtensions
 {
     /// <summary>
     ///     Adds the specified field to the builder.

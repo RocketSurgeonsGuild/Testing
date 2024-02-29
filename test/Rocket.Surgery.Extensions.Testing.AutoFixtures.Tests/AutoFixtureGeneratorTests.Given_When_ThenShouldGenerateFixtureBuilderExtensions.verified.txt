@@ -1,0 +1,142 @@
+﻿{
+  FinalDiagnostics: [
+    {
+      Id: CS8632,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs: (110,87)-(110,88),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8632),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8632,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs: (42,121)-(42,122),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8632),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8632,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs: (42,93)-(42,94),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8632),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8632,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs: (68,115)-(68,116),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8632),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8632,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs: (68,87)-(68,88),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8632),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS1513,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs: (9,36)-(9,37),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1513),
+      MessageFormat: } expected,
+      Message: } expected,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS1514,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs: (9,36)-(9,37),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1514),
+      MessageFormat: { expected,
+      Message: { expected,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS8632,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/BuilderExtensions.cs: (93,93)-(93,94),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8632),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    }
+  ],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator: []
+  },
+  ParseOptions: {
+    LanguageVersion: CSharp11,
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}
