@@ -27,8 +27,8 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
         context.RegisterPostInitializationOutput(
             initializationContext =>
             {
-                initializationContext.AddSource(nameof(Attribute), Attribute);
-                initializationContext.AddSource(nameof(BuilderExtensions), BuilderExtensions.FixtureBuilder);
+                initializationContext.AddSource(nameof(AutoFixtureAttribute), AutoFixtureAttribute.Source);
+                initializationContext.AddSource(nameof(BuilderExtensions), BuilderExtensions.Source);
             }
         );
 
@@ -502,20 +502,6 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
     private const string Fixture = nameof(Fixture);
 
     private const string TestFixtureBuilder = "ITestFixtureBuilder";
-
-    private const string Attribute = @"using System;
-using System.Diagnostics;
-
-namespace Rocket.Surgery.Extensions.Testing.AutoFixture;
-
-[AttributeUsage(AttributeTargets.Class)]
-[Conditional(""CODEGEN"")]
-internal class AutoFixtureAttribute : Attribute
-{
-    public AutoFixtureAttribute(Type type) => Type = type;
-
-    public Type Type { get; }
-}";
 
     private class ParameterSymbolNamespaceComparer : IEqualityComparer<IParameterSymbol>
     {

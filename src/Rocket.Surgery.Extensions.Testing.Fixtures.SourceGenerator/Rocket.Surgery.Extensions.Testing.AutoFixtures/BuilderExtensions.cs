@@ -2,7 +2,8 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 internal static class BuilderExtensions
 {
-    public const string FixtureBuilder = @"using System;
+    public const string Source = @"#nullable enable
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
