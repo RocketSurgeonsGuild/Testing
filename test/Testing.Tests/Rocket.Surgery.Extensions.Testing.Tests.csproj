@@ -15,4 +15,9 @@
         <Content CopyToOutputDirectory="PreserveNewest" Include="Fixtures/**/*.csproj;Fixtures/**/*.props;Fixtures/**/*.targets" />
         <Compile Remove="Fixtures/**/*.cs" />
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Rocket.Surgery.Extensions.Testing.NSubstitute">
+        <HintPath>..\..\src\Testing.NSubstitute\bin\Debug\net6.0\Rocket.Surgery.Extensions.Testing.NSubstitute.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 </Project>

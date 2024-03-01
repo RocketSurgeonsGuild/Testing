@@ -1,7 +1,5 @@
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
-using Xunit;
-using static VerifyXunit.Verifier;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 

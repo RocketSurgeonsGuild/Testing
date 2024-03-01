@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests;

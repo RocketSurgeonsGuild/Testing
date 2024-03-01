@@ -3,7 +3,6 @@ using DryIoc.Microsoft.DependencyInjection;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Mock;

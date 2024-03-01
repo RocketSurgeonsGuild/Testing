@@ -2,7 +2,6 @@ using FakeItEasy;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests;

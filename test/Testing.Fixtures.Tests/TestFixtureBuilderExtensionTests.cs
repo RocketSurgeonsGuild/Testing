@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace Rocket.Surgery.Extensions.Testing.Fixtures.Tests;
 
 public sealed class TestFixtureBuilderExtensionTests

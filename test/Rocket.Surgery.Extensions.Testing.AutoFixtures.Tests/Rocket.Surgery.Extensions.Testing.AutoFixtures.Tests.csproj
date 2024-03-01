@@ -3,11 +3,12 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
-
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FakeItEasy" />
+        <PackageReference Include="NSubstitute" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all"/>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all"/>
         <PackageReference Include="Verify.SourceGenerators"/>

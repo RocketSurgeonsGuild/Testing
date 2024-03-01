@@ -1,6 +1,5 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Substitute;
