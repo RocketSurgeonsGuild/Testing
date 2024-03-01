@@ -1,4 +1,4 @@
-﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator.AutoFixtureGenerator/Attribute.cs
+﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/Attribute.cs
 using System;
 using System.Diagnostics;
 
@@ -8,7 +8,9 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixture;
 [Conditional("CODEGEN")]
 internal class AutoFixtureAttribute : Attribute
 {
+    public AutoFixtureAttribute() {}
+
     public AutoFixtureAttribute(Type type) => Type = type;
 
-    public Type Type { get; }
+    public Type? Type { get; }
 }

@@ -1,28 +1,31 @@
-﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/BuilderExtensions.cs
-using System;
+namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
+
+internal static class BuilderExtensions
+{
+    public const string FixtureBuilder = @"using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixture;
 
 /// <summary>
-///     for the <see cref="TestFixtureBuilderExtensions" /> extension methods.
+///     for the <see cref=""TestFixtureBuilderExtensions"" /> extension methods.
 /// </summary>
 public interface ITestFixtureBuilder;
 
 /// <summary>
-///     Default methods for the <see cref="ITestFixtureBuilder" /> abstraction.
+///     Default methods for the <see cref=""ITestFixtureBuilder"" /> abstraction.
 /// </summary>
 internal static class TestFixtureBuilderExtensions
 {
     /// <summary>
     ///     Adds the specified field to the builder.
     /// </summary>
-    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    /// <typeparam name="TField">The type of the field.</typeparam>
-    /// <param name="this">The this.</param>
-    /// <param name="field">The field.</param>
-    /// <param name="value">The value.</param>
+    /// <typeparam name=""TBuilder"">The type of the builder.</typeparam>
+    /// <typeparam name=""TField"">The type of the field.</typeparam>
+    /// <param name=""this"">The this.</param>
+    /// <param name=""field"">The field.</param>
+    /// <param name=""value"">The value.</param>
     /// <returns></returns>
     // ReSharper disable once RedundantAssignment
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref TField field, TField value)
@@ -35,11 +38,11 @@ internal static class TestFixtureBuilderExtensions
     /// <summary>
     ///     Adds the specified list of fields to the builder.
     /// </summary>
-    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    /// <typeparam name="TField">The type of the field.</typeparam>
-    /// <param name="this">The this.</param>
-    /// <param name="field">The field.</param>
-    /// <param name="values">The values.</param>
+    /// <typeparam name=""TBuilder"">The type of the builder.</typeparam>
+    /// <typeparam name=""TField"">The type of the field.</typeparam>
+    /// <param name=""this"">The this.</param>
+    /// <param name=""field"">The field.</param>
+    /// <param name=""values"">The values.</param>
     /// <returns></returns>
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref Collection<TField>? field, IEnumerable<TField>? values)
         where TBuilder : ITestFixtureBuilder
@@ -60,11 +63,11 @@ internal static class TestFixtureBuilderExtensions
     /// <summary>
     ///     Adds the specified list of fields to the builder.
     /// </summary>
-    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    /// <typeparam name="TField">The type of the field.</typeparam>
-    /// <param name="this">The this.</param>
-    /// <param name="field">The field.</param>
-    /// <param name="values">The values.</param>
+    /// <typeparam name=""TBuilder"">The type of the builder.</typeparam>
+    /// <typeparam name=""TField"">The type of the field.</typeparam>
+    /// <param name=""this"">The this.</param>
+    /// <param name=""field"">The field.</param>
+    /// <param name=""values"">The values.</param>
     /// <returns></returns>
 #pragma warning disable CA1002
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, IEnumerable<TField>? values)
@@ -86,11 +89,11 @@ internal static class TestFixtureBuilderExtensions
     /// <summary>
     ///     Adds the specified field to the builder.
     /// </summary>
-    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    /// <typeparam name="TField">The type of the field.</typeparam>
-    /// <param name="this">The this.</param>
-    /// <param name="field">The field.</param>
-    /// <param name="value">The value.</param>
+    /// <typeparam name=""TBuilder"">The type of the builder.</typeparam>
+    /// <typeparam name=""TField"">The type of the field.</typeparam>
+    /// <param name=""this"">The this.</param>
+    /// <param name=""field"">The field.</param>
+    /// <param name=""value"">The value.</param>
     /// <returns></returns>
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref Collection<TField>? field, TField value)
         where TBuilder : ITestFixtureBuilder
@@ -102,11 +105,11 @@ internal static class TestFixtureBuilderExtensions
     /// <summary>
     ///     Adds the specified field to the builder.
     /// </summary>
-    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    /// <typeparam name="TField">The type of the field.</typeparam>
-    /// <param name="this">The this.</param>
-    /// <param name="field">The field.</param>
-    /// <param name="value">The value.</param>
+    /// <typeparam name=""TBuilder"">The type of the builder.</typeparam>
+    /// <typeparam name=""TField"">The type of the field.</typeparam>
+    /// <param name=""this"">The this.</param>
+    /// <param name=""field"">The field.</param>
+    /// <param name=""value"">The value.</param>
     /// <returns></returns>
 #pragma warning disable CA1002
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, TField value)
@@ -120,12 +123,12 @@ internal static class TestFixtureBuilderExtensions
     /// <summary>
     ///     Adds the specified key value pair to the provided dictionary.
     /// </summary>
-    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    /// <typeparam name="TKey">The type of the key.</typeparam>
-    /// <typeparam name="TField">The type of the field.</typeparam>
-    /// <param name="this">The this.</param>
-    /// <param name="dictionary">The dictionary.</param>
-    /// <param name="keyValuePair">The key value pair.</param>
+    /// <typeparam name=""TBuilder"">The type of the builder.</typeparam>
+    /// <typeparam name=""TKey"">The type of the key.</typeparam>
+    /// <typeparam name=""TField"">The type of the field.</typeparam>
+    /// <param name=""this"">The this.</param>
+    /// <param name=""dictionary"">The dictionary.</param>
+    /// <param name=""keyValuePair"">The key value pair.</param>
     /// <returns></returns>
     public static TBuilder With<TBuilder, TKey, TField>(
         this TBuilder @this, ref Dictionary<TKey, TField> dictionary, KeyValuePair<TKey, TField> keyValuePair
@@ -145,13 +148,13 @@ internal static class TestFixtureBuilderExtensions
     /// <summary>
     ///     Adds the specified key and value to the provided dictionary.
     /// </summary>
-    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    /// <typeparam name="TKey">The type of the key.</typeparam>
-    /// <typeparam name="TField">The type of the field.</typeparam>
-    /// <param name="this">The this.</param>
-    /// <param name="dictionary">The dictionary.</param>
-    /// <param name="key">The key.</param>
-    /// <param name="value">The value.</param>
+    /// <typeparam name=""TBuilder"">The type of the builder.</typeparam>
+    /// <typeparam name=""TKey"">The type of the key.</typeparam>
+    /// <typeparam name=""TField"">The type of the field.</typeparam>
+    /// <param name=""this"">The this.</param>
+    /// <param name=""dictionary"">The dictionary.</param>
+    /// <param name=""key"">The key.</param>
+    /// <param name=""value"">The value.</param>
     /// <returns></returns>
     public static TBuilder With<TBuilder, TKey, TField>(this TBuilder @this, ref Dictionary<TKey, TField> dictionary, TKey key, TField value)
         where TBuilder : ITestFixtureBuilder
@@ -169,12 +172,12 @@ internal static class TestFixtureBuilderExtensions
     /// <summary>
     ///     Adds the specified dictionary to the provided dictionary.
     /// </summary>
-    /// <typeparam name="TBuilder">The type of the builder.</typeparam>
-    /// <typeparam name="TKey">The type of the key.</typeparam>
-    /// <typeparam name="TField">The type of the field.</typeparam>
-    /// <param name="this">The this.</param>
-    /// <param name="dictionary">The dictionary.</param>
-    /// <param name="keyValuePair">The key value pair.</param>
+    /// <typeparam name=""TBuilder"">The type of the builder.</typeparam>
+    /// <typeparam name=""TKey"">The type of the key.</typeparam>
+    /// <typeparam name=""TField"">The type of the field.</typeparam>
+    /// <param name=""this"">The this.</param>
+    /// <param name=""dictionary"">The dictionary.</param>
+    /// <param name=""keyValuePair"">The key value pair.</param>
     /// <returns></returns>
     public static TBuilder With<TBuilder, TKey, TField>(
         this TBuilder @this,
@@ -187,4 +190,5 @@ internal static class TestFixtureBuilderExtensions
         dictionary = keyValuePair;
         return @this;
     }
+}";
 }

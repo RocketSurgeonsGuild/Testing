@@ -5,12 +5,8 @@
         <IsPackable>false</IsPackable>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
-
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
-
-        <RootNamespace>Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator</RootNamespace>
-        <PackageId>Rocket.Surgery.Extensions.Testing.AutoFixtures</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
