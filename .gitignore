@@ -214,3 +214,5 @@ codealike.json
 /test/Testing.Tests/Fixtures/Directory.Packages.props
 ImplicitPackageReferences.props
 ImplicitPackageReferences.targets
+
+*.received.*
