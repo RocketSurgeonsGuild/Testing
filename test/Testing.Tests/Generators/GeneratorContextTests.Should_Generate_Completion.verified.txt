@@ -35,10 +35,12 @@
           },
           Change: {
             TextChange: {
+              Length: 0,
               NewText: Test Completion
             },
             TextChanges: [
               {
+                Length: 0,
                 NewText: Test Completion
               }
             ],

@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -37,6 +38,7 @@ public static class VerifyGeneratorTextContext
                 converters.Add(new CompletionListTestResultConverter());
                 converters.Add(new CompletionItemTestResultConverter());
                 converters.Add(new ResolvedCodeFixTestResultConverter());
+                converters.Add(new TextChangeConverter());
 
                 serializer.Converters.Remove(serializer.Converters.Find(z => z.GetType().Name == "LocationConverter")!);
                 serializer.Converters.Add(new LocationConverter());
@@ -379,6 +381,18 @@ public static class VerifyGeneratorTextContext
             writer.WriteStartObject();
             writer.WriteMember(value, value.TextChanges, nameof(value.TextChanges));
             writer.WriteMember(value, value.CodeAction, nameof(value.CodeAction));
+            writer.WriteEndObject();
+        }
+    }
+
+    private class TextChangeConverter :
+        WriteOnlyJsonConverter<TextChange>
+    {
+        public override void Write(VerifyJsonWriter writer, TextChange value)
+        {
+            writer.WriteStartObject();
+            writer.WriteMember(value, value.Span.Length, nameof(value.Span.Length));
+            writer.WriteMember(value, value.NewText, nameof(value.NewText));
             writer.WriteEndObject();
         }
     }
