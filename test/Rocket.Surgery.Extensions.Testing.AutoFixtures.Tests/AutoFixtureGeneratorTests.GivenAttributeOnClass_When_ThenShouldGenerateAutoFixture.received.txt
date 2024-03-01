@@ -15,38 +15,6 @@
         Telemetry,
         NotConfigurable
       ]
-    },
-    {
-      Id: CS1513,
-      Title: ,
-      Severity: Error,
-      WarningLevel: 0,
-      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/BuilderExtensions.cs: (10,36)-(10,37),
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1513),
-      MessageFormat: } expected,
-      Message: } expected,
-      Category: Compiler,
-      CustomTags: [
-        Compiler,
-        Telemetry,
-        NotConfigurable
-      ]
-    },
-    {
-      Id: CS1514,
-      Title: ,
-      Severity: Error,
-      WarningLevel: 0,
-      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/BuilderExtensions.cs: (10,36)-(10,37),
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1514),
-      MessageFormat: { expected,
-      Message: { expected,
-      Category: Compiler,
-      CustomTags: [
-        Compiler,
-        Telemetry,
-        NotConfigurable
-      ]
     }
   ],
   GeneratorDiagnostics: {
