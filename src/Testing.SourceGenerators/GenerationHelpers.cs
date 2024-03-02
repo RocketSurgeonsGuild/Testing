@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.Composition.Hosting;
-using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Host.Mef;
