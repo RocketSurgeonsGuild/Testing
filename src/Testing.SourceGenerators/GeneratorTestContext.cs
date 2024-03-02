@@ -81,7 +81,7 @@ public record GeneratorTestContext
             }
         }
 
-        var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _relatedTypes.Select(z => z.Assembly).Distinct(), _parseOptions, _sources, _additionalTexts);
+        var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _parseOptions, _sources, _additionalTexts);
 
         var compilation = (CSharpCompilation?)await project.GetCompilationAsync().ConfigureAwait(false);
         if (compilation is null) throw new InvalidOperationException("Could not compile the sources");
