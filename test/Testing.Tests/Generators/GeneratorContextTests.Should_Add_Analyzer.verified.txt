@@ -27,7 +27,7 @@
   ],
   InputDiagnostics: [],
   ParseOptions: {
-    LanguageVersion: CSharp10,
+    LanguageVersion: CSharp11,
     DocumentationMode: Parse
   },
   References: [

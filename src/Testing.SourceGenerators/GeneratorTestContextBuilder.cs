@@ -5,7 +5,6 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
@@ -261,27 +260,6 @@ public record GeneratorTestContextBuilder
         where T : CodeRefactoringProvider, new()
     {
         return WithCodeFix(typeof(T));
-    }
-
-    /// <summary>
-    ///     Add a completion provider to the compilation
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public GeneratorTestContextBuilder WithCompletion(Type type)
-    {
-        return this with { _relatedTypes = _relatedTypes.Add(type), };
-    }
-
-    /// <summary>
-    ///     Add a completion provider to the compilation
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public GeneratorTestContextBuilder WithCompletion<T>()
-        where T : CompletionProvider, new()
-    {
-        return WithCompletion(typeof(T));
     }
 
     /// <summary>

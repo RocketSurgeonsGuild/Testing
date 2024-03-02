@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.Logging;
@@ -118,8 +117,7 @@ public record GeneratorTestContext
                 relatedInstances.OfType<ISourceGenerator>().ToImmutableDictionary(z => z.GetType()),
                 relatedInstances.OfType<IIncrementalGenerator>().ToImmutableDictionary(z => z.GetType()),
                 relatedInstances.OfType<CodeFixProvider>().ToImmutableDictionary(z => z.GetType()),
-                relatedInstances.OfType<CodeRefactoringProvider>().ToImmutableDictionary(z => z.GetType()),
-                relatedInstances.OfType<CompletionProvider>().ToImmutableDictionary(z => z.GetType())
+                relatedInstances.OfType<CodeRefactoringProvider>().ToImmutableDictionary(z => z.GetType())
             );
         }
 
@@ -210,7 +208,6 @@ public record GeneratorTestContext
             analyzerBuilder.ToImmutable(),
             ImmutableDictionary<Type, CodeFixTestResult>.Empty,
             ImmutableDictionary<Type, CodeRefactoringTestResult>.Empty,
-            ImmutableDictionary<Type, CompletionTestResult>.Empty,
             _markedLocations,
             inputCompilation,
             finalDiagnostics,
@@ -233,15 +230,6 @@ public record GeneratorTestContext
             foreach (var provider in projectInformation.CodeRefactoringProviders.Values)
             {
                 results = await results.AddCodeRefactoring(provider);
-            }
-        }
-
-        if (projectInformation.CompletionProviders.Count > 0)
-        {
-            _logger.LogInformation("--- Completion Providers ---");
-            foreach (var provider in projectInformation.CompletionProviders.Values)
-            {
-                results = await results.AddCompletion(provider);
             }
         }
 

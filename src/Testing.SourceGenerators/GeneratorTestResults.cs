@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.Logging;
@@ -46,7 +45,6 @@ public record GeneratorTestResults
     ImmutableDictionary<Type, AnalyzerTestResult> AnalyzerResults,
     ImmutableDictionary<Type, CodeFixTestResult> CodeFixResults,
     ImmutableDictionary<Type, CodeRefactoringTestResult> CodeRefactoringResults,
-    ImmutableDictionary<Type, CompletionTestResult> CompletionsResults,
     ImmutableDictionary<string, MarkedLocation> MarkedLocations,
     CSharpCompilation FinalCompilation,
     ImmutableArray<Diagnostic> FinalDiagnostics,
@@ -191,6 +189,5 @@ public record TestProjectInformation
     ImmutableDictionary<Type, ISourceGenerator> SourceGenerators,
     ImmutableDictionary<Type, IIncrementalGenerator> IncrementalGenerators,
     ImmutableDictionary<Type, CodeFixProvider> CodeFixProviders,
-    ImmutableDictionary<Type, CodeRefactoringProvider> CodeRefactoringProviders,
-    ImmutableDictionary<Type, CompletionProvider> CompletionProviders
+    ImmutableDictionary<Type, CodeRefactoringProvider> CodeRefactoringProviders
 );

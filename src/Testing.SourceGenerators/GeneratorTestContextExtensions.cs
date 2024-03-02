@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
-using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Logging;
@@ -207,92 +206,6 @@ public static class GeneratorTestContextExtensions
                     resolvedValues
                        .OrderBy(z => z.Document.Name)
                        .ThenBy(z => z.MarkedLocation)
-                       .ToImmutableArray()
-                )
-            ),
-        };
-
-        return context;
-    }
-
-    public static Task<CompletionTestResult> GenerateCompletions<T>(this GeneratorTestContext context, char? commitKey = null)
-        where T : CompletionProvider, new()
-    {
-        return GenerateCompletions(context, typeof(T), commitKey);
-    }
-
-    public static Task<CompletionTestResult> GenerateCompletions<T>(this GeneratorTestContextBuilder builder, char? commitKey = null)
-        where T : CompletionProvider, new()
-    {
-        return GenerateCompletions(builder, typeof(T), commitKey);
-    }
-
-    public static Task<CompletionTestResult> GenerateCompletions(this GeneratorTestContextBuilder builder, Type type, char? commitKey = null)
-    {
-        return builder.Build().GenerateCompletions(type, commitKey);
-    }
-
-    public static async Task<CompletionTestResult> GenerateCompletions(this GeneratorTestContext context, Type type, char? commitKey = null)
-    {
-        var result = await context.GenerateAsync();
-
-        result = await result.AddCompletion(( Activator.CreateInstance(type) as CompletionProvider )!, commitKey);
-
-        return result.CompletionsResults.TryGetValue(type, out var analyzerResult)
-            ? analyzerResult
-            : throw new InvalidOperationException("Generator not found");
-    }
-
-    public static Task<GeneratorTestResults> AddCompletion<T>(this GeneratorTestResults context, char? commitKey = null)
-        where T : CompletionProvider, new()
-    {
-        return AddCompletion(context, new T(), commitKey);
-    }
-
-    public static async Task<GeneratorTestResults> AddCompletion(this GeneratorTestResults context, CompletionProvider provider, char? commitKey = null)
-    {
-        var _logger = context.ProjectInformation.Logger;
-        var project = context.ProjectInformation.SourceProject;
-
-        _logger.LogInformation("    {Completion}", provider.GetType().FullName);
-        var completionResults = ImmutableArray.CreateBuilder<CompletionListTestResult>();
-        foreach (( var path, var mark ) in context.MarkedLocations)
-        {
-            var document = project.Documents.Single(z => z.Name == path);
-            var options = await document.GetOptionsAsync(CancellationToken.None);
-            var service = new TestCompletionService(document.Project.Solution.Workspace, LanguageNames.CSharp, provider);
-            var result = await service
-               .GetCompletionsAsync(
-                    document,
-                    mark.Location.Start,
-                    mark.Trigger ?? CompletionTrigger.Invoke,
-                    ImmutableHashSet<string>.Empty,
-                    options,
-                    CancellationToken.None
-                );
-            if (result is { })
-            {
-                var items = new List<CompletionItemTestResult>();
-                foreach (var item in result.Items)
-                {
-                    var description = await provider.GetDescriptionAsync(document, item, CancellationToken.None);
-                    var change = await provider.GetChangeAsync(document, item, commitKey, CancellationToken.None);
-                    items.Add(new(item, description, change));
-                }
-
-                completionResults.Add(new(document, mark, result.SuggestionModeItem, result.Span, items.ToImmutableArray()));
-            }
-        }
-
-        context = context with
-        {
-            CompletionsResults = context.CompletionsResults.SetItem(
-                provider.GetType(),
-                new(
-                    completionResults
-                       .OrderBy(z => z.Document.Name)
-                       .ThenBy(z => z.MarkedLocation)
-                       .ThenBy(z => z.Span)
                        .ToImmutableArray()
                 )
             ),
