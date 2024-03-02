@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -39,7 +38,7 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
         {
             var (syntaxContext, compilation) = valueTuple;
 
-            var nsubstituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
+            var substituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
             var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
 
             if (syntaxContext.Attributes[0].ConstructorArguments[0].Value is not INamedTypeSymbol namedTypeSymbol)
@@ -58,7 +57,7 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
             var fullList =
                 new[] { Operator(namedTypeSymbol) }
                    .Concat(parameterSymbols.Select(symbol => WithMethod(symbol)))
-                   .Concat(parameterSymbols.Select(symbol => BuildFields(symbol)));
+                   .Concat(parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol))));
 
             var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
                .WithMembers(new SyntaxList<MemberDeclarationSyntax>(fullList));
@@ -81,6 +80,42 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
 
             productionContext.AddSource("AutoFixture", unit.ToFullString());
         }
+    }
+
+    private InvocationExpressionSyntax GetFieldInvocation(Compilation compilation, IParameterSymbol symbol)
+    {
+        var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
+
+        if (fakeItEasy is not null)
+        {
+            return InvocationExpression(
+                MemberAccessExpression(
+                    SyntaxKind.SimpleMemberAccessExpression,
+                    IdentifierName("A"),
+                    GenericName(
+                            Identifier("Fake"))
+                       .WithTypeArgumentList(
+                            TypeArgumentList(
+                                SingletonSeparatedList<TypeSyntax>(
+                                    IdentifierName(symbol.Type.Name))))));
+        }
+
+        return InvocationExpression(
+            MemberAccessExpression(
+                SyntaxKind.SimpleMemberAccessExpression,
+                IdentifierName("Substitute"),
+                GenericName(
+                        Identifier("For")
+                    )
+                   .WithTypeArgumentList(
+                        TypeArgumentList(
+                            SingletonSeparatedList<TypeSyntax>(
+                                IdentifierName(symbol.Type.Name)
+                            )
+                        )
+                    )
+            )
+        );
     }
 
     private static UsingDirectiveSyntax BuildUsing(string name) =>
@@ -199,7 +234,7 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
            .WithCloseBraceToken(Token(TriviaList(Tab), SyntaxKind.CloseBraceToken, TriviaList()))
            .WithTrailingTrivia(LineFeed);
 
-    private static MemberDeclarationSyntax BuildFields(IParameterSymbol parameterSymbol) => FieldDeclaration(
+    private static MemberDeclarationSyntax BuildFields(IParameterSymbol parameterSymbol, InvocationExpressionSyntax invocationExpressionSyntax) => FieldDeclaration(
             VariableDeclaration(
                     IdentifierName(
                         Identifier(
@@ -223,24 +258,9 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
                                 )
                             )
                            .WithInitializer(
-                                // TODO: [rlittlesii: February 29, 2024] Replace with FakeItEasy
                                 EqualsValueClause(
-                                        InvocationExpression(
-                                            MemberAccessExpression(
-                                                SyntaxKind.SimpleMemberAccessExpression,
-                                                IdentifierName("Substitute"),
-                                                GenericName(
-                                                        Identifier("For")
-                                                    )
-                                                   .WithTypeArgumentList(
-                                                        TypeArgumentList(
-                                                            SingletonSeparatedList<TypeSyntax>(
-                                                                IdentifierName(parameterSymbol.Type.Name)
-                                                            )
-                                                        )
-                                                    )
-                                            )
-                                        )
+                                // TODO: [rlittlesii: February 29, 2024] Replace with FakeItEasy
+                                        invocationExpressionSyntax
                                     )
                                    .WithEqualsToken(
                                         Token(

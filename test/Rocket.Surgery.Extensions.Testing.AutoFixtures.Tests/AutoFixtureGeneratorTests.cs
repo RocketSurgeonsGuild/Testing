@@ -1,6 +1,7 @@
 using FakeItEasy;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
@@ -65,7 +66,7 @@ public class AutoFixtureGeneratorTests
         var result = await generatorInstance.GenerateAsync();
 
         // Then
-        await Verify(result);
+        await Verify(result).UseHashedParameters(source);
     }
 
     [Theory]
@@ -84,12 +85,11 @@ public class AutoFixtureGeneratorTests
                .AddSources(source)
                .Build();
 
-
         // When
         var result = await generatorInstance.GenerateAsync();
 
         // Then
-        await Verify(result);
+        await Verify(result).UseHashedParameters(source);
     }
 
     [Theory]
@@ -102,7 +102,7 @@ public class AutoFixtureGeneratorTests
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
-               .AddReferences(typeof(Fake))
+               .AddReferences(typeof(Substitute))
                .IgnoreOutputFile("BuilderExtensions.cs")
                .IgnoreOutputFile("Attribute.cs")
                .AddSources(source)
@@ -113,7 +113,7 @@ public class AutoFixtureGeneratorTests
         var result = await generatorInstance.GenerateAsync();
 
         // Then
-        await Verify(result);
+        await Verify(result).UseHashedParameters(source);
     }
 
 //    [Fact]
