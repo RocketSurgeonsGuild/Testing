@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -15,7 +16,7 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
             context
                .SyntaxProvider
                .ForAttributeWithMetadataName(
-                    "AutoFixtureAttribute",
+                    "Rocket.Surgery.Extensions.Testing.AutoFixture.AutoFixtureAttribute",
                     (node, token) => node.IsKind(SyntaxKind.ClassDeclaration),
                     (syntaxContext, token) => syntaxContext
                 )
@@ -33,11 +34,13 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
         );
 
         void GenerateFixtureBuilder(SourceProductionContext productionContext,
-                                    (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple)
+                                    (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
+        )
         {
             var (syntaxContext, compilation) = valueTuple;
 
-            compilation.GetTypeByMetadataName("NSubstitute.Substitute");
+            var nsubstituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
+            var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
 
             if (syntaxContext.Attributes[0].ConstructorArguments[0].Value is not INamedTypeSymbol namedTypeSymbol)
             {
@@ -196,76 +199,74 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
            .WithCloseBraceToken(Token(TriviaList(Tab), SyntaxKind.CloseBraceToken, TriviaList()))
            .WithTrailingTrivia(LineFeed);
 
-    private static MemberDeclarationSyntax BuildFields(IParameterSymbol parameterSymbol)
-    {
-        return FieldDeclaration(
-                   VariableDeclaration(
-                           IdentifierName(
-                               Identifier(
-                                   TriviaList(),
-                                   parameterSymbol.Type.Name,
-                                   TriviaList(
-                                       Space
-                                   )
-                               )
-                           )
-                       )
-                      .WithVariables(
-                           SingletonSeparatedList(
-                               VariableDeclarator(
-                                       Identifier(
-                                           TriviaList(),
-                                           $"_{parameterSymbol.Name}",
-                                           TriviaList(
-                                               Space
-                                           )
-                                       )
-                                   )
-                                  .WithInitializer(
-                                       EqualsValueClause(
-                                               InvocationExpression(
-                                                   MemberAccessExpression(
-                                                       SyntaxKind.SimpleMemberAccessExpression,
-                                                       IdentifierName("Substitute"),
-                                                       GenericName(
-                                                               Identifier("For")
-                                                           )
-                                                          .WithTypeArgumentList(
-                                                               TypeArgumentList(
-                                                                   SingletonSeparatedList<TypeSyntax>(
-                                                                       IdentifierName(parameterSymbol.Type.Name)
-                                                                   )
-                                                               )
-                                                           )
-                                                   )
-                                               )
-                                           )
-                                          .WithEqualsToken(
-                                               Token(
-                                                   TriviaList(),
-                                                   SyntaxKind.EqualsToken,
-                                                   TriviaList(
-                                                       Space
-                                                   )
-                                               )
-                                           )
-                                   )
-                           )
-                       )
-               )
-              .WithModifiers(
-                   TokenList(
-                       Token(
-                           TriviaList(),
-                           SyntaxKind.PrivateKeyword,
-                           TriviaList(
-                               Space
-                           )
-                       )
-                   )
-               )
-              .WithTrailingTrivia(LineFeed);
-    }
+    private static MemberDeclarationSyntax BuildFields(IParameterSymbol parameterSymbol) => FieldDeclaration(
+            VariableDeclaration(
+                    IdentifierName(
+                        Identifier(
+                            TriviaList(),
+                            parameterSymbol.Type.Name,
+                            TriviaList(
+                                Space
+                            )
+                        )
+                    )
+                )
+               .WithVariables(
+                    SingletonSeparatedList(
+                        VariableDeclarator(
+                                Identifier(
+                                    TriviaList(),
+                                    $"_{parameterSymbol.Name}",
+                                    TriviaList(
+                                        Space
+                                    )
+                                )
+                            )
+                           .WithInitializer(
+                                // TODO: [rlittlesii: February 29, 2024] Replace with FakeItEasy
+                                EqualsValueClause(
+                                        InvocationExpression(
+                                            MemberAccessExpression(
+                                                SyntaxKind.SimpleMemberAccessExpression,
+                                                IdentifierName("Substitute"),
+                                                GenericName(
+                                                        Identifier("For")
+                                                    )
+                                                   .WithTypeArgumentList(
+                                                        TypeArgumentList(
+                                                            SingletonSeparatedList<TypeSyntax>(
+                                                                IdentifierName(parameterSymbol.Type.Name)
+                                                            )
+                                                        )
+                                                    )
+                                            )
+                                        )
+                                    )
+                                   .WithEqualsToken(
+                                        Token(
+                                            TriviaList(),
+                                            SyntaxKind.EqualsToken,
+                                            TriviaList(
+                                                Space
+                                            )
+                                        )
+                                    )
+                            )
+                    )
+                )
+        )
+       .WithModifiers(
+            TokenList(
+                Token(
+                    TriviaList(),
+                    SyntaxKind.PrivateKeyword,
+                    TriviaList(
+                        Space
+                    )
+                )
+            )
+        )
+       .WithTrailingTrivia(LineFeed);
 
     private static MemberDeclarationSyntax WithMethod(IParameterSymbol constructorParameter)
     {

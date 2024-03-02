@@ -12,7 +12,7 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixture
     /// <summary>
     ///     for the <see cref=""TestFixtureBuilderExtensions"" /> extension methods.
     /// </summary>
-    public interface ITestFixtureBuilder {}
+    internal interface ITestFixtureBuilder {}
 
     /// <summary>
     ///     Default methods for the <see cref=""ITestFixtureBuilder"" /> abstraction.

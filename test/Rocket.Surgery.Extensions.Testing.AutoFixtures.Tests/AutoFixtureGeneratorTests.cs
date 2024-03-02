@@ -1,3 +1,5 @@
+using FakeItEasy;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -6,7 +8,7 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 public class AutoFixtureGeneratorTests
 {
     [Fact]
-    public async Task Given_When_ThenShouldGenerateAutoFixtureAttribute()
+    public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateAutoFixtureAttribute()
     {
         // Given
         var generatorInstance =
@@ -25,7 +27,7 @@ public class AutoFixtureGeneratorTests
     }
 
     [Fact]
-    public async Task Given_When_ThenShouldGenerateFixtureBuilderExtensions()
+    public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateFixtureBuilderExtensions()
     {
         // Given
         var generatorInstance =
@@ -36,7 +38,6 @@ public class AutoFixtureGeneratorTests
                .IgnoreOutputFile("Attribute.cs")
                .Build();
 
-
         // When
         var result = await generatorInstance.GenerateAsync();
 
@@ -44,8 +45,9 @@ public class AutoFixtureGeneratorTests
         await Verify(result);
     }
 
-    [Fact]
-    public async Task Given_When_ThenShouldGenerateAutoFixture()
+    [Theory]
+    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType= typeof(AutoFixtureGeneratorData))]
+    public async Task GivenAutoFixtureAttributeUsage_WhenGenerate_ThenGeneratedAutoFixture(string source)
     {
         // Given
         GeneratorTestContext generatorInstance =
@@ -55,25 +57,8 @@ public class AutoFixtureGeneratorTests
                .AddReferences(typeof(ILogger<>))
                .IgnoreOutputFile("BuilderExtensions.cs")
                .IgnoreOutputFile("Attribute.cs")
-               .AddSources(@"using System;
-using System.Diagnostics;
-using Microsoft.Extensions.Logging;
-using Rocket.Surgery.Extensions.Testing.AutoFixture;
-
-namespace Goony.Goo.Goo.Tests
-{
-    [AutoFixture(typeof(Authenticator))]
-    internal sealed partial class AuthenticatorFixture : ITestFixtureBuilder { }
-    internal class Authenticator 
-    {
-        public Authenticator(IAuthenticationClient authenticationClient,
-            ISecureStorage secureStorage,
-            ILogger<Authenticator> logger) {}
-    }
-    internal interface ISecureStorage {}
-    internal interface IAuthenticationClient {}
-}"
-                ).Build();
+               .AddSources(source)
+               .Build();
 
 
         // When
@@ -83,7 +68,55 @@ namespace Goony.Goo.Goo.Tests
         await Verify(result);
     }
 
-    [Fact]
+    [Theory]
+    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType= typeof(AutoFixtureGeneratorData))]
+    public async Task GivenFakeItEasy_WhenGenerate_ThenGeneratedAutoFixtureWithFakes(string source)
+    {
+        // Given
+        GeneratorTestContext generatorInstance =
+            GeneratorTestContextBuilder
+               .Create()
+               .WithGenerator<AutoFixtureGenerator>()
+               .AddReferences(typeof(ILogger<>))
+               .AddReferences(typeof(Fake))
+               .IgnoreOutputFile("BuilderExtensions.cs")
+               .IgnoreOutputFile("Attribute.cs")
+               .AddSources(source)
+               .Build();
+
+
+        // When
+        var result = await generatorInstance.GenerateAsync();
+
+        // Then
+        await Verify(result);
+    }
+
+    [Theory]
+    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType= typeof(AutoFixtureGeneratorData))]
+    public async Task GivenNSubstitute_WhenGenerate_ThenGeneratedAutoFixtureWithFakes(string source)
+    {
+        // Given
+        GeneratorTestContext generatorInstance =
+            GeneratorTestContextBuilder
+               .Create()
+               .WithGenerator<AutoFixtureGenerator>()
+               .AddReferences(typeof(ILogger<>))
+               .AddReferences(typeof(Fake))
+               .IgnoreOutputFile("BuilderExtensions.cs")
+               .IgnoreOutputFile("Attribute.cs")
+               .AddSources(source)
+               .Build();
+
+
+        // When
+        var result = await generatorInstance.GenerateAsync();
+
+        // Then
+        await Verify(result);
+    }
+
+//    [Fact]
     public async Task GivenAttributeOnClass_When_ThenShouldGenerateAutoFixture()
     {
         // Given
