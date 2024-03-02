@@ -56,6 +56,7 @@ public class AutoFixtureGeneratorTests
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
+               .AddReferences(typeof(Substitute))
                .IgnoreOutputFile("BuilderExtensions.cs")
                .IgnoreOutputFile("Attribute.cs")
                .AddSources(source)

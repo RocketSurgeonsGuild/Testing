@@ -32,8 +32,9 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
             }
         );
 
-        void GenerateFixtureBuilder(SourceProductionContext productionContext,
-                                    (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
+        void GenerateFixtureBuilder(
+            SourceProductionContext productionContext,
+            (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
         )
         {
             var (syntaxContext, compilation) = valueTuple;
@@ -57,7 +58,9 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
             var fullList =
                 new[] { Operator(namedTypeSymbol) }
                    .Concat(parameterSymbols.Select(symbol => WithMethod(symbol)))
-                   .Concat(parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol))));
+                   .Concat(
+                        parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol)))
+                    );
 
             var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
                .WithMembers(new SyntaxList<MemberDeclarationSyntax>(fullList));
@@ -73,7 +76,12 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
                                 .Select(x => UsingDirective(ParseName(x)))
                                 .ToArray();
 
-            var mockLibrary = UsingDirective(ParseName((fakeItEasy is not null ? fakeItEasy.ContainingNamespace : substituteMetadata.ContainingNamespace)?.ToDisplayString() ?? string.Empty));
+            var mockLibrary = UsingDirective(
+                ParseName(
+                    ( fakeItEasy is not null ? fakeItEasy.ContainingNamespace : substituteMetadata?.ContainingNamespace )
+                  ?.ToDisplayString() ?? string.Empty
+                )
+            );
             var unit =
                 CompilationUnit()
                    .AddUsings(mockLibrary) // TODO: [rlittlesii: March 01, 2024] toggle me
@@ -96,35 +104,40 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
                     SyntaxKind.SimpleMemberAccessExpression,
                     IdentifierName("A"),
                     GenericName(
-                            Identifier("Fake"))
+                            Identifier("Fake")
+                        )
                        .WithTypeArgumentList(
-                            TypeArgumentList(
-                                SingletonSeparatedList<TypeSyntax>(
-                                    IdentifierName(symbol.Type.Name))))));
+                            TypeArgumentListSyntax(symbol)
+                        )
+                )
+            );
         }
 
         return InvocationExpression(
             MemberAccessExpression(
                 SyntaxKind.SimpleMemberAccessExpression,
-                IdentifierName("Substitute"),
+                IdentifierName(
+                    "Substitute"
+                ),
                 GenericName(
-                        Identifier("For")
+                        Identifier(
+                            "For"
+                        )
                     )
                    .WithTypeArgumentList(
-                        TypeArgumentList(
-                            SingletonSeparatedList<TypeSyntax>(
-                                IdentifierName(symbol.Type.Name)
-                            )
+                        TypeArgumentListSyntax(
+                            symbol
                         )
                     )
             )
         );
-    }
 
-    private static UsingDirectiveSyntax BuildUsing(string name) =>
-        UsingDirective(IdentifierName(name))
-           .WithUsingKeyword(Token(TriviaList(), SyntaxKind.UsingKeyword, TriviaList(Space)))
-           .WithTrailingTrivia(LineFeed);
+        TypeArgumentListSyntax TypeArgumentListSyntax(IParameterSymbol parameterSymbol) => TypeArgumentList(
+            SingletonSeparatedList<TypeSyntax>(
+                ParseName(parameterSymbol.Type.GetGenericDisplayName())
+            )
+        );
+    }
 
     private static NamespaceDeclarationSyntax BuildNamespace(ISymbol namedTypeSymbol)
     {
@@ -240,59 +253,64 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
            .WithCloseBraceToken(Token(TriviaList(Tab), SyntaxKind.CloseBraceToken, TriviaList()))
            .WithTrailingTrivia(LineFeed);
 
-    private static MemberDeclarationSyntax BuildFields(IParameterSymbol parameterSymbol, InvocationExpressionSyntax invocationExpressionSyntax) => FieldDeclaration(
-            VariableDeclaration(
-                    IdentifierName(
-                        Identifier(
-                            TriviaList(),
-                            parameterSymbol.Type.Name,
-                            TriviaList(
-                                Space
-                            )
-                        )
-                    )
-                )
-               .WithVariables(
-                    SingletonSeparatedList(
-                        VariableDeclarator(
-                                Identifier(
-                                    TriviaList(),
-                                    $"_{parameterSymbol.Name}",
-                                    TriviaList(
-                                        Space
-                                    )
-                                )
-                            )
-                           .WithInitializer(
-                                EqualsValueClause(
-                                // TODO: [rlittlesii: February 29, 2024] Replace with FakeItEasy
-                                        invocationExpressionSyntax
-                                    )
-                                   .WithEqualsToken(
-                                        Token(
-                                            TriviaList(),
-                                            SyntaxKind.EqualsToken,
-                                            TriviaList(
-                                                Space
-                                            )
-                                        )
-                                    )
-                            )
-                    )
-                )
-        )
-       .WithModifiers(
-            TokenList(
-                Token(
-                    TriviaList(),
-                    SyntaxKind.PrivateKeyword,
-                    TriviaList(
-                        Space
-                    )
-                )
-            )
-        )
-       .WithTrailingTrivia(LineFeed);
+    private static MemberDeclarationSyntax BuildFields(
+        IParameterSymbol parameterSymbol, InvocationExpressionSyntax invocationExpressionSyntax
+    )
+    {
+        return FieldDeclaration(
+                   VariableDeclaration(
+                           IdentifierName(
+                               Identifier(
+                                   TriviaList(),
+                                   parameterSymbol.Type.GetGenericDisplayName(),
+                                   TriviaList(
+                                       Space
+                                   )
+                               )
+                           )
+                       )
+                      .WithVariables(
+                           SingletonSeparatedList(
+                               VariableDeclarator(
+                                       Identifier(
+                                           TriviaList(),
+                                           $"_{parameterSymbol.Name}",
+                                           TriviaList(
+                                               Space
+                                           )
+                                       )
+                                   )
+                                  .WithInitializer(
+                                       EqualsValueClause(
+                                               // TODO: [rlittlesii: February 29, 2024] Replace with FakeItEasy
+                                               invocationExpressionSyntax
+                                           )
+                                          .WithEqualsToken(
+                                               Token(
+                                                   TriviaList(),
+                                                   SyntaxKind.EqualsToken,
+                                                   TriviaList(
+                                                       Space
+                                                   )
+                                               )
+                                           )
+                                   )
+                           )
+                       )
+               )
+              .WithModifiers(
+                   TokenList(
+                       Token(
+                           TriviaList(),
+                           SyntaxKind.PrivateKeyword,
+                           TriviaList(
+                               Space
+                           )
+                       )
+                   )
+               )
+              .WithTrailingTrivia(LineFeed);
+    }
 
     private static MemberDeclarationSyntax WithMethod(IParameterSymbol constructorParameter)
     {
@@ -331,7 +349,7 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
                                         IdentifierName(
                                             Identifier(
                                                 TriviaList(),
-                                                constructorParameter.Type.Name,
+                                                constructorParameter.Type.GetGenericDisplayName(),
                                                 TriviaList(
                                                     Space
                                                 )
