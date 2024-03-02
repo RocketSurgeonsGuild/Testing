@@ -1,5 +1,5 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixture.cs
-using NSubstitute;
+using FakeItEasy;
 using Goony.Goo.Goo;
 using Microsoft.Extensions.Logging;
 

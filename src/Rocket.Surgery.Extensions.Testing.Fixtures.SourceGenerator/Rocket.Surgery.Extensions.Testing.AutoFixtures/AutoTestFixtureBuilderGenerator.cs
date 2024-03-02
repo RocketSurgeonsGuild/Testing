@@ -73,9 +73,10 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
                                 .Select(x => UsingDirective(ParseName(x)))
                                 .ToArray();
 
+            var mockLibrary = UsingDirective(ParseName((fakeItEasy is not null ? fakeItEasy.ContainingNamespace : substituteMetadata.ContainingNamespace)?.ToDisplayString() ?? string.Empty));
             var unit =
                 CompilationUnit()
-                   .AddUsings(BuildUsing("NSubstitute")) // TODO: [rlittlesii: March 01, 2024] toggle me
+                   .AddUsings(mockLibrary) // TODO: [rlittlesii: March 01, 2024] toggle me
                    .AddUsings(usings)
                    .AddMembers(namespaceDeclaration)
                    .NormalizeWhitespace();
