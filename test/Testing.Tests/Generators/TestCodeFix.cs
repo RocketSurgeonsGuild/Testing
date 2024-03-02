@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
+[ExportCodeFixProvider(LanguageNames.CSharp)]
 internal class TestCodeFix : CodeFixProvider
 {
     private static DiagnosticDescriptor _descriptor = new(

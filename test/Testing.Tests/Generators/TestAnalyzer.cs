@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
+[DiagnosticAnalyzer(LanguageNames.CSharp)]
 internal class TestAnalyzer : DiagnosticAnalyzer
 {
     private static readonly DiagnosticDescriptor _descriptor = new(

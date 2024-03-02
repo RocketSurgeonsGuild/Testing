@@ -1,6 +1,9 @@
 ﻿using System.Collections.Immutable;
+using System.Composition.Hosting;
+using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Host.Mef;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -15,7 +18,14 @@ internal static class GenerationHelpers
     )
     {
         var projectId = ProjectId.CreateNewId(projectName);
-        var solution = new AdhocWorkspace()
+
+
+        var compositionConfiguration = new ContainerConfiguration().WithAssemblies(MefHostServices.DefaultAssemblies);
+        var container = compositionConfiguration.CreateContainer();
+        var host = new MefHostServices(container);
+
+
+        var solution = new AdhocWorkspace(host)
                       .CurrentSolution
                       .AddProject(projectId, projectName, projectName, LanguageNames.CSharp)
                       .WithProjectCompilationOptions(

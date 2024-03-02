@@ -2,6 +2,7 @@
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
+[Generator]
 public class MySourceGenerator : ISourceGenerator
 {
     public void Initialize(GeneratorInitializationContext context)

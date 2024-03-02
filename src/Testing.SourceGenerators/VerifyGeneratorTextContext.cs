@@ -131,11 +131,6 @@ public static class VerifyGeneratorTextContext
             data["CodeRefactorings"] = results;
         }
 
-        data["Completions"] = target.CompletionsResults.ToDictionary(
-            z => z.Key.FullName!,
-            z => z.Value.CompletionLists
-        );
-
         return new(data, targets);
     }
 

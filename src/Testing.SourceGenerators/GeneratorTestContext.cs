@@ -81,7 +81,7 @@ public record GeneratorTestContext
             }
         }
 
-        var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _parseOptions, _sources, _additionalTexts);
+        var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _relatedTypes.Select(z => z.Assembly).Distinct(), _parseOptions, _sources, _additionalTexts);
 
         var compilation = (CSharpCompilation?)await project.GetCompilationAsync().ConfigureAwait(false);
         if (compilation is null) throw new InvalidOperationException("Could not compile the sources");
@@ -118,8 +118,7 @@ public record GeneratorTestContext
                 relatedInstances.OfType<ISourceGenerator>().ToImmutableDictionary(z => z.GetType()),
                 relatedInstances.OfType<IIncrementalGenerator>().ToImmutableDictionary(z => z.GetType()),
                 relatedInstances.OfType<CodeFixProvider>().ToImmutableDictionary(z => z.GetType()),
-                relatedInstances.OfType<CodeRefactoringProvider>().ToImmutableDictionary(z => z.GetType()),
-                relatedInstances.OfType<CompletionProvider>().ToImmutableDictionary(z => z.GetType())
+                relatedInstances.OfType<CodeRefactoringProvider>().ToImmutableDictionary(z => z.GetType())
             );
         }
 
@@ -210,7 +209,6 @@ public record GeneratorTestContext
             analyzerBuilder.ToImmutable(),
             ImmutableDictionary<Type, CodeFixTestResult>.Empty,
             ImmutableDictionary<Type, CodeRefactoringTestResult>.Empty,
-            ImmutableDictionary<Type, CompletionTestResult>.Empty,
             _markedLocations,
             inputCompilation,
             finalDiagnostics,
@@ -233,15 +231,6 @@ public record GeneratorTestContext
             foreach (var provider in projectInformation.CodeRefactoringProviders.Values)
             {
                 results = await results.AddCodeRefactoring(provider);
-            }
-        }
-
-        if (projectInformation.CompletionProviders.Count > 0)
-        {
-            _logger.LogInformation("--- Completion Providers ---");
-            foreach (var provider in projectInformation.CompletionProviders.Values)
-            {
-                results = await results.AddCompletion(provider);
             }
         }
 

@@ -135,17 +135,6 @@ public class GeneratorContextTests : LoggerTest
     }
 
     [Fact]
-    public async Task Should_Add_Completion()
-    {
-        var context = GeneratorTestContextBuilder
-                     .Create()
-                     .AddMarkup("Code.cs", "[*c*]")
-                     .WithCompletion<TestCompletion>()
-                     .Build();
-        await Verify(context.GenerateAsync());
-    }
-
-    [Fact]
     public async Task Should_Generate_Analyzer()
     {
         var context = GeneratorTestContextBuilder
@@ -172,16 +161,6 @@ public class GeneratorContextTests : LoggerTest
                      .AddMarkup("Code.cs", "[*c*]")
                      .Build();
         await Verify(context.GenerateCodeRefactoring<TestRefactoring>());
-    }
-
-    [Fact]
-    public async Task Should_Generate_Completion()
-    {
-        var context = GeneratorTestContextBuilder
-                     .Create()
-                     .AddMarkup("Code.cs", "[*c*]")
-                     .Build();
-        await Verify(context.GenerateCompletions<TestCompletion>());
     }
 
     [Fact]

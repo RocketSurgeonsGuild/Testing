@@ -2,6 +2,7 @@
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
+[Generator]
 public class MyIncrementalGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
