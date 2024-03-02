@@ -62,19 +62,21 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
             var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
                .WithMembers(new SyntaxList<MemberDeclarationSyntax>(fullList));
 
+            // TODO: [rlittlesii: March 01, 2024] Configure use of same namespace, or define a namespace, or add suffix.
             var namespaceDeclaration = BuildNamespace(namedTypeSymbol)
                .WithMembers(new SyntaxList<MemberDeclarationSyntax>(classDeclaration));
 
-            var usings = new SyntaxList<UsingDirectiveSyntax>(
-                parameterSymbols
-                   .Distinct(new ParameterSymbolNamespaceComparer())
-                   .Select(parameterSymbol => BuildUsing(parameterSymbol))
-            );
+            var usings =
+                parameterSymbols.Select(symbol => symbol.Type.ContainingNamespace.ToDisplayString())
+                                .Distinct()
+                                .OrderBy(x => x)
+                                .Select(x => UsingDirective(ParseName(x)))
+                                .ToArray();
 
             var unit =
                 CompilationUnit()
-                   .WithUsings(usings)
-                   .AddUsings(BuildUsing("NSubstitute"))
+                   .AddUsings(BuildUsing("NSubstitute")) // TODO: [rlittlesii: March 01, 2024] toggle me
+                   .AddUsings(usings)
                    .AddMembers(namespaceDeclaration)
                    .NormalizeWhitespace();
 
@@ -123,30 +125,33 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
            .WithUsingKeyword(Token(TriviaList(), SyntaxKind.UsingKeyword, TriviaList(Space)))
            .WithTrailingTrivia(LineFeed);
 
-    private static NamespaceDeclarationSyntax BuildNamespace(ISymbol namedTypeSymbol) =>
-        NamespaceDeclaration(
-                ParseName(namedTypeSymbol.ContainingNamespace.ToDisplayString())
-            )
-           .WithNamespaceKeyword(
-                Token(
-                    TriviaList(
-                        LineFeed
-                    ),
-                    SyntaxKind.NamespaceKeyword,
-                    TriviaList(
-                        Space
-                    )
-                )
-            )
-           .WithOpenBraceToken(
-                Token(
-                    TriviaList(),
-                    SyntaxKind.OpenBraceToken,
-                    TriviaList(
-                        LineFeed
-                    )
-                )
-            );
+    private static NamespaceDeclarationSyntax BuildNamespace(ISymbol namedTypeSymbol)
+    {
+        var displayString = namedTypeSymbol.ContainingNamespace.ToDisplayString() + ".Tests";
+        return NamespaceDeclaration(
+                   ParseName(displayString)
+               )
+              .WithNamespaceKeyword(
+                   Token(
+                       TriviaList(
+                           LineFeed
+                       ),
+                       SyntaxKind.NamespaceKeyword,
+                       TriviaList(
+                           Space
+                       )
+                   )
+               )
+              .WithOpenBraceToken(
+                   Token(
+                       TriviaList(),
+                       SyntaxKind.OpenBraceToken,
+                       TriviaList(
+                           LineFeed
+                       )
+                   )
+               );
+    }
 
     private static ClassDeclarationSyntax BuildClassDeclaration(ISymbol namedTypeSymbol) =>
         ClassDeclaration(

@@ -13,10 +13,15 @@ using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.AutoFixture;
 
+
 namespace Goony.Goo.Goo.Tests
 {
     [AutoFixture(typeof(Authenticator))]
     internal sealed partial class AuthenticatorFixture : ITestFixtureBuilder { }
+}
+
+namespace Goony.Goo.Goo
+{
     internal class Authenticator 
     {
         public Authenticator(IAuthenticationClient authenticationClient,
@@ -25,5 +30,6 @@ namespace Goony.Goo.Goo.Tests
     }
     internal interface ISecureStorage {}
     internal interface IAuthenticationClient {}
-}";
+}
+";
 }
