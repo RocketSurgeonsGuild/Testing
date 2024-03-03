@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -6,7 +7,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 [Generator]
-public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
+public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
 {
     /// <inheritdoc />
     public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -253,69 +254,63 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
            .WithCloseBraceToken(Token(TriviaList(Tab), SyntaxKind.CloseBraceToken, TriviaList()))
            .WithTrailingTrivia(LineFeed);
 
-    private static MemberDeclarationSyntax BuildFields(
-        IParameterSymbol parameterSymbol, InvocationExpressionSyntax invocationExpressionSyntax
-    )
-    {
-        return FieldDeclaration(
-                   VariableDeclaration(
-                           IdentifierName(
-                               Identifier(
-                                   TriviaList(),
-                                   parameterSymbol.Type.GetGenericDisplayName(),
-                                   TriviaList(
-                                       Space
-                                   )
-                               )
-                           )
-                       )
-                      .WithVariables(
-                           SingletonSeparatedList(
-                               VariableDeclarator(
-                                       Identifier(
-                                           TriviaList(),
-                                           $"_{parameterSymbol.Name}",
-                                           TriviaList(
-                                               Space
-                                           )
-                                       )
-                                   )
-                                  .WithInitializer(
-                                       EqualsValueClause(
-                                               // TODO: [rlittlesii: February 29, 2024] Replace with FakeItEasy
-                                               invocationExpressionSyntax
-                                           )
-                                          .WithEqualsToken(
-                                               Token(
-                                                   TriviaList(),
-                                                   SyntaxKind.EqualsToken,
-                                                   TriviaList(
-                                                       Space
-                                                   )
-                                               )
-                                           )
-                                   )
-                           )
-                       )
-               )
-              .WithModifiers(
-                   TokenList(
-                       Token(
-                           TriviaList(),
-                           SyntaxKind.PrivateKeyword,
-                           TriviaList(
-                               Space
-                           )
-                       )
-                   )
-               )
-              .WithTrailingTrivia(LineFeed);
-    }
+    private static MemberDeclarationSyntax BuildFields(IParameterSymbol parameterSymbol, InvocationExpressionSyntax invocationExpressionSyntax) =>
+        FieldDeclaration(
+                VariableDeclaration(
+                        IdentifierName(
+                            Identifier(
+                                TriviaList(),
+                                parameterSymbol.Type.GetGenericDisplayName(),
+                                TriviaList(
+                                    Space
+                                )
+                            )
+                        )
+                    )
+                   .WithVariables(
+                        SingletonSeparatedList(
+                            VariableDeclarator(
+                                    Identifier(
+                                        TriviaList(),
+                                        $"_{parameterSymbol.Name}",
+                                        TriviaList(
+                                            Space
+                                        )
+                                    )
+                                )
+                               .WithInitializer(
+                                    EqualsValueClause(
+                                            // TODO: [rlittlesii: February 29, 2024] Replace with FakeItEasy
+                                            invocationExpressionSyntax
+                                        )
+                                       .WithEqualsToken(
+                                            Token(
+                                                TriviaList(),
+                                                SyntaxKind.EqualsToken,
+                                                TriviaList(
+                                                    Space
+                                                )
+                                            )
+                                        )
+                                )
+                        )
+                    )
+            )
+           .WithModifiers(
+                TokenList(
+                    Token(
+                        TriviaList(),
+                        SyntaxKind.PrivateKeyword,
+                        TriviaList(
+                            Space
+                        )
+                    )
+                )
+            )
+           .WithTrailingTrivia(LineFeed);
 
-    private static MemberDeclarationSyntax WithMethod(IParameterSymbol constructorParameter)
-    {
-        var methodName = SplitLastCamel(constructorParameter);
-        return GlobalStatement(
+    private static MemberDeclarationSyntax WithMethod(IParameterSymbol constructorParameter) =>
+        GlobalStatement(
             LocalFunctionStatement(
                     IdentifierName(
                         Identifier(
@@ -326,7 +321,7 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
                             )
                         )
                     ),
-                    Identifier($"With{methodName}")
+                    Identifier($"With{SplitLastCamel(constructorParameter)}")
                 )
                .WithModifiers(
                     TokenList(
@@ -424,7 +419,6 @@ public class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
                 )
                .WithTrailingTrivia(LineFeed)
         );
-    }
 
     private static MemberDeclarationSyntax Operator(ISymbol namedTypeSymbol) =>
         ConversionOperatorDeclaration(
