@@ -533,10 +533,10 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
     }
 
     private static string SplitLastCamel(IParameterSymbol typeSymbol) =>
-        System.Text.RegularExpressions.Regex.Replace(
-            typeSymbol.Type.Name, "([A-Z])", " $1",
-            System.Text.RegularExpressions.RegexOptions.Compiled
-        ).Trim().Split(' ').Last();
+        Regex.Replace(typeSymbol.Type.Name, "([A-Z])", " $1", RegexOptions.Compiled)
+             .Trim()
+             .Split(' ')
+             .Last();
 
     private const string Fixture = nameof(Fixture);
 
