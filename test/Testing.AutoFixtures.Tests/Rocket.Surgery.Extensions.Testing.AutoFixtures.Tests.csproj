@@ -4,6 +4,8 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
+        <RootNamespace>Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests</RootNamespace>
+        <AssemblyName>Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,7 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Rocket.Surgery.Extensions.Testing.Fixtures.SourceGenerator\Rocket.Surgery.Extensions.Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
+      <ProjectReference Include="..\..\src\Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
+      <ProjectReference Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
     </ItemGroup>
 
 </Project>

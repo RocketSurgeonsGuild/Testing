@@ -18,9 +18,4 @@
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
-    </ItemGroup>
-
-
 </Project>
