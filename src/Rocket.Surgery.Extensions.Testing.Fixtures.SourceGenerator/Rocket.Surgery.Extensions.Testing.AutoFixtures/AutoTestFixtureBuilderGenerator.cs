@@ -514,24 +514,6 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             )
            .WithTrailingTrivia(LineFeed);
 
-    private static UsingDirectiveSyntax BuildUsing(IParameterSymbol parameterSymbol)
-    {
-        var identifiers = parameterSymbol.Type.ContainingNamespace.ToDisplayParts()
-                                         .Where(x => x.Kind != SymbolDisplayPartKind.Punctuation)
-                                         .Select(x => IdentifierName(x.ToString())).ToList();
-
-        if (identifiers.Count == 1)
-        {
-            return UsingDirective(identifiers[0])
-                  .WithUsingKeyword(Token(TriviaList(), SyntaxKind.UsingKeyword, TriviaList(Space)))
-                  .WithTrailingTrivia(LineFeed);
-        }
-
-        return UsingDirective(ParseName(parameterSymbol.ContainingNamespace.ToDisplayString()))
-              .WithUsingKeyword(Token(TriviaList(), SyntaxKind.UsingKeyword, TriviaList(Space)))
-              .WithTrailingTrivia(LineFeed);
-    }
-
     private static string SplitLastCamel(IParameterSymbol typeSymbol) =>
         Regex.Replace(typeSymbol.Type.Name, "([A-Z])", " $1", RegexOptions.Compiled)
              .Trim()
@@ -541,17 +523,4 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
     private const string Fixture = nameof(Fixture);
 
     private const string TestFixtureBuilder = "ITestFixtureBuilder";
-
-    private class ParameterSymbolNamespaceComparer : IEqualityComparer<IParameterSymbol>
-    {
-        public bool Equals(IParameterSymbol? x, IParameterSymbol? y)
-        {
-            return SymbolEqualityComparer.Default.Equals(x?.Type.ContainingNamespace, y?.Type.ContainingNamespace);
-        }
-
-        public int GetHashCode(IParameterSymbol obj)
-        {
-            return SymbolEqualityComparer.Default.GetHashCode(obj.Type.ContainingNamespace);
-        }
-    }
 }

@@ -1,5 +1,4 @@
 using FakeItEasy;
-using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -47,11 +46,11 @@ public class AutoFixtureGeneratorTests
     }
 
     [Theory]
-    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType= typeof(AutoFixtureGeneratorData))]
+    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
     public async Task GivenAutoFixtureAttributeUsage_WhenGenerate_ThenGeneratedAutoFixture(string source)
     {
         // Given
-        GeneratorTestContext generatorInstance =
+        var generatorInstance =
             GeneratorTestContextBuilder
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
@@ -75,7 +74,7 @@ public class AutoFixtureGeneratorTests
     public async Task GivenFakeItEasy_WhenGenerate_ThenGeneratedAutoFixtureWithFakes(string source)
     {
         // Given
-        GeneratorTestContext generatorInstance =
+        var generatorInstance =
             GeneratorTestContextBuilder
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
@@ -98,7 +97,7 @@ public class AutoFixtureGeneratorTests
     public async Task GivenNSubstitute_WhenGenerate_ThenGeneratedAutoFixtureWithFakes(string source)
     {
         // Given
-        GeneratorTestContext generatorInstance =
+        var generatorInstance =
             GeneratorTestContextBuilder
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
@@ -121,7 +120,7 @@ public class AutoFixtureGeneratorTests
     public async Task GivenAttributeOnClass_When_ThenShouldGenerateAutoFixture()
     {
         // Given
-        GeneratorTestContext generatorInstance =
+        var generatorInstance =
             GeneratorTestContextBuilder
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
