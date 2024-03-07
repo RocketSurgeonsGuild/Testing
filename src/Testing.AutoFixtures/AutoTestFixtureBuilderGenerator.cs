@@ -29,7 +29,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             initializationContext =>
             {
                 initializationContext.AddSource(nameof(AutoFixtureAttribute), AutoFixtureAttribute.Source);
-                initializationContext.AddSource(nameof(BuilderExtensions), BuilderExtensions.Source);
+                initializationContext.AddSource(nameof(BuilderInterface), BuilderInterface.Source);
             }
         );
 
@@ -58,10 +58,9 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
 
             var fullList =
                 new[] { Operator(namedTypeSymbol) }
-                   .Concat(parameterSymbols.Select(symbol => WithMethod(symbol)))
-                   .Concat(
-                        parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol)))
-                    );
+                   .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol)))
+                   .Concat(FixtureWithMethods.BuildFixtureMethods(namedTypeSymbol))
+                   .Concat(parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol))));
 
             var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
                .WithMembers(new SyntaxList<MemberDeclarationSyntax>(fullList));
@@ -86,6 +85,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             var unit =
                 CompilationUnit()
                    .AddUsings(mockLibrary) // TODO: [rlittlesii: March 01, 2024] toggle me
+                   .AddUsings(UsingDirective(ParseName("System.Collections.ObjectModel")))
                    .AddUsings(usings)
                    .AddMembers(namespaceDeclaration)
                    .NormalizeWhitespace();
@@ -309,7 +309,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             )
            .WithTrailingTrivia(LineFeed);
 
-    private static MemberDeclarationSyntax WithMethod(IParameterSymbol constructorParameter) =>
+    private static MemberDeclarationSyntax WithPropertyMethod(IParameterSymbol constructorParameter) =>
         GlobalStatement(
             LocalFunctionStatement(
                     IdentifierName(
