@@ -60,7 +60,10 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                 new[] { Operator(namedTypeSymbol) }
                    .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol)))
                    .Concat(FixtureWithMethods.BuildFixtureMethods(namedTypeSymbol))
-                   .Concat(parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol))));
+                   .Concat(new[] { BuildBuildMethod(namedTypeSymbol, parameterSymbols) })
+                   .Concat(
+                        parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol)))
+                    );
 
             var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
                .WithMembers(new SyntaxList<MemberDeclarationSyntax>(fullList));
@@ -78,7 +81,9 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
 
             var mockLibrary = UsingDirective(
                 ParseName(
-                    ( fakeItEasy is not null ? fakeItEasy.ContainingNamespace : substituteMetadata?.ContainingNamespace )
+                    ( fakeItEasy is not null
+                        ? fakeItEasy.ContainingNamespace
+                        : substituteMetadata?.ContainingNamespace )
                   ?.ToDisplayString() ?? string.Empty
                 )
             );
@@ -192,14 +197,14 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                         ),
                         Token(
                             TriviaList(),
-                            SyntaxKind.PartialKeyword,
+                            SyntaxKind.SealedKeyword,
                             TriviaList(
                                 Space
                             )
                         ),
                         Token(
                             TriviaList(),
-                            SyntaxKind.SealedKeyword,
+                            SyntaxKind.PartialKeyword,
                             TriviaList(
                                 Space
                             )
@@ -254,7 +259,9 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
            .WithCloseBraceToken(Token(TriviaList(Tab), SyntaxKind.CloseBraceToken, TriviaList()))
            .WithTrailingTrivia(LineFeed);
 
-    private static MemberDeclarationSyntax BuildFields(IParameterSymbol parameterSymbol, InvocationExpressionSyntax invocationExpressionSyntax) =>
+    private static MemberDeclarationSyntax BuildFields(
+        IParameterSymbol parameterSymbol, InvocationExpressionSyntax invocationExpressionSyntax
+    ) =>
         FieldDeclaration(
                 VariableDeclaration(
                         IdentifierName(
@@ -308,6 +315,46 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                 )
             )
            .WithTrailingTrivia(LineFeed);
+
+    private static MemberDeclarationSyntax BuildBuildMethod(
+        ISymbol namedTypeSymbol, IEnumerable<IParameterSymbol> parameterSymbols
+    )
+    {
+        var list = new List<SyntaxNodeOrToken>();
+        foreach (var parameterSymbol in parameterSymbols)
+        {
+            list.Add(Argument(IdentifierName($"_{parameterSymbol.Name}")));
+            list.Add(Token(SyntaxKind.CommaToken));
+        }
+
+        list.RemoveAt(list.Count-1);
+        return GlobalStatement(
+            LocalFunctionStatement(
+                    IdentifierName(namedTypeSymbol.Name),
+                    Identifier("Build")
+                )
+               .WithModifiers(
+                    TokenList(
+                        Token(SyntaxKind.PrivateKeyword)
+                    )
+                )
+               .WithExpressionBody(
+                    ArrowExpressionClause(
+                        ObjectCreationExpression(
+                                IdentifierName(namedTypeSymbol.Name)
+                            )
+                           .WithArgumentList(
+                                ArgumentList(
+                                    SeparatedList<ArgumentSyntax>(list)
+                                )
+                            )
+                    )
+                )
+               .WithSemicolonToken(
+                    Token(SyntaxKind.SemicolonToken)
+                )
+        );
+    }
 
     private static MemberDeclarationSyntax WithPropertyMethod(IParameterSymbol constructorParameter) =>
         GlobalStatement(

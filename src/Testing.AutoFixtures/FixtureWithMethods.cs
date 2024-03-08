@@ -9,13 +9,7 @@ internal static class FixtureWithMethods
 {
     public static MemberDeclarationSyntax[] BuildFixtureMethods(INamedTypeSymbol namedTypeSymbol) =>
     [
-        FieldMethod(namedTypeSymbol),
-        CollectionFieldMethod(namedTypeSymbol),
-        CollectionEnumerableMethod(namedTypeSymbol),
-        ListEnumerableMethod(namedTypeSymbol),
-        ListFieldMethod(namedTypeSymbol),
-        DictionaryDictionaryMethod(namedTypeSymbol),
-        DictionaryKeyValuePairMethod(namedTypeSymbol)
+        FieldMethod(namedTypeSymbol)
     ];
 
     public static MemberDeclarationSyntax FieldMethod(INamedTypeSymbol namedTypeSymbol)
