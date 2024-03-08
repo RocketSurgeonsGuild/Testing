@@ -9,15 +9,11 @@ namespace Rocket.Surgery.Extensions.Testing.Tests.Mock;
 
 public class AutoMockPopulateTests : AutoMockTest
 {
-    public AutoMockPopulateTests(ITestOutputHelper outputHelper) : base(outputHelper)
-    {
-    }
-
     [Fact]
     public void Should_Populate_Configuration_And_Services()
     {
         Container.Populate(new ServiceCollection().AddSingleton(new A()));
-        Container.RegisterInstance<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1" }).Build());
+        Container.RegisterInstance<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1", }).Build());
         Configuration.GetValue<string>("a").Should().Be("1");
         ServiceProvider.GetRequiredService<A>().Should().BeSameAs(ServiceProvider.GetService<A>());
     }
@@ -28,7 +24,7 @@ public class AutoMockPopulateTests : AutoMockTest
         Populate(
             new ServiceCollection()
                .AddSingleton(new A())
-               .AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1" }).Build())
+               .AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1", }).Build())
         );
         Configuration.GetValue<string>("a").Should().Be("1");
         ServiceProvider.GetRequiredService<A>().Should().BeSameAs(ServiceProvider.GetService<A>());
@@ -42,7 +38,7 @@ public class AutoMockPopulateTests : AutoMockTest
         Container.IsRegistered<A>().Should().BeFalse();
     }
 
-    private class A
-    {
-    }
+    public AutoMockPopulateTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+    private class A { }
 }

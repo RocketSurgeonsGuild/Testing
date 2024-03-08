@@ -9,34 +9,6 @@ namespace Rocket.Surgery.Extensions.Testing.Tests.Mock;
 
 public class AutoMockTestTests : AutoMockTest
 {
-    public AutoMockTestTests(ITestOutputHelper outputHelper) : base(outputHelper)
-    {
-    }
-
-    private class Impl : AutoMockTest
-    {
-        public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-            Logger.LogError("abcd");
-            Logger.LogError("abcd {Something}", "somevalue");
-        }
-    }
-
-    private class DoubleAccess : AutoMockTest
-    {
-        public DoubleAccess(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
-        protected override IContainer BuildContainer(IContainer container)
-        {
-            // invalid do not touch ServiceProvider or Container while constructing the container....
-            return Container.GetRequiredService<IContainer>();
-        }
-
-        public IContainer Self => Container;
-    }
-
     [Fact]
     public void Should_Create_Usable_Logger()
     {
@@ -81,21 +53,41 @@ public class AutoMockTestTests : AutoMockTest
         a.Should().Throw<TestBootstrapException>();
     }
 
-    private class MyItem : IItem
+    public AutoMockTestTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+    private class Impl : AutoMockTest
     {
+        public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+            Logger.LogError("abcd");
+            Logger.LogError("abcd {Something}", "somevalue");
+        }
     }
 
-    public interface IItem
+    private class DoubleAccess : AutoMockTest
     {
+        public DoubleAccess(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+        public IContainer Self => Container;
+
+        protected override IContainer BuildContainer(IContainer container)
+        {
+            // invalid do not touch ServiceProvider or Container while constructing the container....
+            return Container.GetRequiredService<IContainer>();
+        }
     }
+
+    private class MyItem : IItem { }
+
+    public interface IItem { }
 
     private class Optional
     {
-        public IItem? Item { get; }
-
         public Optional(IItem? item = null)
         {
             Item = item;
         }
+
+        public IItem? Item { get; }
     }
 }

@@ -8,19 +8,6 @@ namespace Rocket.Surgery.Extensions.Testing.Tests;
 
 public class LoggerTestTests : LoggerTest
 {
-    public LoggerTestTests(ITestOutputHelper outputHelper) : base(outputHelper)
-    {
-    }
-
-    private class Impl : LoggerTest
-    {
-        public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-            Logger.LogError("abcd");
-            Logger.LogError("abcd {Something}", "somevalue");
-        }
-    }
-
     [Fact]
     public void Should_Create_Usable_Logger()
     {
@@ -95,26 +82,6 @@ public class LoggerTestTests : LoggerTest
         logs.Should().HaveCount(3);
     }
 
-    [Theory]
-    [ClassData(typeof(LoggerTheoryCollection))]
-    public void Should_Support_Theory_Data(IEnumerable<string> messages, int count)
-    {
-        using var listener = CaptureLogs(out var logs);
-        foreach (var item in messages)
-            Logger.LogInformation(item);
-        logs.Should().HaveCount(count);
-    }
-
-    public class LoggerTheoryCollection : TheoryCollection<(IEnumerable<string>, int)>
-    {
-        protected override IEnumerable<(IEnumerable<string>, int)> GetData()
-        {
-            yield return ( new[] { "1", "2", "3" }, 3 );
-            yield return ( new[] { "1", "2" }, 2 );
-            yield return ( new[] { "1" }, 1 );
-        }
-    }
-
     [Fact]
     public void Should_Exclude_SourceContext_Messages()
     {
@@ -147,5 +114,36 @@ public class LoggerTestTests : LoggerTest
         otherLogger.LogInformation("Info");
 
         logs.Should().HaveCount(3);
+    }
+
+    public LoggerTestTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+    private class Impl : LoggerTest
+    {
+        public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+            Logger.LogError("abcd");
+            Logger.LogError("abcd {Something}", "somevalue");
+        }
+    }
+
+    [Theory]
+    [ClassData(typeof(LoggerTheoryCollection))]
+    public void Should_Support_Theory_Data(IEnumerable<string> messages, int count)
+    {
+        using var listener = CaptureLogs(out var logs);
+        foreach (var item in messages)
+            Logger.LogInformation(item);
+        logs.Should().HaveCount(count);
+    }
+
+    public class LoggerTheoryCollection : TheoryCollection<(IEnumerable<string>, int)>
+    {
+        protected override IEnumerable<(IEnumerable<string>, int)> GetData()
+        {
+            yield return ( new[] { "1", "2", "3", }, 3 );
+            yield return ( new[] { "1", "2", }, 2 );
+            yield return ( new[] { "1", }, 1 );
+        }
     }
 }

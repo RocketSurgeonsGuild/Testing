@@ -44,8 +44,9 @@ public static class Methods
 
     public static bool IsOpenGenericType(this INamedTypeSymbol type)
     {
-        return type.IsGenericType && ( type.IsUnboundGenericType
-                                    || type.TypeArguments.All(z => z.TypeKind == TypeKind.TypeParameter) );
+        return type.IsGenericType
+         && ( type.IsUnboundGenericType
+             || type.TypeArguments.All(z => z.TypeKind == TypeKind.TypeParameter) );
     }
 
     public static string GetGenericDisplayName(this ISymbol? symbol)
@@ -59,7 +60,7 @@ public static class Methods
         if (symbol is INamedTypeSymbol namedTypeSymbol
          && ( namedTypeSymbol.IsOpenGenericType() || namedTypeSymbol.IsGenericType ))
         {
-            sb = new StringBuilder(symbol.Name);
+            sb = new(symbol.Name);
             if (namedTypeSymbol.IsOpenGenericType())
             {
                 sb.Append('<');
@@ -98,7 +99,8 @@ public static class Methods
             }
 
             sb.Insert(
-                0, workingSymbol.OriginalDefinition.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Trim()
+                0,
+                workingSymbol.OriginalDefinition.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Trim()
             );
             //sb.Insert(0, symbol.MetadataName);
             workingSymbol = workingSymbol.ContainingSymbol;

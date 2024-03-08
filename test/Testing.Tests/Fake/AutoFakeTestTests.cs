@@ -9,52 +9,11 @@ namespace Rocket.Surgery.Extensions.Testing.Tests.Fake;
 
 public class AutoFakeTestTests : AutoFakeTest
 {
-    public AutoFakeTestTests(ITestOutputHelper outputHelper) : base(outputHelper)
-    {
-    }
-
-    private class Impl : AutoFakeTest
-    {
-        public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-            Logger.LogError("abcd");
-            Logger.LogError("abcd {Something}", "somevalue");
-        }
-    }
-
-    private class DoubleAccess : AutoFakeTest
-    {
-        public DoubleAccess(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
-        protected override IContainer BuildContainer(IContainer container)
-        {
-            // invalid do not touch ServiceProvider or Container while constructing the container....
-            return Container.GetRequiredService<IContainer>();
-        }
-
-        public IContainer Self => Container;
-    }
-
     [Fact]
     public void Should_Create_Usable_Logger()
     {
         AutoFake.Resolve<Impl>();
         A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
-    }
-
-    private class LoggerImpl : AutoFakeTest
-    {
-        public LoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
-        public void Write()
-        {
-            AutoFake.Resolve<ILogger>().LogError("abcd");
-            AutoFake.Resolve<ILogger>().LogError("abcd {Something}", "somevalue");
-        }
     }
 
     [Fact]
@@ -65,38 +24,12 @@ public class AutoFakeTestTests : AutoFakeTest
         A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
     }
 
-    private class LoggerFactoryImpl : AutoFakeTest
-    {
-        public LoggerFactoryImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
-        public void Write()
-        {
-            AutoFake.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd");
-            AutoFake.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd {Something}", "somevalue");
-        }
-    }
-
     [Fact]
     public void Should_Inject_LoggerFactory()
     {
         var test = AutoFake.Resolve<LoggerFactoryImpl>();
         test.Write();
         A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
-    }
-
-    public class GenericLoggerImpl : AutoFakeTest
-    {
-        public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
-        public void Write()
-        {
-            AutoFake.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd");
-            AutoFake.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd {Something}", "somevalue");
-        }
     }
 
     [Fact]
@@ -130,8 +63,11 @@ public class AutoFakeTestTests : AutoFakeTest
     public void Should_Populate_Optional_Parameters_When_Provided()
     {
         AutoFake.Provide<IItem>(new MyItem());
-        AutoFake.Resolve<Optional>().Item.Should().NotBeNull()
-                .And.Match(z => !FakeItEasy.Fake.IsFake(z));
+        AutoFake
+           .Resolve<Optional>()
+           .Item.Should()
+           .NotBeNull()
+           .And.Match(z => !FakeItEasy.Fake.IsFake(z));
     }
 
     [Fact]
@@ -142,21 +78,74 @@ public class AutoFakeTestTests : AutoFakeTest
         a.Should().Throw<TestBootstrapException>();
     }
 
-    private class MyItem : IItem
+    public AutoFakeTestTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+    private class Impl : AutoFakeTest
     {
+        public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+            Logger.LogError("abcd");
+            Logger.LogError("abcd {Something}", "somevalue");
+        }
     }
 
-    public interface IItem
+    private class DoubleAccess : AutoFakeTest
     {
+        public DoubleAccess(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+        public IContainer Self => Container;
+
+        protected override IContainer BuildContainer(IContainer container)
+        {
+            // invalid do not touch ServiceProvider or Container while constructing the container....
+            return Container.GetRequiredService<IContainer>();
+        }
     }
+
+    private class LoggerImpl : AutoFakeTest
+    {
+        public LoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+        public void Write()
+        {
+            AutoFake.Resolve<ILogger>().LogError("abcd");
+            AutoFake.Resolve<ILogger>().LogError("abcd {Something}", "somevalue");
+        }
+    }
+
+    private class LoggerFactoryImpl : AutoFakeTest
+    {
+        public LoggerFactoryImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+        public void Write()
+        {
+            AutoFake.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd");
+            AutoFake.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd {Something}", "somevalue");
+        }
+    }
+
+    public class GenericLoggerImpl : AutoFakeTest
+    {
+        public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+        public void Write()
+        {
+            AutoFake.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd");
+            AutoFake.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd {Something}", "somevalue");
+        }
+    }
+
+    private class MyItem : IItem { }
+
+    public interface IItem { }
 
     private class Optional
     {
-        public IItem? Item { get; }
-
         public Optional(IItem? item = null)
         {
             Item = item;
         }
+
+        public IItem? Item { get; }
     }
 }

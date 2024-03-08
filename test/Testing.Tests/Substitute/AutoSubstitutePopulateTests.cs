@@ -1,5 +1,4 @@
 using DryIoc;
-using DryIoc.Microsoft.DependencyInjection;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,15 +8,11 @@ namespace Rocket.Surgery.Extensions.Testing.Tests.Substitute;
 
 public class AutoSubstitutePopulateTests : AutoSubstituteTest
 {
-    public AutoSubstitutePopulateTests(ITestOutputHelper outputHelper) : base(outputHelper)
-    {
-    }
-
     [Fact]
     public void Should_Populate_Configuration_And_Services()
     {
         Container.Populate(new ServiceCollection().AddSingleton(new A()));
-        Container.RegisterInstance<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1" }).Build());
+        Container.RegisterInstance<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1", }).Build());
         Configuration.GetValue<string>("a").Should().Be("1");
         ServiceProvider.GetRequiredService<A>().Should().BeSameAs(ServiceProvider.GetService<A>());
     }
@@ -28,7 +23,7 @@ public class AutoSubstitutePopulateTests : AutoSubstituteTest
         Populate(
             new ServiceCollection()
                .AddSingleton(new A())
-               .AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1" }).Build())
+               .AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { ["a"] = "1", }).Build())
         );
         Configuration.GetValue<string>("a").Should().Be("1");
         ServiceProvider.GetRequiredService<A>().Should().BeSameAs(ServiceProvider.GetService<A>());
@@ -42,7 +37,7 @@ public class AutoSubstitutePopulateTests : AutoSubstituteTest
         Container.IsRegistered<A>().Should().BeFalse();
     }
 
-    private class A
-    {
-    }
+    public AutoSubstitutePopulateTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+    private class A { }
 }

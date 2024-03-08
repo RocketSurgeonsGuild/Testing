@@ -70,7 +70,7 @@ public class AutoFixtureGeneratorTests
     }
 
     [Theory]
-    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType= typeof(AutoFixtureGeneratorData))]
+    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
     public async Task GivenFakeItEasy_WhenGenerate_ThenGeneratedAutoFixtureWithFakes(string source)
     {
         // Given
@@ -93,7 +93,7 @@ public class AutoFixtureGeneratorTests
     }
 
     [Theory]
-    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType= typeof(AutoFixtureGeneratorData))]
+    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
     public async Task GivenNSubstitute_WhenGenerate_ThenGeneratedAutoFixtureWithFakes(string source)
     {
         // Given
@@ -127,7 +127,8 @@ public class AutoFixtureGeneratorTests
                .AddReferences(typeof(ILogger<>))
                .IgnoreOutputFile("BuilderExtensions.cs")
                .IgnoreOutputFile("Attribute.cs")
-               .AddSources(@"using System;
+               .AddSources(
+                    @"using System;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.AutoFixture;
@@ -144,7 +145,8 @@ namespace Goony.Goo.Goo.Tests
     internal interface ISecureStorage {}
     internal interface IAuthenticationClient {}
 }"
-                ).Build();
+                )
+               .Build();
 
 
         // When

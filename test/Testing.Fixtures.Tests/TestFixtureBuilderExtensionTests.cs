@@ -2,24 +2,6 @@ namespace Rocket.Surgery.Extensions.Testing.Fixtures.Tests;
 
 public sealed class TestFixtureBuilderExtensionTests
 {
-    public static IEnumerable<object[]> Data =>
-        new List<object[]>
-        {
-            new object[] { "testing", string.Empty, string.Empty },
-            new object[] { "testing", "testing", string.Empty },
-            new object[] { "testing", "testing", "one" },
-            new object[] { "testing", "one", "two" }
-        };
-
-    public static IEnumerable<object[]> KeyValuePairs =>
-        new List<object[]>
-        {
-            new object[] { "testing", string.Empty },
-            new object[] { "testing", "one" },
-            new object[] { "testing", "two" },
-            new object[] { "testing", "one two" }
-        };
-
     [Fact]
     public void Should_Add_Dictionary()
     {
@@ -27,7 +9,7 @@ public sealed class TestFixtureBuilderExtensionTests
         var dictionary = new Dictionary<string, string>
         {
             { "check", "one" },
-            { "testing", "two" }
+            { "testing", "two" },
         };
         TestFixture builder =
             new TestFixtureBuilder()
@@ -36,6 +18,34 @@ public sealed class TestFixtureBuilderExtensionTests
         // Then
         Assert.Equal(dictionary, builder.Variables);
     }
+
+    [Fact]
+    public void Should_Add_To_List()
+    {
+        // Given, When
+        TestFixture builder = new TestFixtureBuilder().WithTest("testing");
+
+        // Then
+        Assert.Equal(new[] { "testing", }, builder.Tests);
+    }
+
+    public static IEnumerable<object[]> Data =>
+        new List<object[]>
+        {
+            new object[] { "testing", string.Empty, string.Empty, },
+            new object[] { "testing", "testing", string.Empty, },
+            new object[] { "testing", "testing", "one", },
+            new object[] { "testing", "one", "two", },
+        };
+
+    public static IEnumerable<object[]> KeyValuePairs =>
+        new List<object[]>
+        {
+            new object[] { "testing", string.Empty, },
+            new object[] { "testing", "one", },
+            new object[] { "testing", "two", },
+            new object[] { "testing", "one two", },
+        };
 
     [Theory]
     [MemberData(nameof(KeyValuePairs))]
@@ -53,7 +63,7 @@ public sealed class TestFixtureBuilderExtensionTests
     public void Should_Add_Key_Value_Pair(string key, string value)
     {
         // Given, When
-        TestFixture builder = new TestFixtureBuilder().WithKeyValue(new KeyValuePair<string, string>(key, value));
+        TestFixture builder = new TestFixtureBuilder().WithKeyValue(new(key, value));
 
         // Then
         Assert.Equal(value, builder.Variables[key]);
@@ -64,20 +74,10 @@ public sealed class TestFixtureBuilderExtensionTests
     public void Should_Add_Range(string test1, string test2, string test3)
     {
         // Given, When
-        TestFixture builder = new TestFixtureBuilder().WithTests(new[] { test1, test2, test3 });
+        TestFixture builder = new TestFixtureBuilder().WithTests(new[] { test1, test2, test3, });
 
         // Then
-        Assert.Equal(new[] { test1, test2, test3 }, builder.Tests);
-    }
-
-    [Fact]
-    public void Should_Add_To_List()
-    {
-        // Given, When
-        TestFixture builder = new TestFixtureBuilder().WithTest("testing");
-
-        // Then
-        Assert.Equal(new[] { "testing" }, builder.Tests);
+        Assert.Equal(new[] { test1, test2, test3, }, builder.Tests);
     }
 
     [Theory]

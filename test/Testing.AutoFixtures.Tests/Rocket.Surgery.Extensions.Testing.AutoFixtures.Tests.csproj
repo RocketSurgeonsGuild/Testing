@@ -11,14 +11,14 @@
     <ItemGroup>
         <PackageReference Include="FakeItEasy" />
         <PackageReference Include="NSubstitute" />
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all"/>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all"/>
-        <PackageReference Include="Verify.SourceGenerators"/>
-        <PackageReference Include="Verify.Xunit"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" />
+        <PackageReference Include="Verify.SourceGenerators" />
+        <PackageReference Include="Verify.Xunit" />
     </ItemGroup>
 
     <ItemGroup>
-        <Using Include="Xunit"/>
+        <Using Include="Xunit" />
     </ItemGroup>
 
     <ItemGroup>

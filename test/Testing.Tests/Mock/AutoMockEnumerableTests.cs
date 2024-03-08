@@ -6,10 +6,6 @@ namespace Rocket.Surgery.Extensions.Testing.Tests.Mock;
 
 public class AutoMockEnumerableTests : AutoMockTest
 {
-    public AutoMockEnumerableTests(ITestOutputHelper outputHelper) : base(outputHelper, LogLevel.Information)
-    {
-    }
-
     [Fact]
     public void Does_Not_Auto_Fake_Enumerable()
     {
@@ -22,11 +18,11 @@ public class AutoMockEnumerableTests : AutoMockTest
     [Fact]
     public void Should_Handle_Creating_A_Mock_With_Logger()
     {
-        Action a = () =>
-        {
-            var lt = AutoMock.Resolve<LoggerTest>();
-            AutoMock.Provide<Item>(lt);
-        };
+        var a = () =>
+                {
+                    var lt = AutoMock.Resolve<LoggerTest>();
+                    AutoMock.Provide<Item>(lt);
+                };
         a.Should().NotThrow();
     }
 
@@ -88,17 +84,13 @@ public class AutoMockEnumerableTests : AutoMockTest
         result.Should().Contain(fake4);
     }
 
-    public interface Item
-    {
-    }
+    public AutoMockEnumerableTests(ITestOutputHelper outputHelper) : base(outputHelper, LogLevel.Information) { }
 
-    private class A : Item
-    {
-    }
+    public interface Item { }
 
-    private class B : Item
-    {
-    }
+    private class A : Item { }
+
+    private class B : Item { }
 
     private class LoggerTest : Item
     {

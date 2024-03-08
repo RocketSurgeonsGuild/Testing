@@ -5,7 +5,7 @@ public static class AutoFixtureGeneratorData
     public static IEnumerable<object[]> Data =>
         new List<object[]>
         {
-            new object[] { BasicSource }
+            new object[] { BasicSource, },
         };
 
     private const string BasicSource = @"using System;

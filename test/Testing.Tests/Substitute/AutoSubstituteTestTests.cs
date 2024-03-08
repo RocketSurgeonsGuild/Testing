@@ -2,7 +2,6 @@ using DryIoc;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NSubstitute;
 using Xunit.Abstractions;
 using Arg = NSubstitute.Arg;
 
@@ -10,52 +9,11 @@ namespace Rocket.Surgery.Extensions.Testing.Tests.Substitute;
 
 public class AutoSubstituteTestTests : AutoSubstituteTest
 {
-    public AutoSubstituteTestTests(ITestOutputHelper outputHelper) : base(outputHelper)
-    {
-    }
-
-    private class Impl : AutoSubstituteTest
-    {
-        public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-            Logger.LogError("abcd");
-            Logger.LogError("abcd {Something}", "somevalue");
-        }
-    }
-
-    private class DoubleAccess : AutoSubstituteTest
-    {
-        public DoubleAccess(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
-        protected override IContainer BuildContainer(IContainer container)
-        {
-            // invalid do not touch ServiceProvider or Container while constructing the container....
-            return Container.GetRequiredService<IContainer>();
-        }
-
-        public IContainer Self => Container;
-    }
-
     [Fact]
     public void Should_Create_Usable_Logger()
     {
         AutoSubstitute.Resolve<Impl>();
         AutoSubstitute.Resolve<ITestOutputHelper>().Received().WriteLine(Arg.Any<string>());
-    }
-
-    private class LoggerImpl : AutoSubstituteTest
-    {
-        public LoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
-        public void Write()
-        {
-            AutoSubstitute.Resolve<ILogger>().LogError("abcd");
-            AutoSubstitute.Resolve<ILogger>().LogError("abcd {Something}", "somevalue");
-        }
     }
 
     [Fact]
@@ -66,41 +24,12 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
         AutoSubstitute.Resolve<ITestOutputHelper>().Received().WriteLine(Arg.Any<string>());
     }
 
-    private class LoggerFactoryImpl : AutoSubstituteTest
-    {
-        public LoggerFactoryImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-        }
-
-        public void Write()
-        {
-            AutoSubstitute.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd");
-            AutoSubstitute.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd {Something}", "somevalue");
-        }
-    }
-
     [Fact]
     public void Should_Inject_LoggerFactory()
     {
         var test = AutoSubstitute.Resolve<LoggerFactoryImpl>();
         test.Write();
         AutoSubstitute.Resolve<ITestOutputHelper>().Received().WriteLine(Arg.Any<string>());
-    }
-
-    public class GenericLoggerImpl : AutoSubstituteTest
-    {
-        private ITestOutputHelper _otherHelper;
-
-        public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
-        {
-            _otherHelper = outputHelper;
-        }
-
-        public void Write()
-        {
-            AutoSubstitute.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd");
-            AutoSubstitute.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd {Something}", "somevalue");
-        }
     }
 
     [Fact]
@@ -135,10 +64,11 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
     public void Should_Populate_Optional_Parameters_When_Provided()
     {
         AutoSubstitute.Provide<IItem>(new MyItem());
-        AutoSubstitute.Resolve<Optional>()
-                      .Item
-                      .Should()
-                      .NotBeNull();
+        AutoSubstitute
+           .Resolve<Optional>()
+           .Item
+           .Should()
+           .NotBeNull();
     }
 
     [Fact]
@@ -149,21 +79,79 @@ public class AutoSubstituteTestTests : AutoSubstituteTest
         a.Should().Throw<TestBootstrapException>();
     }
 
-    private class MyItem : IItem
+    public AutoSubstituteTestTests(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+    private class Impl : AutoSubstituteTest
     {
+        public Impl(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+            Logger.LogError("abcd");
+            Logger.LogError("abcd {Something}", "somevalue");
+        }
     }
 
-    public interface IItem
+    private class DoubleAccess : AutoSubstituteTest
     {
+        public DoubleAccess(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+        public IContainer Self => Container;
+
+        protected override IContainer BuildContainer(IContainer container)
+        {
+            // invalid do not touch ServiceProvider or Container while constructing the container....
+            return Container.GetRequiredService<IContainer>();
+        }
     }
+
+    private class LoggerImpl : AutoSubstituteTest
+    {
+        public LoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+        public void Write()
+        {
+            AutoSubstitute.Resolve<ILogger>().LogError("abcd");
+            AutoSubstitute.Resolve<ILogger>().LogError("abcd {Something}", "somevalue");
+        }
+    }
+
+    private class LoggerFactoryImpl : AutoSubstituteTest
+    {
+        public LoggerFactoryImpl(ITestOutputHelper outputHelper) : base(outputHelper) { }
+
+        public void Write()
+        {
+            AutoSubstitute.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd");
+            AutoSubstitute.Resolve<ILoggerFactory>().CreateLogger("").LogError("abcd {Something}", "somevalue");
+        }
+    }
+
+    public class GenericLoggerImpl : AutoSubstituteTest
+    {
+        private ITestOutputHelper _otherHelper;
+
+        public GenericLoggerImpl(ITestOutputHelper outputHelper) : base(outputHelper)
+        {
+            _otherHelper = outputHelper;
+        }
+
+        public void Write()
+        {
+            AutoSubstitute.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd");
+            AutoSubstitute.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd {Something}", "somevalue");
+        }
+    }
+
+    private class MyItem : IItem { }
+
+    public interface IItem { }
 
     private class Optional
     {
-        public IItem? Item { get; }
-
         public Optional(IItem? item = null)
         {
             Item = item;
         }
+
+        public IItem? Item { get; }
     }
 }

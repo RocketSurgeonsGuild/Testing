@@ -7,10 +7,13 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 internal static class FixtureWithMethods
 {
-    public static MemberDeclarationSyntax[] BuildFixtureMethods(INamedTypeSymbol namedTypeSymbol) =>
-    [
-        FieldMethod(namedTypeSymbol)
-    ];
+    public static MemberDeclarationSyntax[] BuildFixtureMethods(INamedTypeSymbol namedTypeSymbol)
+    {
+        return
+        [
+            FieldMethod(namedTypeSymbol),
+        ];
+    }
 
     public static MemberDeclarationSyntax FieldMethod(INamedTypeSymbol namedTypeSymbol)
     {
@@ -23,7 +26,7 @@ internal static class FixtureWithMethods
                 )
                .WithTypeParameterList(
                     TypeParameterList(
-                        SingletonSeparatedList<TypeParameterSyntax>(
+                        SingletonSeparatedList(
                             TypeParameter(
                                 Identifier(FieldGenericParameter)
                             )
@@ -58,7 +61,7 @@ internal static class FixtureWithMethods
                                     )
                                    .WithType(
                                         IdentifierName(FieldGenericParameter)
-                                    )
+                                    ),
                             }
                         )
                     )
@@ -99,7 +102,7 @@ internal static class FixtureWithMethods
                 )
                .WithTypeParameterList(
                     TypeParameterList(
-                        SingletonSeparatedList<TypeParameterSyntax>(
+                        SingletonSeparatedList(
                             TypeParameter(
                                 Identifier(FieldGenericParameter)
                             )
@@ -156,7 +159,7 @@ internal static class FixtureWithMethods
                                                     )
                                                 )
                                         )
-                                    )
+                                    ),
                             }
                         )
                     )
@@ -243,7 +246,7 @@ internal static class FixtureWithMethods
                                                             )
                                                            .WithArgumentList(
                                                                 ArgumentList(
-                                                                    SingletonSeparatedList<ArgumentSyntax>(
+                                                                    SingletonSeparatedList(
                                                                         Argument(
                                                                             IdentifierName("item")
                                                                         )
@@ -274,13 +277,12 @@ internal static class FixtureWithMethods
                         new[]
                         {
                             Token(SyntaxKind.PublicKeyword),
-                            
                         }
                     )
                 )
                .WithTypeParameterList(
                     TypeParameterList(
-                        SingletonSeparatedList<TypeParameterSyntax>(
+                        SingletonSeparatedList(
                             TypeParameter(
                                 Identifier("TField")
                             )
@@ -326,7 +328,7 @@ internal static class FixtureWithMethods
                                     )
                                    .WithType(
                                         IdentifierName("TField")
-                                    )
+                                    ),
                             }
                         )
                     )
@@ -351,7 +353,7 @@ internal static class FixtureWithMethods
                                     )
                                    .WithArgumentList(
                                         ArgumentList(
-                                            SingletonSeparatedList<ArgumentSyntax>(
+                                            SingletonSeparatedList(
                                                 Argument(
                                                     IdentifierName("value")
                                                 )
@@ -395,7 +397,7 @@ internal static class FixtureWithMethods
                 )
                .WithTypeParameterList(
                     TypeParameterList(
-                        SingletonSeparatedList<TypeParameterSyntax>(
+                        SingletonSeparatedList(
                             TypeParameter(
                                 Identifier("TField")
                             )
@@ -452,7 +454,7 @@ internal static class FixtureWithMethods
                                                     )
                                                 )
                                         )
-                                    )
+                                    ),
                             }
                         )
                     )
@@ -530,7 +532,7 @@ internal static class FixtureWithMethods
                                                             )
                                                            .WithArgumentList(
                                                                 ArgumentList(
-                                                                    SingletonSeparatedList<ArgumentSyntax>(
+                                                                    SingletonSeparatedList(
                                                                         Argument(
                                                                             IdentifierName("values")
                                                                         )
@@ -597,7 +599,7 @@ internal static class FixtureWithMethods
                 )
                .WithTypeParameterList(
                     TypeParameterList(
-                        SingletonSeparatedList<TypeParameterSyntax>(
+                        SingletonSeparatedList(
                             TypeParameter(
                                 Identifier("TField")
                             )
@@ -643,7 +645,7 @@ internal static class FixtureWithMethods
                                     )
                                    .WithType(
                                         IdentifierName("TField")
-                                    )
+                                    ),
                             }
                         )
                     )
@@ -668,7 +670,7 @@ internal static class FixtureWithMethods
                                         )
                                        .WithArgumentList(
                                             ArgumentList(
-                                                SingletonSeparatedList<ArgumentSyntax>(
+                                                SingletonSeparatedList(
                                                     Argument(
                                                         IdentifierName("value")
                                                     )
@@ -716,7 +718,6 @@ internal static class FixtureWithMethods
                         new[]
                         {
                             Token(SyntaxKind.PublicKeyword),
-                            
                         }
                     )
                 )
@@ -731,7 +732,7 @@ internal static class FixtureWithMethods
                                 Token(SyntaxKind.CommaToken),
                                 TypeParameter(
                                     Identifier("TField")
-                                )
+                                ),
                             }
                         )
                     )
@@ -760,7 +761,7 @@ internal static class FixtureWithMethods
                                                         {
                                                             IdentifierName("TKey"),
                                                             Token(SyntaxKind.CommaToken),
-                                                            IdentifierName("TField")
+                                                            IdentifierName("TField"),
                                                         }
                                                     )
                                                 )
@@ -781,18 +782,18 @@ internal static class FixtureWithMethods
                                                         {
                                                             IdentifierName("TKey"),
                                                             Token(SyntaxKind.CommaToken),
-                                                            IdentifierName("TField")
+                                                            IdentifierName("TField"),
                                                         }
                                                     )
                                                 )
                                             )
-                                    )
+                                    ),
                             }
                         )
                     )
                 )
                .WithConstraintClauses(
-                    SingletonList<TypeParameterConstraintClauseSyntax>(
+                    SingletonList(
                         TypeParameterConstraintClause(
                                 IdentifierName("TKey")
                             )
@@ -823,7 +824,7 @@ internal static class FixtureWithMethods
                                             )
                                            .WithArgumentList(
                                                 ArgumentList(
-                                                    SingletonSeparatedList<ArgumentSyntax>(
+                                                    SingletonSeparatedList(
                                                         Argument(
                                                             InvocationExpression(
                                                                     IdentifierName(
@@ -838,7 +839,7 @@ internal static class FixtureWithMethods
                                                                 )
                                                                .WithArgumentList(
                                                                     ArgumentList(
-                                                                        SingletonSeparatedList<ArgumentSyntax>(
+                                                                        SingletonSeparatedList(
                                                                             Argument(
                                                                                 IdentifierName("dictionary")
                                                                             )
@@ -880,7 +881,7 @@ internal static class FixtureWithMethods
                                                         IdentifierName("keyValuePair"),
                                                         IdentifierName("Value")
                                                     )
-                                                )
+                                                ),
                                             }
                                         )
                                     )
@@ -917,7 +918,7 @@ internal static class FixtureWithMethods
                                 Token(SyntaxKind.CommaToken),
                                 TypeParameter(
                                     Identifier("TField")
-                                )
+                                ),
                             }
                         )
                     )
@@ -946,7 +947,7 @@ internal static class FixtureWithMethods
                                                         {
                                                             IdentifierName("TKey"),
                                                             Token(SyntaxKind.CommaToken),
-                                                            IdentifierName("TField")
+                                                            IdentifierName("TField"),
                                                         }
                                                     )
                                                 )
@@ -965,13 +966,13 @@ internal static class FixtureWithMethods
                                     )
                                    .WithType(
                                         IdentifierName("TField")
-                                    )
+                                    ),
                             }
                         )
                     )
                 )
                .WithConstraintClauses(
-                    SingletonList<TypeParameterConstraintClauseSyntax>(
+                    SingletonList(
                         TypeParameterConstraintClause(
                                 IdentifierName("TKey")
                             )
@@ -1002,7 +1003,7 @@ internal static class FixtureWithMethods
                                             )
                                            .WithArgumentList(
                                                 ArgumentList(
-                                                    SingletonSeparatedList<ArgumentSyntax>(
+                                                    SingletonSeparatedList(
                                                         Argument(
                                                             InvocationExpression(
                                                                     IdentifierName(
@@ -1017,7 +1018,7 @@ internal static class FixtureWithMethods
                                                                 )
                                                                .WithArgumentList(
                                                                     ArgumentList(
-                                                                        SingletonSeparatedList<ArgumentSyntax>(
+                                                                        SingletonSeparatedList(
                                                                             Argument(
                                                                                 IdentifierName("dictionary")
                                                                             )
@@ -1051,7 +1052,7 @@ internal static class FixtureWithMethods
                                                 Token(SyntaxKind.CommaToken),
                                                 Argument(
                                                     IdentifierName("value")
-                                                )
+                                                ),
                                             }
                                         )
                                     )
@@ -1065,8 +1066,10 @@ internal static class FixtureWithMethods
         );
     }
 
-    private static LocalFunctionStatementSyntax LocalFunctionStatementSyntax(ISymbol namedTypeSymbol) =>
-        LocalFunctionStatement(IdentifierName($"{namedTypeSymbol.Name}Fixture"), Identifier(With));
+    private static LocalFunctionStatementSyntax LocalFunctionStatementSyntax(ISymbol namedTypeSymbol)
+    {
+        return LocalFunctionStatement(IdentifierName($"{namedTypeSymbol.Name}Fixture"), Identifier(With));
+    }
 
     private const string FieldGenericParameter = "TField";
     private const string With = "With";

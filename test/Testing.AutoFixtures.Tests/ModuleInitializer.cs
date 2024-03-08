@@ -5,15 +5,15 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-class ModuleInitializer
+internal class ModuleInitializer
 {
     [ModuleInitializer]
     public static void Initialize()
     {
         VerifyGeneratorTextContext.Initialize(
-            includeInputs: false,
-            includeOptions: true,
-            diagnosticSeverityFilter: DiagnosticSeverity.Warning
+            false,
+            true,
+            DiagnosticSeverity.Warning
         );
         DiffRunner.Disabled = true;
     }
