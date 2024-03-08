@@ -1,4 +1,5 @@
 #nullable enable
+const Rocket.Surgery.Extensions.Testing.AutoFixtures.BuilderInterface.Source = "\n    /// <summary>\n    ///     for the <see cref=\"TestFixtureBuilderExtensions\" /> extension methods.\n    /// </summary>\n    internal interface ITestFixtureBuilder {}\n" -> string!
 Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator
 Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator.AutoFixtureGenerator() -> void
 Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator.Initialize(Microsoft.CodeAnalysis.IncrementalGeneratorInitializationContext context) -> void

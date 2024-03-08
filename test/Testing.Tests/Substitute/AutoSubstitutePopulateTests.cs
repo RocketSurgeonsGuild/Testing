@@ -1,5 +1,4 @@
 using DryIoc;
-using DryIoc.Microsoft.DependencyInjection;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
