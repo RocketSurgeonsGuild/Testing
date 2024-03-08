@@ -56,7 +56,7 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderExtensions.cs")
+               .IgnoreOutputFile("BuilderInterface.cs")
                .IgnoreOutputFile("AutoFixtureAttribute.cs")
                .AddSources(source)
                .Build();
@@ -80,8 +80,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Fake))
-               .IgnoreOutputFile("BuilderExtensions.cs")
-               .IgnoreOutputFile("Attribute.cs")
+               .IgnoreOutputFile("BuilderInterface.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.cs")
                .AddSources(source)
                .Build();
 
@@ -103,8 +103,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderExtensions.cs")
-               .IgnoreOutputFile("Attribute.cs")
+               .IgnoreOutputFile("BuilderInterface.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.cs")
                .AddSources(source)
                .Build();
 
