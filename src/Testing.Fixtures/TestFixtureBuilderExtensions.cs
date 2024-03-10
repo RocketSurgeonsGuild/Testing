@@ -58,19 +58,18 @@ public static class TestFixtureBuilderExtensions
     /// <param name="field">The field.</param>
     /// <param name="values">The values.</param>
     /// <returns></returns>
-#pragma warning disable CA1002
+    #pragma warning disable CA1002
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, IEnumerable<TField>? values)
-#pragma warning restore CA1002
+        #pragma warning restore CA1002
         where TBuilder : ITestFixtureBuilder
     {
         if (values == null)
         {
             field = null;
         }
-        else if (field != null)
+        else if (field is { })
         {
-            foreach (var item in values)
-                field.Add(item);
+            field.AddRange(values);
         }
 
         return @this;
@@ -101,9 +100,9 @@ public static class TestFixtureBuilderExtensions
     /// <param name="field">The field.</param>
     /// <param name="value">The value.</param>
     /// <returns></returns>
-#pragma warning disable CA1002
+    #pragma warning disable CA1002
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, TField value)
-#pragma warning restore CA1002
+        #pragma warning restore CA1002
         where TBuilder : ITestFixtureBuilder
     {
         field?.Add(value);
@@ -121,10 +120,12 @@ public static class TestFixtureBuilderExtensions
     /// <param name="keyValuePair">The key value pair.</param>
     /// <returns></returns>
     public static TBuilder With<TBuilder, TKey, TField>(
-        this TBuilder @this, ref Dictionary<TKey, TField> dictionary, KeyValuePair<TKey, TField> keyValuePair
+        this TBuilder @this,
+        ref Dictionary<TKey, TField> dictionary,
+        KeyValuePair<TKey, TField> keyValuePair
     )
-        where TKey : notnull
         where TBuilder : ITestFixtureBuilder
+        where TKey : notnull
     {
         if (dictionary == null)
         {
@@ -147,8 +148,8 @@ public static class TestFixtureBuilderExtensions
     /// <param name="value">The value.</param>
     /// <returns></returns>
     public static TBuilder With<TBuilder, TKey, TField>(this TBuilder @this, ref Dictionary<TKey, TField> dictionary, TKey key, TField value)
-        where TKey : notnull
         where TBuilder : ITestFixtureBuilder
+        where TKey : notnull
     {
         if (dictionary == null)
         {

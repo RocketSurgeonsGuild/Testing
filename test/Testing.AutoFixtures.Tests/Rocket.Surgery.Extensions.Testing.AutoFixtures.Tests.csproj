@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests</RootNamespace>
+        <AssemblyName>Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NSubstitute" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Xunit" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
+      <ProjectReference Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
+    </ItemGroup>
+
+</Project>
