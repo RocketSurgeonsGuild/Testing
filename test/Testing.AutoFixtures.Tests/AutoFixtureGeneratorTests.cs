@@ -16,7 +16,7 @@ public class AutoFixtureGeneratorTests
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(List<>))
-               .IgnoreOutputFile("BuilderInterface.cs")
+               .IgnoreOutputFile("BuilderInterface.g.cs")
                .Build();
 
         // When
@@ -35,7 +35,7 @@ public class AutoFixtureGeneratorTests
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(List<>))
-               .IgnoreOutputFile("AutoFixtureAttribute.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
                .Build();
 
         // When
@@ -56,8 +56,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderInterface.cs")
-               .IgnoreOutputFile("AutoFixtureAttribute.cs")
+               .IgnoreOutputFile("BuilderInterface.g.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
                .AddSources(source)
                .Build();
 
@@ -80,8 +80,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Fake))
-               .IgnoreOutputFile("BuilderInterface.cs")
-               .IgnoreOutputFile("AutoFixtureAttribute.cs")
+               .IgnoreOutputFile("BuilderInterface.g.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
                .AddSources(source)
                .Build();
 
@@ -103,8 +103,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderInterface.cs")
-               .IgnoreOutputFile("AutoFixtureAttribute.cs")
+               .IgnoreOutputFile("BuilderInterface.g.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
                .AddSources(source)
                .Build();
 

@@ -25,6 +25,7 @@ The complete set of information is available in [Source Generators Cookbook](htt
     1. When you see the abstraction
 6. Providing relevant mock values
 7. Strict Fakes by default! Configurable.
+8. Generate As<InterfaceName>() methods by looking at every interface it returns and providing a method that casts it as that interface type.
 
 
 ## Todo
