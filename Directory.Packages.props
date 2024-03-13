@@ -48,8 +48,8 @@
   <ItemGroup>
     <PackageVersion Include="DryIoc.dll" Version="5.4.3" />
     <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="6.2.0" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.1" />
-    <PackageVersion Include="coverlet.msbuild" Version="6.0.1" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
+    <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
     <PackageVersion Include="FakeItEasy" Version="8.1.0" />
     <PackageVersion Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
     <PackageVersion Include="Autofac.Extras.FakeItEasy" Version="7.0.0" />
