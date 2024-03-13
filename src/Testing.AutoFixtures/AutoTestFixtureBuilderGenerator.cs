@@ -585,7 +585,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                    .AddMembers(namespaceDeclaration)
                    .NormalizeWhitespace();
 
-            productionContext.AddSource("AutoFixture", unit.ToFullString());
+            productionContext.AddSource($"{namedTypeSymbol.Name}.AutoFixture.g.cs", unit.ToFullString());
         }
     }
 }
