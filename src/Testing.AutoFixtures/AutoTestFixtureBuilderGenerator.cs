@@ -448,7 +448,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
 
     private const string TestFixtureBuilder = "ITestFixtureBuilder";
 
-    private InvocationExpressionSyntax GetFieldInvocation(Compilation compilation, IParameterSymbol symbol)
+    private static InvocationExpressionSyntax GetFieldInvocation(Compilation compilation, IParameterSymbol symbol)
     {
         var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
 
@@ -516,8 +516,8 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         context.RegisterPostInitializationOutput(
             initializationContext =>
             {
-                initializationContext.AddSource(nameof(AutoFixtureAttribute), AutoFixtureAttribute.Source);
-                initializationContext.AddSource(nameof(BuilderInterface), BuilderInterface.Source);
+                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.Source);
+                initializationContext.AddSource($"{nameof(BuilderInterface)}.g.cs", BuilderInterface.Source);
             }
         );
 
