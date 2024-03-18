@@ -30,7 +30,8 @@ public record GeneratorTestContext
         ImmutableDictionary<string, string> globalOptions,
         CSharpParseOptions parseOptions,
         ImmutableArray<AdditionalText> additionalTexts,
-        ImmutableDictionary<string, MarkedLocation> markedLocations
+        ImmutableDictionary<string, MarkedLocation> markedLocations,
+        DiagnosticSeverity? diagnosticSeverity
     )
     {
         _markedLocations = markedLocations;
@@ -44,6 +45,7 @@ public record GeneratorTestContext
         _parseOptions = parseOptions;
         _additionalTexts = additionalTexts;
         _projectName = projectName;
+        _diagnosticSeverity = diagnosticSeverity;
         AssemblyLoadContext = assemblyLoadContext;
     }
 
@@ -62,6 +64,7 @@ public record GeneratorTestContext
     internal string _projectName { get; init; }
     internal CSharpParseOptions _parseOptions { get; init; }
     internal ImmutableArray<AdditionalText> _additionalTexts { get; init; }
+    internal DiagnosticSeverity? _diagnosticSeverity { get; init; }
 
     /// <summary>
     ///     Generate and return the results of the generators
@@ -185,7 +188,7 @@ public record GeneratorTestContext
                 new AnalyzerOptions(_additionalTexts, new OptionsProvider(_fileOptions, _globalOptions))
             );
 
-            analysisResult = compilationWithAnalyzers.GetAnalysisResultAsync(CancellationToken.None).GetAwaiter().GetResult();
+            analysisResult = await compilationWithAnalyzers.GetAnalysisResultAsync(CancellationToken.None);
             foreach (var analyzer in analyzers)
             {
                 var analyzerResults = analysisResult.GetAllDiagnostics(analyzer.Value);
@@ -201,6 +204,7 @@ public record GeneratorTestContext
             inputDiagnostics,
             compilation.SyntaxTrees,
             _additionalTexts,
+            _diagnosticSeverity,
             _parseOptions,
             _globalOptions,
             _fileOptions,

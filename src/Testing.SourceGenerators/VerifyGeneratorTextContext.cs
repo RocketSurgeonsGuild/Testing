@@ -9,7 +9,7 @@ public static class VerifyGeneratorTextContext
     public static void Initialize(
         bool includeInputs = false,
         bool includeOptions = true,
-        DiagnosticSeverity diagnosticSeverityFilter = DiagnosticSeverity.Warning
+        DiagnosticSeverity? diagnosticSeverityFilter = null
     )
     {
         VerifyGeneratorTextContext.includeInputs = includeInputs;
@@ -51,7 +51,7 @@ public static class VerifyGeneratorTextContext
 
     private static bool includeInputs;
     private static bool includeOptions;
-    private static DiagnosticSeverity diagnosticSeverityFilter;
+    internal static DiagnosticSeverity? diagnosticSeverityFilter;
 
     private static ConversionResult Convert(GeneratorTestResults target, IReadOnlyDictionary<string, object> context)
     {
@@ -69,7 +69,7 @@ public static class VerifyGeneratorTextContext
         var data = new Dictionary<string, object>();
         if (includeInputs)
         {
-            data["InputDiagnostics"] = target.InputDiagnostics.OrderDiagnosticResults(diagnosticSeverityFilter);
+            data["InputDiagnostics"] = target.InputDiagnostics.OrderDiagnosticResults(target.Severity);
             data["InputAdditionalTexts"] = target.InputAdditionalTexts;
         }
 
@@ -95,14 +95,14 @@ public static class VerifyGeneratorTextContext
                                 .OrderBy(z => z);
         }
 
-        data["FinalDiagnostics"] = target.FinalDiagnostics.OrderDiagnosticResults(diagnosticSeverityFilter);
+        data["FinalDiagnostics"] = target.FinalDiagnostics.OrderDiagnosticResults(target.Severity);
         data["GeneratorDiagnostics"] = target.Results.ToDictionary(
             z => z.Key.FullName!,
-            z => z.Value.Diagnostics.OrderDiagnosticResults(diagnosticSeverityFilter)
+            z => z.Value.Diagnostics.OrderDiagnosticResults(target.Severity)
         );
         data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(
             z => z.Key.FullName!,
-            z => z.Value.Diagnostics.OrderDiagnosticResults(diagnosticSeverityFilter)
+            z => z.Value.Diagnostics.OrderDiagnosticResults(target.Severity)
         );
 
         if (target.CodeFixResults.Count > 0)
