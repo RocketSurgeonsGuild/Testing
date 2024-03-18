@@ -5,8 +5,13 @@
         <NoPackageAnalysis>true</NoPackageAnalysis>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <GeneratedFolder>Generated</GeneratedFolder>
+<!--        <IncludeBuildOutput>false</IncludeBuildOutput>-->
     </PropertyGroup>
-
+    <ItemGroup>
+        <Compile Remove="$(GeneratedFolder)/**/*.cs" />
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.Common" PrivateAssets="all" />

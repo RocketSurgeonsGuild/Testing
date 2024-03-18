@@ -1,4 +1,5 @@
 using FakeItEasy;
+using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -116,6 +117,81 @@ public class AutoFixtureGeneratorTests
         await Verify(result).UseHashedParameters(source);
     }
 
+    [Theory]
+    [MemberData(nameof(AutoFixtureGeneratorData.SeparateSource), MemberType = typeof(AutoFixtureGeneratorData))]
+    public async Task GivenSeparateNamespace_WhenGenerate_ThenGeneratedAutoFixtureWithFakes(string classSource, string fixtureSource)
+    {
+        // Given
+        var generatorInstance =
+            GeneratorTestContextBuilder
+               .Create()
+               .WithGenerator<AutoFixtureGenerator>()
+               .AddReferences(typeof(ILogger<>))
+               .AddReferences(typeof(Substitute))
+               .IgnoreOutputFile("BuilderInterface.g.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .AddSources(classSource, fixtureSource)
+               .Build();
+
+
+        // When
+        var result = await generatorInstance.GenerateAsync();
+
+        // Then
+        await Verify(result).UseHashedParameters(classSource, fixtureSource);
+    }
+
+    [Theory]
+    [MemberData(nameof(AutoFixtureGeneratorData.ParameterArrayDeck), MemberType = typeof(AutoFixtureGeneratorData))]
+    public async Task GivenDeckSource_WhenGenerate_ThenReportsDiagnostic(string deckSource, string cardSource, string fixtureSource)
+    {
+        // Given
+        var generatorInstance =
+            GeneratorTestContextBuilder
+               .Create()
+               .WithGenerator<AutoFixtureGenerator>()
+               .AddReferences(typeof(ILogger<>))
+               .AddReferences(typeof(Substitute))
+               .IgnoreOutputFile("BuilderInterface.g.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .AddSources(deckSource, cardSource, fixtureSource)
+               .Build();
+
+
+        // When
+        var result = await generatorInstance.GenerateAsync();
+
+        // Then
+        result
+           .Results
+           .Should()
+           .Contain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
+    }
+
+    [Theory]
+    [MemberData(nameof(AutoFixtureGeneratorData.EnumerableDeck), MemberType = typeof(AutoFixtureGeneratorData))]
+    public async Task GivenDeckSource_WhenGenerate_ThenGeneratedAutoFixture(string deckSource, string cardSource, string fixtureSource)
+    {
+        // Given
+        var generatorInstance =
+            GeneratorTestContextBuilder
+               .Create()
+               .WithGenerator<AutoFixtureGenerator>()
+               .AddReferences(typeof(ILogger<>))
+               .AddReferences(typeof(Substitute))
+               .IgnoreOutputFile("BuilderInterface.g.cs")
+               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .AddSources(cardSource, deckSource, fixtureSource)
+               .Build();
+
+
+        // When
+        var result = await generatorInstance.GenerateAsync();
+
+        // Then
+        await Verify(result).UseHashedParameters(deckSource, cardSource, fixtureSource);
+    }
+
 //    [Fact]
     public async Task GivenAttributeOnClass_When_ThenShouldGenerateAutoFixture()
     {
@@ -136,7 +212,7 @@ using Rocket.Surgery.Extensions.Testing.AutoFixture;
 namespace Goony.Goo.Goo.Tests
 {
     [AutoFixture]
-    internal class Authenticator 
+    internal class Authenticator
     {
         public Authenticator(IAuthenticationClient authenticationClient,
             ISecureStorage secureStorage,
