@@ -87,6 +87,9 @@ public static class Methods
 
         var workingSymbol = symbol.ContainingSymbol;
 
+        if (workingSymbol is null)
+            return string.Empty;
+
         while (!IsRootNamespace(workingSymbol))
         {
             if (workingSymbol is ITypeSymbol && last is ITypeSymbol)

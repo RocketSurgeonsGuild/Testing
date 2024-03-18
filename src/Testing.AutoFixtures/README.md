@@ -35,5 +35,8 @@ Global Configuration `[global:FixtureConfig(path = “foo”, Suffix = “Fixtur
 - file path to generate the source, maybe a different assembly
 - Builder method name convention (Not Until Requested)
 
+## Unsupported
+- param Type[]
+
 ## MVP for Chase
 - AutoFixture on the class, generate ClassNameFixture
