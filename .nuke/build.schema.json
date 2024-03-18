@@ -104,14 +104,11 @@
               "JetBrainsCleanupCode",
               "Lint",
               "LintGitAdd",
-              "LintPublicApiAnalyzers",
               "LintStaged",
-              "MoveUnshippedToShipped",
               "Pack",
               "PostLint",
               "RegenerateBuildConfigurations",
               "Restore",
-              "ShipPublicApis",
               "Test",
               "TriggerCodeCoverageReports"
             ]
@@ -144,14 +141,11 @@
               "JetBrainsCleanupCode",
               "Lint",
               "LintGitAdd",
-              "LintPublicApiAnalyzers",
               "LintStaged",
-              "MoveUnshippedToShipped",
               "Pack",
               "PostLint",
               "RegenerateBuildConfigurations",
               "Restore",
-              "ShipPublicApis",
               "Test",
               "TriggerCodeCoverageReports"
             ]

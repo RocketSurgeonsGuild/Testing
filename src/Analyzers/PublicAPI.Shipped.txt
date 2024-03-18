@@ -1,5 +1,0 @@
-#nullable enable
-Rocket.Surgery.Extensions.Testing.Analyzers.MutableGenerator
-Rocket.Surgery.Extensions.Testing.Analyzers.MutableGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext context) -> void
-Rocket.Surgery.Extensions.Testing.Analyzers.MutableGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext context) -> void
-Rocket.Surgery.Extensions.Testing.Analyzers.MutableGenerator.MutableGenerator() -> void
