@@ -30,15 +30,12 @@ public sealed class AutoSubstitute : IDisposable
                          )
                         .WithUndefinedTestDependenciesResolver(
                              request =>
-                                 Substitute.For(new[] { request.ServiceType }, Array.Empty<object>())
+                                 Substitute.For(new[] { request.ServiceType, }, Array.Empty<object>())
                          )
                         .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
 
-        if (configureAction != null)
-        {
-            Container = configureAction.Invoke(Container);
-        }
+        if (configureAction != null) Container = configureAction.Invoke(Container);
     }
 
     /// <summary>
@@ -91,10 +88,10 @@ public sealed class AutoSubstitute : IDisposable
         return Container.Resolve<TService>();
     }
 
-#pragma warning disable CA1063
+    #pragma warning disable CA1063
     void IDisposable.Dispose()
     {
         Container.Dispose();
     }
-#pragma warning restore CA1063
+    #pragma warning restore CA1063
 }

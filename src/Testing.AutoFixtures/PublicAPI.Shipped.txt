@@ -1,0 +1,10 @@
+#nullable enable
+const Rocket.Surgery.Extensions.Testing.AutoFixtures.BuilderInterface.Source = "\r\n    /// <summary>\r\n    ///     for the <see cref=\"TestFixtureBuilderExtensions\" /> extension methods.\r\n    /// </summary>\r\n    internal interface ITestFixtureBuilder {}\r\n" -> string!
+Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator
+Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator.AutoFixtureGenerator() -> void
+Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator.Initialize(Microsoft.CodeAnalysis.IncrementalGeneratorInitializationContext context) -> void
+Rocket.Surgery.Extensions.Testing.AutoFixtures.BuilderInterface
+Rocket.Surgery.Extensions.Testing.AutoFixtures.Methods
+static Rocket.Surgery.Extensions.Testing.AutoFixtures.Methods.GetFullMetadataName(this Microsoft.CodeAnalysis.ISymbol? s) -> string!
+static Rocket.Surgery.Extensions.Testing.AutoFixtures.Methods.GetGenericDisplayName(this Microsoft.CodeAnalysis.ISymbol? symbol) -> string!
+static Rocket.Surgery.Extensions.Testing.AutoFixtures.Methods.IsOpenGenericType(this Microsoft.CodeAnalysis.INamedTypeSymbol! type) -> bool

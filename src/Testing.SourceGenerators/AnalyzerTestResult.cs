@@ -21,9 +21,6 @@ public record AnalyzerTestResult
     /// <exception cref="InvalidOperationException"></exception>
     public void EnsureDiagnosticSeverity(DiagnosticSeverity severity = DiagnosticSeverity.Warning)
     {
-        if (Diagnostics.Any(x => x.Severity >= severity))
-        {
-            throw new InvalidOperationException("Compilation failed");
-        }
+        if (Diagnostics.Any(x => x.Severity >= severity)) throw new InvalidOperationException("Compilation failed");
     }
 }

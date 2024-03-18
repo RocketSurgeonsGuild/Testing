@@ -9,7 +9,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 internal class TestCodeFix : CodeFixProvider
 {
     private static DiagnosticDescriptor _descriptor = new(
-        "TEST0001",
+        "TEST0002",
         "title",
         "message",
         "category",

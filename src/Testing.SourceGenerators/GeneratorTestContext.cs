@@ -241,14 +241,11 @@ public record GeneratorTestContext
 
         var assemblyStream = Emit(inputCompilation);
         if (assemblyStream is { Length: > 0, })
-
-        {
             results = results with
             {
                 MetadataReference = MetadataReference.CreateFromStream(new MemoryStream(assemblyStream)),
                 Assembly = AssemblyLoadContext.LoadFromStream(new MemoryStream(assemblyStream)),
             };
-        }
 
         return results;
     }
