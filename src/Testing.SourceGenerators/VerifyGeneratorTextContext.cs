@@ -69,7 +69,10 @@ public static class VerifyGeneratorTextContext
         var data = new Dictionary<string, object>();
         if (includeInputs)
         {
-            data["InputDiagnostics"] = target.InputDiagnostics.OrderDiagnosticResults(target.Severity);
+            data["InputDiagnostics"] = target
+                                      .InputDiagnostics
+                                      .Where(s => s.Severity >= target.Severity)
+                                      .OrderDiagnosticResults();
             data["InputAdditionalTexts"] = target.InputAdditionalTexts;
         }
 
@@ -95,15 +98,9 @@ public static class VerifyGeneratorTextContext
                                 .OrderBy(z => z);
         }
 
-        data["FinalDiagnostics"] = target.FinalDiagnostics.OrderDiagnosticResults(target.Severity);
-        data["GeneratorDiagnostics"] = target.Results.ToDictionary(
-            z => z.Key.FullName!,
-            z => z.Value.Diagnostics.OrderDiagnosticResults(target.Severity)
-        );
-        data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(
-            z => z.Key.FullName!,
-            z => z.Value.Diagnostics.OrderDiagnosticResults(target.Severity)
-        );
+        data["FinalDiagnostics"] = target.FinalDiagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults();
+        data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
+        data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
 
         if (target.CodeFixResults.Count > 0)
         {

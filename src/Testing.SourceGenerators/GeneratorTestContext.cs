@@ -124,6 +124,8 @@ public record GeneratorTestContext
             );
         }
 
+        var finalDiagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+
         foreach (var instance in projectInformation.IncrementalGenerators.Values.Concat(projectInformation.SourceGenerators.Values.Cast<object>()))
         {
             _logger.LogInformation("--- {Generator} ---", instance.GetType().FullName);
@@ -159,6 +161,7 @@ public record GeneratorTestContext
             }
 
             inputCompilation = inputCompilation.AddSyntaxTrees(trees);
+            finalDiagnostics.AddRange(diagnostics);
 
             builder.Add(
                 instance.GetType(),
@@ -171,8 +174,7 @@ public record GeneratorTestContext
         }
 
         var analyzers = projectInformation.Analyzers;
-
-        var finalDiagnostics = inputCompilation.GetDiagnostics();
+        finalDiagnostics.AddRange(inputCompilation.GetDiagnostics());
 
         AnalysisResult? analysisResult = null;
         if (analyzers.Count > 0)
@@ -195,7 +197,7 @@ public record GeneratorTestContext
                 analyzerBuilder.Add(analyzer.Key, new(analyzerResults));
             }
 
-            finalDiagnostics = finalDiagnostics.AddRange(analysisResult.GetAllDiagnostics());
+            finalDiagnostics.AddRange(analysisResult.GetAllDiagnostics());
         }
 
         var results = new GeneratorTestResults(
@@ -214,7 +216,7 @@ public record GeneratorTestContext
             ImmutableDictionary<Type, CodeRefactoringTestResult>.Empty,
             _markedLocations,
             inputCompilation,
-            finalDiagnostics,
+            finalDiagnostics.ToImmutable(),
             null!,
             null!
         );
