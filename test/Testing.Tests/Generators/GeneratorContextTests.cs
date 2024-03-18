@@ -234,5 +234,21 @@ public class Class1
         await Verify(context.GenerateAsync());
     }
 
+    [Theory]
+    [InlineData(DiagnosticSeverity.Error)]
+    [InlineData(DiagnosticSeverity.Warning)]
+    [InlineData(DiagnosticSeverity.Info)]
+    [InlineData(DiagnosticSeverity.Hidden)]
+    public async Task Should_Filter_Diagnostics(DiagnosticSeverity diagnosticSeverity)
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .WithLogger(Logger)
+                     .WithDiagnosticSeverity(diagnosticSeverity)
+                     .WithGenerator<MyDiagnosticGenerator>()
+                     .Build();
+        await Verify(context.GenerateAsync()).UseParameters(diagnosticSeverity);
+    }
+
     public GeneratorContextTests(ITestOutputHelper outputHelper) : base(outputHelper, LogLevel.Trace) { }
 }

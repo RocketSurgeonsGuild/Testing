@@ -1,8 +1,0 @@
-#nullable enable
-static Xunit.XUnitExtensions.GetTest(this Rocket.Surgery.Extensions.Testing.IHasTestOutputHelper! output) -> Xunit.Abstractions.ITest! (forwarded, contained in Rocket.Surgery.Extensions.Testing)
-static Xunit.XUnitExtensions.GetTest(this Xunit.Abstractions.ITestOutputHelper! output) -> Xunit.Abstractions.ITest! (forwarded, contained in Rocket.Surgery.Extensions.Testing)
-static Xunit.XUnitExtensions.GetTestHashId(this Rocket.Surgery.Extensions.Testing.IHasTestOutputHelper! output) -> int (forwarded, contained in Rocket.Surgery.Extensions.Testing)
-static Xunit.XUnitExtensions.GetTestHashId(this Xunit.Abstractions.ITestOutputHelper! output) -> int (forwarded, contained in Rocket.Surgery.Extensions.Testing)
-static Xunit.XUnitExtensions.GetTestUniqueId(this Rocket.Surgery.Extensions.Testing.IHasTestOutputHelper! output) -> string! (forwarded, contained in Rocket.Surgery.Extensions.Testing)
-static Xunit.XUnitExtensions.GetTestUniqueId(this Xunit.Abstractions.ITestOutputHelper! output) -> string! (forwarded, contained in Rocket.Surgery.Extensions.Testing)
-Xunit.XUnitExtensions (forwarded, contained in Rocket.Surgery.Extensions.Testing)

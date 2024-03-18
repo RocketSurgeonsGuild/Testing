@@ -13,16 +13,6 @@ internal class TestCompletion : CompletionProvider
         return true;
     }
 
-    public override Task<CompletionDescription> GetDescriptionAsync(Document document, CompletionItem item, CancellationToken cancellationToken)
-    {
-        return base.GetDescriptionAsync(document, item, cancellationToken);
-    }
-
-    public override Task<CompletionChange> GetChangeAsync(Document document, CompletionItem item, char? commitKey, CancellationToken cancellationToken)
-    {
-        return base.GetChangeAsync(document, item, commitKey, cancellationToken);
-    }
-
     public override Task ProvideCompletionsAsync(CompletionContext context)
     {
         context.AddItem(CompletionItem.Create("Test Completion"));

@@ -38,10 +38,7 @@ internal static class GenerationHelpers
         foreach (var source in sources)
         {
             var newFileName = source.Name ?? DefaultFilePathPrefix + count + "." + CSharpDefaultFileExt;
-            if (!newFileName.EndsWith(CSharpDefaultFileExt))
-            {
-                newFileName += "." + CSharpDefaultFileExt;
-            }
+            if (!newFileName.EndsWith(CSharpDefaultFileExt)) newFileName += "." + CSharpDefaultFileExt;
 
             var documentId = DocumentId.CreateNewId(projectId, newFileName);
             solution = solution.AddDocument(documentId, newFileName, source.SourceText);
@@ -56,10 +53,7 @@ internal static class GenerationHelpers
         }
 
         var project = solution.GetProject(projectId);
-        if (project is null)
-        {
-            throw new InvalidOperationException($"The ad hoc workspace does not contain a project with the id {projectId.Id}");
-        }
+        if (project is null) throw new InvalidOperationException($"The ad hoc workspace does not contain a project with the id {projectId.Id}");
 
         return project;
     }

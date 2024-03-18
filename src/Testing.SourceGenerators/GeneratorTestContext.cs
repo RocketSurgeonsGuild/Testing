@@ -30,7 +30,8 @@ public record GeneratorTestContext
         ImmutableDictionary<string, string> globalOptions,
         CSharpParseOptions parseOptions,
         ImmutableArray<AdditionalText> additionalTexts,
-        ImmutableDictionary<string, MarkedLocation> markedLocations
+        ImmutableDictionary<string, MarkedLocation> markedLocations,
+        DiagnosticSeverity? diagnosticSeverity
     )
     {
         _markedLocations = markedLocations;
@@ -44,6 +45,7 @@ public record GeneratorTestContext
         _parseOptions = parseOptions;
         _additionalTexts = additionalTexts;
         _projectName = projectName;
+        _diagnosticSeverity = diagnosticSeverity;
         AssemblyLoadContext = assemblyLoadContext;
     }
 
@@ -62,6 +64,7 @@ public record GeneratorTestContext
     internal string _projectName { get; init; }
     internal CSharpParseOptions _parseOptions { get; init; }
     internal ImmutableArray<AdditionalText> _additionalTexts { get; init; }
+    internal DiagnosticSeverity? _diagnosticSeverity { get; init; }
 
     /// <summary>
     ///     Generate and return the results of the generators
@@ -121,6 +124,8 @@ public record GeneratorTestContext
             );
         }
 
+        var finalDiagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+
         foreach (var instance in projectInformation.IncrementalGenerators.Values.Concat(projectInformation.SourceGenerators.Values.Cast<object>()))
         {
             _logger.LogInformation("--- {Generator} ---", instance.GetType().FullName);
@@ -156,6 +161,7 @@ public record GeneratorTestContext
             }
 
             inputCompilation = inputCompilation.AddSyntaxTrees(trees);
+            finalDiagnostics.AddRange(diagnostics);
 
             builder.Add(
                 instance.GetType(),
@@ -168,8 +174,7 @@ public record GeneratorTestContext
         }
 
         var analyzers = projectInformation.Analyzers;
-
-        var finalDiagnostics = inputCompilation.GetDiagnostics();
+        finalDiagnostics.AddRange(inputCompilation.GetDiagnostics());
 
         AnalysisResult? analysisResult = null;
         if (analyzers.Count > 0)
@@ -185,14 +190,14 @@ public record GeneratorTestContext
                 new AnalyzerOptions(_additionalTexts, new OptionsProvider(_fileOptions, _globalOptions))
             );
 
-            analysisResult = compilationWithAnalyzers.GetAnalysisResultAsync(CancellationToken.None).GetAwaiter().GetResult();
+            analysisResult = await compilationWithAnalyzers.GetAnalysisResultAsync(CancellationToken.None);
             foreach (var analyzer in analyzers)
             {
                 var analyzerResults = analysisResult.GetAllDiagnostics(analyzer.Value);
                 analyzerBuilder.Add(analyzer.Key, new(analyzerResults));
             }
 
-            finalDiagnostics = finalDiagnostics.AddRange(analysisResult.GetAllDiagnostics());
+            finalDiagnostics.AddRange(analysisResult.GetAllDiagnostics());
         }
 
         var results = new GeneratorTestResults(
@@ -201,6 +206,7 @@ public record GeneratorTestContext
             inputDiagnostics,
             compilation.SyntaxTrees,
             _additionalTexts,
+            _diagnosticSeverity,
             _parseOptions,
             _globalOptions,
             _fileOptions,
@@ -210,7 +216,7 @@ public record GeneratorTestContext
             ImmutableDictionary<Type, CodeRefactoringTestResult>.Empty,
             _markedLocations,
             inputCompilation,
-            finalDiagnostics,
+            finalDiagnostics.ToImmutable(),
             null!,
             null!
         );
@@ -235,14 +241,11 @@ public record GeneratorTestContext
 
         var assemblyStream = Emit(inputCompilation);
         if (assemblyStream is { Length: > 0, })
-
-        {
             results = results with
             {
                 MetadataReference = MetadataReference.CreateFromStream(new MemoryStream(assemblyStream)),
                 Assembly = AssemblyLoadContext.LoadFromStream(new MemoryStream(assemblyStream)),
             };
-        }
 
         return results;
     }

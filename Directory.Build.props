@@ -25,6 +25,7 @@
         <AnalysisLevel>latest</AnalysisLevel>
         <!--        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
                 <WarningsAsErrors>RS0017</WarningsAsErrors>
+<!--        <NoWarn>$(NoWarn);RS0036;CS1591</NoWarn>-->
         <!--        <WarningsNotAsErrors></WarningsNotAsErrors>-->
     </PropertyGroup>
     <ItemGroup>

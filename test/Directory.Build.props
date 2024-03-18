@@ -8,6 +8,7 @@
         <Exclude
             Condition="'$(Exclude)'!=''"
         >[Bogus*]*,[Autofac*]*,[FakeItEasy*]*,[Moq*]*,[FluentValidation*]*,[Ben.Demystifier*]*,[Humanizer*]*,[xunit*]*,[Microsoft.*]*,[XunitXml*]*,[coverlet.*]*,[System.*]*,[*]JetBrains.Annotations*,$(Exclude)</Exclude>
+        <NoWarn>$(NoWarn);RS2008</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>

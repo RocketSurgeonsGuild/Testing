@@ -44,6 +44,7 @@ public record GeneratorTestContextBuilder
     private string? _projectName;
     private AssemblyLoadContext? _assemblyLoadContext;
     private CSharpParseOptions _parseOptions = new();
+    private DiagnosticSeverity? _diagnosticSeverity = VerifyGeneratorTextContext.diagnosticSeverityFilter;
 
     private ImmutableHashSet<MetadataReference>
         _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
@@ -64,6 +65,16 @@ public record GeneratorTestContextBuilder
     public GeneratorTestContextBuilder WithLogger(ILogger logger)
     {
         return this with { _logger = logger, };
+    }
+
+    /// <summary>
+    ///     Attach a logger to the builder
+    /// </summary>
+    /// <param name="diagnosticSeverity"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithDiagnosticSeverity(DiagnosticSeverity? diagnosticSeverity)
+    {
+        return this with { _diagnosticSeverity = diagnosticSeverity, };
     }
 
     /// <summary>
@@ -512,7 +523,8 @@ public record GeneratorTestContextBuilder
             _globalOptions,
             _parseOptions,
             _additionalTexts,
-            _markedLocations
+            _markedLocations,
+            _diagnosticSeverity
         );
     }
 

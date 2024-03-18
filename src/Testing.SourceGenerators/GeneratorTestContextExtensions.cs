@@ -9,30 +9,64 @@ using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
+/// <summary>
+///     Generator test context extensions
+/// </summary>
 public static class GeneratorTestContextExtensions
 {
+    /// <summary>
+    ///     Include a related type
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static GeneratorTestContext IncludeRelatedType(this GeneratorTestContext context, Type type)
     {
         return context with { _relatedTypes = context._relatedTypes.Add(type), };
     }
 
+    /// <summary>
+    ///     Generate the analyzer
+    /// </summary>
+    /// <param name="context"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<AnalyzerTestResult> GenerateAnalyzer<T>(this GeneratorTestContext context)
         where T : DiagnosticAnalyzer, new()
     {
         return GenerateAnalyzer(context, typeof(T));
     }
 
+    /// <summary>
+    ///     Generate the analyzer
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<AnalyzerTestResult> GenerateAnalyzer<T>(this GeneratorTestContextBuilder builder)
         where T : DiagnosticAnalyzer, new()
     {
         return GenerateAnalyzer(builder, typeof(T));
     }
 
+    /// <summary>
+    ///     Generate the analyzer
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static Task<AnalyzerTestResult> GenerateAnalyzer(this GeneratorTestContextBuilder builder, Type type)
     {
         return builder.Build().GenerateAnalyzer(type);
     }
 
+    /// <summary>
+    ///     Generate the analyzer
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static async Task<AnalyzerTestResult> GenerateAnalyzer(this GeneratorTestContext context, Type type)
     {
         var result = await context.IncludeRelatedType(type).GenerateAsync();
@@ -42,23 +76,48 @@ public static class GeneratorTestContextExtensions
             : throw new InvalidOperationException("Analyzer not found");
     }
 
+    /// <summary>
+    ///     Generate the source generator
+    /// </summary>
+    /// <param name="context"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<GeneratorTestResult> GenerateSourceGenerator<T>(this GeneratorTestContext context)
         where T : new()
     {
         return GenerateSourceGenerator(context, typeof(T));
     }
 
+    /// <summary>
+    ///     Generate the source generator
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<GeneratorTestResult> GenerateSourceGenerator<T>(this GeneratorTestContextBuilder builder)
         where T : new()
     {
         return GenerateSourceGenerator(builder, typeof(T));
     }
 
+    /// <summary>
+    ///     Generate the source generator
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static Task<GeneratorTestResult> GenerateSourceGenerator(this GeneratorTestContextBuilder builder, Type type)
     {
         return builder.Build().GenerateSourceGenerator(type);
     }
 
+    /// <summary>
+    ///     Generate the source generator
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static async Task<GeneratorTestResult> GenerateSourceGenerator(this GeneratorTestContext context, Type type)
     {
         var result = await context.IncludeRelatedType(type).GenerateAsync();
@@ -68,23 +127,48 @@ public static class GeneratorTestContextExtensions
             : throw new InvalidOperationException("Generator not found");
     }
 
+    /// <summary>
+    ///     Generate the code fix
+    /// </summary>
+    /// <param name="context"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<CodeFixTestResult> GenerateCodeFix<T>(this GeneratorTestContext context)
         where T : CodeFixProvider, new()
     {
         return GenerateCodeFix(context, typeof(T));
     }
 
+    /// <summary>
+    ///     Generate the code fix
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<CodeFixTestResult> GenerateCodeFix<T>(this GeneratorTestContextBuilder builder)
         where T : CodeFixProvider, new()
     {
         return GenerateCodeFix(builder, typeof(T));
     }
 
+    /// <summary>
+    ///     Generate the code fix
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static Task<CodeFixTestResult> GenerateCodeFix(this GeneratorTestContextBuilder builder, Type type)
     {
         return builder.Build().GenerateCodeFix(type);
     }
 
+    /// <summary>
+    ///     Generate the code fix
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static async Task<CodeFixTestResult> GenerateCodeFix(this GeneratorTestContext context, Type type)
     {
         var result = await context.IncludeRelatedType(type).GenerateAsync();
@@ -94,12 +178,24 @@ public static class GeneratorTestContextExtensions
             : throw new InvalidOperationException("Code fix not found");
     }
 
+    /// <summary>
+    ///     Add the code fix to the results
+    /// </summary>
+    /// <param name="context"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<GeneratorTestResults> AddCodeFix<T>(this GeneratorTestResults context)
         where T : CodeFixProvider, new()
     {
         return AddCodeFix(context, new T());
     }
 
+    /// <summary>
+    ///     Add the code fix to the results
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="provider"></param>
+    /// <returns></returns>
     public static async Task<GeneratorTestResults> AddCodeFix(this GeneratorTestResults context, CodeFixProvider provider)
     {
         var _logger = context.ProjectInformation.Logger;
@@ -150,23 +246,48 @@ public static class GeneratorTestContextExtensions
         return context;
     }
 
+    /// <summary>
+    ///     Generate the code refactoring
+    /// </summary>
+    /// <param name="context"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring<T>(this GeneratorTestContext context)
         where T : CodeRefactoringProvider, new()
     {
         return GenerateCodeRefactoring(context, typeof(T));
     }
 
+    /// <summary>
+    ///     Generate the code refactoring
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring<T>(this GeneratorTestContextBuilder builder)
         where T : CodeRefactoringProvider, new()
     {
         return GenerateCodeRefactoring(builder, typeof(T));
     }
 
+    /// <summary>
+    ///     Generate the code refactoring
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring(this GeneratorTestContextBuilder builder, Type type)
     {
         return builder.Build().GenerateCodeRefactoring(type);
     }
 
+    /// <summary>
+    ///     Generate the code refactoring
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public static async Task<CodeRefactoringTestResult> GenerateCodeRefactoring(this GeneratorTestContext context, Type type)
     {
         var result = await context.IncludeRelatedType(type).GenerateAsync();
@@ -176,12 +297,24 @@ public static class GeneratorTestContextExtensions
             : throw new InvalidOperationException("Generator not found");
     }
 
+    /// <summary>
+    ///     Add the code refactoring to the results
+    /// </summary>
+    /// <param name="context"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static Task<GeneratorTestResults> AddCodeRefactoring<T>(this GeneratorTestResults context)
         where T : CodeRefactoringProvider, new()
     {
         return AddCodeRefactoring(context, new T());
     }
 
+    /// <summary>
+    ///     Add the code refactoring to the results
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="provider"></param>
+    /// <returns></returns>
     public static async Task<GeneratorTestResults> AddCodeRefactoring(this GeneratorTestResults context, CodeRefactoringProvider provider)
     {
         var _logger = context.ProjectInformation.Logger;
@@ -238,7 +371,7 @@ public static class GeneratorTestContextExtensions
 
             foreach (var changedDocument in documentChanges.GetChangedDocuments(true))
             {
-                var oldDocument = project.GetDocument(changedDocument);
+                var oldDocument = project.GetDocument(changedDocument)!;
                 var newDocument = changedProject.GetDocument(changedDocument);
                 var textChanges = ( await newDocument!.GetTextChangesAsync(oldDocument!) ).ToImmutableArray();
 

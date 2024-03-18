@@ -4,12 +4,23 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
+/// <summary>
+///     Configures verify for use with testing roslyn generators and analyzers
+/// </summary>
 public static class VerifyGeneratorTextContext
 {
+    /// <summary>
+    ///     Initializes the context
+    /// </summary>
+    /// <param name="includeInputs"></param>
+    /// <param name="includeOptions"></param>
+    /// <param name="diagnosticSeverityFilter"></param>
     public static void Initialize(
+        // ReSharper disable ParameterHidesMember
         bool includeInputs = false,
         bool includeOptions = true,
-        DiagnosticSeverity diagnosticSeverityFilter = DiagnosticSeverity.Warning
+        DiagnosticSeverity? diagnosticSeverityFilter = null
+        // ReSharper enable ParameterHidesMember
     )
     {
         VerifyGeneratorTextContext.includeInputs = includeInputs;
@@ -51,15 +62,12 @@ public static class VerifyGeneratorTextContext
 
     private static bool includeInputs;
     private static bool includeOptions;
-    private static DiagnosticSeverity diagnosticSeverityFilter;
+    internal static DiagnosticSeverity? diagnosticSeverityFilter;
 
     private static ConversionResult Convert(GeneratorTestResults target, IReadOnlyDictionary<string, object> context)
     {
         var targets = new List<Target>();
-        if (includeInputs)
-        {
-            targets.AddRange(target.InputSyntaxTrees.Select(Selector));
-        }
+        if (includeInputs) targets.AddRange(target.InputSyntaxTrees.Select(Selector));
 
         foreach (var item in target.Results)
         {
@@ -69,7 +77,10 @@ public static class VerifyGeneratorTextContext
         var data = new Dictionary<string, object>();
         if (includeInputs)
         {
-            data["InputDiagnostics"] = target.InputDiagnostics.OrderDiagnosticResults(diagnosticSeverityFilter);
+            data["InputDiagnostics"] = target
+                                      .InputDiagnostics
+                                      .Where(s => s.Severity >= target.Severity)
+                                      .OrderDiagnosticResults();
             data["InputAdditionalTexts"] = target.InputAdditionalTexts;
         }
 
@@ -95,15 +106,9 @@ public static class VerifyGeneratorTextContext
                                 .OrderBy(z => z);
         }
 
-        data["FinalDiagnostics"] = target.FinalDiagnostics.OrderDiagnosticResults(diagnosticSeverityFilter);
-        data["GeneratorDiagnostics"] = target.Results.ToDictionary(
-            z => z.Key.FullName!,
-            z => z.Value.Diagnostics.OrderDiagnosticResults(diagnosticSeverityFilter)
-        );
-        data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(
-            z => z.Key.FullName!,
-            z => z.Value.Diagnostics.OrderDiagnosticResults(diagnosticSeverityFilter)
-        );
+        data["FinalDiagnostics"] = target.FinalDiagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults();
+        data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
+        data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
 
         if (target.CodeFixResults.Count > 0)
         {
@@ -173,20 +178,20 @@ public static class VerifyGeneratorTextContext
                 foreach (var changedDocumentId in action.Changes.GetChangedDocuments(true))
                 {
                     action.Changes.NewProject.GetDocument(changedDocumentId)!.GetTextAsync().GetAwaiter().GetResult();
-                    targets.Add(Selector(action.Changes.NewProject.GetDocument(changedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
+                    targets.Add(selector(action.Changes.NewProject.GetDocument(changedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
                 }
 
                 foreach (var addedDocumentId in action.Changes.GetAddedDocuments())
                 {
                     action.Changes.NewProject.GetDocument(addedDocumentId)!.GetTextAsync().GetAwaiter().GetResult();
-                    targets.Add(Selector(action.Changes.NewProject.GetDocument(addedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
+                    targets.Add(selector(action.Changes.NewProject.GetDocument(addedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
                 }
             }
         }
 
         return new(data, targets);
 
-        static Target Selector(Document source, string additionalHintPath)
+        static Target selector(Document source, string additionalHintPath)
         {
             var hintPath = source.FilePath;
             var data = $@"//HintName: {hintPath?.Replace("\\", "/")}
@@ -217,20 +222,20 @@ public static class VerifyGeneratorTextContext
                 foreach (var changedDocumentId in action.Changes.GetChangedDocuments(true))
                 {
                     action.Changes.NewProject.GetDocument(changedDocumentId)!.GetTextAsync().GetAwaiter().GetResult();
-                    targets.Add(Selector(action.Changes.NewProject.GetDocument(changedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
+                    targets.Add(selector(action.Changes.NewProject.GetDocument(changedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
                 }
 
                 foreach (var addedDocumentId in action.Changes.GetAddedDocuments())
                 {
                     action.Changes.NewProject.GetDocument(addedDocumentId)!.GetTextAsync().GetAwaiter().GetResult();
-                    targets.Add(Selector(action.Changes.NewProject.GetDocument(addedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
+                    targets.Add(selector(action.Changes.NewProject.GetDocument(addedDocumentId)!, action.CodeAction.Title.Replace(" ", "_")));
                 }
             }
         }
 
         return new(data, targets);
 
-        static Target Selector(Document source, string additionalHintPath)
+        static Target selector(Document source, string additionalHintPath)
         {
             var hintPath = source.FilePath;
             var data = $@"//HintName: {hintPath?.Replace("\\", "/")}
@@ -429,16 +434,10 @@ public static class VerifyGeneratorTextContext
             writer.WriteMember(value, value.WarningLevel, "WarningLevel");
             writer.WriteMember(value, value.Location.GetMappedLineSpan().ToString().Replace("\\", "/"), "Location");
             var description = descriptor.Description.ToString();
-            if (!string.IsNullOrWhiteSpace(description))
-            {
-                writer.WriteMember(value, description, "Description");
-            }
+            if (!string.IsNullOrWhiteSpace(description)) writer.WriteMember(value, description, "Description");
 
             var help = descriptor.HelpLinkUri;
-            if (!string.IsNullOrWhiteSpace(help))
-            {
-                writer.WriteMember(value, help, "HelpLink");
-            }
+            if (!string.IsNullOrWhiteSpace(help)) writer.WriteMember(value, help, "HelpLink");
 
             writer.WriteMember(value, descriptor.MessageFormat.ToString(), "MessageFormat");
             writer.WriteMember(value, value.GetMessage(), "Message");
