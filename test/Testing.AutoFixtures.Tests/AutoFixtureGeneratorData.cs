@@ -11,19 +11,19 @@ public static class AutoFixtureGeneratorData
     public static IEnumerable<object[]> SeparateSource =>
         new List<object[]>
         {
-            new object[] { TargetClassSource, TargetFixtureSource },
+            new object[] { TargetClassSource, TargetFixtureSource, },
         };
 
     public static IEnumerable<object[]> EnumerableDeck =>
         new List<object[]>
         {
-            new object[] { EnumerableDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource }
+            new object[] { EnumerableDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource, },
         };
 
     public static IEnumerable<object[]> ParameterArrayDeck =>
         new List<object[]>
         {
-            new object[] { ParamsArrayDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource }
+            new object[] { ParamsArrayDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource, },
         };
 
     private const string BasicSource = @"using System;

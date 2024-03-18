@@ -1,6 +1,5 @@
 using FakeItEasy;
 using FluentAssertions;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;

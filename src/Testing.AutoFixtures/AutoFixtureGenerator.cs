@@ -55,8 +55,14 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                    .ToList();
 
             foreach (var location in parameterSymbols
-                                    .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol })
-                                    .Select(tuple => new { tuple.parameterSymbol, tuple.isArrayType, hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params") })
+                                    .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol, })
+                                    .Select(
+                                         tuple => new
+                                         {
+                                             tuple.parameterSymbol, tuple.isArrayType,
+                                             hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
+                                         }
+                                     )
                                     .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
                                     .SelectMany(tuple => tuple.parameterSymbol.Locations))
             {
