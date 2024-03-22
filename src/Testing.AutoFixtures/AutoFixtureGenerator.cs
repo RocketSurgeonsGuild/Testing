@@ -83,7 +83,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .WithMembers(new(fullList));
 
             // TODO: [rlittlesii: March 01, 2024] Configure use of same namespace, or define a namespace, or add suffix.
-            var namespaceDeclaration = BuildNamespace(namedTypeSymbol)
+            var namespaceDeclaration = BuildNamespace(syntaxContext.TargetSymbol)
                .WithMembers(new(classDeclaration));
 
             var usings =

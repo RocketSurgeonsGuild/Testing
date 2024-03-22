@@ -10,7 +10,7 @@ public partial class AutoFixtureGenerator
 {
     private static NamespaceDeclarationSyntax BuildNamespace(ISymbol namedTypeSymbol)
     {
-        var displayString = namedTypeSymbol.ContainingNamespace.ToDisplayString() + ".Tests";
+        var displayString = namedTypeSymbol.ContainingNamespace.ToDisplayString();
         return NamespaceDeclaration(
                    ParseName(displayString)
                )
