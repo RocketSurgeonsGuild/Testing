@@ -28,6 +28,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             {
                 initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.Source);
                 initializationContext.AddSource($"{nameof(BuilderInterface)}.g.cs", BuilderInterface.Source);
+                initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
             }
         );
 
