@@ -443,10 +443,6 @@ public partial class AutoFixtureGenerator
               .Last();
     }
 
-    private const string Fixture = nameof(Fixture);
-
-    private const string TestFixtureBuilder = "ITestFixtureBuilder";
-
     private static InvocationExpressionSyntax GetFieldInvocation(Compilation compilation, IParameterSymbol symbol)
     {
         var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
@@ -495,4 +491,8 @@ public partial class AutoFixtureGenerator
             );
         }
     }
+
+    private const string Fixture = nameof(Fixture);
+
+    private const string TestFixtureBuilder = "ITestFixtureBuilder";
 }
