@@ -17,6 +17,7 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 public record GeneratorTestContext
 {
     private readonly ImmutableDictionary<string, MarkedLocation> _markedLocations;
+    private readonly ImmutableArray<GeneratorTestResultsCustomizer> _customizers;
 
     internal GeneratorTestContext(
         string projectName,
@@ -31,10 +32,12 @@ public record GeneratorTestContext
         CSharpParseOptions parseOptions,
         ImmutableArray<AdditionalText> additionalTexts,
         ImmutableDictionary<string, MarkedLocation> markedLocations,
-        DiagnosticSeverity? diagnosticSeverity
+        DiagnosticSeverity? diagnosticSeverity,
+        ImmutableArray<GeneratorTestResultsCustomizer> customizers
     )
     {
         _markedLocations = markedLocations;
+        _customizers = customizers;
         _logger = logger;
         _metadataReferences = metadataReferences;
         _relatedTypes = relatedTypes;
@@ -206,6 +209,7 @@ public record GeneratorTestContext
             inputDiagnostics,
             compilation.SyntaxTrees,
             _additionalTexts,
+            _customizers,
             _diagnosticSeverity,
             _parseOptions,
             _globalOptions,

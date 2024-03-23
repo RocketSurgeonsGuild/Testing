@@ -52,6 +52,7 @@ public record GeneratorTestContextBuilder
     private ImmutableHashSet<Type> _relatedTypes = ImmutableHashSet<Type>.Empty;
     private ImmutableArray<NamedSourceText> _sources = ImmutableArray<NamedSourceText>.Empty;
     private ImmutableArray<AdditionalText> _additionalTexts = ImmutableArray<AdditionalText>.Empty;
+    private ImmutableArray<GeneratorTestResultsCustomizer> _customizers = ImmutableArray<GeneratorTestResultsCustomizer>.Empty;
     private ImmutableHashSet<string> _ignoredFilePaths = ImmutableHashSet<string>.Empty;
     private ImmutableDictionary<string, MarkedLocation> _markedLocations = ImmutableDictionary<string, MarkedLocation>.Empty;
 
@@ -68,13 +69,23 @@ public record GeneratorTestContextBuilder
     }
 
     /// <summary>
-    ///     Attach a logger to the builder
+    ///     Configure the diagnostic severity to be returned
     /// </summary>
     /// <param name="diagnosticSeverity"></param>
     /// <returns></returns>
     public GeneratorTestContextBuilder WithDiagnosticSeverity(DiagnosticSeverity? diagnosticSeverity)
     {
         return this with { _diagnosticSeverity = diagnosticSeverity, };
+    }
+
+    /// <summary>
+    ///     Add a customizer to custom the data returned through verify
+    /// </summary>
+    /// <param name="customizer"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithCustomizer(GeneratorTestResultsCustomizer customizer)
+    {
+        return this with { _customizers = _customizers.Add(customizer), };
     }
 
     /// <summary>
@@ -524,7 +535,8 @@ public record GeneratorTestContextBuilder
             _parseOptions,
             _additionalTexts,
             _markedLocations,
-            _diagnosticSeverity
+            _diagnosticSeverity,
+            _customizers
         );
     }
 

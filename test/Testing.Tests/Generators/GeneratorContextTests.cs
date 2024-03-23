@@ -250,5 +250,36 @@ public class Class1
         await Verify(context.GenerateAsync()).UseParameters(diagnosticSeverity);
     }
 
+    [Theory]
+    [MemberData(nameof(GeneratorTestResultsCustomizerData))]
+    public async Task Should_Support_Customizers(string name, GeneratorTestResultsCustomizer customizer)
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .WithLogger(Logger)
+                     .WithCustomizer(customizer)
+                     .AddOption("test.g.cs", "a", "value")
+                     .AddGlobalOption("b", "key")
+                     .IgnoreOutputFile("test.g.cs")
+                     .AddSource("file.cs", "")
+                     .WithGenerator<MySourceGenerator>()
+                     .Build();
+        await Verify(context.GenerateAsync()).UseHashedParameters(name);
+    }
+
+    public static IEnumerable<object[]> GeneratorTestResultsCustomizerData()
+    {
+        yield return ["IncludeInputs", Customizers.Reset + Customizers.IncludeInputs];
+        yield return ["IncludeReferences", Customizers.Reset + Customizers.IncludeReferences];
+        yield return ["IncludeFileOptions", Customizers.Reset + Customizers.IncludeFileOptions];
+        yield return ["IncludeParseOptions", Customizers.Reset + Customizers.IncludeParseOptions];
+        yield return ["IncludeGlobalOptions", Customizers.Reset + Customizers.IncludeGlobalOptions];
+        yield return ["Default + IncludeInputs", Customizers.Reset + Customizers.Default + Customizers.IncludeInputs];
+        yield return ["Default + ExcludeReferences", Customizers.Reset + Customizers.Default + Customizers.ExcludeReferences];
+        yield return ["Default + ExcludeFileOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeFileOptions];
+        yield return ["Default + ExcludeGlobalOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeGlobalOptions];
+        yield return ["Default + ExcludeParseOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeParseOptions];
+    }
+
     public GeneratorContextTests(ITestOutputHelper outputHelper) : base(outputHelper, LogLevel.Trace) { }
 }

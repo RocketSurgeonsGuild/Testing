@@ -9,7 +9,7 @@ internal class ModuleInitializer
     [ModuleInitializer]
     public static void Initialize()
     {
-        VerifyGeneratorTextContext.Initialize();
+        VerifyGeneratorTextContext.Initialize(false, true);
         DiffRunner.Disabled = true;
     }
 }
