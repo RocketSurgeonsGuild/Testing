@@ -1,10 +1,9 @@
-﻿using System.Collections.Immutable;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 /// <summary>
-/// Some default customizers that allow for including or excluding various parts of the generator test results
+///     Some default customizers that allow for including or excluding various parts of the generator test results
 /// </summary>
 public static class Customizers
 {

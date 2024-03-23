@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.Text;
 
@@ -23,20 +22,26 @@ public static class VerifyGeneratorTextContext
         bool includeOptions = true,
         DiagnosticSeverity? diagnosticSeverityFilter = null
         // ReSharper enable ParameterHidesMember
-    ) => Initialize(
-        diagnosticSeverityFilter,
-        includeInputs ? Customizers.IncludeInputs : Customizers.ExcludeInputs,
-        includeOptions ? Customizers.IncludeParseOptions : Customizers.ExcludeParseOptions,
-        includeOptions ? Customizers.IncludeGlobalOptions : Customizers.ExcludeGlobalOptions,
-        includeOptions ? Customizers.IncludeFileOptions : Customizers.ExcludeFileOptions,
-        includeOptions ? Customizers.IncludeReferences : Customizers.ExcludeReferences
-    );
+    )
+    {
+        Initialize(
+            diagnosticSeverityFilter,
+            includeInputs ? Customizers.IncludeInputs : Customizers.ExcludeInputs,
+            includeOptions ? Customizers.IncludeParseOptions : Customizers.ExcludeParseOptions,
+            includeOptions ? Customizers.IncludeGlobalOptions : Customizers.ExcludeGlobalOptions,
+            includeOptions ? Customizers.IncludeFileOptions : Customizers.ExcludeFileOptions,
+            includeOptions ? Customizers.IncludeReferences : Customizers.ExcludeReferences
+        );
+    }
 
     /// <summary>
     ///     Initializes the context
     /// </summary>
     /// <param name="customizers"></param>
-    public static void Initialize(params GeneratorTestResultsCustomizer[] customizers) => Initialize(null, customizers);
+    public static void Initialize(params GeneratorTestResultsCustomizer[] customizers)
+    {
+        Initialize(null, customizers);
+    }
 
     /// <summary>
     ///     Initializes the context
@@ -46,7 +51,7 @@ public static class VerifyGeneratorTextContext
     {
         if (customizers is [])
         {
-            customizers = [Customizers.Default];
+            customizers = [Customizers.Default,];
         }
 
         VerifyGeneratorTextContext.diagnosticSeverityFilter = diagnosticSeverityFilter;
@@ -141,7 +146,7 @@ public static class VerifyGeneratorTextContext
 
         static GeneratorTestResultsCustomizer executeDelegate(GeneratorTestResultsCustomizer customizer)
         {
-            if (customizer.GetInvocationList() is { Length: > 0 } methods)
+            if (customizer.GetInvocationList() is { Length: > 0, } methods)
             {
                 return (results, target, data) =>
                        {
