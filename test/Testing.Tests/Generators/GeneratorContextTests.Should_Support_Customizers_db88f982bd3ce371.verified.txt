@@ -1,0 +1,23 @@
+﻿{
+  FileOptions: {
+    test.g.cs: {
+      a: value
+    }
+  },
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.Tests.Generators.MySourceGenerator: []
+  },
+  GlobalOptions: {
+    b: key
+  },
+  InputDiagnostics: [],
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

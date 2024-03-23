@@ -1,0 +1,10 @@
+﻿{
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.Tests.Generators.MySourceGenerator: []
+  },
+  ParseOptions: {
+    LanguageVersion: CSharp11,
+    DocumentationMode: Parse
+  }
+}

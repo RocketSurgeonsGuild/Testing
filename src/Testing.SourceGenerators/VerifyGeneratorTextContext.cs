@@ -15,6 +15,7 @@ public static class VerifyGeneratorTextContext
     /// <param name="includeInputs"></param>
     /// <param name="includeOptions"></param>
     /// <param name="diagnosticSeverityFilter"></param>
+    [Obsolete("Use Initialize with customizer methods instead")]
     public static void Initialize(
         // ReSharper disable ParameterHidesMember
         bool includeInputs = false,
@@ -23,12 +24,40 @@ public static class VerifyGeneratorTextContext
         // ReSharper enable ParameterHidesMember
     )
     {
-        VerifyGeneratorTextContext.includeInputs = includeInputs;
-        VerifyGeneratorTextContext.includeOptions = includeOptions;
+        Initialize(
+            diagnosticSeverityFilter,
+            includeInputs ? Customizers.IncludeInputs : Customizers.ExcludeInputs,
+            includeOptions ? Customizers.IncludeParseOptions : Customizers.ExcludeParseOptions,
+            includeOptions ? Customizers.IncludeGlobalOptions : Customizers.ExcludeGlobalOptions,
+            includeOptions ? Customizers.IncludeFileOptions : Customizers.ExcludeFileOptions,
+            includeOptions ? Customizers.IncludeReferences : Customizers.ExcludeReferences
+        );
+    }
+
+    /// <summary>
+    ///     Initializes the context
+    /// </summary>
+    /// <param name="customizers"></param>
+    public static void Initialize(params GeneratorTestResultsCustomizer[] customizers)
+    {
+        Initialize(null, customizers);
+    }
+
+    /// <summary>
+    ///     Initializes the context
+    /// </summary>
+    /// <param name="customizers"></param>
+    public static void Initialize(DiagnosticSeverity? diagnosticSeverityFilter, params GeneratorTestResultsCustomizer[] customizers)
+    {
+        if (customizers is [])
+        {
+            customizers = [Customizers.Default,];
+        }
+
         VerifyGeneratorTextContext.diagnosticSeverityFilter = diagnosticSeverityFilter;
         VerifySourceGenerators.Initialize();
         VerifierSettings.RegisterFileConverter<GeneratorTestResult>(Convert);
-        VerifierSettings.RegisterFileConverter<GeneratorTestResults>(Convert);
+        VerifierSettings.RegisterFileConverter(Convert(customizers));
         VerifierSettings.RegisterFileConverter<CompletionTestResult>(Convert);
         VerifierSettings.RegisterFileConverter<CodeRefactoringTestResult>(Convert);
         VerifierSettings.RegisterFileConverter<CodeFixTestResult>(Convert);
@@ -60,88 +89,81 @@ public static class VerifyGeneratorTextContext
         );
     }
 
-    private static bool includeInputs;
-    private static bool includeOptions;
     internal static DiagnosticSeverity? diagnosticSeverityFilter;
 
-    private static ConversionResult Convert(GeneratorTestResults target, IReadOnlyDictionary<string, object> context)
+    private static Conversion<GeneratorTestResults> Convert(IEnumerable<GeneratorTestResultsCustomizer> customizers)
     {
-        var targets = new List<Target>();
-        if (includeInputs) targets.AddRange(target.InputSyntaxTrees.Select(Selector));
+        var customizer = customizers.Aggregate(Customizers.Empty, generatorTestResultsCustomizer);
 
-        foreach (var item in target.Results)
+        return (target, context) =>
+               {
+                   var targets = new List<Target>();
+                   foreach (var item in target.Results)
+                   {
+                       targets.AddRange(item.Value.SyntaxTrees.Select(Customizers.Selector));
+                   }
+
+                   var data = new Dictionary<string, object>();
+                   executeDelegate(target.Customizers.Aggregate(customizer, generatorTestResultsCustomizer))(target, targets, data);
+
+                   data["FinalDiagnostics"] = target.FinalDiagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults();
+                   data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
+                   data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
+
+                   if (target.CodeFixResults.Count > 0)
+                   {
+                       var results = new Dictionary<string, object>();
+                       foreach (var result in target.CodeFixResults)
+                       {
+                           var converted = Convert(result.Value, context);
+                           results[result.Key.FullName!] = converted.Info!;
+                           targets.AddRange(converted.Targets);
+                       }
+
+                       data["CodeFixes"] = results;
+                   }
+
+                   if (target.CodeRefactoringResults.Count > 0)
+                   {
+                       var results = new Dictionary<string, object>();
+                       foreach (var result in target.CodeRefactoringResults)
+                       {
+                           var converted = Convert(result.Value, context);
+                           results[result.Key.FullName!] = converted.Info!;
+                           targets.AddRange(converted.Targets);
+                       }
+
+                       data["CodeRefactorings"] = results;
+                   }
+
+                   return new(data, targets);
+               };
+
+        static GeneratorTestResultsCustomizer generatorTestResultsCustomizer(GeneratorTestResultsCustomizer seed, GeneratorTestResultsCustomizer value)
         {
-            targets.AddRange(item.Value.SyntaxTrees.Select(Selector));
+            return seed + value;
         }
 
-        var data = new Dictionary<string, object>();
-        if (includeInputs)
+        static GeneratorTestResultsCustomizer executeDelegate(GeneratorTestResultsCustomizer customizer)
         {
-            data["InputDiagnostics"] = target
-                                      .InputDiagnostics
-                                      .Where(s => s.Severity >= target.Severity)
-                                      .OrderDiagnosticResults();
-            data["InputAdditionalTexts"] = target.InputAdditionalTexts;
-        }
-
-        if (includeOptions)
-        {
-            // start here
-            data["ParseOptions"] = new
+            if (customizer.GetInvocationList() is { Length: > 0, } methods)
             {
-                target.ParseOptions.LanguageVersion,
-                target.ParseOptions.DocumentationMode,
-                target.ParseOptions.Kind,
-                target.ParseOptions.Features,
-                target.ParseOptions.PreprocessorSymbolNames,
-            };
-
-            data["GlobalOptions"] = target.GlobalOptions;
-            data["FileOptions"] = target.FileOptions;
-            data["References"] = target
-                                .FinalCompilation
-                                .References
-                                .Select(x => x.Display ?? "")
-                                .Select(Path.GetFileName)
-                                .OrderBy(z => z);
-        }
-
-        data["FinalDiagnostics"] = target.FinalDiagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults();
-        data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
-        data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
-
-        if (target.CodeFixResults.Count > 0)
-        {
-            var results = new Dictionary<string, object>();
-            foreach (var result in target.CodeFixResults)
-            {
-                var converted = Convert(result.Value, context);
-                results[result.Key.FullName!] = converted.Info!;
-                targets.AddRange(converted.Targets);
+                return (results, target, data) =>
+                       {
+                           foreach (var method in methods.OfType<GeneratorTestResultsCustomizer>())
+                           {
+                               method.Invoke(results, target, data);
+                           }
+                       };
             }
 
-            data["CodeFixes"] = results;
+            return customizer;
         }
-
-        if (target.CodeRefactoringResults.Count > 0)
-        {
-            var results = new Dictionary<string, object>();
-            foreach (var result in target.CodeRefactoringResults)
-            {
-                var converted = Convert(result.Value, context);
-                results[result.Key.FullName!] = converted.Info!;
-                targets.AddRange(converted.Targets);
-            }
-
-            data["CodeRefactorings"] = results;
-        }
-
-        return new(data, targets);
     }
 
     private static ConversionResult Convert(GeneratorTestResult target, IReadOnlyDictionary<string, object> context)
     {
-        return new(new { target.Diagnostics, }, target.SyntaxTrees.Select(Selector));
+        return new(new { target.Diagnostics, }, target.SyntaxTrees.Select(Customizers.Selector));
     }
 
     private static ConversionResult Convert(AnalyzerTestResult target, IReadOnlyDictionary<string, object> context)
@@ -246,14 +268,6 @@ public static class VerifyGeneratorTextContext
                 Path.GetFileNameWithoutExtension(hintPath) + "_" + additionalHintPath
             );
         }
-    }
-
-    private static Target Selector(SyntaxTree source)
-    {
-        var hintPath = source.FilePath;
-        var data = $@"//HintName: {hintPath.Replace("\\", "/")}
-{source.GetText()}";
-        return new("cs", data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase), Path.GetFileNameWithoutExtension(hintPath));
     }
 
     private class CodeFixTestResultConverter : WriteOnlyJsonConverter<CodeFixTestResult>

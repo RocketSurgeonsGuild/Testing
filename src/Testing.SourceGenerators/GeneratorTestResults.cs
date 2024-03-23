@@ -19,6 +19,7 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 /// <param name="InputDiagnostics">The initial diagnostics before any generators run</param>
 /// <param name="InputSyntaxTrees">The input sources that are used by the compilation and the generators</param>
 /// <param name="InputAdditionalTexts">The additional input texts that are used by the generators</param>
+/// <param name="Customizers">The additional customizers to handle off to verify</param>
 /// <param name="Severity">The diagnostic severity to report on, can be null</param>
 /// <param name="ParseOptions">The parse options that are used to determine the C# language being used</param>
 /// <param name="GlobalOptions">The global options provided with the initial input</param>
@@ -40,6 +41,7 @@ public record GeneratorTestResults
     ImmutableArray<Diagnostic> InputDiagnostics,
     ImmutableArray<SyntaxTree> InputSyntaxTrees,
     ImmutableArray<AdditionalText> InputAdditionalTexts,
+    ImmutableArray<GeneratorTestResultsCustomizer> Customizers,
     DiagnosticSeverity? Severity,
     CSharpParseOptions ParseOptions,
     ImmutableDictionary<string, string> GlobalOptions,
