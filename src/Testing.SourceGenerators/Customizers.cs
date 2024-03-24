@@ -12,17 +12,10 @@ public static class Customizers
 
     public static GeneratorTestResultsCustomizer Empty = (results, targets, data) => { };
 
-    private static void RemoveTargets(List<Target> targets, GeneratorTestResults results) =>
-        targets.RemoveAll(
-            z => results.InputSyntaxTrees.Any(
-                x => z.Name.Equals(Path.GetFileNameWithoutExtension(x.FilePath))
-            )
-        );
-
     public static GeneratorTestResultsCustomizer Reset = (results, targets, data) =>
                                                          {
                                                              data.Clear();
-                                                                      RemoveTargets(targets, results);
+                                                             RemoveTargets(targets, results);
                                                          };
 
     public static GeneratorTestResultsCustomizer IncludeInputs => static (results, targets, data) =>
@@ -77,5 +70,14 @@ public static class Customizers
         var data = $@"//HintName: {hintPath.Replace("\\", "/")}
 {source.GetText()}";
         return new("cs", data.Replace("\r", string.Empty, StringComparison.OrdinalIgnoreCase), Path.GetFileNameWithoutExtension(hintPath));
+    }
+
+    private static void RemoveTargets(List<Target> targets, GeneratorTestResults results)
+    {
+        targets.RemoveAll(
+            z => results.InputSyntaxTrees.Any(
+                x => z.Name.Equals(Path.GetFileNameWithoutExtension(x.FilePath))
+            )
+        );
     }
 }
