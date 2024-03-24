@@ -98,13 +98,13 @@ public static class VerifyGeneratorTextContext
         return (target, context) =>
                {
                    var targets = new List<Target>();
+                   var data = new Dictionary<string, object>();
+                   executeDelegate(target.Customizers.Aggregate(customizer, generatorTestResultsCustomizer))(target, targets, data);
+
                    foreach (var item in target.Results)
                    {
                        targets.AddRange(item.Value.SyntaxTrees.Select(Customizers.Selector));
                    }
-
-                   var data = new Dictionary<string, object>();
-                   executeDelegate(target.Customizers.Aggregate(customizer, generatorTestResultsCustomizer))(target, targets, data);
 
                    data["FinalDiagnostics"] = target.FinalDiagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults();
                    data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());

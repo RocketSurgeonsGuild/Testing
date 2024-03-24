@@ -12,23 +12,22 @@ public static class Customizers
 
     public static GeneratorTestResultsCustomizer Empty = (results, targets, data) => { };
 
+    private static void RemoveTargets(List<Target> targets, GeneratorTestResults results) =>
+        targets.RemoveAll(
+            z => results.InputSyntaxTrees.Any(
+                x => z.Name.Equals(Path.GetFileNameWithoutExtension(x.FilePath))
+            )
+        );
+
     public static GeneratorTestResultsCustomizer Reset = (results, targets, data) =>
                                                          {
                                                              data.Clear();
-                                                             targets.RemoveAll(
-                                                                 z => results.InputSyntaxTrees.Any(
-                                                                     x => z.Name.StartsWith(Path.GetFileNameWithoutExtension(x.FilePath))
-                                                                 )
-                                                             );
+                                                                      RemoveTargets(targets, results);
                                                          };
 
     public static GeneratorTestResultsCustomizer IncludeInputs => static (results, targets, data) =>
                                                                   {
-                                                                      targets.RemoveAll(
-                                                                          z => results.InputSyntaxTrees.Any(
-                                                                              x => z.Name.StartsWith(Path.GetFileNameWithoutExtension(x.FilePath))
-                                                                          )
-                                                                      );
+                                                                      RemoveTargets(targets, results);
                                                                       targets.AddRange(results.InputSyntaxTrees.Select(Selector));
                                                                       data["InputDiagnostics"] = results
                                                                                                 .InputDiagnostics
@@ -39,11 +38,7 @@ public static class Customizers
 
     public static GeneratorTestResultsCustomizer ExcludeInputs => static (results, targets, data) =>
                                                                   {
-                                                                      targets.RemoveAll(
-                                                                          z => results.InputSyntaxTrees.Any(
-                                                                              x => z.Name.StartsWith(Path.GetFileNameWithoutExtension(x.FilePath))
-                                                                          )
-                                                                      );
+                                                                      RemoveTargets(targets, results);
                                                                       data.Remove("InputDiagnostics");
                                                                       data.Remove("InputAdditionalTexts");
                                                                   };

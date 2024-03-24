@@ -43,6 +43,17 @@ public class GeneratorContextTests : LoggerTest
     }
 
     [Fact]
+    public async Task Should_Not_Filter_Ouputs_Named_After_Input()
+    {
+        var context = GeneratorTestContextBuilder
+                     .Create()
+                     .WithGenerator<MyInputLikeSourceGenerator>()
+                     .AddSources("public class Test { }")
+                     .Build();
+        await Verify(context.GenerateAsync());
+    }
+
+    [Fact]
     public async Task Should_Add_Named_Sources()
     {
         var context = GeneratorTestContextBuilder
