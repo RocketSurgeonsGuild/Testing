@@ -14,7 +14,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             context
                .SyntaxProvider
                .ForAttributeWithMetadataName(
-                    "Rocket.Surgery.Extensions.Testing.AutoFixture.AutoFixtureAttribute",
+                    "Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureAttribute",
                     (node, token) => node.IsKind(SyntaxKind.ClassDeclaration),
                     (syntaxContext, token) => syntaxContext
                 )
@@ -27,7 +27,6 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             initializationContext =>
             {
                 initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.Source);
-                initializationContext.AddSource($"{nameof(BuilderInterface)}.g.cs", BuilderInterface.Source);
                 initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
             }
         );
@@ -74,7 +73,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             var fullList =
                 new[] { Operator(namedTypeSymbol), }
                    .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol)))
-                   .Concat(FixtureWithMethods.BuildFixtureMethods(namedTypeSymbol))
+//                   .Concat(FixtureWithMethods.BuildFixtureMethods(namedTypeSymbol))
                    .Concat(new[] { BuildBuildMethod(namedTypeSymbol, parameterSymbols), })
                    .Concat(
                         parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol)))

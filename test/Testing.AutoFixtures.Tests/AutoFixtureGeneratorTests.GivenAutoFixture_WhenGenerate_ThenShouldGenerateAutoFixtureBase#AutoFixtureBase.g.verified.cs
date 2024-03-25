@@ -1,10 +1,5 @@
+﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs
 using System.Collections.ObjectModel;
-
-namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
-
-internal static class AutoFixtureBase
-{
-    public const string Source = @"using System.Collections.ObjectModel;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
 {
@@ -16,10 +11,10 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
         /// <summary>
         ///     Adds the specified field to the fixture.
         /// </summary>
-        /// <typeparam name=""TFixture"">The type of the fixture.</typeparam>
-        /// <typeparam name=""TField"">The type of the field.</typeparam>
-        /// <param name=""field"">The field.</param>
-        /// <param name=""value"">The value.</param>
+        /// <typeparam name="TFixture">The type of the fixture.</typeparam>
+        /// <typeparam name="TField">The type of the field.</typeparam>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
         /// <returns>The fixture.</returns>
         protected TFixture With<TField>(ref TField field, TField value)
         {
@@ -30,10 +25,10 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
         /// <summary>
         ///     Adds the specified list of fields to the fixture.
         /// </summary>
-        /// <typeparam name=""TFixture"">The type of the fixture.</typeparam>
-        /// <typeparam name=""TField"">The type of the field.</typeparam>
-        /// <param name=""field"">The field.</param>
-        /// <param name=""values"">The values.</param>
+        /// <typeparam name="TFixture">The type of the fixture.</typeparam>
+        /// <typeparam name="TField">The type of the field.</typeparam>
+        /// <param name="field">The field.</param>
+        /// <param name="values">The values.</param>
         /// <returns>The fixture.</returns>
         protected TFixture With<TField>(ref Collection<TField>? field, IEnumerable<TField>? values)
         {
@@ -51,10 +46,10 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
         /// <summary>
         ///     Adds the specified list of fields to the fixture.
         /// </summary>
-        /// <typeparam name=""TFixture"">The type of the fixture.</typeparam>
-        /// <typeparam name=""TField"">The type of the field.</typeparam>
-        /// <param name=""field"">The field.</param>
-        /// <param name=""values"">The values.</param>
+        /// <typeparam name="TFixture">The type of the fixture.</typeparam>
+        /// <typeparam name="TField">The type of the field.</typeparam>
+        /// <param name="field">The field.</param>
+        /// <param name="values">The values.</param>
         /// <returns>The fixture.</returns>
         protected TFixture With<TField>(ref List<TField>? field, IEnumerable<TField>? values)
         {
@@ -69,10 +64,10 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
         /// <summary>
         ///     Adds the specified field to the fixture.
         /// </summary>
-        /// <typeparam name=""TFixture"">The type of the fixture.</typeparam>
-        /// <typeparam name=""TField"">The type of the field.</typeparam>
-        /// <param name=""field"">The field.</param>
-        /// <param name=""value"">The value.</param>
+        /// <typeparam name="TFixture">The type of the fixture.</typeparam>
+        /// <typeparam name="TField">The type of the field.</typeparam>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
         /// <returns>The fixture.</returns>
         protected TFixture With<TField>(ref Collection<TField>? field, TField value)
         {
@@ -83,10 +78,10 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
         /// <summary>
         ///     Adds the specified field to the fixture.
         /// </summary>
-        /// <typeparam name=""TFixture"">The type of the fixture.</typeparam>
-        /// <typeparam name=""TField"">The type of the field.</typeparam>
-        /// <param name=""field"">The field.</param>
-        /// <param name=""value"">The value.</param>
+        /// <typeparam name="TFixture">The type of the fixture.</typeparam>
+        /// <typeparam name="TField">The type of the field.</typeparam>
+        /// <param name="field">The field.</param>
+        /// <param name="value">The value.</param>
         /// <returns>The fixture.</returns>
         protected TFixture With<TField>(ref List<TField>? field, TField value)
         {
@@ -97,11 +92,11 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
         /// <summary>
         ///     Adds the specified key value pair to the provided dictionary.
         /// </summary>
-        /// <typeparam name=""TFixture"">The type of the fixture.</typeparam>
-        /// <typeparam name=""TKey"">The type of the key.</typeparam>
-        /// <typeparam name=""TField"">The type of the field.</typeparam>
-        /// <param name=""dictionary"">The dictionary.</param>
-        /// <param name=""keyValuePair"">The key value pair.</param>
+        /// <typeparam name="TFixture">The type of the fixture.</typeparam>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TField">The type of the field.</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="keyValuePair">The key value pair.</param>
         /// <returns>The fixture.</returns>
         protected TFixture With<TKey, TField>(
             ref Dictionary<TKey, TField> dictionary,
@@ -118,12 +113,12 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
         /// <summary>
         ///     Adds the specified key and value to the provided dictionary.
         /// </summary>
-        /// <typeparam name=""TFixture"">The type of the fixture.</typeparam>
-        /// <typeparam name=""TKey"">The type of the key.</typeparam>
-        /// <typeparam name=""TField"">The type of the field.</typeparam>
-        /// <param name=""dictionary"">The dictionary.</param>
-        /// <param name=""key"">The key.</param>
-        /// <param name=""value"">The value.</param>
+        /// <typeparam name="TFixture">The type of the fixture.</typeparam>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TField">The type of the field.</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
         /// <returns>The fixture.</returns>
         protected TFixture With<TKey, TField>(ref Dictionary<TKey, TField> dictionary, TKey key, TField value)
             where TKey : notnull
@@ -137,11 +132,11 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
         /// <summary>
         ///     Adds the specified dictionary to the provided dictionary.
         /// </summary>
-        /// <typeparam name=""TFixture"">The type of the fixture.</typeparam>
-        /// <typeparam name=""TKey"">The type of the key.</typeparam>
-        /// <typeparam name=""TField"">The type of the field.</typeparam>
-        /// <param name=""dictionary"">The dictionary.</param>
-        /// <param name=""keyValuePair"">The key value pair.</param>
+        /// <typeparam name="TFixture">The type of the fixture.</typeparam>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TField">The type of the field.</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="keyValuePair">The key value pair.</param>
         /// <returns>The fixture.</returns>
         protected TFixture With<TKey, TField>(
             ref Dictionary<TKey, TField> dictionary,
@@ -153,5 +148,4 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
             return this as TFixture ?? throw new InvalidOperationException();
         }
     }
-}";
 }

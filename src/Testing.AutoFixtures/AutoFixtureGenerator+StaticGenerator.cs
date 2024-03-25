@@ -92,7 +92,7 @@ public partial class AutoFixtureGenerator
                                    IdentifierName(
                                        Identifier(
                                            TriviaList(),
-                                           TestFixtureBuilder,
+                                           nameof(AutoFixtureBase),
                                            TriviaList(
                                                LineFeed
                                            )
@@ -283,11 +283,7 @@ public partial class AutoFixtureGenerator
                .WithExpressionBody(
                     ArrowExpressionClause(
                             InvocationExpression(
-                                    MemberAccessExpression(
-                                        SyntaxKind.SimpleMemberAccessExpression,
-                                        ThisExpression(),
-                                        IdentifierName("With")
-                                    )
+                                    IdentifierName("With")
                                 )
                                .WithArgumentList(
                                     ArgumentList(
@@ -494,5 +490,5 @@ public partial class AutoFixtureGenerator
 
     private const string Fixture = nameof(Fixture);
 
-    private const string TestFixtureBuilder = "ITestFixtureBuilder";
+//    private const string TestFixtureBuilder = "ITestFixtureBuilder";
 }

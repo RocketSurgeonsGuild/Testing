@@ -17,7 +17,7 @@ public class AutoFixtureGeneratorTests
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(List<>))
-               .IgnoreOutputFile("BuilderInterface.g.cs")
+               .IgnoreOutputFile("AutoFixtureBase.g.cs")
                .Build();
 
         // When
@@ -28,7 +28,7 @@ public class AutoFixtureGeneratorTests
     }
 
     [Fact]
-    public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateFixtureBuilderExtensions()
+    public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateAutoFixtureBase()
     {
         // Given
         var generatorInstance =
@@ -50,15 +50,15 @@ public class AutoFixtureGeneratorTests
     [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
     public async Task GivenAutoFixtureAttributeUsage_WhenGenerate_ThenGeneratedAutoFixture(string source)
     {
-        // Given
+        // Givenzz
         var generatorInstance =
             GeneratorTestContextBuilder
                .Create()
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderInterface.g.cs")
                .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .IgnoreOutputFile("AutoFixtureBase.g.cs")
                .AddSources(source)
                .Build();
 
@@ -81,8 +81,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Fake))
-               .IgnoreOutputFile("BuilderInterface.g.cs")
                .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .IgnoreOutputFile("AutoFixtureBase.g.cs")
                .AddSources(source)
                .Build();
 
@@ -104,8 +104,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderInterface.g.cs")
                .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .IgnoreOutputFile("AutoFixtureBase.g.cs")
                .AddSources(source)
                .Build();
 
@@ -128,8 +128,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderInterface.g.cs")
                .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .IgnoreOutputFile("AutoFixtureBase.g.cs")
                .AddSources(classSource, fixtureSource)
                .Build();
 
@@ -152,8 +152,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderInterface.g.cs")
                .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .IgnoreOutputFile("AutoFixtureBase.g.cs")
                .AddSources(deckSource, cardSource, fixtureSource)
                .Build();
 
@@ -179,8 +179,8 @@ public class AutoFixtureGeneratorTests
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(ILogger<>))
                .AddReferences(typeof(Substitute))
-               .IgnoreOutputFile("BuilderInterface.g.cs")
                .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
+               .IgnoreOutputFile("AutoFixtureBase.g.cs")
                .AddSources(cardSource, deckSource, fixtureSource)
                .Build();
 
