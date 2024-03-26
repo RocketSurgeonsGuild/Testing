@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Rocket.Surgery.Extensions.Testing.AutoFixture
+namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
 {
     [AttributeUsage(AttributeTargets.Class)]
     [Conditional("CODEGEN")]

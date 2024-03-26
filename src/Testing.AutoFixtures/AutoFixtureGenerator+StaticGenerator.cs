@@ -92,7 +92,7 @@ public partial class AutoFixtureGenerator
                                    IdentifierName(
                                        Identifier(
                                            TriviaList(),
-                                           TestFixtureBuilder,
+                                           nameof(AutoFixtureBase),
                                            TriviaList(
                                                LineFeed
                                            )
@@ -283,11 +283,7 @@ public partial class AutoFixtureGenerator
                .WithExpressionBody(
                     ArrowExpressionClause(
                             InvocationExpression(
-                                    MemberAccessExpression(
-                                        SyntaxKind.SimpleMemberAccessExpression,
-                                        ThisExpression(),
-                                        IdentifierName("With")
-                                    )
+                                    IdentifierName("With")
                                 )
                                .WithArgumentList(
                                     ArgumentList(
@@ -443,10 +439,6 @@ public partial class AutoFixtureGenerator
               .Last();
     }
 
-    private const string Fixture = nameof(Fixture);
-
-    private const string TestFixtureBuilder = "ITestFixtureBuilder";
-
     private static InvocationExpressionSyntax GetFieldInvocation(Compilation compilation, IParameterSymbol symbol)
     {
         var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
@@ -495,4 +487,8 @@ public partial class AutoFixtureGenerator
             );
         }
     }
+
+    private const string Fixture = nameof(Fixture);
+
+//    private const string TestFixtureBuilder = "ITestFixtureBuilder";
 }

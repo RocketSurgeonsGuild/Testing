@@ -29,13 +29,13 @@ public static class AutoFixtureGeneratorData
     private const string BasicSource = @"using System;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using Rocket.Surgery.Extensions.Testing.AutoFixture;
+using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 
 namespace Goony.Goo.Goo.Tests
 {
     [AutoFixture(typeof(Authenticator))]
-    internal sealed partial class AuthenticatorFixture : ITestFixtureBuilder { }
+    internal sealed partial class AuthenticatorFixture { }
 }
 
 namespace Goony.Goo.Goo
@@ -54,13 +54,13 @@ namespace Goony.Goo.Goo
     private const string TargetFixtureSource = @"using System;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using Rocket.Surgery.Extensions.Testing.AutoFixture;
+using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 
 namespace Goony.Goo.Goo.Tests
 {
     [AutoFixture(typeof(Authenticator))]
-    internal sealed partial class AuthenticatorFixture : ITestFixtureBuilder { }
+    internal sealed partial class AuthenticatorFixture { }
 }
 ";
 
@@ -189,18 +189,18 @@ namespace Goony.Goo.Goo
     }
 }";
 
-    private const string DeckAutoFixtureAttributedSource = @"using Rocket.Surgery.Extensions.Testing.AutoFixture;
+    private const string DeckAutoFixtureAttributedSource = @"using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo.Tests
 {
     [AutoFixture(typeof(Deck))]
-    internal partial class DeckFixture : ITestFixtureBuilder {}
+    internal partial class DeckFixture {}
 }";
 
     private const string AttributeOnClassSource = @"using System;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using Rocket.Surgery.Extensions.Testing.AutoFixture;
+using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo.Tests
 {
