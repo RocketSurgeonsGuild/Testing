@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 internal static class AutoFixtureBase
