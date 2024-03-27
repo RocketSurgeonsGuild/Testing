@@ -39,6 +39,7 @@ public partial class AutoFixtureGenerator
     private static ClassDeclarationSyntax BuildClassDeclaration(ISymbol namedTypeSymbol)
     {
         var fixture = $"{namedTypeSymbol.Name}{Fixture}";
+
         return ClassDeclaration(
                    Identifier(
                        TriviaList(),
