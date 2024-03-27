@@ -50,7 +50,7 @@ public class AutoFixtureGeneratorTests
     [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
     public async Task GivenAutoFixtureAttributeUsage_WhenGenerate_ThenGeneratedAutoFixture(string source)
     {
-        // Givenzz
+        // Given
         var generatorInstance =
             GeneratorTestContextBuilder
                .Create()

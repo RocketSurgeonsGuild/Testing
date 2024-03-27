@@ -50,8 +50,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                 namedTypeSymbol
                    .Constructors
                    .SelectMany(methodSymbol => methodSymbol.Parameters)
-                   .Distinct(SymbolEqualityComparer.Default)
-                   .OfType<IParameterSymbol>()
+                   .Distinct(ParameterReductionComparer.Default)
                    .ToList();
 
             foreach (var location in parameterSymbols
@@ -72,8 +71,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
 
             var fullList =
                 new[] { Operator(namedTypeSymbol), }
-                   .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol)))
-//                   .Concat(FixtureWithMethods.BuildFixtureMethods(namedTypeSymbol))
+                   .Concat(parameterSymbols.Select(WithPropertyMethod))
                    .Concat(new[] { BuildBuildMethod(namedTypeSymbol, parameterSymbols), })
                    .Concat(
                         parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol)))
@@ -114,6 +112,20 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                    .NormalizeWhitespace();
 
             productionContext.AddSource($"{namedTypeSymbol.Name}.AutoFixture.g.cs", unit.ToFullString());
+        }
+    }
+
+    internal class ParameterReductionComparer : IEqualityComparer<IParameterSymbol>
+    {
+        public static IEqualityComparer<IParameterSymbol> Default { get; } = new ParameterReductionComparer();
+        public bool Equals(IParameterSymbol x, IParameterSymbol y)
+        {
+            return ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
+        }
+
+        public int GetHashCode(IParameterSymbol obj)
+        {
+            return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
         }
     }
 }

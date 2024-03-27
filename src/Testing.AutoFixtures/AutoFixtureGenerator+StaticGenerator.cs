@@ -247,7 +247,7 @@ public partial class AutoFixtureGenerator
                             )
                         )
                     ),
-                    Identifier($"With{SplitLastCamel(constructorParameter)}")
+                    withTypeOrParameterName(constructorParameter)
                 )
                .WithModifiers(
                     TokenList(
@@ -341,6 +341,12 @@ public partial class AutoFixtureGenerator
                 )
                .WithTrailingTrivia(LineFeed)
         );
+
+        SyntaxToken withTypeOrParameterName(IParameterSymbol parameterSymbol)
+        {
+            var splitLastCamel = parameterSymbol.Type.IsValueType ? parameterSymbol.Name : SplitLastCamel(parameterSymbol);
+            return Identifier($"With{splitLastCamel}");
+        }
     }
 
     private static MemberDeclarationSyntax Operator(ISymbol namedTypeSymbol)
