@@ -5,7 +5,7 @@ public static class DuplicateConstructorParameterData
     public static IEnumerable<object[]> Data =>
         new List<object[]>
         {
-            new object[] { ClassSource, AttributedFixtureSource },
+            new object[] { ClassSource, AttributedFixtureSource, },
         };
 
     private const string ClassSource =
@@ -33,4 +33,3 @@ namespace Goony.Goo.Goo.Tests
     internal sealed partial class DuplicateConstructorParameterFixture { }
 }";
 }
-

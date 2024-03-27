@@ -446,12 +446,14 @@ public partial class AutoFixtureGenerator
               .WithTrailingTrivia(LineFeed);
     }
 
-    private static string SplitLastCamel(IParameterSymbol typeSymbol) =>
-        Regex
-           .Replace(typeSymbol.Type.Name, "([A-Z])", " $1", RegexOptions.Compiled)
-           .Trim()
-           .Split(' ')
-           .Last();
+    private static string SplitLastCamel(IParameterSymbol typeSymbol)
+    {
+        return Regex
+              .Replace(typeSymbol.Type.Name, "([A-Z])", " $1", RegexOptions.Compiled)
+              .Trim()
+              .Split(' ')
+              .Last();
+    }
 
     private static InvocationExpressionSyntax GetFieldInvocation(Compilation compilation, IParameterSymbol symbol)
     {
@@ -492,12 +494,14 @@ public partial class AutoFixtureGenerator
             )
         );
 
-        TypeArgumentListSyntax typeArgumentListSyntax(IParameterSymbol parameterSymbol) =>
-            TypeArgumentList(
+        TypeArgumentListSyntax typeArgumentListSyntax(IParameterSymbol parameterSymbol)
+        {
+            return TypeArgumentList(
                 SingletonSeparatedList<TypeSyntax>(
                     ParseName(parameterSymbol.Type.GetGenericDisplayName())
                 )
             );
+        }
     }
 
     private const string Fixture = nameof(Fixture);

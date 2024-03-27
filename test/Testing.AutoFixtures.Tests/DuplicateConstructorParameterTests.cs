@@ -29,6 +29,7 @@ public class DuplicateConstructorParameterTests
         // Then
         await Verify(result).UseHashedParameters(classSource, fixtureSource);
     }
+
     [Theory]
     [MemberData(nameof(DuplicateConstructorParameterData.Data), MemberType = typeof(DuplicateConstructorParameterData))]
     public async Task GivenMultiplePrimitiveConstructorParameters_WhenGenerate_ThenGeneratedByParameterName(string classSource, string fixtureSource)
