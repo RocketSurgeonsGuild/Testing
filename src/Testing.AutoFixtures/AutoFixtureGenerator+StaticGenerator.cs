@@ -344,7 +344,8 @@ public partial class AutoFixtureGenerator
 
         SyntaxToken withTypeOrParameterName(IParameterSymbol parameterSymbol)
         {
-            var splitLastCamel = parameterSymbol.Type.IsValueType ? parameterSymbol.Name : SplitLastCamel(parameterSymbol);
+            var primitiveName = $"{char.ToUpper(parameterSymbol.Name[0])}{parameterSymbol.Name.Substring(1, parameterSymbol.Name.Length - 1)}";
+            var splitLastCamel = parameterSymbol.Type.IsValueType ? primitiveName : SplitLastCamel(parameterSymbol);
             return Identifier($"With{splitLastCamel}");
         }
     }
@@ -445,14 +446,12 @@ public partial class AutoFixtureGenerator
               .WithTrailingTrivia(LineFeed);
     }
 
-    private static string SplitLastCamel(IParameterSymbol typeSymbol)
-    {
-        return Regex
-              .Replace(typeSymbol.Type.Name, "([A-Z])", " $1", RegexOptions.Compiled)
-              .Trim()
-              .Split(' ')
-              .Last();
-    }
+    private static string SplitLastCamel(IParameterSymbol typeSymbol) =>
+        Regex
+           .Replace(typeSymbol.Type.Name, "([A-Z])", " $1", RegexOptions.Compiled)
+           .Trim()
+           .Split(' ')
+           .Last();
 
     private static InvocationExpressionSyntax GetFieldInvocation(Compilation compilation, IParameterSymbol symbol)
     {
@@ -468,7 +467,7 @@ public partial class AutoFixtureGenerator
                             Identifier("Fake")
                         )
                        .WithTypeArgumentList(
-                            TypeArgumentListSyntax(symbol)
+                            typeArgumentListSyntax(symbol)
                         )
                 )
             );
@@ -486,24 +485,20 @@ public partial class AutoFixtureGenerator
                         )
                     )
                    .WithTypeArgumentList(
-                        TypeArgumentListSyntax(
+                        typeArgumentListSyntax(
                             symbol
                         )
                     )
             )
         );
 
-        TypeArgumentListSyntax TypeArgumentListSyntax(IParameterSymbol parameterSymbol)
-        {
-            return TypeArgumentList(
+        TypeArgumentListSyntax typeArgumentListSyntax(IParameterSymbol parameterSymbol) =>
+            TypeArgumentList(
                 SingletonSeparatedList<TypeSyntax>(
                     ParseName(parameterSymbol.Type.GetGenericDisplayName())
                 )
             );
-        }
     }
 
     private const string Fixture = nameof(Fixture);
-
-//    private const string TestFixtureBuilder = "ITestFixtureBuilder";
 }

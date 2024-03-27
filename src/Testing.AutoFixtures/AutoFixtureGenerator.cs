@@ -20,7 +20,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                 )
                .Combine(context.CompilationProvider);
 
-        context.RegisterSourceOutput(syntaxProvider, GenerateFixtureBuilder);
+        context.RegisterSourceOutput(syntaxProvider, generateFixtureBuilder);
 
         // do generator things
         context.RegisterPostInitializationOutput(
@@ -31,7 +31,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             }
         );
 
-        void GenerateFixtureBuilder(
+        void generateFixtureBuilder(
             SourceProductionContext productionContext,
             (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
         )
@@ -80,7 +80,6 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
                .WithMembers(new(fullList));
 
-            // TODO: [rlittlesii: March 01, 2024] Configure use of same namespace, or define a namespace, or add suffix.
             var namespaceDeclaration = BuildNamespace(syntaxContext.TargetSymbol)
                .WithMembers(new(classDeclaration));
 
