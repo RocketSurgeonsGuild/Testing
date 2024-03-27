@@ -38,10 +38,12 @@ public partial class AutoFixtureGenerator
 
     private static ClassDeclarationSyntax BuildClassDeclaration(ISymbol namedTypeSymbol)
     {
+        var fixture = $"{namedTypeSymbol.Name}{Fixture}";
+
         return ClassDeclaration(
                    Identifier(
                        TriviaList(),
-                       $"{namedTypeSymbol.Name}{Fixture}",
+                       fixture,
                        TriviaList(
                            Space
                        )
@@ -89,15 +91,22 @@ public partial class AutoFixtureGenerator
                    BaseList(
                            SingletonSeparatedList<BaseTypeSyntax>(
                                SimpleBaseType(
-                                   IdentifierName(
-                                       Identifier(
-                                           TriviaList(),
-                                           nameof(AutoFixtureBase),
-                                           TriviaList(
-                                               LineFeed
+                                   GenericName(
+                                           Identifier(
+                                               TriviaList(),
+                                               nameof(AutoFixtureBase),
+                                               TriviaList(
+                                                   LineFeed
+                                               )
                                            )
                                        )
-                                   )
+                                      .WithTypeArgumentList(
+                                           TypeArgumentList(
+                                               SingletonSeparatedList<TypeSyntax>(
+                                                   IdentifierName(fixture)
+                                               )
+                                           )
+                                       )
                                )
                            )
                        )

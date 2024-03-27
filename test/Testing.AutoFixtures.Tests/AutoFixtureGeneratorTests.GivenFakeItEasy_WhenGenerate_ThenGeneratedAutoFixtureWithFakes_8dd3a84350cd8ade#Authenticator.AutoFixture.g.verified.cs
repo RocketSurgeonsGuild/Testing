@@ -1,12 +1,13 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/Authenticator.AutoFixture.g.cs
-using FakeItEasy;
 using System.Collections.ObjectModel;
 using Goony.Goo.Goo;
 using Microsoft.Extensions.Logging;
+using FakeItEasy;
+using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo.Tests
 {
-    internal sealed partial class AuthenticatorFixture : AutoFixtureBase
+    internal sealed partial class AuthenticatorFixture : AutoFixtureBase<AuthenticatorFixture>
     {
         public static implicit operator Authenticator(AuthenticatorFixture fixture) => fixture.Build();
         public AuthenticatorFixture WithClient(Goony.Goo.Goo.IAuthenticationClient authenticationClient) => With(ref _authenticationClient, authenticationClient);
