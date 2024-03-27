@@ -32,20 +32,5 @@ namespace Goony.Goo.Goo.Tests
     [AutoFixture(typeof(DuplicateConstructorParameter))]
     internal sealed partial class DuplicateConstructorParameterFixture { }
 }";
-
-}
-public class DuplicateConstructorParameter
-{
-    public DuplicateConstructorParameter(int count, bool ready, double percentage, int range)
-    {
-    }
-
-    public DuplicateConstructorParameter(int count, bool ready, double percentage)
-    {
-    }
-
-    public DuplicateConstructorParameter(int count, bool ready)
-    {
-    }
 }
 
