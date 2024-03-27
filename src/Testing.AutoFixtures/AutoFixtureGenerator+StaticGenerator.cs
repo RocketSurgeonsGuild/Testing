@@ -92,17 +92,21 @@ public partial class AutoFixtureGenerator
                            SingletonSeparatedList<BaseTypeSyntax>(
                                SimpleBaseType(
                                    GenericName(
-                                       Identifier(
-                                           TriviaList(),
-                                           nameof(AutoFixtureBase),
-                                           TriviaList(
-                                               LineFeed
+                                           Identifier(
+                                               TriviaList(),
+                                               nameof(AutoFixtureBase),
+                                               TriviaList(
+                                                   LineFeed
+                                               )
                                            )
                                        )
-                                   ).WithTypeArgumentList(
-                                       TypeArgumentList(
-                                           SingletonSeparatedList<TypeSyntax>(
-                                               IdentifierName(fixture))))
+                                      .WithTypeArgumentList(
+                                           TypeArgumentList(
+                                               SingletonSeparatedList<TypeSyntax>(
+                                                   IdentifierName(fixture)
+                                               )
+                                           )
+                                       )
                                )
                            )
                        )
