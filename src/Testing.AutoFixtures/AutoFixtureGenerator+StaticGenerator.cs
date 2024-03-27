@@ -38,10 +38,11 @@ public partial class AutoFixtureGenerator
 
     private static ClassDeclarationSyntax BuildClassDeclaration(ISymbol namedTypeSymbol)
     {
+        var fixture = $"{namedTypeSymbol.Name}{Fixture}";
         return ClassDeclaration(
                    Identifier(
                        TriviaList(),
-                       $"{namedTypeSymbol.Name}{Fixture}",
+                       fixture,
                        TriviaList(
                            Space
                        )
@@ -89,7 +90,7 @@ public partial class AutoFixtureGenerator
                    BaseList(
                            SingletonSeparatedList<BaseTypeSyntax>(
                                SimpleBaseType(
-                                   IdentifierName(
+                                   GenericName(
                                        Identifier(
                                            TriviaList(),
                                            nameof(AutoFixtureBase),
@@ -97,7 +98,10 @@ public partial class AutoFixtureGenerator
                                                LineFeed
                                            )
                                        )
-                                   )
+                                   ).WithTypeArgumentList(
+                                       TypeArgumentList(
+                                           SingletonSeparatedList<TypeSyntax>(
+                                               IdentifierName(fixture))))
                                )
                            )
                        )

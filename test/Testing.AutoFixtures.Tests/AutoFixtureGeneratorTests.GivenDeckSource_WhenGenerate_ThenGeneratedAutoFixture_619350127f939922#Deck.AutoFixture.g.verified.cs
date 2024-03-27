@@ -1,11 +1,12 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/Deck.AutoFixture.g.cs
-using NSubstitute;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using NSubstitute;
+using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo.Tests
 {
-    internal sealed partial class DeckFixture : AutoFixtureBase
+    internal sealed partial class DeckFixture : AutoFixtureBase<DeckFixture>
     {
         public static implicit operator Deck(DeckFixture fixture) => fixture.Build();
         public DeckFixture WithEnumerable(System.Collections.Generic.IEnumerable<Goony.Goo.Goo.Card> cards) => With(ref _cards, cards);

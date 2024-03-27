@@ -88,11 +88,11 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
 
             var usings =
                 parameterSymbols
-                   .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString())
+                   .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
                    .Where(x => !string.IsNullOrWhiteSpace(x))
                    .Distinct()
                    .OrderBy(x => x)
-                   .Select(x => UsingDirective(ParseName(x!)))
+                   .Select(x => UsingDirective(ParseName(x)))
                    .ToArray();
 
             var mockLibrary = UsingDirective(
@@ -106,9 +106,10 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             );
             var unit =
                 CompilationUnit()
-                   .AddUsings(mockLibrary)
                    .AddUsings(UsingDirective(ParseName("System.Collections.ObjectModel")))
                    .AddUsings(usings)
+                   .AddUsings(mockLibrary)
+                   .AddUsings(UsingDirective(ParseName("Rocket.Surgery.Extensions.Testing.AutoFixtures")))
                    .AddMembers(namespaceDeclaration)
                    .NormalizeWhitespace();
 
