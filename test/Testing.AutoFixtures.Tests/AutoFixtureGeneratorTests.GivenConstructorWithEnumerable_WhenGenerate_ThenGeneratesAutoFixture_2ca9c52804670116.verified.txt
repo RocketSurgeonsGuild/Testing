@@ -8,10 +8,10 @@
     DocumentationMode: Parse
   },
   References: [
+    FakeItEasy.dll,
     Microsoft.Extensions.Logging.Abstractions.dll,
     mscorlib.dll,
     netstandard.dll,
-    NSubstitute.dll,
     System.Core.dll,
     System.dll,
     System.Private.CoreLib.dll,
