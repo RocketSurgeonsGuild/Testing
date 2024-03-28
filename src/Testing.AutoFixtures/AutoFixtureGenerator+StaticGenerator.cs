@@ -247,7 +247,7 @@ public partial class AutoFixtureGenerator
                             )
                         )
                     ),
-                    Identifier($"With{SplitLastCamel(constructorParameter)}")
+                    withTypeOrParameterName(constructorParameter)
                 )
                .WithModifiers(
                     TokenList(
@@ -341,6 +341,13 @@ public partial class AutoFixtureGenerator
                 )
                .WithTrailingTrivia(LineFeed)
         );
+
+        SyntaxToken withTypeOrParameterName(IParameterSymbol parameterSymbol)
+        {
+            var primitiveName = $"{char.ToUpper(parameterSymbol.Name[0])}{parameterSymbol.Name.Substring(1, parameterSymbol.Name.Length - 1)}";
+            var splitLastCamel = parameterSymbol.Type.IsValueType ? primitiveName : SplitLastCamel(parameterSymbol);
+            return Identifier($"With{splitLastCamel}");
+        }
     }
 
     private static MemberDeclarationSyntax Operator(ISymbol namedTypeSymbol)
@@ -462,7 +469,7 @@ public partial class AutoFixtureGenerator
                             Identifier("Fake")
                         )
                        .WithTypeArgumentList(
-                            TypeArgumentListSyntax(symbol)
+                            typeArgumentListSyntax(symbol)
                         )
                 )
             );
@@ -480,14 +487,14 @@ public partial class AutoFixtureGenerator
                         )
                     )
                    .WithTypeArgumentList(
-                        TypeArgumentListSyntax(
+                        typeArgumentListSyntax(
                             symbol
                         )
                     )
             )
         );
 
-        TypeArgumentListSyntax TypeArgumentListSyntax(IParameterSymbol parameterSymbol)
+        TypeArgumentListSyntax typeArgumentListSyntax(IParameterSymbol parameterSymbol)
         {
             return TypeArgumentList(
                 SingletonSeparatedList<TypeSyntax>(
@@ -498,6 +505,4 @@ public partial class AutoFixtureGenerator
     }
 
     private const string Fixture = nameof(Fixture);
-
-//    private const string TestFixtureBuilder = "ITestFixtureBuilder";
 }
