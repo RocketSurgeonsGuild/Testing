@@ -2,7 +2,9 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 internal static class AutoFixtureBase
 {
-    public const string Source = @"using System.Collections.ObjectModel;
+    public const string Source = @"using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
 {
