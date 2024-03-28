@@ -1,4 +1,6 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
