@@ -1,26 +1,45 @@
+using FakeItEasy;
+using NSubstitute;
+
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-public static class DuplicateConstructorParameterData
+internal class DuplicateConstructorParameterData : AutoFixtureSourceData
 {
     public static IEnumerable<object[]> Data =>
         new List<object[]>
         {
-            new object[] { ClassSource, AttributedFixtureSource, },
+            new object[]
+            {
+                DefaultBuilder()
+                   .AddReferences(typeof(Fake))
+                   .AddSources(ClassSource, AttributedFixtureSource)
+                   .Build(),
+            },
+            new object[]
+            {
+                DefaultBuilder()
+                   .AddReferences(typeof(Substitute))
+                   .AddSources(ClassSource, AttributedFixtureSource)
+                   .Build(),
+            },
         };
 
     private const string ClassSource =
-        @"public class DuplicateConstructorParameter
+        @"namespace Goony.Goo.Goo
 {
-    public DuplicateConstructorParameter(int count, bool ready, double percentage, int range)
+    public class DuplicateConstructorParameter
     {
-    }
+        public DuplicateConstructorParameter(int count, bool ready, double percentage, int range)
+        {
+        }
 
-    public DuplicateConstructorParameter(int count, bool ready, double percentage)
-    {
-    }
+        public DuplicateConstructorParameter(int count, bool ready, double percentage)
+        {
+        }
 
-    public DuplicateConstructorParameter(int count, bool ready)
-    {
+        public DuplicateConstructorParameter(int count, bool ready)
+        {
+        }
     }
 }";
 
