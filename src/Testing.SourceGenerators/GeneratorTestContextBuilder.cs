@@ -47,7 +47,7 @@ public record GeneratorTestContextBuilder
     private DiagnosticSeverity? _diagnosticSeverity = VerifyGeneratorTextContext.diagnosticSeverityFilter;
 
     private ImmutableHashSet<MetadataReference> _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
-    private ImmutableHashSet<Assembly> _assemblyReferences = ImmutableHashSet<Assembly>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
+    private ImmutableHashSet<string> _referenceNames = ImmutableHashSet<string>.Empty.WithComparer(StringComparer.OrdinalIgnoreCase);
 
     private ImmutableHashSet<Type> _relatedTypes = ImmutableHashSet<Type>.Empty;
     private ImmutableArray<NamedSourceText> _sources = ImmutableArray<NamedSourceText>.Empty;
@@ -291,7 +291,10 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddCompilationReferences(params GeneratorTestResults[] additionalCompilations)
     {
-        return AddReferences(additionalCompilations.Select(z => z.MetadataReference!).ToArray());
+        return AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
+        {
+            _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name)),
+        };
     }
 
     /// <summary>
@@ -303,9 +306,12 @@ public record GeneratorTestContextBuilder
     {
         // this "core assemblies hack" is from https://stackoverflow.com/a/47196516/4418060
         var coreAssemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location)!;
-        return AddReferences(
+        return AddReferencesInternal(
             assemblyNames.Select(z => MetadataReference.CreateFromFile(Path.Combine(coreAssemblyPath, z))).OfType<MetadataReference>().ToArray()
-        );
+        ) with
+        {
+            _referenceNames = _referenceNames.Union(assemblyNames),
+        };
     }
 
     /// <summary>
@@ -315,13 +321,16 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddReferences(params MetadataReference[] references)
     {
-        var set = _metadataReferences.ToBuilder();
+        var names = _referenceNames.ToBuilder();
         foreach (var reference in references)
         {
-            set.Add(reference);
+            names.Add(Path.GetFileName(reference.Display ?? ""));
         }
 
-        return this with { _metadataReferences = set.ToImmutable(), };
+        return AddReferencesInternal(references) with
+        {
+            _referenceNames = names.ToImmutable(),
+        };
     }
 
     /// <summary>
@@ -341,7 +350,10 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddReferences(params Assembly[] references)
     {
-        return this with { _assemblyReferences = _assemblyReferences.Union(references), };
+        return AddReferencesInternal(references.Select(z => MetadataReference.CreateFromFile(z.Location)).OfType<MetadataReference>().ToArray()) with
+        {
+            _referenceNames = _referenceNames.Union(references.Select(z => z.GetName().Name ?? "")),
+        };
     }
 
     /// <summary>
@@ -360,6 +372,25 @@ public record GeneratorTestContextBuilder
             #endif
             "System.Runtime.dll"
         );
+    }
+
+    /// <summary>
+    ///     Add a set of metadata references to the compilation
+    /// </summary>
+    /// <param name="references"></param>
+    /// <returns></returns>
+    private GeneratorTestContextBuilder AddReferencesInternal(IEnumerable<MetadataReference> references)
+    {
+        var set = _metadataReferences.ToBuilder();
+        foreach (var reference in references)
+        {
+            set.Add(reference);
+        }
+
+        return this with
+        {
+            _metadataReferences = set.ToImmutable(),
+        };
     }
 
     /// <summary>
@@ -527,7 +558,7 @@ public record GeneratorTestContextBuilder
             _logger ?? NullLogger.Instance,
             _assemblyLoadContext ?? new CollectibleTestAssemblyLoadContext(),
             _metadataReferences,
-            _assemblyReferences,
+            _referenceNames,
             _relatedTypes,
             _sources,
             _ignoredFilePaths,
