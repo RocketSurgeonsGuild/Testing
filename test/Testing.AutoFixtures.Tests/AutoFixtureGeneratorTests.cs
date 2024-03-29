@@ -58,7 +58,7 @@ public class AutoFixtureGeneratorTests
                .GenerateAsync();
 
         // Then
-        await Verify(result).UseParameters(context.Id);
+        await Verify(result).UseHashedParameters(context.Id);
     }
 
     [Theory]
@@ -83,6 +83,6 @@ public class AutoFixtureGeneratorTests
         var result = await context.GenerateAsync();
 
         // Then
-        await Verify(result).UseParameters(context.Id);
+        await Verify(result).UseHashedParameters(context.Id);
     }
 }
