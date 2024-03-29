@@ -534,7 +534,6 @@ public record GeneratorTestContextBuilder
     public GeneratorTestContext Build()
     {
         return new(
-            _id,
             _projectName ?? "TestProject",
             _logger ?? NullLogger.Instance,
             _assemblyLoadContext ?? new CollectibleTestAssemblyLoadContext(),

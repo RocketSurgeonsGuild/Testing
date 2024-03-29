@@ -23,7 +23,6 @@ public record GeneratorTestContext
     private readonly ImmutableArray<GeneratorTestResultsCustomizer> _customizers;
 
     internal GeneratorTestContext(
-        Guid id,
         string projectName,
         ILogger logger,
         AssemblyLoadContext assemblyLoadContext,
@@ -40,7 +39,6 @@ public record GeneratorTestContext
         ImmutableArray<GeneratorTestResultsCustomizer> customizers
     )
     {
-        Id = id;
         _markedLocations = markedLocations;
         _customizers = customizers;
         _logger = logger;
@@ -60,7 +58,7 @@ public record GeneratorTestContext
         hasher.AppendData(Encoding.UTF8.GetBytes(projectName));
         foreach (var reference in metadataReferences.OrderBy(z => z.Display))
         {
-            hasher.AppendData(Encoding.UTF8.GetBytes(reference.Display ?? ""));
+            hasher.AppendData(Encoding.UTF8.GetBytes(Path.GetFileName(reference.Display ?? "")));
         }
 
         foreach (var reference in relatedTypes.OrderBy(z => z.FullName))
@@ -123,11 +121,6 @@ public record GeneratorTestContext
 
         Id = Convert.ToBase64String(hasher.GetCurrentHash());
     }
-
-    /// <summary>
-    ///     Gets the identifier for the context
-    /// </summary>
-    public Guid Id { get; init; }
 
     /// <summary>
     ///     The related assembly load context
