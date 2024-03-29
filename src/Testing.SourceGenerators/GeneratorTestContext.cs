@@ -55,9 +55,9 @@ public record GeneratorTestContext
 
         using var hasher = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         hasher.AppendData(Encoding.UTF8.GetBytes(projectName));
-        foreach (var reference in metadataReferences.OrderBy(z => z.Display))
+        foreach (var reference in metadataReferences.Select(z => Path.GetFileName(z.Display ?? "")).OrderBy(z => z))
         {
-            hasher.AppendData(Encoding.UTF8.GetBytes(Path.GetFileName(reference.Display ?? "")));
+            hasher.AppendData(Encoding.UTF8.GetBytes(Path.GetFileName(reference)));
         }
 
         foreach (var reference in relatedTypes.OrderBy(z => z.FullName))
