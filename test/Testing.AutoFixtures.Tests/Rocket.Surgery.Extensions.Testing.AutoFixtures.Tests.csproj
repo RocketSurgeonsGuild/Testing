@@ -12,6 +12,7 @@
         <PackageReference Include="NSubstitute" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" />
+        <PackageReference Include="Verify.DiffPlex" />
     </ItemGroup>
 
     <ItemGroup>
