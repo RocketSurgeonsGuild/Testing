@@ -72,7 +72,7 @@ public record GeneratorTestContext
             var builder = new StringBuilder();
             var writer = new StringWriter(builder);
             reference.SourceText.Write(writer);
-            hasher.AppendData(Encoding.UTF8.GetBytes(builder.ToString()));
+            hasher.AppendData(Encoding.UTF8.GetBytes(builder.Replace("\r\n", "\n").ToString()));
         }
 
         foreach (var reference in ignoredFilePaths.OrderBy(z => z))
@@ -116,7 +116,7 @@ public record GeneratorTestContext
             var builder = new StringBuilder();
             var writer = new StringWriter(builder);
             text?.Write(writer);
-            hasher.AppendData(Encoding.UTF8.GetBytes(builder.ToString()));
+            hasher.AppendData(Encoding.UTF8.GetBytes(builder.Replace("\r\n", "\n").ToString()));
         }
 
         foreach (var item in markedLocations.OrderBy(z => z.Key))
