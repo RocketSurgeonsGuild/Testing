@@ -12,4 +12,7 @@ internal abstract class AutoFixtureSourceData
            .AddReferences(typeof(ILogger<>))
            .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
            .IgnoreOutputFile("AutoFixtureBase.g.cs");
+
+    protected const string Fake = "FakeItEasy";
+    protected const string Substitute = "NSubstitute";
 }

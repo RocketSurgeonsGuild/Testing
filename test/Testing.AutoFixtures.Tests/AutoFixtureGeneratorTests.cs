@@ -48,7 +48,9 @@ public class AutoFixtureGeneratorTests
     [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
     [MemberData(nameof(DuplicateConstructorParameterData.Data), MemberType = typeof(DuplicateConstructorParameterData))]
     public async Task GivenAutoFixtureAttribute_WhenGenerate_ThenGeneratesAutoFixture(
-        GeneratorTestContext context
+        GeneratorTestContext context,
+        string classSource,
+        string attributedSource
     )
     {
         // Given, When
@@ -57,7 +59,7 @@ public class AutoFixtureGeneratorTests
                  .GenerateAsync();
 
         // Then
-        await Verify(result).UseHashedParameters(context.ToString());
+        await Verify(result).UseHashedParameters(context.Id);
     }
 
     [Theory]
@@ -82,46 +84,6 @@ public class AutoFixtureGeneratorTests
         var result = await context.GenerateAsync();
 
         // Then
-        await Verify(result).UseHashedParameters(context.ToString());
-    }
-
-//    [Fact]
-    public async Task GivenAttributeOnClass_When_ThenShouldGenerateAutoFixture()
-    {
-        // Given
-        var generatorInstance =
-            GeneratorTestContextBuilder
-               .Create()
-               .WithGenerator<AutoFixtureGenerator>()
-               .AddReferences(typeof(ILogger<>))
-               .IgnoreOutputFile("BuilderExtensions.cs")
-               .IgnoreOutputFile("Attribute.cs")
-               .AddSources(
-                    @"using System;
-using System.Diagnostics;
-using Microsoft.Extensions.Logging;
-using Rocket.Surgery.Extensions.Testing.AutoFixture;
-
-namespace Goony.Goo.Goo.Tests
-{
-    [AutoFixture]
-    internal class Authenticator
-    {
-        public Authenticator(IAuthenticationClient authenticationClient,
-            ISecureStorage secureStorage,
-            ILogger<Authenticator> logger) {}
-    }
-    internal interface ISecureStorage {}
-    internal interface IAuthenticationClient {}
-}"
-                )
-               .Build();
-
-
-        // When
-        var result = await generatorInstance.GenerateAsync();
-
-        // Then
-        await Verify(result);
+        await Verify(result).UseHashedParameters(context.Id);
     }
 }

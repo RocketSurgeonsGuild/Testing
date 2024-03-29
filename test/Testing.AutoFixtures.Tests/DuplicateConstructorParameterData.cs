@@ -11,16 +11,22 @@ internal class DuplicateConstructorParameterData : AutoFixtureSourceData
             new object[]
             {
                 DefaultBuilder()
+                   .WithId(Guid.Parse("1A9A7FD4-CEF0-4712-858C-685E8191FE4E"))
                    .AddReferences(typeof(Fake))
                    .AddSources(ClassSource, AttributedFixtureSource)
                    .Build(),
+                ClassSource,
+                AttributedFixtureSource
             },
             new object[]
             {
                 DefaultBuilder()
+                   .WithId(Guid.Parse("5A24BB51-84DE-4688-829E-9FA0A49EF7F1"))
                    .AddReferences(typeof(Substitute))
                    .AddSources(ClassSource, AttributedFixtureSource)
                    .Build(),
+                ClassSource,
+                AttributedFixtureSource
             },
         };
 

@@ -11,16 +11,22 @@ internal class AutoFixtureGeneratorData : AutoFixtureSourceData
             new object[]
             {
                 DefaultBuilder()
+                   .WithId(Guid.Parse("B7DE0125-E715-40E3-A4DD-618B92757624"))
                    .AddReferences(typeof(Fake))
                    .AddSources(ClassSource, AttributedFixtureSource)
                    .Build(),
+                ClassSource,
+                AttributedFixtureSource
             },
             new object[]
             {
                 DefaultBuilder()
+                   .WithId(Guid.Parse("E37CCEE3-CE23-419D-B926-B32269BEFDE1"))
                    .AddReferences(typeof(Substitute))
                    .AddSources(ClassSource, AttributedFixtureSource)
                    .Build(),
+                ClassSource,
+                AttributedFixtureSource
             },
         };
 
