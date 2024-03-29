@@ -26,6 +26,20 @@ internal class AutoFixtureGeneratorData : AutoFixtureSourceData
                 ClassSource,
                 AttributedFixtureSource,
             },
+            new object[]
+            {
+                DefaultBuilder()
+                   .AddReferences(typeof(Fake))
+                   .AddSources(AttributedSource)
+                   .Build(),
+            },
+            new object[]
+            {
+                DefaultBuilder()
+                   .AddReferences(typeof(Substitute))
+                   .AddSources(AttributedSource)
+                   .Build(),
+            },
         };
 
     private const string AttributedFixtureSource = @"using System;
@@ -58,12 +72,12 @@ namespace Goony.Goo.Goo
 }
 ";
 
-    private const string AttributeOnClassSource = @"using System;
+    private const string AttributedSource = @"using System;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Goony.Goo.Goo.Tests
+namespace Goony.Goo.Goo
 {
     [AutoFixture]
     internal class Authenticator

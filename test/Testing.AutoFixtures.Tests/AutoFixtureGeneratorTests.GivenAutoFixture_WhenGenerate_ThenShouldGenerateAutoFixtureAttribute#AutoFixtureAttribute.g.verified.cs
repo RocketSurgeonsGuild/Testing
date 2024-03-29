@@ -1,4 +1,5 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureAttribute.g.cs
+#nullable enable
 using System;
 using System.Diagnostics;
 
@@ -8,8 +9,10 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures
     [Conditional("CODEGEN")]
     internal class AutoFixtureAttribute : Attribute
     {
-        public AutoFixtureAttribute(Type type) => Type = type;
+        public AutoFixtureAttribute() : this(null) {}
 
-        public Type Type { get; }
+        public AutoFixtureAttribute(Type? type) => Type = type;
+
+        public Type? Type { get; }
     }
 }

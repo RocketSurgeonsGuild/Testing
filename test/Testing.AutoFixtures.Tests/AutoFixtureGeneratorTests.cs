@@ -85,4 +85,15 @@ public class AutoFixtureGeneratorTests
         // Then
         await Verify(result).UseHashedParameters(context.Id);
     }
+
+    [Theory]
+    [MemberData(nameof(ValueTypeSourceData.Data), MemberType = typeof(ValueTypeSourceData))]
+    public async Task GivenConstructorWithValueTypes_WhenGenerate_ThenGeneratesAutoFixture(GeneratorTestContext context)
+    {
+        // Given, When
+        var result = await context.GenerateAsync();
+
+        // Then
+        await Verify(result).UseHashedParameters(context.ToString());
+    }
 }

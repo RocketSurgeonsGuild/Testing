@@ -38,12 +38,20 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         {
             ( var syntaxContext, var compilation ) = valueTuple;
 
+            var targetSymbol = syntaxContext.TargetSymbol as INamedTypeSymbol;
+
             var substituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
             var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
 
-            if (syntaxContext.Attributes[0].ConstructorArguments[0].Value is not INamedTypeSymbol namedTypeSymbol)
+            if (syntaxContext.Attributes[0].ConstructorArguments.Length == 0
+             || syntaxContext.Attributes[0].ConstructorArguments[0].Value is not INamedTypeSymbol namedTypeSymbol)
             {
-                return;
+                if (targetSymbol is null)
+                {
+                    return;
+                }
+
+                namedTypeSymbol = targetSymbol;
             }
 
             var parameterSymbols =
