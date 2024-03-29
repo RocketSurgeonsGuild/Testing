@@ -8,7 +8,6 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.RulesetToEditorconfig;
 using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -138,7 +137,7 @@ public record GeneratorTestContext
     public AssemblyLoadContext AssemblyLoadContext { get; }
 
     /// <summary>
-    /// Get the id of the context
+    ///     Get the id of the context
     /// </summary>
     public string Id { get; }
 
