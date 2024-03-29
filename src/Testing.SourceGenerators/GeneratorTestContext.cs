@@ -119,6 +119,16 @@ public record GeneratorTestContext
             hasher.AppendData(Encoding.UTF8.GetBytes(builder.ToString()));
         }
 
+        foreach (var item in markedLocations.OrderBy(z => z.Key))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Key));
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Value.Location.ToString()));
+            if (item.Value.Trigger is { } trigger)
+            {
+                hasher.AppendData(Encoding.UTF8.GetBytes(trigger.ToString() ?? ""));
+            }
+        }
+
         Id = Convert.ToBase64String(hasher.GetCurrentHash());
     }
 
