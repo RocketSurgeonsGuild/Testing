@@ -11,7 +11,6 @@ internal class ParameterArraySourceData : AutoFixtureSourceData
             new object[]
             {
                 DefaultBuilder()
-                   .WithId(Guid.Parse("DAA27034-D059-464E-8AF2-E790726BA762"))
                    .AddReferences(typeof(Fake))
                    .AddSources(EnumerableDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
                    .Build(),
@@ -19,7 +18,6 @@ internal class ParameterArraySourceData : AutoFixtureSourceData
             new object[]
             {
                 DefaultBuilder()
-                   .WithId(Guid.Parse("980411FA-0E5D-4FAF-95AA-EDC0542CF226"))
                    .AddReferences(typeof(Substitute))
                    .AddSources(EnumerableDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
                    .Build(),

@@ -55,19 +55,8 @@ public record GeneratorTestContextBuilder
     private ImmutableArray<GeneratorTestResultsCustomizer> _customizers = ImmutableArray<GeneratorTestResultsCustomizer>.Empty;
     private ImmutableHashSet<string> _ignoredFilePaths = ImmutableHashSet<string>.Empty;
     private ImmutableDictionary<string, MarkedLocation> _markedLocations = ImmutableDictionary<string, MarkedLocation>.Empty;
-    private Guid _id = Guid.Empty;
 
     private GeneratorTestContextBuilder() { }
-
-    /// <summary>
-    ///     Attach a id to the builder
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public GeneratorTestContextBuilder WithId(Guid id)
-    {
-        return this with { _id = id, };
-    }
 
     /// <summary>
     ///     Attach a logger to the builder
