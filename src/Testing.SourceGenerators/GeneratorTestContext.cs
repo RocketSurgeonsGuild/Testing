@@ -20,6 +20,7 @@ public record GeneratorTestContext
     private readonly ImmutableArray<GeneratorTestResultsCustomizer> _customizers;
 
     internal GeneratorTestContext(
+        Guid id,
         string projectName,
         ILogger logger,
         AssemblyLoadContext assemblyLoadContext,
@@ -36,6 +37,7 @@ public record GeneratorTestContext
         ImmutableArray<GeneratorTestResultsCustomizer> customizers
     )
     {
+        Id = id;
         _markedLocations = markedLocations;
         _customizers = customizers;
         _logger = logger;
@@ -51,6 +53,11 @@ public record GeneratorTestContext
         _diagnosticSeverity = diagnosticSeverity;
         AssemblyLoadContext = assemblyLoadContext;
     }
+
+    /// <summary>
+    ///     Gets the identifier for the context
+    /// </summary>
+    public Guid Id { get; init; }
 
     /// <summary>
     ///     The related assembly load context
