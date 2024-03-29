@@ -46,7 +46,9 @@ public record GeneratorTestContextBuilder
     private CSharpParseOptions _parseOptions = new();
     private DiagnosticSeverity? _diagnosticSeverity = VerifyGeneratorTextContext.diagnosticSeverityFilter;
 
-    private ImmutableHashSet<MetadataReference> _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
+    private ImmutableHashSet<MetadataReference>
+        _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
+
     private ImmutableHashSet<string> _referenceNames = ImmutableHashSet<string>.Empty.WithComparer(StringComparer.OrdinalIgnoreCase);
 
     private ImmutableHashSet<Type> _relatedTypes = ImmutableHashSet<Type>.Empty;
