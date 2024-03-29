@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
@@ -56,7 +55,7 @@ public class AutoFixtureGeneratorTests
         // Given, When
         var result =
             await context
-                 .GenerateAsync();
+               .GenerateAsync();
 
         // Then
         await Verify(result).UseHashedParameters(context.Id);

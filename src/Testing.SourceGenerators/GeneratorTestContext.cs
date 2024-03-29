@@ -55,7 +55,7 @@ public record GeneratorTestContext
     }
 
     /// <summary>
-    /// Gets the identifier for the context
+    ///     Gets the identifier for the context
     /// </summary>
     public Guid Id { get; init; }
 

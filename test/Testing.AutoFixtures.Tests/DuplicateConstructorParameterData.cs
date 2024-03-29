@@ -16,7 +16,7 @@ internal class DuplicateConstructorParameterData : AutoFixtureSourceData
                    .AddSources(ClassSource, AttributedFixtureSource)
                    .Build(),
                 ClassSource,
-                AttributedFixtureSource
+                AttributedFixtureSource,
             },
             new object[]
             {
@@ -26,7 +26,7 @@ internal class DuplicateConstructorParameterData : AutoFixtureSourceData
                    .AddSources(ClassSource, AttributedFixtureSource)
                    .Build(),
                 ClassSource,
-                AttributedFixtureSource
+                AttributedFixtureSource,
             },
         };
 
