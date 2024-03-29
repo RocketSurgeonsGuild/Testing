@@ -46,8 +46,8 @@ public record GeneratorTestContextBuilder
     private CSharpParseOptions _parseOptions = new();
     private DiagnosticSeverity? _diagnosticSeverity = VerifyGeneratorTextContext.diagnosticSeverityFilter;
 
-    private ImmutableHashSet<MetadataReference>
-        _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
+    private ImmutableHashSet<MetadataReference> _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
+    private ImmutableHashSet<Assembly> _assemblyReferences = ImmutableHashSet<Assembly>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
 
     private ImmutableHashSet<Type> _relatedTypes = ImmutableHashSet<Type>.Empty;
     private ImmutableArray<NamedSourceText> _sources = ImmutableArray<NamedSourceText>.Empty;
@@ -331,7 +331,7 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddReferences(params Type[] references)
     {
-        return AddReferences(references.Select(z => MetadataReference.CreateFromFile(z.Assembly.Location)).OfType<MetadataReference>().ToArray());
+        return AddReferences(references.Select(z => z.Assembly).ToArray());
     }
 
     /// <summary>
@@ -341,7 +341,7 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddReferences(params Assembly[] references)
     {
-        return AddReferences(references.Select(z => MetadataReference.CreateFromFile(z.Location)).OfType<MetadataReference>().ToArray());
+        return this with { _assemblyReferences = _assemblyReferences.Union(references), };
     }
 
     /// <summary>
@@ -527,6 +527,7 @@ public record GeneratorTestContextBuilder
             _logger ?? NullLogger.Instance,
             _assemblyLoadContext ?? new CollectibleTestAssemblyLoadContext(),
             _metadataReferences,
+            _assemblyReferences,
             _relatedTypes,
             _sources,
             _ignoredFilePaths,

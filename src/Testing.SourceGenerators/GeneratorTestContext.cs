@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Reflection;
 using System.Runtime.Loader;
 using System.Security.Cryptography;
 using System.Text;
@@ -26,6 +27,7 @@ public record GeneratorTestContext
         ILogger logger,
         AssemblyLoadContext assemblyLoadContext,
         ImmutableHashSet<MetadataReference> metadataReferences,
+        ImmutableHashSet<Assembly> assemblyReferences,
         ImmutableHashSet<Type> relatedTypes,
         ImmutableArray<NamedSourceText> sources,
         ImmutableHashSet<string> ignoredFilePaths,
@@ -38,10 +40,16 @@ public record GeneratorTestContext
         ImmutableArray<GeneratorTestResultsCustomizer> customizers
     )
     {
+        var references = metadataReferences.ToBuilder();
+        foreach (var reference in assemblyReferences.Select(static z => MetadataReference.CreateFromFile(z.Location)))
+        {
+            references.Add(reference);
+        }
+
         _markedLocations = markedLocations;
         _customizers = customizers;
         _logger = logger;
-        _metadataReferences = metadataReferences;
+        _metadataReferences = references.ToImmutable();
         _relatedTypes = relatedTypes;
         _sources = sources;
         _ignoredFilePaths = ignoredFilePaths;
@@ -55,9 +63,9 @@ public record GeneratorTestContext
 
         using var hasher = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         hasher.AppendData(Encoding.UTF8.GetBytes(projectName));
-        foreach (var reference in metadataReferences.Select(z => Path.GetFileName(z.Display ?? "")).OrderBy(z => z))
+        foreach (var reference in assemblyReferences.OrderBy(z => z.GetName().Name ?? ""))
         {
-            hasher.AppendData(Encoding.UTF8.GetBytes(Path.GetFileName(reference)));
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference.GetName().Name ?? ""));
         }
 
         foreach (var reference in relatedTypes.OrderBy(z => z.FullName))
