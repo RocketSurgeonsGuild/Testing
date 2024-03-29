@@ -1,11 +1,14 @@
 ﻿using System.Collections.Immutable;
 using System.Runtime.Loader;
+using System.Security.Cryptography;
+using System.Text;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.RulesetToEditorconfig;
 using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -52,6 +55,73 @@ public record GeneratorTestContext
         _projectName = projectName;
         _diagnosticSeverity = diagnosticSeverity;
         AssemblyLoadContext = assemblyLoadContext;
+
+        using var hasher = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        hasher.AppendData(Encoding.UTF8.GetBytes(projectName));
+        foreach (var reference in metadataReferences.OrderBy(z => z.Display))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference.Display ?? ""));
+        }
+
+        foreach (var reference in relatedTypes.OrderBy(z => z.FullName))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference.FullName ?? ""));
+        }
+
+        foreach (var reference in sources.OrderBy(z => z.Name))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference.Name ?? ""));
+            var builder = new StringBuilder();
+            var writer = new StringWriter(builder);
+            reference.SourceText.Write(writer);
+            hasher.AppendData(Encoding.UTF8.GetBytes(builder.ToString()));
+        }
+
+        foreach (var reference in ignoredFilePaths.OrderBy(z => z))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference));
+        }
+
+        foreach (var reference in fileOptions.OrderBy(z => z.Key))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference.Key));
+            foreach (var item in reference.Value.OrderBy(z => z.Key))
+            {
+                hasher.AppendData(Encoding.UTF8.GetBytes(item.Key));
+                hasher.AppendData(Encoding.UTF8.GetBytes(item.Value));
+            }
+        }
+
+        foreach (var item in globalOptions.OrderBy(z => z.Key))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Key));
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Value));
+        }
+
+        hasher.AppendData(Encoding.UTF8.GetBytes(parseOptions.Language));
+        hasher.AppendData(Encoding.UTF8.GetBytes(parseOptions.LanguageVersion.ToString()));
+        foreach (var item in parseOptions.Features.OrderBy(z => z.Key))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Key));
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Value));
+        }
+
+        foreach (var item in parseOptions.PreprocessorSymbolNames.OrderBy(z => z))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item));
+        }
+
+        foreach (var item in additionalTexts.OrderBy(z => z.Path))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Path));
+            var text = item.GetText();
+            var builder = new StringBuilder();
+            var writer = new StringWriter(builder);
+            text?.Write(writer);
+            hasher.AppendData(Encoding.UTF8.GetBytes(builder.ToString()));
+        }
+
+        Id = Convert.ToBase64String(hasher.GetCurrentHash());
     }
 
     /// <summary>
@@ -63,6 +133,11 @@ public record GeneratorTestContext
     ///     The related assembly load context
     /// </summary>
     public AssemblyLoadContext AssemblyLoadContext { get; }
+
+    /// <summary>
+    /// Get the id of the context
+    /// </summary>
+    public string Id { get; }
 
     internal ILogger _logger { get; init; }
     internal ImmutableHashSet<MetadataReference> _metadataReferences { get; init; }
@@ -211,6 +286,7 @@ public record GeneratorTestContext
         }
 
         var results = new GeneratorTestResults(
+            Id,
             projectInformation,
             compilation,
             inputDiagnostics,

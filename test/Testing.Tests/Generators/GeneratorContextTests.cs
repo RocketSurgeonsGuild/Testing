@@ -26,6 +26,7 @@ public class GeneratorContextTests : LoggerTest
                      .WithSourceCodeKind(SourceCodeKind.Regular)
                      .WithFeature("my-feature", "true")
                      .AddPreprocessorSymbol("SOMETHING", "SOMETHING_ELSE")
+                     .WithCustomizer(Customizers.IncludeContextId)
                      .Build();
         await Verify(context.GenerateAsync());
         context.AssemblyLoadContext.Should().Be(AssemblyLoadContext.Default);

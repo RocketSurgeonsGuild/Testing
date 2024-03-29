@@ -29,6 +29,8 @@ public static class Customizers
                                                                       data["InputAdditionalTexts"] = results.InputAdditionalTexts;
                                                                   };
 
+    public static GeneratorTestResultsCustomizer IncludeContextId => static (results, targets, data) => { data["ContextId"] = results.ContextId; };
+
     public static GeneratorTestResultsCustomizer ExcludeInputs => static (results, targets, data) =>
                                                                   {
                                                                       RemoveTargets(targets, results);
