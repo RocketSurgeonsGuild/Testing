@@ -309,11 +309,11 @@ public record GeneratorTestContextBuilder
         // this "core assemblies hack" is from https://stackoverflow.com/a/47196516/4418060
         var coreAssemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location)!;
         return AddReferencesInternal(
-            assemblyNames.Select(z => MetadataReference.CreateFromFile(Path.Combine(coreAssemblyPath, z))).OfType<MetadataReference>().ToArray()
-        ) with
-        {
-            _referenceNames = _referenceNames.Union(assemblyNames),
-        };
+                assemblyNames.Select(z => MetadataReference.CreateFromFile(Path.Combine(coreAssemblyPath, z))).OfType<MetadataReference>().ToArray()
+            ) with
+            {
+                _referenceNames = _referenceNames.Union(assemblyNames),
+            };
     }
 
     /// <summary>
