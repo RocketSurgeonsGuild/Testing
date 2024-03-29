@@ -14,6 +14,7 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 /// <summary>
 ///     The overall results of the given generator test context.
 /// </summary>
+/// <param name="ContextId">The unique id of the generating context</param>
 /// <param name="ProjectInformation">The Test project information</param>
 /// <param name="InputCompilation">The initial compilation before any generators run</param>
 /// <param name="InputDiagnostics">The initial diagnostics before any generators run</param>
@@ -36,6 +37,7 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 [PublicAPI]
 public record GeneratorTestResults
 (
+    string ContextId,
     TestProjectInformation ProjectInformation,
     CSharpCompilation InputCompilation,
     ImmutableArray<Diagnostic> InputDiagnostics,

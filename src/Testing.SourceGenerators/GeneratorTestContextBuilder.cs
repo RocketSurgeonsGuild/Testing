@@ -49,25 +49,16 @@ public record GeneratorTestContextBuilder
     private ImmutableHashSet<MetadataReference>
         _metadataReferences = ImmutableHashSet<MetadataReference>.Empty.WithComparer(ReferenceEqualityComparer.Instance);
 
+    private ImmutableHashSet<string> _referenceNames = ImmutableHashSet<string>.Empty.WithComparer(StringComparer.OrdinalIgnoreCase);
+
     private ImmutableHashSet<Type> _relatedTypes = ImmutableHashSet<Type>.Empty;
     private ImmutableArray<NamedSourceText> _sources = ImmutableArray<NamedSourceText>.Empty;
     private ImmutableArray<AdditionalText> _additionalTexts = ImmutableArray<AdditionalText>.Empty;
     private ImmutableArray<GeneratorTestResultsCustomizer> _customizers = ImmutableArray<GeneratorTestResultsCustomizer>.Empty;
     private ImmutableHashSet<string> _ignoredFilePaths = ImmutableHashSet<string>.Empty;
     private ImmutableDictionary<string, MarkedLocation> _markedLocations = ImmutableDictionary<string, MarkedLocation>.Empty;
-    private Guid _id = Guid.Empty;
 
     private GeneratorTestContextBuilder() { }
-
-    /// <summary>
-    ///     Attach a id to the builder
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public GeneratorTestContextBuilder WithId(Guid id)
-    {
-        return this with { _id = id, };
-    }
 
     /// <summary>
     ///     Attach a logger to the builder
@@ -302,7 +293,10 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddCompilationReferences(params GeneratorTestResults[] additionalCompilations)
     {
-        return AddReferences(additionalCompilations.Select(z => z.MetadataReference!).ToArray());
+        return AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
+        {
+            _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name)),
+        };
     }
 
     /// <summary>
@@ -314,9 +308,12 @@ public record GeneratorTestContextBuilder
     {
         // this "core assemblies hack" is from https://stackoverflow.com/a/47196516/4418060
         var coreAssemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location)!;
-        return AddReferences(
-            assemblyNames.Select(z => MetadataReference.CreateFromFile(Path.Combine(coreAssemblyPath, z))).OfType<MetadataReference>().ToArray()
-        );
+        return AddReferencesInternal(
+                assemblyNames.Select(z => MetadataReference.CreateFromFile(Path.Combine(coreAssemblyPath, z))).OfType<MetadataReference>().ToArray()
+            ) with
+            {
+                _referenceNames = _referenceNames.Union(assemblyNames),
+            };
     }
 
     /// <summary>
@@ -326,13 +323,16 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddReferences(params MetadataReference[] references)
     {
-        var set = _metadataReferences.ToBuilder();
+        var names = _referenceNames.ToBuilder();
         foreach (var reference in references)
         {
-            set.Add(reference);
+            names.Add(Path.GetFileName(reference.Display ?? ""));
         }
 
-        return this with { _metadataReferences = set.ToImmutable(), };
+        return AddReferencesInternal(references) with
+        {
+            _referenceNames = names.ToImmutable(),
+        };
     }
 
     /// <summary>
@@ -342,7 +342,7 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddReferences(params Type[] references)
     {
-        return AddReferences(references.Select(z => MetadataReference.CreateFromFile(z.Assembly.Location)).OfType<MetadataReference>().ToArray());
+        return AddReferences(references.Select(z => z.Assembly).ToArray());
     }
 
     /// <summary>
@@ -352,7 +352,10 @@ public record GeneratorTestContextBuilder
     /// <returns></returns>
     public GeneratorTestContextBuilder AddReferences(params Assembly[] references)
     {
-        return AddReferences(references.Select(z => MetadataReference.CreateFromFile(z.Location)).OfType<MetadataReference>().ToArray());
+        return AddReferencesInternal(references.Select(z => MetadataReference.CreateFromFile(z.Location)).OfType<MetadataReference>().ToArray()) with
+        {
+            _referenceNames = _referenceNames.Union(references.Select(z => z.GetName().Name ?? "")),
+        };
     }
 
     /// <summary>
@@ -371,6 +374,25 @@ public record GeneratorTestContextBuilder
             #endif
             "System.Runtime.dll"
         );
+    }
+
+    /// <summary>
+    ///     Add a set of metadata references to the compilation
+    /// </summary>
+    /// <param name="references"></param>
+    /// <returns></returns>
+    private GeneratorTestContextBuilder AddReferencesInternal(IEnumerable<MetadataReference> references)
+    {
+        var set = _metadataReferences.ToBuilder();
+        foreach (var reference in references)
+        {
+            set.Add(reference);
+        }
+
+        return this with
+        {
+            _metadataReferences = set.ToImmutable(),
+        };
     }
 
     /// <summary>
@@ -534,11 +556,11 @@ public record GeneratorTestContextBuilder
     public GeneratorTestContext Build()
     {
         return new(
-            _id,
             _projectName ?? "TestProject",
             _logger ?? NullLogger.Instance,
             _assemblyLoadContext ?? new CollectibleTestAssemblyLoadContext(),
             _metadataReferences,
+            _referenceNames,
             _relatedTypes,
             _sources,
             _ignoredFilePaths,

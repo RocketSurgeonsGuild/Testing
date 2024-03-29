@@ -1,5 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Runtime.Loader;
+using System.Security.Cryptography;
+using System.Text;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -20,11 +22,11 @@ public record GeneratorTestContext
     private readonly ImmutableArray<GeneratorTestResultsCustomizer> _customizers;
 
     internal GeneratorTestContext(
-        Guid id,
         string projectName,
         ILogger logger,
         AssemblyLoadContext assemblyLoadContext,
         ImmutableHashSet<MetadataReference> metadataReferences,
+        ImmutableHashSet<string> referenceNames,
         ImmutableHashSet<Type> relatedTypes,
         ImmutableArray<NamedSourceText> sources,
         ImmutableHashSet<string> ignoredFilePaths,
@@ -37,7 +39,6 @@ public record GeneratorTestContext
         ImmutableArray<GeneratorTestResultsCustomizer> customizers
     )
     {
-        Id = id;
         _markedLocations = markedLocations;
         _customizers = customizers;
         _logger = logger;
@@ -52,17 +53,94 @@ public record GeneratorTestContext
         _projectName = projectName;
         _diagnosticSeverity = diagnosticSeverity;
         AssemblyLoadContext = assemblyLoadContext;
-    }
 
-    /// <summary>
-    ///     Gets the identifier for the context
-    /// </summary>
-    public Guid Id { get; init; }
+        using var hasher = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        hasher.AppendData(Encoding.UTF8.GetBytes(projectName));
+        foreach (var reference in referenceNames.OrderBy(z => z))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference));
+        }
+
+        foreach (var reference in relatedTypes.OrderBy(z => z.FullName))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference.FullName ?? ""));
+        }
+
+        foreach (var reference in sources.OrderBy(z => z.Name))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference.Name ?? ""));
+            var builder = new StringBuilder();
+            var writer = new StringWriter(builder);
+            reference.SourceText.Write(writer);
+            hasher.AppendData(Encoding.UTF8.GetBytes(builder.Replace("\r\n", "\n").ToString()));
+        }
+
+        foreach (var reference in ignoredFilePaths.OrderBy(z => z))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference));
+        }
+
+        foreach (var reference in fileOptions.OrderBy(z => z.Key))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(reference.Key));
+            foreach (var item in reference.Value.OrderBy(z => z.Key))
+            {
+                hasher.AppendData(Encoding.UTF8.GetBytes(item.Key));
+                hasher.AppendData(Encoding.UTF8.GetBytes(item.Value));
+            }
+        }
+
+        foreach (var item in globalOptions.OrderBy(z => z.Key))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Key));
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Value));
+        }
+
+        hasher.AppendData(Encoding.UTF8.GetBytes(parseOptions.Language));
+        hasher.AppendData(Encoding.UTF8.GetBytes(parseOptions.LanguageVersion.ToString()));
+        foreach (var item in parseOptions.Features.OrderBy(z => z.Key))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Key));
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Value));
+        }
+
+        foreach (var item in parseOptions.PreprocessorSymbolNames.OrderBy(z => z))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item));
+        }
+
+        foreach (var item in additionalTexts.OrderBy(z => z.Path))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Path));
+            var text = item.GetText();
+            var builder = new StringBuilder();
+            var writer = new StringWriter(builder);
+            text?.Write(writer);
+            hasher.AppendData(Encoding.UTF8.GetBytes(builder.Replace("\r\n", "\n").ToString()));
+        }
+
+        foreach (var item in markedLocations.OrderBy(z => z.Key))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Key));
+            hasher.AppendData(Encoding.UTF8.GetBytes(item.Value.Location.ToString()));
+            if (item.Value.Trigger is { } trigger)
+            {
+                hasher.AppendData(Encoding.UTF8.GetBytes(trigger.ToString() ?? ""));
+            }
+        }
+
+        Id = Convert.ToBase64String(hasher.GetCurrentHash());
+    }
 
     /// <summary>
     ///     The related assembly load context
     /// </summary>
     public AssemblyLoadContext AssemblyLoadContext { get; }
+
+    /// <summary>
+    ///     Get the id of the context
+    /// </summary>
+    public string Id { get; }
 
     internal ILogger _logger { get; init; }
     internal ImmutableHashSet<MetadataReference> _metadataReferences { get; init; }
@@ -211,6 +289,7 @@ public record GeneratorTestContext
         }
 
         var results = new GeneratorTestResults(
+            Id,
             projectInformation,
             compilation,
             inputDiagnostics,
