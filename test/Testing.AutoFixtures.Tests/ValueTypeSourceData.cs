@@ -1,9 +1,11 @@
+using Rocket.Surgery.Extensions.Testing.SourceGenerators;
+
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
 internal class ValueTypeSourceData : AutoFixtureSourceData
 {
-    public static IEnumerable<object[]> Data =>
-        new List<object[]> { new object[] { DefaultBuilder().AddSources(ClassSource).AddSources(AttributedSource).Build(), }, };
+    public static TheoryData<GeneratorTestContext> Data =>
+        new() { DefaultBuilder().AddSources(ClassSource).AddSources(AttributedSource).Build(), };
 
     private const string ClassSource = @"
 namespace Goony.Goo.Goo
