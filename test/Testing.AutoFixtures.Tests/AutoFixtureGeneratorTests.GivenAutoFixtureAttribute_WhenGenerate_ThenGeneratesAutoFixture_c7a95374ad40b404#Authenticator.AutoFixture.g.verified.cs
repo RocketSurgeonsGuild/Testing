@@ -1,11 +1,11 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/Authenticator.AutoFixture.g.cs
 using System.Collections.ObjectModel;
-using FakeItEasy;
 using Goony.Goo.Goo;
 using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Goony.Goo.Goo.Tests
+namespace Goony.Goo.Goo
 {
     internal sealed partial class AuthenticatorFixture : AutoFixtureBase<AuthenticatorFixture>
     {
@@ -14,8 +14,8 @@ namespace Goony.Goo.Goo.Tests
         public AuthenticatorFixture WithStorage(Goony.Goo.Goo.ISecureStorage secureStorage) => With(ref _secureStorage, secureStorage);
         public AuthenticatorFixture WithLogger(Microsoft.Extensions.Logging.ILogger<Goony.Goo.Goo.Authenticator> logger) => With(ref _logger, logger);
         private Authenticator Build() => new Authenticator(_authenticationClient, _secureStorage, _logger);
-        private Goony.Goo.Goo.IAuthenticationClient _authenticationClient = A.Fake<Goony.Goo.Goo.IAuthenticationClient>();
-        private Goony.Goo.Goo.ISecureStorage _secureStorage = A.Fake<Goony.Goo.Goo.ISecureStorage>();
-        private Microsoft.Extensions.Logging.ILogger<Goony.Goo.Goo.Authenticator> _logger = A.Fake<Microsoft.Extensions.Logging.ILogger<Goony.Goo.Goo.Authenticator>>();
+        private Goony.Goo.Goo.IAuthenticationClient _authenticationClient = Substitute.For<Goony.Goo.Goo.IAuthenticationClient>();
+        private Goony.Goo.Goo.ISecureStorage _secureStorage = Substitute.For<Goony.Goo.Goo.ISecureStorage>();
+        private Microsoft.Extensions.Logging.ILogger<Goony.Goo.Goo.Authenticator> _logger = Substitute.For<Microsoft.Extensions.Logging.ILogger<Goony.Goo.Goo.Authenticator>>();
     }
 }

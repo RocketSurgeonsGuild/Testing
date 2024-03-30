@@ -1,6 +1,6 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/Deck.AutoFixture.g.cs
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 

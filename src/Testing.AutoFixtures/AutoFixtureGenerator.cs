@@ -38,12 +38,20 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         {
             ( var syntaxContext, var compilation ) = valueTuple;
 
+            var targetSymbol = syntaxContext.TargetSymbol as INamedTypeSymbol;
+
             var substituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
             var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
 
-            if (syntaxContext.Attributes[0].ConstructorArguments[0].Value is not INamedTypeSymbol namedTypeSymbol)
+            if (syntaxContext.Attributes[0].ConstructorArguments.Length == 0
+             || syntaxContext.Attributes[0].ConstructorArguments[0].Value is not INamedTypeSymbol namedTypeSymbol)
             {
-                return;
+                if (targetSymbol is null)
+                {
+                    return;
+                }
+
+                namedTypeSymbol = targetSymbol;
             }
 
             var parameterSymbols =
@@ -74,7 +82,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                    .Concat(parameterSymbols.Select(WithPropertyMethod))
                    .Concat(new[] { BuildBuildMethod(namedTypeSymbol, parameterSymbols), })
                    .Concat(
-                        parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol)))
+                        parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
                     );
 
             var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
@@ -83,30 +91,30 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             var namespaceDeclaration = BuildNamespace(syntaxContext.TargetSymbol)
                .WithMembers(new(classDeclaration));
 
-            var usings =
+            var usingDirectives = new HashSet<string>(
                 parameterSymbols
                    .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
                    .Where(x => !string.IsNullOrWhiteSpace(x))
                    .Distinct()
-                   .OrderBy(x => x)
-                   .Select(x => UsingDirective(ParseName(x)))
-                   .ToArray();
+            ) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", };
 
-            var mockLibrary = UsingDirective(
-                ParseName(
-                    ( fakeItEasy is { }
-                        ? fakeItEasy.ContainingNamespace
-                        : substituteMetadata?.ContainingNamespace )
-                  ?.ToDisplayString()
-                 ?? string.Empty
-                )
-            );
+            if (fakeItEasy is { })
+            {
+                usingDirectives.Add(fakeItEasy.ContainingNamespace.ToDisplayString());
+            }
+
+            if (substituteMetadata is { })
+            {
+                usingDirectives.Add(substituteMetadata.ContainingNamespace.ToDisplayString());
+            }
+
+            var usingDirectiveSyntax = usingDirectives
+                                      .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
+                                      .Select(x => UsingDirective(ParseName(x)))
+                                      .ToArray();
             var unit =
                 CompilationUnit()
-                   .AddUsings(UsingDirective(ParseName("System.Collections.ObjectModel")))
-                   .AddUsings(usings)
-                   .AddUsings(mockLibrary)
-                   .AddUsings(UsingDirective(ParseName("Rocket.Surgery.Extensions.Testing.AutoFixtures")))
+                   .AddUsings(usingDirectiveSyntax)
                    .AddMembers(namespaceDeclaration)
                    .NormalizeWhitespace();
 
@@ -126,6 +134,29 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         public int GetHashCode(IParameterSymbol obj)
         {
             return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
+        }
+    }
+
+    internal class NamespaceComparer : IComparer<string>
+    {
+        public static NamespaceComparer Default { get; } = new();
+
+        public int Compare(string x, string y)
+        {
+            // Check if both namespaces start with "System"
+            var xIsSystem = x.StartsWith("System", StringComparison.Ordinal);
+            var yIsSystem = y.StartsWith("System", StringComparison.Ordinal);
+
+            return xIsSystem switch
+                   {
+                       // If only one of them starts with "System", prioritize it
+                       true when !yIsSystem => -1,
+                       false when yIsSystem => 1,
+                       // If both start with "System" or neither does, compare them alphabetically
+                       true when yIsSystem   => string.Compare(x, y, StringComparison.Ordinal),
+                       false when !yIsSystem => string.Compare(x, y, StringComparison.Ordinal),
+                       _                     => xIsSystem ? -1 : 1,
+                   };
         }
     }
 }
