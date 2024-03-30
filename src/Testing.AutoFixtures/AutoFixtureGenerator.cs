@@ -82,7 +82,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                    .Concat(parameterSymbols.Select(WithPropertyMethod))
                    .Concat(new[] { BuildBuildMethod(namedTypeSymbol, parameterSymbols), })
                    .Concat(
-                        parameterSymbols.Select(symbol => BuildFields(symbol, GetFieldInvocation(compilation, symbol)))
+                        parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
                     );
 
             var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
@@ -91,30 +91,28 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             var namespaceDeclaration = BuildNamespace(syntaxContext.TargetSymbol)
                .WithMembers(new(classDeclaration));
 
-            var usings =
-                parameterSymbols
-                   .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
-                   .Where(x => !string.IsNullOrWhiteSpace(x))
-                   .Distinct()
-                   .OrderBy(x => x)
-                   .Select(x => UsingDirective(ParseName(x)))
-                   .ToArray();
+            var usingDirectives = new HashSet<string>(parameterSymbols
+                                                  .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
+                                                  .Where(x => !string.IsNullOrWhiteSpace(x))
+                                                  .Distinct()) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", };
 
-            var mockLibrary = UsingDirective(
-                ParseName(
-                    ( fakeItEasy is { }
-                        ? fakeItEasy.ContainingNamespace
-                        : substituteMetadata?.ContainingNamespace )
-                  ?.ToDisplayString()
-                 ?? string.Empty
-                )
-            );
+            if (fakeItEasy is { })
+            {
+                usingDirectives.Add(fakeItEasy.ContainingNamespace.ToDisplayString());
+            }
+
+            if (substituteMetadata is { })
+            {
+                usingDirectives.Add(substituteMetadata.ContainingNamespace.ToDisplayString());
+            }
+
+            var usingDirectiveSyntax = usingDirectives
+                                        .OrderBy(x => x, NamespaceComparer.Default)
+                                        .Select(x => UsingDirective(ParseName(x)))
+                                        .ToArray();
             var unit =
                 CompilationUnit()
-                   .AddUsings(UsingDirective(ParseName("System.Collections.ObjectModel")))
-                   .AddUsings(usings)
-                   .AddUsings(mockLibrary)
-                   .AddUsings(UsingDirective(ParseName("Rocket.Surgery.Extensions.Testing.AutoFixtures")))
+                   .AddUsings(usingDirectiveSyntax)
                    .AddMembers(namespaceDeclaration)
                    .NormalizeWhitespace();
 
@@ -134,6 +132,29 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         public int GetHashCode(IParameterSymbol obj)
         {
             return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
+        }
+    }
+    internal class NamespaceComparer : IComparer<string>
+    {
+        public static NamespaceComparer Default { get; } = new NamespaceComparer();
+        public int Compare(string x, string y)
+        {
+            // Check if both namespaces start with "System"
+            bool xIsSystem = x.StartsWith("System", StringComparison.Ordinal);
+            bool yIsSystem = y.StartsWith("System", StringComparison.Ordinal);
+
+            // If only one of them starts with "System", prioritize it
+            if (xIsSystem && !yIsSystem)
+                return -1;
+            if (!xIsSystem && yIsSystem)
+                return 1;
+
+            // If both start with "System" or neither does, compare them alphabetically
+            if (xIsSystem && yIsSystem || !xIsSystem && !yIsSystem)
+                return string.Compare(x, y, StringComparison.Ordinal);
+
+            // If one starts with "System" and the other doesn't, prioritize "System" namespace
+            return xIsSystem ? -1 : 1;
         }
     }
 }

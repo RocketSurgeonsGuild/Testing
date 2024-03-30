@@ -47,9 +47,7 @@ public class AutoFixtureGeneratorTests
     [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
     [MemberData(nameof(DuplicateConstructorParameterData.Data), MemberType = typeof(DuplicateConstructorParameterData))]
     public async Task GivenAutoFixtureAttribute_WhenGenerate_ThenGeneratesAutoFixture(
-        GeneratorTestContext context,
-        string classSource,
-        string attributedSource
+        GeneratorTestContext context
     )
     {
         // Given, When
@@ -94,6 +92,6 @@ public class AutoFixtureGeneratorTests
         var result = await context.GenerateAsync();
 
         // Then
-        await Verify(result).UseHashedParameters(context.ToString());
+        await Verify(result).UseHashedParameters(context.Id);
     }
 }

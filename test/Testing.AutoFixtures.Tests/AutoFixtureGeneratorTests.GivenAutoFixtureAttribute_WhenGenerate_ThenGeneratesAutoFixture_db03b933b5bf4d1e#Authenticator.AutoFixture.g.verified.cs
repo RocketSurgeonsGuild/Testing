@@ -5,7 +5,7 @@ using Goony.Goo.Goo;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Goony.Goo.Goo.Tests
+namespace Goony.Goo.Goo
 {
     internal sealed partial class AuthenticatorFixture : AutoFixtureBase<AuthenticatorFixture>
     {

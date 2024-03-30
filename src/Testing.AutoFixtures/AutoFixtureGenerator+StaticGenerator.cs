@@ -135,9 +135,52 @@ public partial class AutoFixtureGenerator
 
     private static MemberDeclarationSyntax BuildFields(
         IParameterSymbol parameterSymbol,
-        InvocationExpressionSyntax invocationExpressionSyntax
+        Compilation compilation
     )
     {
+
+        var isAbstract = parameterSymbol.IsAbstract;
+        var isInterface = parameterSymbol.Type.TypeKind == TypeKind.Interface;
+        var isValueType = parameterSymbol.Type.IsValueType;
+
+        var symbolName = $"_{parameterSymbol.Name}";
+        if (isValueType)
+        {
+            return FieldDeclaration(
+                    VariableDeclaration(
+                            IdentifierName(
+                                Identifier(
+                                    TriviaList(),
+                                    parameterSymbol.Type.GetGenericDisplayName(),
+                                    TriviaList(
+                                        Space
+                                    )
+                                )
+                            )
+                        )
+                       .WithVariables(
+                            SingletonSeparatedList(
+                                VariableDeclarator(
+                                        Identifier(symbolName)
+                                    )
+                                   .WithInitializer(
+                                        EqualsValueClause(
+                                            LiteralExpression(
+                                                SyntaxKind.DefaultLiteralExpression,
+                                                Token(SyntaxKind.DefaultKeyword)
+                                            )
+                                        )
+                                    )
+                            )
+                        )
+                )
+               .WithModifiers(
+                    TokenList(
+                        Token(SyntaxKind.PrivateKeyword)
+                    )
+                );
+        }
+
         return FieldDeclaration(
                    VariableDeclaration(
                            IdentifierName(
@@ -155,7 +198,7 @@ public partial class AutoFixtureGenerator
                                VariableDeclarator(
                                        Identifier(
                                            TriviaList(),
-                                           $"_{parameterSymbol.Name}",
+                                           symbolName,
                                            TriviaList(
                                                Space
                                            )
@@ -163,8 +206,7 @@ public partial class AutoFixtureGenerator
                                    )
                                   .WithInitializer(
                                        EqualsValueClause(
-                                               // TODO: [rlittlesii: February 29, 2024] Replace with FakeItEasy
-                                               invocationExpressionSyntax
+                                               GetFieldInvocation(compilation, parameterSymbol)
                                            )
                                           .WithEqualsToken(
                                                Token(

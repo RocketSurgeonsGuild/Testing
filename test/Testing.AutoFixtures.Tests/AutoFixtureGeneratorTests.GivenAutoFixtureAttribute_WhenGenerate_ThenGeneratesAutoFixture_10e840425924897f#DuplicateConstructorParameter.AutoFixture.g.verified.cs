@@ -1,7 +1,7 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/DuplicateConstructorParameter.AutoFixture.g.cs
 using System;
 using System.Collections.ObjectModel;
-using FakeItEasy;
+using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo.Tests
