@@ -20,7 +20,7 @@ internal class ParameterArraySourceData : AutoFixtureSourceData
         };
 
     public static TheoryData<GeneratorTestContext> ParameterArrayDeck =>
-        new ()
+        new()
         {
             DefaultBuilder()
                .AddReferences(typeof(Fake))
