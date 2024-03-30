@@ -46,6 +46,8 @@ public class AutoFixtureGeneratorTests
     [Theory]
     [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
     [MemberData(nameof(DuplicateConstructorParameterData.Data), MemberType = typeof(DuplicateConstructorParameterData))]
+    [MemberData(nameof(ParameterArraySourceData.Data), MemberType = typeof(ParameterArraySourceData))]
+    [MemberData(nameof(ValueTypeSourceData.Data), MemberType = typeof(ValueTypeSourceData))]
     public async Task GivenAutoFixtureAttribute_WhenGenerate_ThenGeneratesAutoFixture(
         GeneratorTestContext context
     )
@@ -71,27 +73,5 @@ public class AutoFixtureGeneratorTests
            .Results
            .Should()
            .Contain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
-    }
-
-    [Theory]
-    [MemberData(nameof(ParameterArraySourceData.EnumerableDeck), MemberType = typeof(ParameterArraySourceData))]
-    public async Task GivenConstructorWithEnumerable_WhenGenerate_ThenGeneratesAutoFixture(GeneratorTestContext context)
-    {
-        // Given, When
-        var result = await context.GenerateAsync();
-
-        // Then
-        await Verify(result).UseHashedParameters(context.Id);
-    }
-
-    [Theory]
-    [MemberData(nameof(ValueTypeSourceData.Data), MemberType = typeof(ValueTypeSourceData))]
-    public async Task GivenConstructorWithValueTypes_WhenGenerate_ThenGeneratesAutoFixture(GeneratorTestContext context)
-    {
-        // Given, When
-        var result = await context.GenerateAsync();
-
-        // Then
-        await Verify(result).UseHashedParameters(context.Id);
     }
 }

@@ -5,7 +5,7 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
 internal class ParameterArraySourceData : AutoFixtureSourceData
 {
-    public static IEnumerable<object[]> EnumerableDeck =>
+    public static IEnumerable<object[]> Data =>
         new List<object[]>
         {
             new object[]
