@@ -91,10 +91,12 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             var namespaceDeclaration = BuildNamespace(syntaxContext.TargetSymbol)
                .WithMembers(new(classDeclaration));
 
-            var usingDirectives = new HashSet<string>(parameterSymbols
-                                                  .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
-                                                  .Where(x => !string.IsNullOrWhiteSpace(x))
-                                                  .Distinct()) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", };
+            var usingDirectives = new HashSet<string>(
+                parameterSymbols
+                   .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
+                   .Where(x => !string.IsNullOrWhiteSpace(x))
+                   .Distinct()
+            ) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", };
 
             if (fakeItEasy is { })
             {
@@ -107,9 +109,9 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             }
 
             var usingDirectiveSyntax = usingDirectives
-                                        .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
-                                        .Select(x => UsingDirective(ParseName(x)))
-                                        .ToArray();
+                                      .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
+                                      .Select(x => UsingDirective(ParseName(x)))
+                                      .ToArray();
             var unit =
                 CompilationUnit()
                    .AddUsings(usingDirectiveSyntax)
@@ -134,9 +136,11 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
         }
     }
+
     internal class NamespaceComparer : IComparer<string>
     {
-        public static NamespaceComparer Default { get; } = new NamespaceComparer();
+        public static NamespaceComparer Default { get; } = new();
+
         public int Compare(string x, string y)
         {
             // Check if both namespaces start with "System"

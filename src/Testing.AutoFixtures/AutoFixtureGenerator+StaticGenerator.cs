@@ -138,7 +138,6 @@ public partial class AutoFixtureGenerator
         Compilation compilation
     )
     {
-
         var isAbstract = parameterSymbol.IsAbstract;
         var isInterface = parameterSymbol.Type.TypeKind == TypeKind.Interface;
         var isValueType = parameterSymbol.Type.IsValueType;

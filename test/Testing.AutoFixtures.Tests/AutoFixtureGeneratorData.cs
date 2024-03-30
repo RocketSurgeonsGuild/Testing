@@ -13,14 +13,14 @@ internal class AutoFixtureGeneratorData : AutoFixtureSourceData
                 DefaultBuilder()
                    .AddReferences(typeof(Fake))
                    .AddSources(ClassSource, AttributedFixtureSource)
-                   .Build()
+                   .Build(),
             },
             new object[]
             {
                 DefaultBuilder()
                    .AddReferences(typeof(Substitute))
                    .AddSources(ClassSource, AttributedFixtureSource)
-                   .Build()
+                   .Build(),
             },
             new object[]
             {
