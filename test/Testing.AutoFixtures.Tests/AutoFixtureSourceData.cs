@@ -14,7 +14,4 @@ internal abstract class AutoFixtureSourceData
               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
               .IgnoreOutputFile("AutoFixtureBase.g.cs");
     }
-
-    protected const string Fake = "FakeItEasy";
-    protected const string Substitute = "NSubstitute";
 }

@@ -1,46 +1,35 @@
 using FakeItEasy;
 using NSubstitute;
+using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
 internal class ParameterArraySourceData : AutoFixtureSourceData
 {
-    public static IEnumerable<object[]> Data =>
-        new List<object[]>
+    public static TheoryData<GeneratorTestContext> Data =>
+        new()
         {
-            new object[]
-            {
-                DefaultBuilder()
-                   .AddReferences(typeof(Fake))
-                   .AddSources(EnumerableDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
-                   .Build(),
-            },
-            new object[]
-            {
-                DefaultBuilder()
-                   .AddReferences(typeof(Substitute))
-                   .AddSources(EnumerableDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
-                   .Build(),
-            },
+            DefaultBuilder()
+               .AddReferences(typeof(Fake))
+               .AddSources(EnumerableDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
+               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Substitute))
+               .AddSources(EnumerableDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
+               .Build(),
         };
 
-    public static IEnumerable<object[]> ParameterArrayDeck =>
-        new List<object[]>
+    public static TheoryData<GeneratorTestContext> ParameterArrayDeck =>
+        new ()
         {
-            new object[]
-            {
-                DefaultBuilder()
-                   .AddReferences(typeof(Fake))
-                   .AddSources(ParamsArrayDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
-                   .Build(),
-            },
-            new object[]
-            {
-                DefaultBuilder()
-                   .AddReferences(typeof(Substitute))
-                   .AddSources(ParamsArrayDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
-                   .Build(),
-            },
+            DefaultBuilder()
+               .AddReferences(typeof(Fake))
+               .AddSources(ParamsArrayDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
+               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Substitute))
+               .AddSources(ParamsArrayDeckSource, CardsDomainSource, DeckAutoFixtureAttributedSource)
+               .Build(),
         };
 
     private const string ParamsArrayDeckSource = @"using System;

@@ -1,48 +1,36 @@
 using FakeItEasy;
 using NSubstitute;
+using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
 internal class AutoFixtureGeneratorData : AutoFixtureSourceData
 {
-    public static IEnumerable<object[]> Data =>
-        new List<object[]>
+    public static TheoryData<GeneratorTestContext> Data =>
+        new()
         {
-            new object[]
-            {
-                DefaultBuilder()
-                   .AddReferences(typeof(Fake))
-                   .AddSources(ClassSource, AttributedFixtureSource)
-                   .Build(),
-            },
-            new object[]
-            {
-                DefaultBuilder()
-                   .AddReferences(typeof(Substitute))
-                   .AddSources(ClassSource, AttributedFixtureSource)
-                   .Build(),
-            },
-            new object[]
-            {
-                DefaultBuilder()
-                   .AddReferences(typeof(Fake))
-                   .AddSources(AttributedSource)
-                   .Build(),
-            },
-            new object[]
-            {
-                DefaultBuilder()
-                   .AddReferences(typeof(Substitute))
-                   .AddSources(AttributedSource)
-                   .Build(),
-            },
+            DefaultBuilder()
+               .AddReferences(typeof(Fake))
+               .AddSources(ClassSource, AttributedFixtureSource)
+               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Substitute))
+               .AddSources(ClassSource, AttributedFixtureSource)
+               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Fake))
+               .AddSources(AttributedSource)
+               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Substitute))
+               .AddSources(AttributedSource)
+               .Build(),
         };
 
     private const string AttributedFixtureSource = @"using System;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
-
 
 namespace Goony.Goo.Goo.Tests
 {
