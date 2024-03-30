@@ -50,31 +50,3 @@ namespace Goony.Goo.Goo.Tests
     internal sealed partial class ThingFixture { }
 }";
 }
-
-public class Thing
-{
-    public Thing(int thingOne, Numbered thingTwo, Colored thingThree)
-    {
-        ThingOne = thingOne;
-        ThingTwo = thingTwo;
-        ThingThree = thingThree;
-    }
-
-    public int ThingOne { get; }
-    public Numbered ThingTwo { get; }
-    public Colored ThingThree { get; }
-}
-
-public struct Numbered
-{
-    public static Numbered One = new Numbered();
-    public static Numbered Two = new Numbered();
-
-    public Numbered() { }
-}
-
-public enum Colored
-{
-    Red,
-    Blue
-}
