@@ -26,7 +26,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         context.RegisterPostInitializationOutput(
             initializationContext =>
             {
-                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.Source);
+                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.source);
                 initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
             }
         );
@@ -108,10 +108,12 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                 usingDirectives.Add(substituteMetadata.ContainingNamespace.ToDisplayString());
             }
 
-            var usingDirectiveSyntax = usingDirectives
-                                      .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
-                                      .Select(x => UsingDirective(ParseName(x)))
-                                      .ToArray();
+            var usingDirectiveSyntax =
+                usingDirectives
+                   .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
+                   .Select(x => UsingDirective(ParseName(x)))
+                   .ToArray();
+
             var unit =
                 CompilationUnit()
                    .AddUsings(usingDirectiveSyntax)
@@ -131,10 +133,8 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             return ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
         }
 
-        public int GetHashCode(IParameterSymbol obj)
-        {
-            return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
-        }
+        public int GetHashCode(IParameterSymbol obj) =>
+            SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
     }
 
     internal class NamespaceComparer : IComparer<string>

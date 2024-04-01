@@ -21,7 +21,7 @@ public class AutoFixtureGeneratorTests
         var result = await generatorInstance.GenerateAsync();
 
         // Then
-        await Verify(result);
+        await Verify(result).ScrubLines(text => text.Contains("System.CodeDom.Compiler.GeneratedCode"));
     }
 
     [Fact]
