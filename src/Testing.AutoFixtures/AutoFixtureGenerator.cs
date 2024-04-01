@@ -133,8 +133,10 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             return ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
         }
 
-        public int GetHashCode(IParameterSymbol obj) =>
-            SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
+        public int GetHashCode(IParameterSymbol obj)
+        {
+            return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
+        }
     }
 
     internal class NamespaceComparer : IComparer<string>
