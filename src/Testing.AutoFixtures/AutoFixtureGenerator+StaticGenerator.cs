@@ -390,10 +390,12 @@ public partial class AutoFixtureGenerator
             return Identifier($"With{splitLastCamel}");
         }
 
-        bool useParameterName(IParameterSymbol parameterSymbol) =>
-            parameterSymbol.Type.TypeKind != TypeKind.Interface
-         || parameterSymbol.Type.IsValueType
-         || !parameterSymbol.Type.IsAbstract;
+        bool useParameterName(IParameterSymbol parameterSymbol)
+        {
+            return parameterSymbol.Type.TypeKind != TypeKind.Interface
+             || parameterSymbol.Type.IsValueType
+             || !parameterSymbol.Type.IsAbstract;
+        }
     }
 
     private static MemberDeclarationSyntax Operator(ISymbol namedTypeSymbol)
