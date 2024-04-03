@@ -48,6 +48,7 @@ public class AutoFixtureGeneratorTests
     [MemberData(nameof(DuplicateConstructorParameterData.Data), MemberType = typeof(DuplicateConstructorParameterData))]
     [MemberData(nameof(ParameterArraySourceData.Data), MemberType = typeof(ParameterArraySourceData))]
     [MemberData(nameof(ValueTypeSourceData.Data), MemberType = typeof(ValueTypeSourceData))]
+    [MemberData(nameof(NonAbstractReferenceTypeData.Data), MemberType = typeof(NonAbstractReferenceTypeData))]
     public async Task GivenAutoFixtureAttribute_WhenGenerate_ThenGeneratesAutoFixture(
         GeneratorTestContext context
     )
