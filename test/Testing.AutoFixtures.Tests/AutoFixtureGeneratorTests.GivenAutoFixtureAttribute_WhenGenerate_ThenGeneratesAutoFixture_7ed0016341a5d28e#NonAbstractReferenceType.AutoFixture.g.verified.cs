@@ -1,7 +1,7 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/NonAbstractReferenceType.AutoFixture.g.cs
 using System.Collections.ObjectModel;
-using FakeItEasy;
 using Goony.Goo.Goo;
+using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo

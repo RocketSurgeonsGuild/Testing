@@ -143,7 +143,7 @@ public partial class AutoFixtureGenerator
         var isValueType = parameterSymbol.Type.IsValueType;
 
         var symbolName = $"_{parameterSymbol.Name}";
-        if (isValueType)
+        if (!isAbstract && !isInterface)
         {
             return FieldDeclaration(
                     VariableDeclaration(
@@ -386,9 +386,14 @@ public partial class AutoFixtureGenerator
         SyntaxToken withTypeOrParameterName(IParameterSymbol parameterSymbol)
         {
             var primitiveName = $"{char.ToUpper(parameterSymbol.Name[0])}{parameterSymbol.Name.Substring(1, parameterSymbol.Name.Length - 1)}";
-            var splitLastCamel = parameterSymbol.Type.IsValueType ? primitiveName : SplitLastCamel(parameterSymbol);
+            var splitLastCamel = useParameterName(parameterSymbol) ? primitiveName : SplitLastCamel(parameterSymbol);
             return Identifier($"With{splitLastCamel}");
         }
+
+        bool useParameterName(IParameterSymbol parameterSymbol) =>
+            parameterSymbol.Type.TypeKind != TypeKind.Interface
+         || parameterSymbol.Type.IsValueType
+         || !parameterSymbol.Type.IsAbstract;
     }
 
     private static MemberDeclarationSyntax Operator(ISymbol namedTypeSymbol)
