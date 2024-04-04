@@ -9,14 +9,14 @@ internal class NonAbstractReferenceTypeData : AutoFixtureSourceData
     public static TheoryData<GeneratorTestContext> Data =>
         new()
         {
-//            DefaultBuilder()
-//               .AddReferences(typeof(Fake))
-//               .AddSources(ClassSource, AttributedFixtureSource)
-//               .Build(),
-//            DefaultBuilder()
-//               .AddReferences(typeof(Substitute))
-//               .AddSources(ClassSource, AttributedFixtureSource)
-//               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Fake))
+               .AddSources(ClassSource, AttributedFixtureSource)
+               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Substitute))
+               .AddSources(ClassSource, AttributedFixtureSource)
+               .Build(),
             DefaultBuilder()
                .AddReferences(typeof(Fake))
                .AddSources(AttributedSource)
@@ -56,7 +56,7 @@ using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo
 {
-    [AutoFixture(typeof(NonAbstractReferenceType))]
+    [AutoFixture]
     public class NonAbstractReferenceType
     {
         public NonAbstractReferenceType(Fish one, Fish two, Color red, Color blue)
