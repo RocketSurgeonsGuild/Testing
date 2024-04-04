@@ -235,6 +235,7 @@ public partial class AutoFixtureGenerator
     }
 
     private static MemberDeclarationSyntax BuildBuildMethod(
+        SourceProductionContext productionContext,
         ISymbol namedTypeSymbol,
         IEnumerable<IParameterSymbol> parameterSymbols
     )
@@ -245,6 +246,11 @@ public partial class AutoFixtureGenerator
             list.Add(Argument(IdentifierName($"_{parameterSymbol.Name}")));
             list.Add(Token(SyntaxKind.CommaToken));
         }
+//
+//        if (list.Count < 1)
+//        {
+//            ReportDiagnostic(productionContext, Diagnostics.AutoFixture0002, namedTypeSymbol.Locations.Last(_ => true));
+//        }
 
         list.RemoveAt(list.Count - 1);
         return GlobalStatement(
@@ -552,5 +558,79 @@ public partial class AutoFixtureGenerator
         }
     }
 
+    private static void ReportDiagnostic(
+        SourceProductionContext productionContext,
+        DiagnosticDescriptor diagnosticDescriptor,
+        IEnumerable<Location> locations
+    ) =>
+        ReportDiagnostic(productionContext, diagnosticDescriptor, locations.ToArray());
+
+    private static void ReportDiagnostic(SourceProductionContext productionContext, DiagnosticDescriptor diagnosticDescriptor, params Location[] locations)
+    {
+        foreach (var location in locations)
+        {
+            productionContext.ReportDiagnostic(Diagnostic.Create(diagnosticDescriptor, location));
+        }
+    }
+
     private const string Fixture = nameof(Fixture);
+
+    private static INamedTypeSymbol? GetClassForFixture(GeneratorAttributeSyntaxContext syntaxContext)
+    {
+        var targetSymbol = syntaxContext.TargetSymbol as INamedTypeSymbol;
+
+        if (syntaxContext.Attributes[0].ConstructorArguments.Length == 0)
+        {
+            return targetSymbol;
+        }
+
+        if (syntaxContext.Attributes[0].ConstructorArguments[0].Value is INamedTypeSymbol namedTypeSymbol)
+        {
+            return namedTypeSymbol;
+        }
+
+        return null;
+    }
+
+
+    private static bool ReportAutoFixture0001(INamedTypeSymbol classForFixture, SourceProductionContext productionContext)
+    {
+        if (classForFixture.Constructors.All(x => x.Parameters.IsDefaultOrEmpty))
+        {
+            ReportDiagnostic(productionContext, Diagnostics.AutoFixture0001, classForFixture.Locations);
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private static bool ReportAutoFixture0002(INamedTypeSymbol namedTypeSymbol, SourceProductionContext productionContext)
+    {
+        var reported = false;
+        foreach (var location in namedTypeSymbol
+                                .Constructors
+                                .SelectMany(methodSymbol => methodSymbol.Parameters)
+                                .Distinct(ParameterReductionComparer.Default)
+                                .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol, })
+                                .Select(
+                                     tuple => new
+                                     {
+                                         tuple.isArrayType,
+                                         tuple.parameterSymbol,
+                                         hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
+                                     }
+                                 )
+                                .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
+                                .SelectMany(tuple => tuple.parameterSymbol.Locations))
+        {
+            productionContext.ReportDiagnostic(Diagnostic.Create(Diagnostics.AutoFixture0002, location));
+            if (!reported)
+            {
+                reported = true;
+            }
+        }
+
+        return reported;
+    }
 }

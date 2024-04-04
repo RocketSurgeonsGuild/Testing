@@ -38,105 +38,102 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         {
             ( var syntaxContext, var compilation ) = valueTuple;
 
-            var targetSymbol = syntaxContext.TargetSymbol as INamedTypeSymbol;
+            INamedTypeSymbol? classForFixture = GetClassForFixture(syntaxContext);
 
-            var substituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
-            var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
-
-            if (syntaxContext.Attributes[0].ConstructorArguments.Length == 0
-             || syntaxContext.Attributes[0].ConstructorArguments[0].Value is not INamedTypeSymbol namedTypeSymbol)
+            if (classForFixture is null)
             {
-                if (targetSymbol is null)
-                {
-                    return;
-                }
-
-                namedTypeSymbol = targetSymbol;
-            }
-
-            var parameterSymbols =
-                namedTypeSymbol
-                   .Constructors
-                   .SelectMany(methodSymbol => methodSymbol.Parameters)
-                   .Distinct(ParameterReductionComparer.Default)
-                   .ToList();
-
-            foreach (var location in parameterSymbols
-                                    .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol, })
-                                    .Select(
-                                         tuple => new
-                                         {
-                                             tuple.parameterSymbol, tuple.isArrayType,
-                                             hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
-                                         }
-                                     )
-                                    .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
-                                    .SelectMany(tuple => tuple.parameterSymbol.Locations))
-            {
-                productionContext.ReportDiagnostic(Diagnostic.Create(Diagnostics.AutoFixture0001, location));
                 return;
             }
 
-            var fullList =
-                new[] { Operator(namedTypeSymbol), }
-                   .Concat(parameterSymbols.Select(WithPropertyMethod))
-                   .Concat(new[] { BuildBuildMethod(namedTypeSymbol, parameterSymbols), })
-                   .Concat(
-                        parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
-                    );
-
-            var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
-               .WithMembers(new(fullList));
-
-            var namespaceDeclaration = BuildNamespace(syntaxContext.TargetSymbol)
-               .WithMembers(new(classDeclaration));
-
-            var usingDirectives = new HashSet<string>(
-                parameterSymbols
-                   .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
-                   .Where(x => !string.IsNullOrWhiteSpace(x))
-                   .Distinct()
-            ) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", };
-
-            if (fakeItEasy is { })
+            // Check for all occurrences of known issues
+            if (ReportAutoFixture0001(classForFixture, productionContext))
             {
-                usingDirectives.Add(fakeItEasy.ContainingNamespace.ToDisplayString());
+                return;
             }
 
-            if (substituteMetadata is { })
+            if (ReportAutoFixture0002(classForFixture, productionContext))
             {
-                usingDirectives.Add(substituteMetadata.ContainingNamespace.ToDisplayString());
+                return;
             }
 
-            var usingDirectiveSyntax =
-                usingDirectives
-                   .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
-                   .Select(x => UsingDirective(ParseName(x)))
-                   .ToArray();
-
-            var unit =
-                CompilationUnit()
-                   .AddUsings(usingDirectiveSyntax)
-                   .AddMembers(namespaceDeclaration)
-                   .NormalizeWhitespace();
-
-            productionContext.AddSource($"{namedTypeSymbol.Name}.AutoFixture.g.cs", unit.ToFullString());
+            // Loop through
+            // Check for a list of diagnostics to report
+            // report and exit
+            // Generate Stuffs™
+            CurrentGenerator(classForFixture, syntaxContext.TargetSymbol, productionContext, compilation);
         }
+    }
+
+    private static void CurrentGenerator(
+        INamedTypeSymbol namedTypeSymbol,
+        ISymbol targetSymbol,
+        SourceProductionContext productionContext,
+        Compilation compilation
+    )
+    {
+
+        var parameterSymbols =
+            namedTypeSymbol
+               .Constructors
+               .SelectMany(methodSymbol => methodSymbol.Parameters)
+               .Distinct(ParameterReductionComparer.Default)
+               .ToList();
+
+        var fullList =
+            new[] { Operator(namedTypeSymbol), }
+               .Concat(parameterSymbols.Select(WithPropertyMethod))
+               .Concat(new[] { BuildBuildMethod(productionContext, namedTypeSymbol, parameterSymbols), })
+               .Concat(
+                    parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
+                );
+
+        var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
+           .WithMembers(new(fullList));
+
+        var namespaceDeclaration = BuildNamespace(targetSymbol)
+           .WithMembers(new(classDeclaration));
+
+        var usingDirectives = new HashSet<string>(
+            parameterSymbols
+               .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
+               .Where(x => !string.IsNullOrWhiteSpace(x))
+               .Distinct()
+        ) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", };
+
+        var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
+        if (fakeItEasy is { })
+        {
+            usingDirectives.Add(fakeItEasy.ContainingNamespace.ToDisplayString());
+        }
+
+        var substituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
+        if (substituteMetadata is { })
+        {
+            usingDirectives.Add(substituteMetadata.ContainingNamespace.ToDisplayString());
+        }
+
+        var usingDirectiveSyntax =
+            usingDirectives
+               .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
+               .Select(x => UsingDirective(ParseName(x)))
+               .ToArray();
+
+        var unit =
+            CompilationUnit()
+               .AddUsings(usingDirectiveSyntax)
+               .AddMembers(namespaceDeclaration)
+               .NormalizeWhitespace();
+
+        productionContext.AddSource($"{namedTypeSymbol.Name}.AutoFixture.g.cs", unit.ToFullString());
     }
 
     internal class ParameterReductionComparer : IEqualityComparer<IParameterSymbol>
     {
         public static IEqualityComparer<IParameterSymbol> Default { get; } = new ParameterReductionComparer();
 
-        public bool Equals(IParameterSymbol x, IParameterSymbol y)
-        {
-            return ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
-        }
+        public bool Equals(IParameterSymbol x, IParameterSymbol y) => ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
 
-        public int GetHashCode(IParameterSymbol obj)
-        {
-            return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
-        }
+        public int GetHashCode(IParameterSymbol obj) => SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
     }
 
     internal class NamespaceComparer : IComparer<string>
