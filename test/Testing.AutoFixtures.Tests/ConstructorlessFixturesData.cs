@@ -6,7 +6,6 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
 public class GenerateMultipleFixturesData : AutoFixtureSourceData
 {
-
     public static TheoryData<GeneratorTestContext> Data =>
         new()
         {

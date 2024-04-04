@@ -562,8 +562,10 @@ public partial class AutoFixtureGenerator
         SourceProductionContext productionContext,
         DiagnosticDescriptor diagnosticDescriptor,
         IEnumerable<Location> locations
-    ) =>
+    )
+    {
         ReportDiagnostic(productionContext, diagnosticDescriptor, locations.ToArray());
+    }
 
     private static void ReportDiagnostic(SourceProductionContext productionContext, DiagnosticDescriptor diagnosticDescriptor, params Location[] locations)
     {

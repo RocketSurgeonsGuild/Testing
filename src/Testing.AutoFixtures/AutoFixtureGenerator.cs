@@ -7,63 +7,6 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 [Generator]
 public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
 {
-    /// <inheritdoc />
-    public void Initialize(IncrementalGeneratorInitializationContext context)
-    {
-        var syntaxProvider =
-            context
-               .SyntaxProvider
-               .ForAttributeWithMetadataName(
-                    "Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureAttribute",
-                    (node, token) => node.IsKind(SyntaxKind.ClassDeclaration),
-                    (syntaxContext, token) => syntaxContext
-                )
-               .Combine(context.CompilationProvider);
-
-        context.RegisterSourceOutput(syntaxProvider, generateFixtureBuilder);
-
-        // do generator things
-        context.RegisterPostInitializationOutput(
-            initializationContext =>
-            {
-                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.source);
-                initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
-            }
-        );
-
-        void generateFixtureBuilder(
-            SourceProductionContext productionContext,
-            (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
-        )
-        {
-            ( var syntaxContext, var compilation ) = valueTuple;
-
-            INamedTypeSymbol? classForFixture = GetClassForFixture(syntaxContext);
-
-            if (classForFixture is null)
-            {
-                return;
-            }
-
-            // Check for all occurrences of known issues
-            if (ReportAutoFixture0001(classForFixture, productionContext))
-            {
-                return;
-            }
-
-            if (ReportAutoFixture0002(classForFixture, productionContext))
-            {
-                return;
-            }
-
-            // Loop through
-            // Check for a list of diagnostics to report
-            // report and exit
-            // Generate Stuffs™
-            CurrentGenerator(classForFixture, syntaxContext.TargetSymbol, productionContext, compilation);
-        }
-    }
-
     private static void CurrentGenerator(
         INamedTypeSymbol namedTypeSymbol,
         ISymbol targetSymbol,
@@ -71,7 +14,6 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         Compilation compilation
     )
     {
-
         var parameterSymbols =
             namedTypeSymbol
                .Constructors
@@ -127,13 +69,76 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         productionContext.AddSource($"{namedTypeSymbol.Name}.AutoFixture.g.cs", unit.ToFullString());
     }
 
+    /// <inheritdoc />
+    public void Initialize(IncrementalGeneratorInitializationContext context)
+    {
+        var syntaxProvider =
+            context
+               .SyntaxProvider
+               .ForAttributeWithMetadataName(
+                    "Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureAttribute",
+                    (node, token) => node.IsKind(SyntaxKind.ClassDeclaration),
+                    (syntaxContext, token) => syntaxContext
+                )
+               .Combine(context.CompilationProvider);
+
+        context.RegisterSourceOutput(syntaxProvider, generateFixtureBuilder);
+
+        // do generator things
+        context.RegisterPostInitializationOutput(
+            initializationContext =>
+            {
+                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.source);
+                initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
+            }
+        );
+
+        void generateFixtureBuilder(
+            SourceProductionContext productionContext,
+            (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
+        )
+        {
+            ( var syntaxContext, var compilation ) = valueTuple;
+
+            var classForFixture = GetClassForFixture(syntaxContext);
+
+            if (classForFixture is null)
+            {
+                return;
+            }
+
+            // Check for all occurrences of known issues
+            if (ReportAutoFixture0001(classForFixture, productionContext))
+            {
+                return;
+            }
+
+            if (ReportAutoFixture0002(classForFixture, productionContext))
+            {
+                return;
+            }
+
+            // Loop through
+            // Check for a list of diagnostics to report
+            // report and exit
+            // Generate Stuffs™
+            CurrentGenerator(classForFixture, syntaxContext.TargetSymbol, productionContext, compilation);
+        }
+    }
+
     internal class ParameterReductionComparer : IEqualityComparer<IParameterSymbol>
     {
         public static IEqualityComparer<IParameterSymbol> Default { get; } = new ParameterReductionComparer();
 
-        public bool Equals(IParameterSymbol x, IParameterSymbol y) => ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
+        public bool Equals(IParameterSymbol x, IParameterSymbol y)
+        {
+            return ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
+        }
 
-        public int GetHashCode(IParameterSymbol obj) => SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
+        public int GetHashCode(IParameterSymbol obj)
+        {
+            return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
+        }
     }
 
     internal class NamespaceComparer : IComparer<string>

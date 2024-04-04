@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis;
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 /// <summary>
-/// Represents the supported <see cref="DiagnosticDescriptor"/>.
+///     Represents the supported <see cref="DiagnosticDescriptor" />.
 /// </summary>
 public static class Diagnostics
 {
@@ -18,6 +18,7 @@ public static class Diagnostics
         DiagnosticSeverity.Info,
         true
     );
+
     /// <summary>
     ///     Diagnostic for unsupported parameter arrays as constructors.
     /// </summary>

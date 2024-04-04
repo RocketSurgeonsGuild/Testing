@@ -76,6 +76,7 @@ public class AutoFixtureGeneratorTests
            .Should()
            .Contain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
     }
+
     [Theory]
     [MemberData(nameof(ParameterArraySourceData.ParameterArrayDeck), MemberType = typeof(ParameterArraySourceData))]
     public async Task GivenConstructorWithParameterArray_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
