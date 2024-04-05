@@ -2,7 +2,6 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="coverlet.collector" />
-        <PackageReference Include="coverlet.msbuild" />
         <PackageReference Include="FakeItEasy" />
         <PackageReference Include="FakeItEasy.Analyzer.CSharp" />
         <PackageReference Include="FluentAssertions" />
@@ -14,6 +13,8 @@
         <PackageReference Include="Verify.Xunit" />
         <PackageReference Include="Verify.SourceGenerators" />
     </ItemGroup>
-    <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
-    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+    <Import
+        Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
+    <Import
+        Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 </Project>
