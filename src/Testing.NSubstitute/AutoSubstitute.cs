@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using DryIoc;
+using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 
@@ -20,9 +21,9 @@ public sealed class AutoSubstitute : IDisposable
         Func<IContainer, IContainer>? configureAction = null
     )
     {
-        Container = container ?? new Container();
+        container ??= new Container();
 
-        Container = Container
+        container = container
            .With(
                 rules => rules
                         .WithTestLoggerResolver(
@@ -35,13 +36,14 @@ public sealed class AutoSubstitute : IDisposable
                         .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
 
-        if (configureAction != null) Container = configureAction.Invoke(Container);
+        if (configureAction != null)
+            DryIoc = configureAction.Invoke(container).WithDependencyInjectionAdapter();
     }
 
     /// <summary>
     ///     Gets the <see cref="IContainer" /> that handles the component resolution.
     /// </summary>
-    public IContainer Container { get; }
+    public DryIocServiceProvider DryIoc { get; }
 
     /// <summary>
     ///     Resolve the specified type in the container (register it if needed).
@@ -50,7 +52,7 @@ public sealed class AutoSubstitute : IDisposable
     /// <returns>The service.</returns>
     public T Resolve<T>()
     {
-        return Container.Resolve<T>();
+        return DryIoc.Container.Resolve<T>();
     }
 
     /// <summary>
@@ -67,7 +69,7 @@ public sealed class AutoSubstitute : IDisposable
     public TService Provide<TService>(TService instance)
         where TService : class
     {
-        Container.RegisterInstance(instance);
+        DryIoc.Container.RegisterInstance(instance);
         return instance;
     }
 
@@ -84,14 +86,14 @@ public sealed class AutoSubstitute : IDisposable
     )]
     public TService Provide<TService, TImplementation>() where TImplementation : TService
     {
-        Container.Register<TService, TImplementation>();
-        return Container.Resolve<TService>();
+        DryIoc.Container.Register<TService, TImplementation>();
+        return DryIoc.Container.Resolve<TService>();
     }
 
     #pragma warning disable CA1063
     void IDisposable.Dispose()
     {
-        Container.Dispose();
+        DryIoc.Dispose();
     }
     #pragma warning restore CA1063
 }

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using DryIoc;
+using DryIoc.Microsoft.DependencyInjection;
 using FakeItEasy.Creation;
 using FakeItEasy.Sdk;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,10 +24,9 @@ public sealed class AutoFake : IDisposable
         Action<IFakeOptions>? fakeOptionsAction = null
     )
     {
-        Container = container ?? new Container();
-        if (fakeOptionsAction == null)
-            fakeOptionsAction = _ => { };
-        Container = Container
+        container ??= new Container();
+        fakeOptionsAction ??= _ => { };
+        container = container
            .With(
                 rules => rules
                         .WithTestLoggerResolver(
@@ -40,13 +40,13 @@ public sealed class AutoFake : IDisposable
                         .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
         if (configureAction != null)
-            Container = configureAction.Invoke(Container);
+            DryIoc = configureAction.Invoke(container).WithDependencyInjectionAdapter();
     }
 
     /// <summary>
     ///     Gets the <see cref="IContainer" /> that handles the component resolution.
     /// </summary>
-    public IContainer Container { get; }
+    public DryIocServiceProvider DryIoc { get; }
 
     /// <summary>
     ///     Resolve the specified type in the container (register it if needed).
@@ -55,7 +55,7 @@ public sealed class AutoFake : IDisposable
     /// <returns>The service.</returns>
     public T Resolve<T>()
     {
-        return Container.Resolve<T>();
+        return DryIoc.Container.Resolve<T>();
     }
 
     /// <summary>
@@ -72,8 +72,8 @@ public sealed class AutoFake : IDisposable
     public TService Provide<TService, TImplementation>()
         where TImplementation : TService
     {
-        Container.Register<TService, TImplementation>(Reuse.Singleton);
-        return Container.Resolve<TService>();
+        DryIoc.Container.Register<TService, TImplementation>(Reuse.Singleton);
+        return DryIoc.Container.Resolve<TService>();
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public sealed class AutoFake : IDisposable
     public TService Provide<TService>(TService instance)
         where TService : class
     {
-        Container.RegisterInstance(instance);
+        DryIoc.Container.RegisterInstance(instance);
         return instance;
     }
 
@@ -98,6 +98,6 @@ public sealed class AutoFake : IDisposable
     void IDisposable.Dispose()
 #pragma warning restore CA1063
     {
-        Container.Dispose();
+        DryIoc.Dispose();
     }
 }

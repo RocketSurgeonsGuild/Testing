@@ -37,7 +37,7 @@ public abstract class AutoMockTest : LoggerTest
     /// </summary>
     protected IContainer Container
     {
-        get => AutoMock.Container;
+        get => AutoMock.DryIoc.Container;
         private set => _autoMock = Rebuild(value);
     }
 
@@ -58,7 +58,7 @@ public abstract class AutoMockTest : LoggerTest
     /// <summary>
     ///     The Service Provider
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoMock.Container;
+    protected IServiceProvider ServiceProvider => AutoMock.DryIoc;
 
 #pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
     /// <summary>
@@ -118,7 +118,7 @@ public abstract class AutoMockTest : LoggerTest
         container.RegisterInstance(LoggerFactory);
         container.RegisterInstance(Logger);
         container.RegisterInstance(SerilogLogger);
-        return BuildContainer(container.WithDependencyInjectionAdapter());
+        return BuildContainer(container);
     }
 
     /// <summary>

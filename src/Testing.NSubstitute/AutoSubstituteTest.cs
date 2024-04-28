@@ -83,7 +83,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     /// </summary>
     protected IContainer Container
     {
-        get => AutoSubstitute.Container;
+        get => AutoSubstitute.DryIoc.Container;
         private set => _autoSubstitute = Rebuild(value);
     }
 
@@ -104,7 +104,7 @@ public abstract class AutoSubstituteTest : LoggerTest
     /// <summary>
     ///     The Service Provider
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoSubstitute.Container;
+    protected IServiceProvider ServiceProvider => AutoSubstitute.DryIoc;
 
     /// <summary>
     ///     A method that allows you to override and update the behavior of building the container
@@ -156,6 +156,6 @@ public abstract class AutoSubstituteTest : LoggerTest
         container.RegisterInstance(LoggerFactory);
         container.RegisterInstance(Logger);
         container.RegisterInstance(SerilogLogger);
-        return BuildContainer(container.WithDependencyInjectionAdapter());
+        return BuildContainer(container);
     }
 }

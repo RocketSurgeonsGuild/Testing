@@ -19,7 +19,7 @@ namespace Rocket.Surgery.Extensions.Testing;
 /// </summary>
 public abstract class AutoFakeTest : LoggerTest
 {
-    private static readonly IConfiguration ReadOnlyConfiguration = new ConfigurationBuilder().Build();
+    private static readonly IConfiguration _readOnlyConfiguration = new ConfigurationBuilder().Build();
     private readonly Action<IFakeOptions>? _fakeOptionsAction;
     private AutoFake? _autoFake;
     private bool _building;
@@ -27,7 +27,7 @@ public abstract class AutoFakeTest : LoggerTest
     /// <summary>
     ///     The Configuration if defined otherwise empty.
     /// </summary>
-    protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.Resolve<IConfiguration>() : ReadOnlyConfiguration;
+    protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.Resolve<IConfiguration>() : _readOnlyConfiguration;
 
     /// <summary>
     ///     The AutoFake instance
@@ -39,7 +39,7 @@ public abstract class AutoFakeTest : LoggerTest
     /// </summary>
     protected IContainer Container
     {
-        get => AutoFake.Container;
+        get => AutoFake.DryIoc.Container;
         private set => _autoFake = Rebuild(value);
     }
 
@@ -61,7 +61,7 @@ public abstract class AutoFakeTest : LoggerTest
     /// <summary>
     ///     The Service Provider
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoFake.Container;
+    protected IServiceProvider ServiceProvider => AutoFake.DryIoc;
 
 #pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
     /// <summary>
@@ -126,7 +126,7 @@ public abstract class AutoFakeTest : LoggerTest
         container.RegisterInstance(LoggerFactory);
         container.RegisterInstance(Logger);
         container.RegisterInstance(SerilogLogger);
-        return BuildContainer(container.WithDependencyInjectionAdapter());
+        return BuildContainer(container);
     }
 
     /// <summary>
