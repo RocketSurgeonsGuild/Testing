@@ -42,6 +42,11 @@ public abstract class AutoMockTest : LoggerTest
     }
 
     /// <summary>
+    ///     The Service Provider
+    /// </summary>
+    protected IServiceProvider ServiceProvider => AutoMock.DryIoc;
+
+    /// <summary>
     ///     Force the container to rebuild from scratch
     /// </summary>
     /// <returns></returns>
@@ -54,64 +59,6 @@ public abstract class AutoMockTest : LoggerTest
         _building = false;
         return autoFake;
     }
-
-    /// <summary>
-    ///     The Service Provider
-    /// </summary>
-    protected IServiceProvider ServiceProvider => AutoMock.DryIoc;
-
-#pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="mockBehavior"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    protected AutoMockTest(
-        ITestOutputHelper outputHelper, MockBehavior mockBehavior = MockBehavior.Default,
-        string? logFormat = null, Action<LoggerConfiguration>? configureLogger = null
-    )
-        : this(outputHelper, LogEventLevel.Information, mockBehavior, logFormat, configureLogger)
-    {
-    }
-
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="minLevel"></param>
-    /// <param name="mockBehavior"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    protected AutoMockTest(
-        ITestOutputHelper outputHelper, LogLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default,
-        string? logFormat = null, Action<LoggerConfiguration>? configureLogger = null
-    )
-        : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), mockBehavior, logFormat, configureLogger)
-    {
-    }
-
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="minLevel"></param>
-    /// <param name="mockBehavior"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    protected AutoMockTest(
-        ITestOutputHelper outputHelper,
-        LogEventLevel minLevel,
-        MockBehavior mockBehavior = MockBehavior.Default,
-        string? logFormat = null,
-        Action<LoggerConfiguration>? configureLogger = null
-    )
-        : base(outputHelper, minLevel, logFormat, configureLogger)
-    {
-        _mockBehavior = mockBehavior;
-    }
-#pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 
     private IContainer ConfigureContainer(IContainer container)
     {
@@ -165,4 +112,58 @@ public abstract class AutoMockTest : LoggerTest
     {
         return container;
     }
+
+    #pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
+    /// <summary>
+    ///     The default constructor with available logging level
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="mockBehavior"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
+    protected AutoMockTest(
+        ITestOutputHelper outputHelper,
+        MockBehavior mockBehavior = MockBehavior.Default,
+        string? logFormat = null,
+        Action<LoggerConfiguration>? configureLogger = null
+    )
+        : this(outputHelper, LogEventLevel.Information, mockBehavior, logFormat, configureLogger) { }
+
+    /// <summary>
+    ///     The default constructor with available logging level
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="minLevel"></param>
+    /// <param name="mockBehavior"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
+    protected AutoMockTest(
+        ITestOutputHelper outputHelper,
+        LogLevel minLevel,
+        MockBehavior mockBehavior = MockBehavior.Default,
+        string? logFormat = null,
+        Action<LoggerConfiguration>? configureLogger = null
+    )
+        : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), mockBehavior, logFormat, configureLogger) { }
+
+    /// <summary>
+    ///     The default constructor with available logging level
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="minLevel"></param>
+    /// <param name="mockBehavior"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
+    protected AutoMockTest(
+        ITestOutputHelper outputHelper,
+        LogEventLevel minLevel,
+        MockBehavior mockBehavior = MockBehavior.Default,
+        string? logFormat = null,
+        Action<LoggerConfiguration>? configureLogger = null
+    )
+        : base(outputHelper, minLevel, logFormat, configureLogger)
+    {
+        _mockBehavior = mockBehavior;
+    }
+    #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 }

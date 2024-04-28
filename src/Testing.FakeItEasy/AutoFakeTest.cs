@@ -44,6 +44,11 @@ public abstract class AutoFakeTest : LoggerTest
     }
 
     /// <summary>
+    ///     The Service Provider
+    /// </summary>
+    protected IServiceProvider ServiceProvider => AutoFake.DryIoc;
+
+    /// <summary>
     ///     Force the container to rebuild from scratch
     /// </summary>
     /// <exception cref="ApplicationException"></exception>
@@ -57,69 +62,6 @@ public abstract class AutoFakeTest : LoggerTest
         _building = false;
         return autoFake;
     }
-
-    /// <summary>
-    ///     The Service Provider
-    /// </summary>
-    protected IServiceProvider ServiceProvider => AutoFake.DryIoc;
-
-#pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    /// <param name="fakeOptionsAction"></param>
-    protected AutoFakeTest(
-        ITestOutputHelper outputHelper,
-        string? logFormat = null,
-        Action<LoggerConfiguration>? configureLogger = null,
-        Action<IFakeOptions>? fakeOptionsAction = null
-    )
-        : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger, fakeOptionsAction)
-    {
-    }
-
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="minLevel"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    /// <param name="fakeOptionsAction"></param>
-    protected AutoFakeTest(
-        ITestOutputHelper outputHelper,
-        LogLevel minLevel,
-        string? logFormat = null,
-        Action<LoggerConfiguration>? configureLogger = null,
-        Action<IFakeOptions>? fakeOptionsAction = null
-    )
-        : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger, fakeOptionsAction)
-    {
-    }
-
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="minLevel"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    /// <param name="fakeOptionsAction"></param>
-    protected AutoFakeTest(
-        ITestOutputHelper outputHelper,
-        LogEventLevel minLevel,
-        string? logFormat = null,
-        Action<LoggerConfiguration>? configureLogger = null,
-        Action<IFakeOptions>? fakeOptionsAction = null
-    )
-        : base(outputHelper, minLevel, logFormat, configureLogger)
-    {
-        _fakeOptionsAction = fakeOptionsAction;
-    }
-#pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 
     private IContainer ConfigureContainer(IContainer container)
     {
@@ -182,10 +124,64 @@ public abstract class AutoFakeTest : LoggerTest
         LoggerProviderCollection loggerProviderCollection
     )
     {
-#pragma warning disable CA2000 // Dispose objects before losing scope
+        #pragma warning disable CA2000 // Dispose objects before losing scope
         var factory =
             new FakeItEasyLoggerFactory(new SerilogLoggerFactory(logger, false, loggerProviderCollection));
-#pragma warning restore CA2000 // Dispose objects before losing scope
+        #pragma warning restore CA2000 // Dispose objects before losing scope
         return A.Fake<ILoggerFactory>(l => l.Wrapping(factory));
     }
+
+    #pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
+    /// <summary>
+    ///     The default constructor with available logging level
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
+    /// <param name="fakeOptionsAction"></param>
+    protected AutoFakeTest(
+        ITestOutputHelper outputHelper,
+        string? logFormat = null,
+        Action<LoggerConfiguration>? configureLogger = null,
+        Action<IFakeOptions>? fakeOptionsAction = null
+    )
+        : this(outputHelper, LogEventLevel.Information, logFormat, configureLogger, fakeOptionsAction) { }
+
+    /// <summary>
+    ///     The default constructor with available logging level
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="minLevel"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
+    /// <param name="fakeOptionsAction"></param>
+    protected AutoFakeTest(
+        ITestOutputHelper outputHelper,
+        LogLevel minLevel,
+        string? logFormat = null,
+        Action<LoggerConfiguration>? configureLogger = null,
+        Action<IFakeOptions>? fakeOptionsAction = null
+    )
+        : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), logFormat, configureLogger, fakeOptionsAction) { }
+
+    /// <summary>
+    ///     The default constructor with available logging level
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="minLevel"></param>
+    /// <param name="logFormat"></param>
+    /// <param name="configureLogger"></param>
+    /// <param name="fakeOptionsAction"></param>
+    protected AutoFakeTest(
+        ITestOutputHelper outputHelper,
+        LogEventLevel minLevel,
+        string? logFormat = null,
+        Action<LoggerConfiguration>? configureLogger = null,
+        Action<IFakeOptions>? fakeOptionsAction = null
+    )
+        : base(outputHelper, minLevel, logFormat, configureLogger)
+    {
+        _fakeOptionsAction = fakeOptionsAction;
+    }
+    #pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
 }

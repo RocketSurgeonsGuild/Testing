@@ -94,9 +94,9 @@ public sealed class AutoFake : IDisposable
         return instance;
     }
 
-#pragma warning disable CA1063
+    #pragma warning disable CA1063
     void IDisposable.Dispose()
-#pragma warning restore CA1063
+        #pragma warning restore CA1063
     {
         DryIoc.Dispose();
     }

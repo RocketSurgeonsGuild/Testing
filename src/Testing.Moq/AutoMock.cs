@@ -22,9 +22,7 @@ public sealed class AutoMock : IDisposable
         IContainer? container = null,
         Func<IContainer, IContainer>? configureAction = null
     )
-        : this(new MockRepository(behavior), container, configureAction)
-    {
-    }
+        : this(new MockRepository(behavior), container, configureAction) { }
 
     /// <summary>
     ///     Create a container that automatically fakes unknown types
@@ -114,7 +112,8 @@ public sealed class AutoMock : IDisposable
     /// <param name="instance">The instance to register if needed.</param>
     /// <returns>The instance resolved from container.</returns>
     [SuppressMessage(
-        "Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+        "Microsoft.Reliability",
+        "CA2000:Dispose objects before losing scope",
         Justification = "The component registry is responsible for registration disposal."
     )]
     public TService Provide<TService>(TService instance)
@@ -124,9 +123,9 @@ public sealed class AutoMock : IDisposable
         return instance;
     }
 
-#pragma warning disable CA1063
+    #pragma warning disable CA1063
     void IDisposable.Dispose()
-#pragma warning restore CA1063
+        #pragma warning restore CA1063
     {
         DryIoc.Dispose();
     }
