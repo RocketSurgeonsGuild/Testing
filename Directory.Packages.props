@@ -46,8 +46,8 @@
     <PackageVersion Include="System.Reactive" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="DryIoc.dll" Version="5.4.3" />
-    <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="6.2.0" />
+    <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-07" />
+    <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-02" />
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="FakeItEasy" Version="8.2.0" />
     <PackageVersion Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
