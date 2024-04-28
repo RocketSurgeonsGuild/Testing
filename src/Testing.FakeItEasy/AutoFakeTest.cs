@@ -68,7 +68,7 @@ public abstract class AutoFakeTest : LoggerTest
         container.RegisterInstance(LoggerFactory);
         container.RegisterInstance(Logger);
         container.RegisterInstance(SerilogLogger);
-        return BuildContainer(container);
+        return BuildContainer(container.With(r => r.WithBaseMicrosoftDependencyInjectionRules(null)));
     }
 
     /// <summary>

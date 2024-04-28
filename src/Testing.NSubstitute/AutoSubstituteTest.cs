@@ -150,6 +150,6 @@ public abstract class AutoSubstituteTest : LoggerTest
         container.RegisterInstance(LoggerFactory);
         container.RegisterInstance(Logger);
         container.RegisterInstance(SerilogLogger);
-        return BuildContainer(container);
+        return container.With(r => r.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 }
