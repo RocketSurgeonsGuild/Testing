@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using DryIoc;
+using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
@@ -21,9 +22,7 @@ public sealed class AutoMock : IDisposable
         IContainer? container = null,
         Func<IContainer, IContainer>? configureAction = null
     )
-        : this(new MockRepository(behavior), container, configureAction)
-    {
-    }
+        : this(new MockRepository(behavior), container, configureAction) { }
 
     /// <summary>
     ///     Create a container that automatically fakes unknown types
@@ -37,9 +36,9 @@ public sealed class AutoMock : IDisposable
         Func<IContainer, IContainer>? configureAction = null
     )
     {
-        Container = container ?? new Container();
+        container ??= new Container();
 
-        Container = Container.With(
+        container = container.With(
             rules =>
             {
                 var createMethod = typeof(MockRepository).GetMethod(nameof(MockRepository.Create), Array.Empty<Type>())!;
@@ -58,13 +57,13 @@ public sealed class AutoMock : IDisposable
         );
 
         if (configureAction != null)
-            Container = configureAction.Invoke(Container);
+            DryIoc = configureAction.Invoke(container).WithDependencyInjectionAdapter();
     }
 
     /// <summary>
     ///     Gets the <see cref="IContainer" /> that handles the component resolution.
     /// </summary>
-    public IContainer Container { get; }
+    public DryIocServiceProvider DryIoc { get; }
 
     /// <summary>
     ///     Resolve the specified type in the container (register it if needed).
@@ -73,7 +72,7 @@ public sealed class AutoMock : IDisposable
     /// <returns>The service.</returns>
     public T Resolve<T>()
     {
-        return Container.Resolve<T>();
+        return DryIoc.Container.Resolve<T>();
     }
 
     /// <summary>
@@ -84,7 +83,7 @@ public sealed class AutoMock : IDisposable
     public Mock<T> Mock<T>()
         where T : class
     {
-        var obj = (IMocked<T>)Container.Resolve<T>();
+        var obj = (IMocked<T>)DryIoc.Container.Resolve<T>();
         return obj.Mock;
     }
 
@@ -102,8 +101,8 @@ public sealed class AutoMock : IDisposable
     public TService Provide<TService, TImplementation>()
         where TImplementation : TService
     {
-        Container.Register<TService, TImplementation>(Reuse.Singleton);
-        return Container.Resolve<TService>();
+        DryIoc.Container.Register<TService, TImplementation>(Reuse.Singleton);
+        return DryIoc.Container.Resolve<TService>();
     }
 
     /// <summary>
@@ -113,20 +112,21 @@ public sealed class AutoMock : IDisposable
     /// <param name="instance">The instance to register if needed.</param>
     /// <returns>The instance resolved from container.</returns>
     [SuppressMessage(
-        "Microsoft.Reliability", "CA2000:Dispose objects before losing scope",
+        "Microsoft.Reliability",
+        "CA2000:Dispose objects before losing scope",
         Justification = "The component registry is responsible for registration disposal."
     )]
     public TService Provide<TService>(TService instance)
         where TService : class
     {
-        Container.RegisterInstance(instance);
+        DryIoc.Container.RegisterInstance(instance);
         return instance;
     }
 
-#pragma warning disable CA1063
+    #pragma warning disable CA1063
     void IDisposable.Dispose()
-#pragma warning restore CA1063
+        #pragma warning restore CA1063
     {
-        Container.Dispose();
+        DryIoc.Dispose();
     }
 }
