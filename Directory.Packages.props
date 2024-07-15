@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageVersion Include="GitVersion.Tool" Version="6.0.0-rc.1" />
     <PackageVersion Include="Nuke.Common" Version="8.0.0" />
-    <PackageVersion Include="ReportGenerator" Version="5.3.7" />
+    <PackageVersion Include="ReportGenerator" Version="5.3.8" />
     <PackageVersion Include="Rocket.Surgery.Nuke" Version="1.8.36" />
     <PackageVersion Include="NuGet.ProjectModel" Version="6.10.1" />
     <PackageVersion Include="Buildalyzer" Version="7.0.2" />
