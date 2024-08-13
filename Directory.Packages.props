@@ -21,7 +21,7 @@
     <PackageVersion Include="Nuke.Common" Version="8.0.0" />
     <PackageVersion Include="ReportGenerator" Version="5.3.8" />
     <PackageVersion Include="Rocket.Surgery.Nuke" Version="1.8.36" />
-    <PackageVersion Include="NuGet.ProjectModel" Version="6.10.2" />
+    <PackageVersion Include="NuGet.ProjectModel" Version="6.11.0" />
     <PackageVersion Include="Buildalyzer" Version="7.0.2" />
   </ItemGroup>
   <ItemGroup>
