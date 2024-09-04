@@ -1,5 +1,6 @@
 <Project>
     <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="coverlet.collector" />
         <PackageReference Include="FakeItEasy" />
@@ -10,6 +11,8 @@
         <PackageReference Include="Verify.Xunit" />
         <PackageReference Include="Verify.SourceGenerators" />
     </ItemGroup>
-    <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
-    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+    <Import
+        Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
+    <Import
+        Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 </Project>
