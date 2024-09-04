@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations"
-            IncludeAssets="runtime;build;contentfiles;analyzers;buildtransitive" PrivateAssets="all" />
+        <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" />
     </ItemGroup>
 </Project>
