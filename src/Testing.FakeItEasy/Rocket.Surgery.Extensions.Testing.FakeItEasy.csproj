@@ -8,7 +8,6 @@
     <ItemGroup>
         <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.Tests" />
         <PackageReference Include="FakeItEasy" />
-        <PackageReference Include="FakeItEasy.Analyzer.CSharp" ExcludeAssets="compile" PrivateAssets="contentfiles" />
         <!-- Disabled for now to handle scenarios with enumerables -->
         <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj" PrivateAssets="contentfiles" />
         <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles" />

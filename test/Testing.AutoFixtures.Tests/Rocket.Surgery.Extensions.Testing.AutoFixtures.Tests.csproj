@@ -10,7 +10,6 @@
 
     <ItemGroup>
         <PackageReference Include="NSubstitute" />
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" />
         <PackageReference Include="Verify.DiffPlex" />
     </ItemGroup>
@@ -20,8 +19,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
-      <ProjectReference Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
+        <ProjectReference Include="..\..\src\Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
+        <ProjectReference Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
     </ItemGroup>
 
 </Project>
