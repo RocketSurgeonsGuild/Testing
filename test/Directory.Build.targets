@@ -1,6 +1,5 @@
 <Project>
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" IncludeAssets="runtime" PrivateAssets="all" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="coverlet.collector" />
         <PackageReference Include="FakeItEasy" />
