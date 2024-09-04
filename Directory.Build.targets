@@ -2,6 +2,6 @@
 <Project>
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations"
-            Assets="build;contentfiles;analyzers;buildtransitive" PrivateAssets="all" />
+            IncludeAssets="build;contentfiles;analyzers;buildtransitive" PrivateAssets="all" />
     </ItemGroup>
 </Project>

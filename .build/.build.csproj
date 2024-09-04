@@ -12,7 +12,7 @@
     <PackageReference Include="GitVersion.Tool" ExcludeAssets="All" />
     <PackageReference Include="ReportGenerator" ExcludeAssets="All" />
     <PackageReference Include="JetBrains.Annotations"
-      Assets="build;contentfiles;analyzers;buildtransitive" PrivateAssets="all" />
+      IncludeAssets="build;contentfiles;analyzers;buildtransitive" PrivateAssets="all" />
     <PackageReference Include="Rocket.Surgery.Nuke" />
     <PackageReference Include="NuGet.ProjectModel" />
   </ItemGroup>
