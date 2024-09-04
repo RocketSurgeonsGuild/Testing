@@ -5,9 +5,8 @@
         <IsTestProject>false</IsTestProject>
         <IsMagicProject>true</IsMagicProject>
     </PropertyGroup>
-    
-    <ItemGroup>        
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" />
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
         <PackageReference Include="Microsoft.CodeAnalysis.Common" />
         <PackageReference Include="Microsoft.CodeAnalysis.Features" />
