@@ -7,7 +7,6 @@
     <GlobalPackageReference Include="Rocket.Surgery.MSBuild.CI" Version="1.2.1" />
     <GlobalPackageReference Include="Rocket.Surgery.MSBuild.GitVersion" Version="1.2.1" />
     <GlobalPackageReference Include="Rocket.Surgery.MSBuild.SourceLink" Version="1.2.1" />
-    <GlobalPackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
     <GlobalPackageReference Include="JetBrains.ExternalAnnotations" Version="10.2.152" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
@@ -23,6 +22,7 @@
     <GlobalPackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="JetBrains.Annotations" Version="2024.2.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
     <PackageVersion Include="Polyfill" Version="6.5.0" />
     <PackageVersion Include="Verify.DiffPlex" Version="3.1.0" />
