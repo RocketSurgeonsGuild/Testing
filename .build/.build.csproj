@@ -11,7 +11,8 @@
     <PackageReference Include="Nuke.Common" />
     <PackageReference Include="GitVersion.Tool" ExcludeAssets="All" />
     <PackageReference Include="ReportGenerator" ExcludeAssets="All" />
-    <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
+    <PackageReference Include="JetBrains.Annotations"
+      Assets="build;contentfiles;analyzers;buildtransitive" PrivateAssets="all" />
     <PackageReference Include="Rocket.Surgery.Nuke" />
     <PackageReference Include="NuGet.ProjectModel" />
   </ItemGroup>
