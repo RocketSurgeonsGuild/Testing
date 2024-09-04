@@ -1,7 +1,4 @@
 <Project>
-    <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
-    </ItemGroup>
     <Import
         Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 </Project>
