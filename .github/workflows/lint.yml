@@ -56,10 +56,6 @@ jobs:
         id: commit-message
         run: |
           echo "message=$(git show -s --format=%s)" >> "$GITHUB_OUTPUT"
-      - name: 🔨 Use .NET Core 6.0 SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '6.0.x'
       - name: 🔨 Use .NET Core 8.0 SDK
         uses: actions/setup-dotnet@v4
         with:
@@ -83,10 +79,6 @@ jobs:
         id: regenerateBuildConfigurations
         run: |
           dotnet nuke RegenerateBuildConfigurations --skip
-      - name: Lint Public Api Analyzers
-        id: lintPublicApiAnalyzers
-        run: |
-          dotnet nuke LintPublicApiAnalyzers --skip
       - name: Prettier
         id: prettier
         run: |
@@ -107,10 +99,6 @@ jobs:
         id: generateReadme
         run: |
           dotnet nuke GenerateReadme --skip
-      - name: Move Unshipped to Shipped
-        id: moveUnshippedToShipped
-        run: |
-          dotnet nuke MoveUnshippedToShipped --skip
       - name: Lint Git Add
         id: lintGitAdd
         run: |
