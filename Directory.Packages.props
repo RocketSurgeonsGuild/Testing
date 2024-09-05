@@ -29,7 +29,7 @@
     <PackageVersion Include="GitVersion.Tool" Version="6.0.2" />
     <PackageVersion Include="Nuke.Common" Version="8.0.0" />
     <PackageVersion Include="ReportGenerator" Version="5.3.9" />
-    <PackageVersion Include="Rocket.Surgery.Nuke" Version="2.8.0-beta.4" />
+    <PackageVersion Include="Rocket.Surgery.Nuke" Version="2.8.0-beta.5" />
     <PackageVersion Include="NuGet.ProjectModel" Version="6.11.0" />
     <PackageVersion Include="Buildalyzer" Version="7.0.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
