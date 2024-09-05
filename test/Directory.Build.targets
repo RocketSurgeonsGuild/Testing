@@ -10,8 +10,6 @@
         <PackageReference Include="Verify.Xunit" />
         <PackageReference Include="Verify.SourceGenerators" />
     </ItemGroup>
-    <Import
-        Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
-    <Import
-        Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+    <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 </Project>
