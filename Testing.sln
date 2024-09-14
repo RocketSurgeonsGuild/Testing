@@ -52,7 +52,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{A3232E
 		build.ps1 = build.ps1
 		build.sh = build.sh
 		GitReleaseManager.yaml = GitReleaseManager.yaml
-		.appveyor.yml = .appveyor.yml
 		.codecov.yml = .codecov.yml
 		GitVersion.yml = GitVersion.yml
 		LICENSE = LICENSE
@@ -62,7 +61,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{A3232E
 		.gitmodules = .gitmodules
 		.prettierignore = .prettierignore
 		.prettierrc = .prettierrc
-		.lintstagedrc.js = .lintstagedrc.js
 		NuGet.config = NuGet.config
 		package.json = package.json
 	EndProjectSection
@@ -100,20 +98,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.SourceGenerators", "src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj", "{14E1380D-30CE-4EA6-8392-C9744B3548CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests", "test\Testing.AutoFixtures.Tests\Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.csproj", "{5A08F7E7-90C1-4DAA-A732-4CD080AFE2E8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "node_modules", "node_modules", "{23F6FBFB-B51E-4BCC-BAFB-7FE48A105592}"
-	ProjectSection(SolutionItems) = preProject
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resolve", "resolve", "{55C6BB1F-E98B-48A8-93F4-1D0C3D6E1E93}"
-	ProjectSection(SolutionItems) = preProject
-		node_modules/resolve/.editorconfig = node_modules/resolve/.editorconfig
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "is-arrayish", "is-arrayish", "{82A69EC4-C831-4DAF-AE55-48CD28CE2F99}"
-	ProjectSection(SolutionItems) = preProject
-		node_modules/is-arrayish/.editorconfig = node_modules/is-arrayish/.editorconfig
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.Surgery.Extensions.Testing.AutoFixtures", "src\Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj", "{3F1CF946-4DA3-4B96-8039-54C112BED0DE}"
 EndProject
@@ -324,8 +308,6 @@ Global
 		{2E4EA52F-4835-4D34-A6F5-650042213443} = {A3232EC4-8418-4188-8EB8-DD463C031533}
 		{14E1380D-30CE-4EA6-8392-C9744B3548CC} = {8FFDF555-DB50-45F9-9A2D-6410F39151C3}
 		{5A08F7E7-90C1-4DAA-A732-4CD080AFE2E8} = {DF33E0FB-9790-4654-B60F-8AB22E0CC3D1}
-		{55C6BB1F-E98B-48A8-93F4-1D0C3D6E1E93} = {23F6FBFB-B51E-4BCC-BAFB-7FE48A105592}
-		{82A69EC4-C831-4DAF-AE55-48CD28CE2F99} = {23F6FBFB-B51E-4BCC-BAFB-7FE48A105592}
 		{3F1CF946-4DA3-4B96-8039-54C112BED0DE} = {8FFDF555-DB50-45F9-9A2D-6410F39151C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
