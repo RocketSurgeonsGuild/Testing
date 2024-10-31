@@ -27,7 +27,7 @@
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
         <PackageVersion Include="Polyfill" Version="7.2.0" />
         <PackageVersion Include="Verify.DiffPlex" Version="3.1.1" />
-        <PackageVersion Include="GitVersion.Tool" Version="6.0.3" />
+        <PackageVersion Include="GitVersion.Tool" Version="6.0.4" />
         <PackageVersion Include="Nuke.Common" Version="8.1.2" />
         <PackageVersion Include="ReportGenerator" Version="5.3.11" />
         <PackageVersion Include="Rocket.Surgery.Nuke" Version="2.8.113" />
