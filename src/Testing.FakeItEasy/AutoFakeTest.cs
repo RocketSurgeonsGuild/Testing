@@ -43,9 +43,14 @@ public abstract class AutoFakeTest<TContext>(TContext context) : LoggerTest<TCon
     /// </summary>
     protected IContainer Container
     {
-        get => AutoFake.Container;
+        get => AutoFake.DryIoc.Container;
         private set => _autoFake = Rebuild(value);
     }
+
+    /// <summary>
+    ///     The Service Provider
+    /// </summary>
+    protected IServiceProvider ServiceProvider => AutoFake.DryIoc;
 
     /// <summary>
     ///     Force the container to rebuild from scratch
@@ -62,10 +67,73 @@ public abstract class AutoFakeTest<TContext>(TContext context) : LoggerTest<TCon
         return autoFake;
     }
 
+    private IContainer ConfigureContainer(IContainer container)
+    {
+        container.RegisterInstance(LoggerFactory);
+        container.RegisterInstance(Logger);
+        container.RegisterInstance(SerilogLogger);
+        return BuildContainer(container.With(r => r.WithBaseMicrosoftDependencyInjectionRules(null)));
+    }
+
     /// <summary>
-    ///     The Service Provider
+    ///     Populate the test class with the given configuration and services
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoFake.Container;
+    [ExcludeFromCodeCoverage]
+    [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
+    protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context)
+    {
+        Populate(context.configuration, context.serviceCollection);
+    }
+
+    /// <summary>
+    ///     Populate the test class with the given configuration and services
+    /// </summary>
+    [ExcludeFromCodeCoverage]
+    [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
+    protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
+    {
+        Container.Populate(serviceCollection);
+        Container.RegisterInstance(configuration);
+    }
+
+    /// <summary>
+    ///     Populate the test class with the given configuration and services
+    /// </summary>
+    protected void Populate(IServiceCollection serviceCollection)
+    {
+        Container.Populate(serviceCollection);
+    }
+
+    /// <summary>
+    ///     Populate the test class with the given configuration and services
+    /// </summary>
+    protected void Populate(IContainer container)
+    {
+        Container = container;
+    }
+
+    /// <summary>
+    ///     A method that allows you to override and update the behavior of building the container
+    /// </summary>
+    protected virtual IContainer BuildContainer(IContainer container)
+    {
+        return container;
+    }
+
+    /// <summary>
+    ///     Control the way that the serilog logger factory is created.
+    /// </summary>
+    protected override ILoggerFactory CreateLoggerFactory(
+        ILogger logger,
+        LoggerProviderCollection loggerProviderCollection
+    )
+    {
+        #pragma warning disable CA2000 // Dispose objects before losing scope
+        var factory =
+            new FakeItEasyLoggerFactory(new SerilogLoggerFactory(logger, false, loggerProviderCollection));
+        #pragma warning restore CA2000 // Dispose objects before losing scope
+        return A.Fake<ILoggerFactory>(l => l.Wrapping(factory));
+    }
 
     private IContainer ConfigureContainer(IContainer container)
     {

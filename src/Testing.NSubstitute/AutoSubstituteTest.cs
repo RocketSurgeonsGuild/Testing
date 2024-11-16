@@ -41,9 +41,14 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
     /// </summary>
     protected IContainer Container
     {
-        get => AutoSubstitute.Container;
+        get => AutoSubstitute.DryIoc.Container;
         private set => _autoSubstitute = Rebuild(value);
     }
+
+    /// <summary>
+    ///     The Service Provider
+    /// </summary>
+    protected IServiceProvider ServiceProvider => AutoSubstitute.DryIoc;
 
     /// <summary>
     ///     Force the container to rebuild from scratch
@@ -58,11 +63,6 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
         _building = false;
         return autoFake;
     }
-
-    /// <summary>
-    ///     The Service Provider
-    /// </summary>
-    protected IServiceProvider ServiceProvider => AutoSubstitute.Container;
 
     /// <summary>
     ///     A method that allows you to override and update the behavior of building the container
@@ -97,6 +97,6 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
         );
         container.RegisterDelegate(context => context.Resolve<ILoggerFactory>().CreateLogger("Test"));
         container.RegisterInstance(Logger);
-        return BuildContainer(container.WithDependencyInjectionAdapter());
+        return container.With(r => r.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 }

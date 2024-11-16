@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Serilog;
 
 namespace Rocket.Surgery.Extensions.Testing;
@@ -5,6 +6,7 @@ namespace Rocket.Surgery.Extensions.Testing;
 /// <summary>
 ///     Defaults to be configured globally for tests
 /// </summary>
+[PublicAPI]
 public static class RocketSurgeonsTestingDefaults
 {
     /// <summary>
