@@ -41,14 +41,14 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
     /// </summary>
     protected IContainer Container
     {
-        get => AutoMock.DryIoc.Container;
+        get => AutoMock.Container;
         private set => _autoMock = Rebuild(value);
     }
 
     /// <summary>
     ///     The Service Provider
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoMock.DryIoc;
+    protected IServiceProvider ServiceProvider => AutoMock.Container;
 
     /// <summary>
     ///     Force the container to rebuild from scratch
@@ -66,59 +66,6 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
 
     private IContainer ConfigureContainer(IContainer container)
     {
-        container.RegisterInstance(LoggerFactory);
-        container.RegisterInstance(Logger);
-        container.RegisterInstance(SerilogLogger);
-        return BuildContainer(container.With(r => r.WithBaseMicrosoftDependencyInjectionRules(null)));
-    }
-
-    /// <summary>
-    ///     Populate the test class with the given configuration and services
-    /// </summary>
-    [ExcludeFromCodeCoverage]
-    [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
-    protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context)
-    {
-        Populate(context.configuration, context.serviceCollection);
-    }
-
-    /// <summary>
-    ///     Populate the test class with the given configuration and services
-    /// </summary>
-    [ExcludeFromCodeCoverage]
-    [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
-    protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
-    {
-        Container.Populate(serviceCollection);
-        Container.RegisterInstance(configuration);
-    }
-
-    /// <summary>
-    ///     Populate the test class with the given configuration and services
-    /// </summary>
-    protected void Populate(IServiceCollection serviceCollection)
-    {
-        Container.Populate(serviceCollection);
-    }
-
-    /// <summary>
-    ///     Populate the test class with the given configuration and services
-    /// </summary>
-    protected void Populate(IContainer container)
-    {
-        Container = container;
-    }
-
-    /// <summary>
-    ///     A method that allows you to override and update the behavior of building the container
-    /// </summary>
-    protected virtual IContainer BuildContainer(IContainer container)
-    {
-        return container;
-    }
-
-    private IContainer ConfigureContainer(IContainer container)
-    {
         container.RegisterDelegate(
             context => CreateLoggerFactory(
                 context.Resolve<LoggerProviderCollection>(IfUnresolved.ReturnDefault) ?? new LoggerProviderCollection()
@@ -126,7 +73,7 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
         );
         container.RegisterDelegate(context => context.Resolve<ILoggerFactory>().CreateLogger("Test"));
         container.RegisterInstance(Logger);
-        return BuildContainer(container.WithDependencyInjectionAdapter());
+        return BuildContainer(container);
     }
 
     /// <summary>
@@ -150,6 +97,6 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
     /// </summary>
     protected virtual IContainer BuildContainer(IContainer container)
     {
-        return container;
+        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 }

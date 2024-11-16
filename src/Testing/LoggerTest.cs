@@ -68,7 +68,7 @@ public abstract class LoggerTest<TContext>(TContext testContext) : IDisposable w
     /// <summary>
     ///     Control the way that the serilog logger factory is created.
     /// </summary>
-    protected ILoggerFactory CreateLoggerFactory(LoggerProviderCollection? loggerProviderCollection = null)
+    protected virtual ILoggerFactory CreateLoggerFactory(LoggerProviderCollection? loggerProviderCollection = null)
     {
         return new SerilogLoggerFactory(Logger, false, loggerProviderCollection);
     }

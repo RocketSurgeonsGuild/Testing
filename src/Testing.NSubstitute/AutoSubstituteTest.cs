@@ -41,14 +41,14 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
     /// </summary>
     protected IContainer Container
     {
-        get => AutoSubstitute.DryIoc.Container;
+        get => AutoSubstitute.Container;
         private set => _autoSubstitute = Rebuild(value);
     }
 
     /// <summary>
     ///     The Service Provider
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoSubstitute.DryIoc;
+    protected IServiceProvider ServiceProvider => AutoSubstitute.Container;
 
     /// <summary>
     ///     Force the container to rebuild from scratch
@@ -69,7 +69,7 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
     /// </summary>
     protected virtual IContainer BuildContainer(IContainer container)
     {
-        return container;
+        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 
     /// <summary>
@@ -97,6 +97,6 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
         );
         container.RegisterDelegate(context => context.Resolve<ILoggerFactory>().CreateLogger("Test"));
         container.RegisterInstance(Logger);
-        return container.With(r => r.WithBaseMicrosoftDependencyInjectionRules(null));
+        return BuildContainer(container);
     }
 }
