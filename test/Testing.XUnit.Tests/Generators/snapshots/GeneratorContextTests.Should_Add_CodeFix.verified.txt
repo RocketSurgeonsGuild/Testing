@@ -58,7 +58,6 @@
   ],
   InputDiagnostics: [],
   ParseOptions: {
-    LanguageVersion: CSharp11,
     DocumentationMode: Parse
   },
   References: [

@@ -7,11 +7,12 @@
     DocumentationMode: Parse
   },
   References: [
+    Microsoft.Extensions.Logging.Abstractions.dll,
     mscorlib.dll,
     netstandard.dll,
+    NSubstitute.dll,
     System.Core.dll,
     System.dll,
-    System.Private.CoreLib.dll,
     System.Private.CoreLib.dll,
     System.Runtime.dll
   ]

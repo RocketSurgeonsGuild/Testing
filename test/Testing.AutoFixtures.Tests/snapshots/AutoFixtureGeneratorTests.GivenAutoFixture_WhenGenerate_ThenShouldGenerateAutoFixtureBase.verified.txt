@@ -4,7 +4,6 @@
     Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator: []
   },
   ParseOptions: {
-    LanguageVersion: CSharp11,
     DocumentationMode: Parse
   },
   References: [
