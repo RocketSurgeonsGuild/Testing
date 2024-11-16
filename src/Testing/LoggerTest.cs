@@ -18,7 +18,7 @@ namespace Rocket.Surgery.Extensions.Testing;
 public abstract class LoggerTest<TContext>(TContext testContext) : IDisposable where TContext : class, ILoggingTestContext
 {
     /// <summary>
-    /// The <see cref="TestContext" />
+    ///     The <see cref="TestContext" />
     /// </summary>
     protected TContext TestContext => testContext;
 
@@ -68,10 +68,8 @@ public abstract class LoggerTest<TContext>(TContext testContext) : IDisposable w
     /// <summary>
     ///     Control the way that the serilog logger factory is created.
     /// </summary>
-    protected virtual ILoggerFactory CreateLoggerFactory(LoggerProviderCollection? loggerProviderCollection = null)
-    {
-        return new SerilogLoggerFactory(Logger, false, loggerProviderCollection);
-    }
+    protected virtual ILoggerFactory CreateLoggerFactory(LoggerProviderCollection? loggerProviderCollection = null) =>
+        new SerilogLoggerFactory(Logger, false, loggerProviderCollection);
 
     /// <summary>
     ///     Filter a given source context from serilog

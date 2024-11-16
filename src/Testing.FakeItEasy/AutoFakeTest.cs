@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using FakeItEasy;

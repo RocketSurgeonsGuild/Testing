@@ -1,5 +1,4 @@
 using DryIoc;
-using DryIoc.Microsoft.DependencyInjection;
 using FakeItEasy.Creation;
 using FakeItEasy.Sdk;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,10 +52,7 @@ public sealed class AutoFake : IDisposable
     /// </summary>
     /// <typeparam name="T">The type of the service.</typeparam>
     /// <returns>The service.</returns>
-    public T Resolve<T>()
-    {
-        return Container.Resolve<T>();
-    }
+    public T Resolve<T>() => Container.Resolve<T>();
 
     /// <summary>
     ///     Resolve the specified type in the container (register it if needed).

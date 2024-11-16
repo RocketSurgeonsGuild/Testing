@@ -1,5 +1,4 @@
 using DryIoc;
-using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 
@@ -50,10 +49,7 @@ public sealed class AutoSubstitute : IDisposable
     /// </summary>
     /// <typeparam name="T">The type of the service.</typeparam>
     /// <returns>The service.</returns>
-    public T Resolve<T>()
-    {
-        return Container.Resolve<T>();
-    }
+    public T Resolve<T>() => Container.Resolve<T>();
 
     /// <summary>
     ///     Resolve the specified type in the container (register specified instance if needed).

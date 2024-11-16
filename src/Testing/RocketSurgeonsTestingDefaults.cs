@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Serilog;
 
 namespace Rocket.Surgery.Extensions.Testing;
