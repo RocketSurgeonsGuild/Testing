@@ -1,13 +1,7 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -178,24 +172,3 @@ public record GeneratorTestResults
         }
     }
 }
-
-/// <summary>
-///     Test project information
-/// </summary>
-/// <param name="Logger"></param>
-/// <param name="SourceProject"></param>
-/// <param name="Analyzers"></param>
-/// <param name="SourceGenerators"></param>
-/// <param name="IncrementalGenerators"></param>
-/// <param name="CodeFixProviders"></param>
-/// <param name="CodeRefactoringProviders"></param>
-public record TestProjectInformation
-(
-    ILogger Logger,
-    Project SourceProject,
-    ImmutableDictionary<Type, DiagnosticAnalyzer> Analyzers,
-    ImmutableDictionary<Type, ISourceGenerator> SourceGenerators,
-    ImmutableDictionary<Type, IIncrementalGenerator> IncrementalGenerators,
-    ImmutableDictionary<Type, CodeFixProvider> CodeFixProviders,
-    ImmutableDictionary<Type, CodeRefactoringProvider> CodeRefactoringProviders
-);

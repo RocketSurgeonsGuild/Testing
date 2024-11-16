@@ -1,0 +1,68 @@
+﻿[
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [info] this is a test 1
+    ],
+    ArgumentsAfterCall: [
+      [info] this is a test 1
+    ],
+    FakedObject: {},
+    SequenceNumber: 11
+  },
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [info] this is a test 2
+    ],
+    ArgumentsAfterCall: [
+      [info] this is a test 2
+    ],
+    FakedObject: {},
+    SequenceNumber: 12
+  },
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [warn] this is a test 2
+    ],
+    ArgumentsAfterCall: [
+      [warn] this is a test 2
+    ],
+    FakedObject: {},
+    SequenceNumber: 13
+  },
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [eror] this is a test 2
+    ],
+    ArgumentsAfterCall: [
+      [eror] this is a test 2
+    ],
+    FakedObject: {},
+    SequenceNumber: 14
+  },
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [fatl] this is a test 2
+    ],
+    ArgumentsAfterCall: [
+      [fatl] this is a test 2
+    ],
+    FakedObject: {},
+    SequenceNumber: 15
+  },
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [info] this is a test 3
+    ],
+    ArgumentsAfterCall: [
+      [info] this is a test 3
+    ],
+    FakedObject: {},
+    SequenceNumber: 16
+  }
+]

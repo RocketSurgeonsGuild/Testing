@@ -2,13 +2,13 @@
 using System.Runtime.Loader;
 using System.Security.Cryptography;
 using System.Text;
-using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -161,13 +161,13 @@ public record GeneratorTestContext
     /// <exception cref="InvalidOperationException"></exception>
     public async Task<GeneratorTestResults> GenerateAsync()
     {
-        _logger.LogInformation("Starting Generation for {SourceCount}", _sources.Length);
-        if (_logger.IsEnabled(LogLevel.Trace))
+        _logger.Information("Starting Generation for {SourceCount}", _sources.Length);
+        if (_logger.IsEnabled(LogEventLevel.Verbose))
         {
-            _logger.LogTrace("--- References --- {Count}", _metadataReferences.Count);
+            _logger.Verbose("--- References --- {Count}", _metadataReferences.Count);
             foreach (var reference in _metadataReferences)
             {
-                _logger.LogTrace("    Reference: {Name}", reference.Display);
+                _logger.Verbose("    Reference: {Name}", reference.Display);
             }
         }
 
@@ -177,12 +177,12 @@ public record GeneratorTestContext
         if (compilation is null) throw new InvalidOperationException("Could not compile the sources");
 
         var diagnostics = compilation.GetDiagnostics();
-        if (_logger.IsEnabled(LogLevel.Trace) && diagnostics is { Length: > 0, })
+        if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
         {
-            _logger.LogTrace("--- Input Diagnostics --- {Count}", diagnostics.Length);
+            _logger.Verbose("--- Input Diagnostics --- {Count}", diagnostics.Length);
             foreach (var d in diagnostics)
             {
-                _logger.LogTrace("    Reference: {Name}", d.ToString());
+                _logger.Verbose("    Reference: {Name}", d.ToString());
             }
         }
 
@@ -216,7 +216,7 @@ public record GeneratorTestContext
 
         foreach (var instance in projectInformation.IncrementalGenerators.Values.Concat(projectInformation.SourceGenerators.Values.Cast<object>()))
         {
-            _logger.LogInformation("--- {Generator} ---", instance.GetType().FullName);
+            _logger.Information("--- {Generator} ---", instance.GetType().FullName);
             var generators = new List<ISourceGenerator>
             {
                 instance switch { IIncrementalGenerator i => i.AsSourceGenerator(), ISourceGenerator s => s, _ => throw new ArgumentOutOfRangeException(), },
@@ -225,12 +225,12 @@ public record GeneratorTestContext
 
             driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out diagnostics);
 
-            if (_logger.IsEnabled(LogLevel.Trace) && diagnostics is { Length: > 0, })
+            if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
             {
-                _logger.LogTrace("--- Diagnostics --- {Count}", diagnostics.Length);
+                _logger.Verbose("--- Diagnostics --- {Count}", diagnostics.Length);
                 foreach (var d in diagnostics)
                 {
-                    _logger.LogTrace("    Reference: {Name}", d.ToString());
+                    _logger.Verbose("    Reference: {Name}", d.ToString());
                 }
             }
 
@@ -238,13 +238,13 @@ public record GeneratorTestContext
                        .SyntaxTrees
                        .Except(compilation.SyntaxTrees)
                        .ToImmutableArray();
-            if (_logger.IsEnabled(LogLevel.Trace) && trees is { Length: > 0, })
+            if (_logger.IsEnabled(LogEventLevel.Verbose) && trees is { Length: > 0, })
             {
-                _logger.LogTrace("--- Syntax Trees --- {Count}", trees.Length);
+                _logger.Verbose("--- Syntax Trees --- {Count}", trees.Length);
                 foreach (var t in trees)
                 {
-                    _logger.LogTrace("    FilePath: {Name}", t.FilePath);
-                    _logger.LogTrace("    Source:\n{Name}", ( await t.GetTextAsync().ConfigureAwait(false) ).ToString());
+                    _logger.Verbose("    FilePath: {Name}", t.FilePath);
+                    _logger.Verbose("    Source:\n{Name}", ( await t.GetTextAsync().ConfigureAwait(false) ).ToString());
                 }
             }
 
@@ -267,10 +267,10 @@ public record GeneratorTestContext
         AnalysisResult? analysisResult = null;
         if (analyzers.Count > 0)
         {
-            _logger.LogInformation("--- Analyzers ---");
+            _logger.Information("--- Analyzers ---");
             foreach (var analyzer in analyzers)
             {
-                _logger.LogInformation("    {Analyzer}", analyzer.Key.FullName);
+                _logger.Information("    {Analyzer}", analyzer.Key.FullName);
             }
 
             var compilationWithAnalyzers = inputCompilation.WithAnalyzers(
@@ -313,7 +313,7 @@ public record GeneratorTestContext
 
         if (projectInformation.CodeFixProviders.Count > 0)
         {
-            _logger.LogInformation("--- Code Fix Providers ---");
+            _logger.Information("--- Code Fix Providers ---");
             foreach (var provider in projectInformation.CodeFixProviders.Values)
             {
                 results = await results.AddCodeFix(provider);
@@ -322,7 +322,7 @@ public record GeneratorTestContext
 
         if (projectInformation.CodeRefactoringProviders.Count > 0)
         {
-            _logger.LogInformation("--- Code Refactoring Providers ---");
+            _logger.Information("--- Code Refactoring Providers ---");
             foreach (var provider in projectInformation.CodeRefactoringProviders.Values)
             {
                 results = await results.AddCodeRefactoring(provider);

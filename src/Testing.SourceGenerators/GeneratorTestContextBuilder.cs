@@ -8,8 +8,8 @@ using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
+using Serilog;
+using Serilog.Core;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -557,7 +557,7 @@ public record GeneratorTestContextBuilder
     {
         return new(
             _projectName ?? "TestProject",
-            _logger ?? NullLogger.Instance,
+            _logger ?? Logger.None,
             _assemblyLoadContext ?? new CollectibleTestAssemblyLoadContext(),
             _metadataReferences,
             _referenceNames,

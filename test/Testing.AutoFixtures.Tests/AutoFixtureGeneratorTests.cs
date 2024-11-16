@@ -59,7 +59,7 @@ public class AutoFixtureGeneratorTests
                .GenerateAsync();
 
         // Then
-        await Verify(result).UseHashedParameters(context.Id);
+        await Verify(result).HashParameters().UseParameters(context.Id);
     }
 
 

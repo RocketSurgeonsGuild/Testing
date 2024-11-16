@@ -18,6 +18,7 @@
 <!-- nuget packages -->
 | Package | NuGet |
 | ------- | ----- |
+| Rocket.Surgery.Extensions.Testing | [![nuget-version-ingbk+ngdt+w-badge]![nuget-downloads-ingbk+ngdt+w-badge]][nuget-ingbk+ngdt+w] |
 | Rocket.Surgery.Extensions.Testing.Analyzers | [![nuget-version-is2d/pp3l2nq-badge]![nuget-downloads-is2d/pp3l2nq-badge]][nuget-is2d/pp3l2nq] |
 | Rocket.Surgery.Extensions.Testing.AutoFixtures | [![nuget-version-zo+gi4/wtnoq-badge]![nuget-downloads-zo+gi4/wtnoq-badge]][nuget-zo+gi4/wtnoq] |
 | Rocket.Surgery.Extensions.Testing.Coverlet | [![nuget-version-2jdbmqdcrhfg-badge]![nuget-downloads-2jdbmqdcrhfg-badge]][nuget-2jdbmqdcrhfg] |
@@ -26,7 +27,9 @@
 | Rocket.Surgery.Extensions.Testing.Moq | [![nuget-version-lgkm8pi65yea-badge]![nuget-downloads-lgkm8pi65yea-badge]][nuget-lgkm8pi65yea] |
 | Rocket.Surgery.Extensions.Testing.NSubstitute | [![nuget-version-fyo8rfzowxvg-badge]![nuget-downloads-fyo8rfzowxvg-badge]][nuget-fyo8rfzowxvg] |
 | Rocket.Surgery.Extensions.Testing.SourceGenerators | [![nuget-version-m2gtxx+rpfoa-badge]![nuget-downloads-m2gtxx+rpfoa-badge]][nuget-m2gtxx+rpfoa] |
+| Rocket.Surgery.Extensions.Testing.TUnit | [![nuget-version-62wdpzblxeyq-badge]![nuget-downloads-62wdpzblxeyq-badge]][nuget-62wdpzblxeyq] |
 | Rocket.Surgery.Extensions.Testing.XUnit | [![nuget-version-8nuftac8whxa-badge]![nuget-downloads-8nuftac8whxa-badge]][nuget-8nuftac8whxa] |
+| Rocket.Surgery.Extensions.Testing.XUnit3 | [![nuget-version-qbcmvuq1m6jg-badge]![nuget-downloads-qbcmvuq1m6jg-badge]][nuget-qbcmvuq1m6jg] |
 <!-- nuget packages -->
 
 # Whats next?
@@ -43,6 +46,9 @@ TBD
 [github]: https://github.com/RocketSurgeonsGuild/Testing/actions?query=workflow%3Aci
 [github-badge]: https://img.shields.io/github/workflow/status/RocketSurgeonsGuild/Testing/ci.svg?label=github&logo=github&color=b845fc&logoColor=b845fc&style=flat "GitHub Actions Status"
 [github-history-badge]: https://buildstats.info/github/chart/RocketSurgeonsGuild/Testing?includeBuildsFromPullRequest=false "GitHub Actions History"
+[nuget-ingbk+ngdt+w]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing/
+[nuget-version-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 [nuget-is2d/pp3l2nq]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Analyzers/
 [nuget-version-is2d/pp3l2nq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Analyzers.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-is2d/pp3l2nq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Analyzers.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
@@ -67,9 +73,15 @@ TBD
 [nuget-m2gtxx+rpfoa]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.SourceGenerators/
 [nuget-version-m2gtxx+rpfoa-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.SourceGenerators.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-m2gtxx+rpfoa-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.SourceGenerators.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
+[nuget-62wdpzblxeyq]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.TUnit/
+[nuget-version-62wdpzblxeyq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.TUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-62wdpzblxeyq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.TUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 [nuget-8nuftac8whxa]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.XUnit/
 [nuget-version-8nuftac8whxa-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.XUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
 [nuget-downloads-8nuftac8whxa-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.XUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
+[nuget-qbcmvuq1m6jg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.XUnit3/
+[nuget-version-qbcmvuq1m6jg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.XUnit3.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
+[nuget-downloads-qbcmvuq1m6jg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.XUnit3.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
 <!-- generated references -->
 
 <!-- nuke-data

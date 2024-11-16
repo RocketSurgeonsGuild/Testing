@@ -5,7 +5,7 @@ using VerifyTests.DiffPlex;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-internal class ModuleInitializer
+internal static class ModuleInitializer
 {
     [ModuleInitializer]
     public static void Initialize()
@@ -13,5 +13,20 @@ internal class ModuleInitializer
         VerifyGeneratorTextContext.Initialize();
         VerifyDiffPlex.Initialize(OutputType.Minimal);
         DiffRunner.Disabled = true;
+
+        DerivePathInfo(
+            (sourceFile, projectDirectory, type, method) =>
+            {
+                static string GetTypeName(Type type)
+                {
+                    return type.IsNested ? $"{type.ReflectedType!.Name}.{type.Name}" : type.Name;
+                }
+
+                var typeName = GetTypeName(type);
+
+                var path = Path.Combine(Path.GetDirectoryName(sourceFile)!, "snapshots");
+                return new(path, typeName, method.Name);
+            }
+        );
     }
 }

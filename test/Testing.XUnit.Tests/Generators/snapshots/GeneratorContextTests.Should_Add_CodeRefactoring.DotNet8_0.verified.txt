@@ -1,0 +1,74 @@
+﻿{
+  CodeRefactorings: {
+    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.TestRefactoring: [
+      {
+        CodeActions: [
+          {
+            Title: Test Code Action,
+            Tags: null,
+            TextChanges: {
+              Code.cs: [
+                {
+                  Length: 0,
+                  NewText: NewText
+                }
+              ]
+            }
+          }
+        ],
+        Document: Code.cs,
+        Location: [0..2),
+        TriggerCharacter: c,
+        TriggerKind: Insertion
+      }
+    ]
+  },
+  FinalDiagnostics: [
+    {
+      Id: CS0116,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,0)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0116),
+      MessageFormat: A namespace cannot directly contain members such as fields, methods or statements,
+      Message: A namespace cannot directly contain members such as fields, methods or statements,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    }
+  ],
+  InputDiagnostics: [
+    {
+      Id: CS0116,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,0)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0116),
+      MessageFormat: A namespace cannot directly contain members such as fields, methods or statements,
+      Message: A namespace cannot directly contain members such as fields, methods or statements,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    }
+  ],
+  ParseOptions: {
+    LanguageVersion: CSharp11,
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

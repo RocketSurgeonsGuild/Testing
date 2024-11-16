@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
-using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -201,7 +200,7 @@ public static class GeneratorTestContextExtensions
         var _logger = context.ProjectInformation.Logger;
         var project = context.ProjectInformation.SourceProject;
 
-        _logger.LogInformation("    {CodeFix}", provider.GetType().FullName);
+        _logger.Information("    {CodeFix}", provider.GetType().FullName);
 
         var resolvedValues = ImmutableArray.CreateBuilder<ResolvedCodeFixTestResult>();
 
@@ -321,7 +320,7 @@ public static class GeneratorTestContextExtensions
         var project = context.ProjectInformation.SourceProject;
 
         var resolvedValues = ImmutableArray.CreateBuilder<ResolvedCodeRefactoringTestResult>();
-        _logger.LogInformation("    {CodeRefactoring}", provider.GetType().FullName);
+        _logger.Information("    {CodeRefactoring}", provider.GetType().FullName);
         foreach (( var path, var mark ) in context.MarkedLocations)
         {
             var cab = ImmutableArray.CreateBuilder<(Document Document, CodeAction CodeAction)>();

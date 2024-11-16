@@ -1,0 +1,20 @@
+﻿[
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [info] this is a test 1
+    ]
+  },
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [info] this is a test 2
+    ]
+  },
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [info] this is a test 3
+    ]
+  }
+]

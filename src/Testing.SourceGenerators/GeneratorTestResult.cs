@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 

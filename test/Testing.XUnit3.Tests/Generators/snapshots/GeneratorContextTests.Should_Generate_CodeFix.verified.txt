@@ -1,0 +1,29 @@
+﻿[
+  {
+    CodeActions: [
+      {
+        Title: Test Code Action,
+        Tags: null,
+        TextChanges: {
+          Input0.cs: [
+            {
+              Length: 0,
+              NewText: NewText
+            }
+          ]
+        }
+      }
+    ],
+    Diagnostic: {
+      Id: TEST0001,
+      Title: title,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: : (0,0)-(0,0),
+      MessageFormat: message,
+      Message: message,
+      Category: category
+    },
+    Document: Input0.cs
+  }
+]

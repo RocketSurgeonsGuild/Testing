@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <IsTestProject>false</IsTestProject>
+    <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
+    <IsMagicProject>true</IsMagicProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="TUnit.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
+  </ItemGroup>
+</Project>
