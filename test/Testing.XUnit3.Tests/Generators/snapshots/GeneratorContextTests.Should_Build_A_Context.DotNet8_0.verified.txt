@@ -1,0 +1,21 @@
+﻿{
+  ContextId: mVobr9pljsU8XxGiTr87ZIiX90efKTl6TKadwT6lPTI=,
+  FinalDiagnostics: [],
+  InputDiagnostics: [],
+  ParseOptions: {
+    LanguageVersion: CSharp11,
+    DocumentationMode: Diagnose,
+    PreprocessorSymbolNames: [
+      SOMETHING,
+      SOMETHING_ELSE
+    ]
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

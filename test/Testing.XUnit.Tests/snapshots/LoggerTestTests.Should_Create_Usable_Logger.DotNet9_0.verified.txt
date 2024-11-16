@@ -1,0 +1,14 @@
+﻿[
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [eror] abcd
+    ]
+  },
+  {
+    Method: ITestOutputHelper.WriteLine(string message),
+    Arguments: [
+      [eror] abcd "somevalue"
+    ]
+  }
+]

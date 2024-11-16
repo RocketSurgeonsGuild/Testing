@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using DryIoc;
 using FakeItEasy.Creation;
 using FakeItEasy.Sdk;

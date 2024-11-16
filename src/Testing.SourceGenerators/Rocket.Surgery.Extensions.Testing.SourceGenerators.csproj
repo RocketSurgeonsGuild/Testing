@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
         <IsTestProject>false</IsTestProject>
         <IsMagicProject>true</IsMagicProject>
     </PropertyGroup>
@@ -11,7 +11,7 @@
         <PackageReference Include="Microsoft.CodeAnalysis.Common" />
         <PackageReference Include="Microsoft.CodeAnalysis.Features" />
         <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" />
-        <PackageReference Include="Microsoft.Extensions.Logging" />
+        <PackageReference Include="Serilog" />
         <PackageReference Include="Verify.SourceGenerators" />
     </ItemGroup>
 

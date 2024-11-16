@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -6,26 +5,31 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Serilog;
-using Serilog.Events;
 using Serilog.Extensions.Logging;
-using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
 /// <summary>
 ///     A base class with AutoFake wired in for DryIoc
 /// </summary>
-public abstract class AutoMockTest : LoggerTest
+public abstract class AutoMockTest
+    (Action<AutoMockTestContext, LoggerConfiguration> configureLogger, MockBehavior mockBehavior = MockBehavior.Default)
+    : LoggerTest<AutoMockTestContext>(new(configureLogger, mockBehavior));
+
+/// <summary>
+///     A base class with AutoFake wired in for DryIoc
+/// </summary>
+public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TContext>(context)
+    where TContext : class, IAutoMockTestContext
 {
-    private static readonly IConfiguration ReadOnlyConfiguration = new ConfigurationBuilder().Build();
-    private readonly MockBehavior _mockBehavior;
+    private static readonly IConfiguration _readOnlyConfiguration = new ConfigurationBuilder().Build();
     private AutoMock? _autoMock;
     private bool _building;
 
     /// <summary>
     ///     The Configuration if defined otherwise empty.
     /// </summary>
-    protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.Resolve<IConfiguration>() : ReadOnlyConfiguration;
+    protected IConfiguration Configuration => Container.IsRegistered<IConfiguration>() ? Container.Resolve<IConfiguration>() : _readOnlyConfiguration;
 
     /// <summary>
     ///     The AutoMock instance
@@ -50,7 +54,7 @@ public abstract class AutoMockTest : LoggerTest
     {
         if (_building) throw new TestBootstrapException($"Unable to access {nameof(AutoMock)} while the container is being constructed!");
         _building = true;
-        var autoFake = new AutoMock(new MockRepository(_mockBehavior), configureAction: ConfigureContainer, container: container);
+        var autoFake = new AutoMock(new MockRepository(TestContext.MockBehavior), configureAction: ConfigureContainer, container: container);
         _building = false;
         return autoFake;
     }
@@ -60,86 +64,16 @@ public abstract class AutoMockTest : LoggerTest
     /// </summary>
     protected IServiceProvider ServiceProvider => AutoMock.Container;
 
-#pragma warning disable RS0026 // Do not add multiple public overloads with optional parameters
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="mockBehavior"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    protected AutoMockTest(
-        ITestOutputHelper outputHelper, MockBehavior mockBehavior = MockBehavior.Default,
-        string? logFormat = null, Action<LoggerConfiguration>? configureLogger = null
-    )
-        : this(outputHelper, LogEventLevel.Information, mockBehavior, logFormat, configureLogger)
-    {
-    }
-
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="minLevel"></param>
-    /// <param name="mockBehavior"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    protected AutoMockTest(
-        ITestOutputHelper outputHelper, LogLevel minLevel, MockBehavior mockBehavior = MockBehavior.Default,
-        string? logFormat = null, Action<LoggerConfiguration>? configureLogger = null
-    )
-        : this(outputHelper, LevelConvert.ToSerilogLevel(minLevel), mockBehavior, logFormat, configureLogger)
-    {
-    }
-
-    /// <summary>
-    ///     The default constructor with available logging level
-    /// </summary>
-    /// <param name="outputHelper"></param>
-    /// <param name="minLevel"></param>
-    /// <param name="mockBehavior"></param>
-    /// <param name="logFormat"></param>
-    /// <param name="configureLogger"></param>
-    protected AutoMockTest(
-        ITestOutputHelper outputHelper,
-        LogEventLevel minLevel,
-        MockBehavior mockBehavior = MockBehavior.Default,
-        string? logFormat = null,
-        Action<LoggerConfiguration>? configureLogger = null
-    )
-        : base(outputHelper, minLevel, logFormat, configureLogger)
-    {
-        _mockBehavior = mockBehavior;
-    }
-#pragma warning restore RS0026 // Do not add multiple public overloads with optional parameters
-
     private IContainer ConfigureContainer(IContainer container)
     {
-        container.RegisterInstance(LoggerFactory);
+        container.RegisterDelegate(
+            context => CreateLoggerFactory(
+                context.Resolve<LoggerProviderCollection>(IfUnresolved.ReturnDefault) ?? new LoggerProviderCollection()
+            )
+        );
+        container.RegisterDelegate(context => context.Resolve<ILoggerFactory>().CreateLogger("Test"));
         container.RegisterInstance(Logger);
-        container.RegisterInstance(SerilogLogger);
         return BuildContainer(container.WithDependencyInjectionAdapter());
-    }
-
-    /// <summary>
-    ///     Populate the test class with the given configuration and services
-    /// </summary>
-    [ExcludeFromCodeCoverage]
-    [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
-    protected void Populate((IConfiguration configuration, IServiceCollection serviceCollection) context)
-    {
-        Populate(context.configuration, context.serviceCollection);
-    }
-
-    /// <summary>
-    ///     Populate the test class with the given configuration and services
-    /// </summary>
-    [ExcludeFromCodeCoverage]
-    [Obsolete("This method is obsolete you can use the overload with IServiceCollection or IContainer instead.")]
-    protected void Populate(IConfiguration configuration, IServiceCollection serviceCollection)
-    {
-        Container.Populate(serviceCollection);
-        Container.RegisterInstance(configuration);
     }
 
     /// <summary>

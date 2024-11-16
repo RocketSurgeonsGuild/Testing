@@ -1,9 +1,0 @@
-﻿{
-  FinalDiagnostics: [],
-  GeneratorDiagnostics: {
-    Rocket.Surgery.Extensions.Testing.Tests.Generators.MySourceGenerator: []
-  },
-  GlobalOptions: {
-    b: key
-  }
-}

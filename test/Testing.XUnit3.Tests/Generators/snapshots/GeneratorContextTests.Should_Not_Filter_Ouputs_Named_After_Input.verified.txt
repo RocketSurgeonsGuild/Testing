@@ -1,0 +1,19 @@
+﻿{
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MyInputLikeSourceGenerator: []
+  },
+  InputDiagnostics: [],
+  ParseOptions: {
+    LanguageVersion: CSharp11,
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}
