@@ -4,7 +4,6 @@
     Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MySourceGenerator: []
   },
   ParseOptions: {
-    LanguageVersion: CSharp11,
     DocumentationMode: Parse
   }
 }

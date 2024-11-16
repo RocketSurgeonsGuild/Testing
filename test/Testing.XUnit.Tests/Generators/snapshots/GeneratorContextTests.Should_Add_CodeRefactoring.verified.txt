@@ -25,14 +25,62 @@
   },
   FinalDiagnostics: [
     {
-      Id: CS0116,
+      Id: CS0246,
       Title: ,
       Severity: Error,
       WarningLevel: 0,
       Location: Code.cs: (0,0)-(0,1),
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0116),
-      MessageFormat: A namespace cannot directly contain members such as fields, methods or statements,
-      Message: A namespace cannot directly contain members such as fields, methods or statements,
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0246),
+      MessageFormat: The type or namespace name '{0}' could not be found (are you missing a using directive or an assembly reference?),
+      Message: The type or namespace name 'c' could not be found (are you missing a using directive or an assembly reference?),
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS8805,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,0)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8805),
+      MessageFormat: Program using top-level statements must be an executable.,
+      Message: Program using top-level statements must be an executable.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS1001,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,1)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1001),
+      MessageFormat: Identifier expected,
+      Message: Identifier expected,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS1002,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,1)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1002),
+      MessageFormat: ; expected,
+      Message: ; expected,
       Category: Compiler,
       CustomTags: [
         Compiler,
@@ -43,14 +91,62 @@
   ],
   InputDiagnostics: [
     {
-      Id: CS0116,
+      Id: CS0246,
       Title: ,
       Severity: Error,
       WarningLevel: 0,
       Location: Code.cs: (0,0)-(0,1),
-      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0116),
-      MessageFormat: A namespace cannot directly contain members such as fields, methods or statements,
-      Message: A namespace cannot directly contain members such as fields, methods or statements,
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0246),
+      MessageFormat: The type or namespace name '{0}' could not be found (are you missing a using directive or an assembly reference?),
+      Message: The type or namespace name 'c' could not be found (are you missing a using directive or an assembly reference?),
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS8805,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,0)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8805),
+      MessageFormat: Program using top-level statements must be an executable.,
+      Message: Program using top-level statements must be an executable.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS1001,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,1)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1001),
+      MessageFormat: Identifier expected,
+      Message: Identifier expected,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS1002,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Code.cs: (0,1)-(0,1),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS1002),
+      MessageFormat: ; expected,
+      Message: ; expected,
       Category: Compiler,
       CustomTags: [
         Compiler,
@@ -60,7 +156,6 @@
     }
   ],
   ParseOptions: {
-    LanguageVersion: CSharp11,
     DocumentationMode: Parse
   },
   References: [

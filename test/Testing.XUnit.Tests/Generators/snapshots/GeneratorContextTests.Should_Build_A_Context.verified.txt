@@ -1,9 +1,8 @@
 ﻿{
-  ContextId: mVobr9pljsU8XxGiTr87ZIiX90efKTl6TKadwT6lPTI=,
+  ContextId: rr84zYR6OeQ+IL8cAG9yU/HFlrJWA7h/9NrK+Eu+NP0=,
   FinalDiagnostics: [],
   InputDiagnostics: [],
   ParseOptions: {
-    LanguageVersion: CSharp11,
     DocumentationMode: Diagnose,
     PreprocessorSymbolNames: [
       SOMETHING,

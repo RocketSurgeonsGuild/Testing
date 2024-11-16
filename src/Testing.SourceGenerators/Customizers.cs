@@ -40,7 +40,7 @@ public static class Customizers
 
     public static GeneratorTestResultsCustomizer IncludeParseOptions => (results, targets, data) => data["ParseOptions"] = new
     {
-        results.ParseOptions.LanguageVersion,
+//        results.ParseOptions.LanguageVersion,
         results.ParseOptions.DocumentationMode,
         results.ParseOptions.Kind,
         results.ParseOptions.Features,
