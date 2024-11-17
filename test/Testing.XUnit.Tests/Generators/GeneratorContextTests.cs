@@ -277,7 +277,7 @@ public class Class1
                      .AddSource("file.cs", "")
                      .WithGenerator<MySourceGenerator>()
                      .Build();
-        await Verify(context.GenerateAsync()).UseHashedParameters(name);
+        await Verify(context.GenerateAsync()).HashParameters().UseParameters(name);
     }
 
     public static IEnumerable<object[]> GeneratorTestResultsCustomizerData()
