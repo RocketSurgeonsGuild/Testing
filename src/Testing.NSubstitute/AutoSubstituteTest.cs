@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Events;
 using Serilog.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing;
@@ -46,6 +45,11 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
     }
 
     /// <summary>
+    ///     The Service Provider
+    /// </summary>
+    protected IServiceProvider ServiceProvider => AutoSubstitute.Container;
+
+    /// <summary>
     ///     Force the container to rebuild from scratch
     /// </summary>
     /// <returns></returns>
@@ -60,16 +64,11 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
     }
 
     /// <summary>
-    ///     The Service Provider
-    /// </summary>
-    protected IServiceProvider ServiceProvider => AutoSubstitute.Container;
-
-    /// <summary>
     ///     A method that allows you to override and update the behavior of building the container
     /// </summary>
     protected virtual IContainer BuildContainer(IContainer container)
     {
-        return container;
+        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 
     /// <summary>
@@ -97,6 +96,6 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
         );
         container.RegisterDelegate(context => context.Resolve<ILoggerFactory>().CreateLogger("Test"));
         container.RegisterInstance(Logger);
-        return BuildContainer(container.WithDependencyInjectionAdapter());
+        return BuildContainer(container);
     }
 }

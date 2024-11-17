@@ -22,10 +22,9 @@ public sealed class AutoFake : IDisposable
         Action<IFakeOptions>? fakeOptionsAction = null
     )
     {
-        Container = container ?? new Container();
-        if (fakeOptionsAction == null)
-            fakeOptionsAction = _ => { };
-        Container = Container
+        container ??= new Container();
+        fakeOptionsAction ??= _ => { };
+        container = container
            .With(
                 rules => rules
                         .WithTestLoggerResolver(
@@ -39,7 +38,8 @@ public sealed class AutoFake : IDisposable
                         .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
         if (configureAction != null)
-            Container = configureAction.Invoke(Container);
+            Container = configureAction.Invoke(container);
+        Container = container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 
     /// <summary>
@@ -52,10 +52,7 @@ public sealed class AutoFake : IDisposable
     /// </summary>
     /// <typeparam name="T">The type of the service.</typeparam>
     /// <returns>The service.</returns>
-    public T Resolve<T>()
-    {
-        return Container.Resolve<T>();
-    }
+    public T Resolve<T>() => Container.Resolve<T>();
 
     /// <summary>
     ///     Resolve the specified type in the container (register it if needed).
@@ -93,9 +90,9 @@ public sealed class AutoFake : IDisposable
         return instance;
     }
 
-#pragma warning disable CA1063
+    #pragma warning disable CA1063
     void IDisposable.Dispose()
-#pragma warning restore CA1063
+        #pragma warning restore CA1063
     {
         Container.Dispose();
     }

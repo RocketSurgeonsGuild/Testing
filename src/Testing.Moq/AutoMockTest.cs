@@ -46,6 +46,11 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
     }
 
     /// <summary>
+    ///     The Service Provider
+    /// </summary>
+    protected IServiceProvider ServiceProvider => AutoMock.Container;
+
+    /// <summary>
     ///     Force the container to rebuild from scratch
     /// </summary>
     /// <returns></returns>
@@ -59,11 +64,6 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
         return autoFake;
     }
 
-    /// <summary>
-    ///     The Service Provider
-    /// </summary>
-    protected IServiceProvider ServiceProvider => AutoMock.Container;
-
     private IContainer ConfigureContainer(IContainer container)
     {
         container.RegisterDelegate(
@@ -73,7 +73,7 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
         );
         container.RegisterDelegate(context => context.Resolve<ILoggerFactory>().CreateLogger("Test"));
         container.RegisterInstance(Logger);
-        return BuildContainer(container.WithDependencyInjectionAdapter());
+        return BuildContainer(container);
     }
 
     /// <summary>
@@ -97,6 +97,6 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
     /// </summary>
     protected virtual IContainer BuildContainer(IContainer container)
     {
-        return container;
+        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 }

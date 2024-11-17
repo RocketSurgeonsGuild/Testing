@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using FakeItEasy;
@@ -48,6 +47,11 @@ public abstract class AutoFakeTest<TContext>(TContext context) : LoggerTest<TCon
     }
 
     /// <summary>
+    ///     The Service Provider
+    /// </summary>
+    protected IServiceProvider ServiceProvider => AutoFake.Container;
+
+    /// <summary>
     ///     Force the container to rebuild from scratch
     /// </summary>
     /// <exception cref="ApplicationException"></exception>
@@ -62,10 +66,13 @@ public abstract class AutoFakeTest<TContext>(TContext context) : LoggerTest<TCon
         return autoFake;
     }
 
-    /// <summary>
-    ///     The Service Provider
-    /// </summary>
-    protected IServiceProvider ServiceProvider => AutoFake.Container;
+    protected override ILoggerFactory CreateLoggerFactory(LoggerProviderCollection? loggerProviderCollection = null)
+    {
+        #pragma warning disable CA2000 // Dispose objects before losing scope
+        var factory = new FakeItEasyLoggerFactory(new SerilogLoggerFactory(Logger, false, loggerProviderCollection));
+        #pragma warning restore CA2000 // Dispose objects before losing scope
+        return A.Fake<ILoggerFactory>(l => l.Wrapping(factory));
+    }
 
     private IContainer ConfigureContainer(IContainer container)
     {
@@ -80,7 +87,7 @@ public abstract class AutoFakeTest<TContext>(TContext context) : LoggerTest<TCon
         );
         container.RegisterDelegate(context => context.Resolve<ILoggerFactory>().CreateLogger("Test"));
         container.RegisterInstance(Logger);
-        return BuildContainer(container.WithDependencyInjectionAdapter());
+        return BuildContainer(container);
     }
 
     /// <summary>
@@ -104,6 +111,6 @@ public abstract class AutoFakeTest<TContext>(TContext context) : LoggerTest<TCon
     /// </summary>
     protected virtual IContainer BuildContainer(IContainer container)
     {
-        return container;
+        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 }

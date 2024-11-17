@@ -19,9 +19,9 @@ public sealed class AutoSubstitute : IDisposable
         Func<IContainer, IContainer>? configureAction = null
     )
     {
-        Container = container ?? new Container();
+        container ??= new Container();
 
-        Container = Container
+        container = container
            .With(
                 rules => rules
                         .WithTestLoggerResolver(
@@ -34,7 +34,9 @@ public sealed class AutoSubstitute : IDisposable
                         .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
 
-        if (configureAction != null) Container = configureAction.Invoke(Container);
+        if (configureAction != null)
+            Container = configureAction.Invoke(container);
+        Container = container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 
     /// <summary>
@@ -47,10 +49,7 @@ public sealed class AutoSubstitute : IDisposable
     /// </summary>
     /// <typeparam name="T">The type of the service.</typeparam>
     /// <returns>The service.</returns>
-    public T Resolve<T>()
-    {
-        return Container.Resolve<T>();
-    }
+    public T Resolve<T>() => Container.Resolve<T>();
 
     /// <summary>
     ///     Resolve the specified type in the container (register specified instance if needed).
