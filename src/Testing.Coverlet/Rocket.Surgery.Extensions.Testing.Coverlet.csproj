@@ -4,7 +4,7 @@
         <IsTestProject>false</IsTestProject>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="coverlet.collector" PrivateAssets="contentfiles" />
+        <PackageReference Include="Microsoft.CodeCoverage" PrivateAssets="contentfiles" />
     </ItemGroup>
     <ItemGroup>
         <None Include="build/*.*" Pack="true" PackagePath="build" />
