@@ -1,19 +1,16 @@
-﻿using System.Globalization;
-using Serilog;
-using Serilog.Events;
-using Xunit;
+﻿using Serilog.Events;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
 /// <summary>
-/// Defaults for logging with xunit
+///     Defaults for logging with xunit
 /// </summary>
 [PublicAPI]
 public static class XUnitDefaults
 {
     /// <summary>
-    /// Create the test context
+    ///     Create the test context
     /// </summary>
     /// <param name="outputHelper"></param>
     /// <param name="logEventLevel"></param>
@@ -23,8 +20,6 @@ public static class XUnitDefaults
         ITestOutputHelper outputHelper,
         LogEventLevel logEventLevel = LogEventLevel.Verbose,
         string? outputTemplate = null
-    )
-    {
-        return new(outputHelper, logEventLevel, outputTemplate);
-    }
+    ) =>
+        new(outputHelper, logEventLevel, outputTemplate);
 }
