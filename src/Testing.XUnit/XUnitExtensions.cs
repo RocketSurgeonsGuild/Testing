@@ -17,11 +17,11 @@ public static class XUnitExtensions
     /// </summary>
     /// <param name="output"></param>
     /// <returns></returns>
-    public static ITest GetTest(this ITestOutputHelper output)
+    public static ITest? GetTest(this ITestOutputHelper output)
     {
         var type = output.GetType();
         var testMember = type.GetField("test", BindingFlags.Instance | BindingFlags.NonPublic)!;
-        return (ITest)testMember.GetValue(output)!;
+        return (ITest?)testMember?.GetValue(output);
     }
 
     /// <summary>

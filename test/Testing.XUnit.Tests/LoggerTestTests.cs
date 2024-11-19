@@ -20,8 +20,9 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
     [Fact]
     public Task Should_Create_Usable_Logger()
     {
-        using var _ = new Impl(_testOutputHelper);
-        A.CallTo(() => _testOutputHelper.WriteLine(A<string>._)).MustHaveHappened();
+        var helper = A.Fake<ITestOutputHelper>();
+        using var _ = new Impl(helper);
+        A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
         return Task.CompletedTask;
     }
 
