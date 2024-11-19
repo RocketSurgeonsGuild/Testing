@@ -11,7 +11,7 @@ public static class RocketSurgeonsTestingDefaults
     /// <summary>
     ///     Default log format
     /// </summary>
-    public static string LogFormat { get; set; } = "[{Level:w4}] {Message}{NewLine}{Exception}";
+    public static string OutputTemplate { get; set; } = "[{Level:w4}] {Message}{NewLine}{Exception}";
 
     /// <summary>
     ///     The default delegate for configuring the logger.

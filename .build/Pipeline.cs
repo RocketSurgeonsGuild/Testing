@@ -50,7 +50,7 @@ using Rocket.Surgery.Nuke.GithubActions;
 [TitleEvents]
 [ContinuousIntegrationConventions]
 [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
-public partial class Pipeline
+internal partial class Pipeline
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
     private string DebuggerDisplay => ToString();

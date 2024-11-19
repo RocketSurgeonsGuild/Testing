@@ -7,11 +7,12 @@ using ITest = DryIoc.ITest;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests;
 
-public class LoggerTestTests : LoggerTest<TestOutputTestContext>
+public class LoggerTestTests : LoggerTest<XUnitTestContext>
 {
     private readonly ITestOutputHelper _testOutputHelper;
 
-    public LoggerTestTests(ITestOutputHelper testOutputHelper) : base(Defaults.CreateTestOutput(testOutputHelper)) {
+    public LoggerTestTests(ITestOutputHelper testOutputHelper) : base(XUnitDefaults.CreateTestContext(testOutputHelper))
+    {
         // this is the wrapped one.
         _testOutputHelper = TestContext.TestOutputHelper;
     }
@@ -130,11 +131,6 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
 
         logs.Should().HaveCount(3);
         return Task.CompletedTask;
-    }
-
-    private async Task VerifyOutput()
-    {
-        await Verify(FakeItEasy.Fake.GetCalls(_testOutputHelper));
     }
 
     private class Impl : LoggerTest<TestOutputTestContext>
