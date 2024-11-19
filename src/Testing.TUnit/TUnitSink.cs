@@ -4,7 +4,7 @@ using Serilog.Events;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
-class TUnitSink(TestContext context) : ILogEventSink
+internal class TUnitSink(TestContext context) : ILogEventSink
 {
     public void Emit(LogEvent logEvent)
     {

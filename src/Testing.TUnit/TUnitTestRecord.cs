@@ -4,7 +4,7 @@ using Serilog.Events;
 namespace Rocket.Surgery.Extensions.Testing;
 
 /// <summary>
-/// The xunit test context
+///     The xunit test context
 /// </summary>
 [PublicAPI]
 public abstract class TUnitTestRecord<TContext> : RocketSurgeryTestContext<TContext>, ITUnitTestRecord
@@ -14,7 +14,7 @@ public abstract class TUnitTestRecord<TContext> : RocketSurgeryTestContext<TCont
     private readonly LogEventLevel _logEventLevel;
 
     /// <summary>
-    /// The xunit test context
+    ///     The xunit test context
     /// </summary>
     /// <param name="context"></param>
     /// <param name="logEventLevel"></param>
@@ -72,7 +72,7 @@ public abstract class TUnitTestRecord<TContext> : RocketSurgeryTestContext<TCont
 }
 
 /// <summary>
-/// The xunit test context
+///     The xunit test context
 /// </summary>
 [PublicAPI]
 public class TUnitTestRecord(TestContext context, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null)

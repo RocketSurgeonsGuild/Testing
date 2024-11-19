@@ -1,57 +1,57 @@
 namespace Rocket.Surgery.Extensions.Testing;
 
 /// <summary>
-/// A TUnit test record (custom context really)
+///     A TUnit test record (custom context really)
 /// </summary>
 public interface ITUnitTestRecord
 {
     /// <summary>
-    /// The events
+    ///     The events
     /// </summary>
     TestContextEvents Events { get; }
 
     /// <summary>
-    /// The test start
+    ///     The test start
     /// </summary>
     DateTimeOffset? TestStart { get; }
 
     /// <summary>
-    /// The test details
+    ///     The test details
     /// </summary>
     TestDetails TestDetails { get; }
 
     /// <summary>
-    /// The current retry attempt
+    ///     The current retry attempt
     /// </summary>
     int CurrentRetryAttempt { get; }
 
     /// <summary>
-    /// The formatters
+    ///     The formatters
     /// </summary>
     IReadOnlyList<ArgumentDisplayFormatter> ArgumentDisplayFormatters { get; }
 
     /// <summary>
-    /// The timings
+    ///     The timings
     /// </summary>
     IReadOnlyList<Timing> Timings { get; }
 
     /// <summary>
-    /// The object bag
+    ///     The object bag
     /// </summary>
     Dictionary<string, object?> ObjectBag { get; }
 
     /// <summary>
-    /// The result
+    ///     The result
     /// </summary>
     TestResult? Result { get; }
 
     /// <summary>
-    /// Supress results
+    ///     Supress results
     /// </summary>
     void SuppressReportingResult();
 
     /// <summary>
-    /// Add an artifact
+    ///     Add an artifact
     /// </summary>
     /// <param name="artifact"></param>
     void AddArtifact(Artifact artifact);

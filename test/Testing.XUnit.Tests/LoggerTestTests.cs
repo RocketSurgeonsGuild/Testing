@@ -3,20 +3,11 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 using Xunit.Abstractions;
-using ITest = DryIoc.ITest;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests;
 
 public class LoggerTestTests : LoggerTest<XUnitTestContext>
 {
-    private readonly ITestOutputHelper _testOutputHelper;
-
-    public LoggerTestTests(ITestOutputHelper testOutputHelper) : base(XUnitDefaults.CreateTestContext(testOutputHelper))
-    {
-        // this is the wrapped one.
-        _testOutputHelper = TestContext.TestOutputHelper;
-    }
-
     [Fact]
     public Task Should_Create_Usable_Logger()
     {
@@ -133,6 +124,12 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         logs.Should().HaveCount(3);
         return Task.CompletedTask;
     }
+
+    public LoggerTestTests(ITestOutputHelper testOutputHelper) : base(XUnitDefaults.CreateTestContext(testOutputHelper)) =>
+        // this is the wrapped one.
+        _testOutputHelper = TestContext.TestOutputHelper;
+
+    private readonly ITestOutputHelper _testOutputHelper;
 
     private class Impl : LoggerTest<TestOutputTestContext>
     {

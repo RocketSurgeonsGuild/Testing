@@ -1,8 +1,6 @@
-﻿using System.Globalization;
-using FakeItEasy;
+﻿using FakeItEasy;
 using FakeItEasy.Creation;
 using Moq;
-using Serilog;
 using Serilog.Events;
 using Xunit.Abstractions;
 

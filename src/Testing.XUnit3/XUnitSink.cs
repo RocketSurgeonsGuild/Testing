@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
-class XUnitSink(ITestContext context) : ILogEventSink
+internal class XUnitSink(ITestContext context) : ILogEventSink
 {
     public void Emit(LogEvent logEvent)
     {

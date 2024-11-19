@@ -1,4 +1,3 @@
-using System.Globalization;
 using Serilog;
 using Serilog.Events;
 using Xunit;
@@ -6,9 +5,8 @@ using Xunit.Sdk;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
-
 /// <summary>
-/// The xunit test context
+///     The xunit test context
 /// </summary>
 [PublicAPI]
 public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TContext>, ITestContext
@@ -18,12 +16,16 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
     private readonly ITestContext _testContext;
 
     /// <summary>
-    /// The xunit test context
+    ///     The xunit test context
     /// </summary>
     /// <param name="testContextAccessor"></param>
     /// <param name="logEventLevel"></param>
     /// <param name="outputTemplate"></param>
-    protected XUnitTestContext(ITestContextAccessor testContextAccessor, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null) : base(outputTemplate: outputTemplate)
+    protected XUnitTestContext(
+        ITestContextAccessor testContextAccessor,
+        LogEventLevel logEventLevel = LogEventLevel.Verbose,
+        string? outputTemplate = null
+    ) : base(outputTemplate: outputTemplate)
     {
         _testContext = testContextAccessor.Current;
         _logEventLevel = logEventLevel;
@@ -153,7 +155,7 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
 }
 
 /// <summary>
-/// The xunit test context
+///     The xunit test context
 /// </summary>
 [PublicAPI]
 public class XUnitTestContext(ITestContextAccessor testContextAccessor, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null)

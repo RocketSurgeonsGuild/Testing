@@ -1,17 +1,15 @@
-﻿using System.Globalization;
-using Serilog;
-using Serilog.Events;
+﻿using Serilog.Events;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
 /// <summary>
-/// Defaults for logging with xunit
+///     Defaults for logging with xunit
 /// </summary>
 [PublicAPI]
 public static class TUnitDefaults
 {
     /// <summary>
-    /// Create the test context
+    ///     Create the test context
     /// </summary>
     /// <param name="testContext"></param>
     /// <param name="logEventLevel"></param>
@@ -21,8 +19,6 @@ public static class TUnitDefaults
         TestContext testContext,
         LogEventLevel logEventLevel = LogEventLevel.Verbose,
         string? outputTemplate = null
-    )
-    {
-        return new(testContext, logEventLevel, outputTemplate);
-    }
+    ) =>
+        new(testContext, logEventLevel, outputTemplate);
 }
