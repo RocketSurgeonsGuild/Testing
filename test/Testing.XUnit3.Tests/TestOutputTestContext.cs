@@ -28,7 +28,7 @@ public class TestOutputTestContext : RocketSurgeryTestContext<TestOutputTestCont
     {
         loggerConfiguration
            .MinimumLevel.Is(_logEventLevel)
-           .WriteTo.Sink(new TestOutputSink(TestOutputHelper, new MessageTemplateTextFormatter(RocketSurgeonsTestingDefaults.LogFormat, CultureInfo.InvariantCulture)));
+           .WriteTo.Sink(new TestOutputSink(TestOutputHelper, new MessageTemplateTextFormatter(OutputTemplate, CultureInfo.InvariantCulture)));
     }
 
     public Action<IFakeOptions>? FakeOptionsAction => null;

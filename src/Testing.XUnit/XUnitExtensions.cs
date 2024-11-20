@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using Rocket.Surgery.Extensions.Testing;
 using Xunit.Abstractions;
 
 // ReSharper disable once CheckNamespace
@@ -17,11 +16,11 @@ public static class XUnitExtensions
     /// </summary>
     /// <param name="output"></param>
     /// <returns></returns>
-    public static ITest GetTest(this ITestOutputHelper output)
+    public static ITest? GetTest(this ITestOutputHelper output)
     {
         var type = output.GetType();
         var testMember = type.GetField("test", BindingFlags.Instance | BindingFlags.NonPublic)!;
-        return (ITest)testMember.GetValue(output)!;
+        return (ITest?)testMember?.GetValue(output);
     }
 
     /// <summary>
@@ -44,8 +43,5 @@ public static class XUnitExtensions
     /// <remarks>may be unstable depending on your test runner</remarks>
     /// <param name="output"></param>
     /// <returns></returns>
-    public static string GetTestUniqueId(this ITestOutputHelper output)
-    {
-        return output.GetTest().TestCase.UniqueID;
-    }
+    public static string GetTestUniqueId(this ITestOutputHelper output) => output.GetTest().TestCase.UniqueID;
 }

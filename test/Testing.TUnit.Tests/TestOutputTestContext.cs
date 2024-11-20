@@ -19,7 +19,7 @@ public class TestOutputTestContext : RocketSurgeryTestContext<TestOutputTestCont
     {
         loggerConfiguration
            .MinimumLevel.Is(_logEventLevel)
-           .WriteTo.Spectre(outputTemplate: RocketSurgeonsTestingDefaults.LogFormat);
+           .WriteTo.Spectre(outputTemplate: OutputTemplate);
     }
 
     public Action<IFakeOptions>? FakeOptionsAction => null;
