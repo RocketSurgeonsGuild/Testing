@@ -131,11 +131,7 @@ jobs:
       - name: 🚦 Test
         id: test
         run: |
-          dotnet .build/bin/Debug/.build.dll --target DotnetCoreTest Test
-      - name: Collect Code Coverage
-        id: collectCodeCoverage
-        run: |
-          dotnet .build/bin/Debug/.build.dll --target CollectCodeCoverage GenerateCodeCoverageReportCobertura GenerateCodeCoverageBadges GenerateCodeCoverageSummary GenerateCodeCoverageReport
+          dotnet .build/bin/Debug/.build.dll --target DotnetCoreTest Test CollectCodeCoverage GenerateCodeCoverageReportCobertura GenerateCodeCoverageBadges GenerateCodeCoverageSummary GenerateCodeCoverageReport
       - name: 📦 Pack
         id: pack
         run: |

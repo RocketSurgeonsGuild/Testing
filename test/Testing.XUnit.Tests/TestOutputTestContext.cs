@@ -1,5 +1,4 @@
-﻿using FakeItEasy;
-using FakeItEasy.Creation;
+﻿using FakeItEasy.Creation;
 using Moq;
 using Serilog.Events;
 using Xunit.Abstractions;
