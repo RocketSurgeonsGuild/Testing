@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Fake;
 
-public class AutoFakePopulateTests(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class AutoFakePopulateTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void Should_Populate_Configuration_And_Services()

@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Mock;
 
-public class AutoMockPopulateTests(ITestOutputHelper outputHelper) : AutoMockTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class AutoMockPopulateTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void Should_Populate_Configuration_And_Services()
@@ -38,5 +38,5 @@ public class AutoMockPopulateTests(ITestOutputHelper outputHelper) : AutoMockTes
         Container.IsRegistered<A>().Should().BeFalse();
     }
 
-    private class A { }
+    private class A;
 }

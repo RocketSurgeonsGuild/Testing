@@ -12,7 +12,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
-public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public async Task Should_Build_A_Context()

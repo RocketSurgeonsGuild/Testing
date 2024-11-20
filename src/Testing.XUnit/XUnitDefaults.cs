@@ -20,6 +20,5 @@ public static class XUnitDefaults
         ITestOutputHelper outputHelper,
         LogEventLevel logEventLevel = LogEventLevel.Verbose,
         string? outputTemplate = null
-    ) =>
-        new(outputHelper, logEventLevel, outputTemplate);
+    ) => new(outputHelper, logEventLevel, outputTemplate);
 }

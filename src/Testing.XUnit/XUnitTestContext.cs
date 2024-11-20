@@ -34,16 +34,16 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
     /// <summary>
     ///     The xunit test context
     /// </summary>
-    /// <param name="testOutputHelper"></param>
+    /// <param name="outputHelper"></param>
     /// <param name="logEventLevel"></param>
     /// <param name="outputTemplate"></param>
-    protected XUnitTestContext(ITestOutputHelper testOutputHelper, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null) : base(
+    protected XUnitTestContext(ITestOutputHelper outputHelper, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null) : base(
         outputTemplate: outputTemplate
     )
     {
         _logEventLevel = logEventLevel;
-        TestOutputHelper = testOutputHelper;
-        Test = testOutputHelper.GetTest();
+        TestOutputHelper = outputHelper;
+        Test = outputHelper.GetTest();
     }
 
     /// <inheritdoc />
@@ -69,5 +69,19 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
 ///     The xunit test context
 /// </summary>
 [PublicAPI]
-public class XUnitTestContext(ITestOutputHelper testOutputHelper, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null)
-    : XUnitTestContext<XUnitTestContext>(testOutputHelper, logEventLevel, outputTemplate);
+public class XUnitTestContext(ITestOutputHelper outputHelper, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null)
+    : XUnitTestContext<XUnitTestContext>(outputHelper, logEventLevel, outputTemplate)
+{
+    /// <summary>
+    ///     Create the test context
+    /// </summary>
+    /// <param name="outputHelper"></param>
+    /// <param name="logEventLevel"></param>
+    /// <param name="outputTemplate"></param>
+    /// <returns></returns>
+    public static XUnitTestContext Create(
+        ITestOutputHelper outputHelper,
+        LogEventLevel logEventLevel = LogEventLevel.Verbose,
+        string? outputTemplate = null
+    ) => new(outputHelper, logEventLevel, outputTemplate);
+}

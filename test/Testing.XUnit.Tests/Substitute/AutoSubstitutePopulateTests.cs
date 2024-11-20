@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Substitute;
 
-public class AutoSubstitutePopulateTests(ITestOutputHelper outputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class AutoSubstitutePopulateTests(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void Should_Populate_Configuration_And_Services()
@@ -38,5 +38,5 @@ public class AutoSubstitutePopulateTests(ITestOutputHelper outputHelper) : AutoS
         Container.IsRegistered<A>().Should().BeFalse();
     }
 
-    private class A { }
+    private class A;
 }

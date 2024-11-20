@@ -125,15 +125,15 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         return Task.CompletedTask;
     }
 
-    public LoggerTestTests(ITestOutputHelper testOutputHelper) : base(XUnitDefaults.CreateTestContext(testOutputHelper)) =>
+    public LoggerTestTests(ITestOutputHelper outputHelper) : base(XUnitDefaults.CreateTestContext(outputHelper)) =>
         // this is the wrapped one.
         _testOutputHelper = TestContext.TestOutputHelper;
 
     private readonly ITestOutputHelper _testOutputHelper;
 
-    private class Impl : LoggerTest<TestOutputTestContext>
+    private class Impl : LoggerTest<XUnitTestContext>
     {
-        public Impl(ITestOutputHelper outputHelper) : base(Defaults.CreateTestOutput(outputHelper))
+        public Impl(ITestOutputHelper outputHelper) : base(XUnitDefaults.CreateTestContext(outputHelper))
         {
             Logger.Error("abcd");
             Logger.Error("abcd {Something}", "somevalue");

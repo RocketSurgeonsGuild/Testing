@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Fake;
 
-public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void Should_Create_Usable_Logger()
@@ -78,16 +78,16 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
         a.Should().Throw<TestBootstrapException>();
     }
 
-    private class Impl : AutoFakeTest<TestOutputTestContext>
+    private class Impl : AutoFakeTest<XUnitTestContext>
     {
-        public Impl(ITestOutputHelper outputHelper) : base(Defaults.CreateTestOutput(outputHelper))
+        public Impl(ITestOutputHelper outputHelper) : base(XUnitDefaults.CreateTestContext(outputHelper))
         {
             Logger.Error("abcd");
             Logger.Error("abcd {Something}", "somevalue");
         }
     }
 
-    private class DoubleAccess(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    private class DoubleAccess(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         public IContainer Self => Container;
 
@@ -98,7 +98,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
         }
     }
 
-    private class LoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    private class LoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         public void Write()
         {
@@ -107,7 +107,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
         }
     }
 
-    private class LoggerFactoryImpl(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    private class LoggerFactoryImpl(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         public void Write()
         {
@@ -116,7 +116,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
         }
     }
 
-    public class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    public class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         public void Write()
         {
@@ -125,9 +125,9 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
         }
     }
 
-    private class MyItem : IItem { }
+    private class MyItem : IItem;
 
-    public interface IItem { }
+    public interface IItem;
 
     private class Optional(IItem? item = null)
     {

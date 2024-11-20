@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Mock;
 
-public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void Should_Create_Usable_Logger()
@@ -53,16 +53,16 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<Te
         a.Should().Throw<TestBootstrapException>();
     }
 
-    private class Impl : AutoMockTest<TestOutputTestContext>
+    private class Impl : AutoMockTest<XUnitTestContext>
     {
-        public Impl(ITestOutputHelper outputHelper) : base(Defaults.CreateTestOutput(outputHelper))
+        public Impl(ITestOutputHelper outputHelper) : base(XUnitDefaults.CreateTestContext(outputHelper))
         {
             Logger.Error("abcd");
             Logger.Error("abcd {Something}", "somevalue");
         }
     }
 
-    private class DoubleAccess(ITestOutputHelper outputHelper) : AutoMockTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    private class DoubleAccess(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         public IContainer Self => Container;
 
@@ -73,9 +73,9 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<Te
         }
     }
 
-    private class MyItem : IItem { }
+    private class MyItem : IItem;
 
-    public interface IItem { }
+    public interface IItem;
 
     private class Optional(IItem? item = null)
     {

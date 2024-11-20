@@ -3,7 +3,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests;
 
-public class XUnitExtensionsTests(ITestOutputHelper outputHelper) : LoggerTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class XUnitExtensionsTests(ITestOutputHelper outputHelper) : LoggerTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void GetTestTest()
