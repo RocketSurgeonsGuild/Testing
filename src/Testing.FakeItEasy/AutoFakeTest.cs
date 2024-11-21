@@ -23,8 +23,8 @@ public abstract class AutoFakeTest
 public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptions>? fakeOptionsAction = null) : LoggerTest<TContext>(context)
     where TContext : class, ILoggingTestContext
 {
-    private readonly Action<IFakeOptions>? _fakeOptionsAction = fakeOptionsAction;
     private static readonly IConfiguration _readOnlyConfiguration = new ConfigurationBuilder().Build();
+    private readonly Action<IFakeOptions>? _fakeOptionsAction = fakeOptionsAction;
     private AutoFake? _autoFake;
     private bool _building;
 

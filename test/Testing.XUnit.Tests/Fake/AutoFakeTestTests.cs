@@ -91,11 +91,9 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     {
         public IContainer Self => Container;
 
-        protected override IContainer BuildContainer(IContainer container)
-        {
+        protected override IContainer BuildContainer(IContainer container) =>
             // invalid do not touch ServiceProvider or Container while constructing the container....
-            return Container.GetRequiredService<IContainer>();
-        }
+            Container.GetRequiredService<IContainer>();
     }
 
     private class LoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))

@@ -16,12 +16,12 @@ public class XUnitExtensionsTests(ITestOutputHelper outputHelper) : LoggerTest<X
     [Fact]
     public void GetTestUniqueId()
     {
-        XUnitExtensions.GetTestUniqueId(outputHelper).Should().Be("66d256d940db996ce53528d6d76407726a8eaa10");
+        outputHelper.GetTestUniqueId().Should().Be("66d256d940db996ce53528d6d76407726a8eaa10");
     }
 
     [Fact]
     public void GetTestHashId()
     {
-        XUnitExtensions.GetTestHashId(outputHelper).Should().Be(-485969091);
+        outputHelper.GetTestHashId().Should().Be(-485969091);
     }
 }

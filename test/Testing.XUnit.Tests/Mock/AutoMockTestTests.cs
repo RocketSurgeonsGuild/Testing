@@ -1,7 +1,6 @@
 using DryIoc;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit.Abstractions;
 
@@ -66,11 +65,9 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
     {
         public IContainer Self => Container;
 
-        protected override IContainer BuildContainer(IContainer container)
-        {
+        protected override IContainer BuildContainer(IContainer container) =>
             // invalid do not touch ServiceProvider or Container while constructing the container....
-            return Container.GetRequiredService<IContainer>();
-        }
+            Container.GetRequiredService<IContainer>();
     }
 
     private class MyItem : IItem;
