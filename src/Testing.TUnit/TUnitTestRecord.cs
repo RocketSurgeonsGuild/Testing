@@ -19,8 +19,16 @@ public abstract class TUnitTestRecord<TContext> : RocketSurgeryTestContext<TCont
     /// <param name="context"></param>
     /// <param name="logEventLevel"></param>
     /// <param name="outputTemplate"></param>
-    protected TUnitTestRecord(TestContext context, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null) : base(
-        outputTemplate: outputTemplate
+    /// <param name="configureLogger"></param>
+    protected TUnitTestRecord(
+        TestContext context,
+        LogEventLevel logEventLevel = LogEventLevel.Verbose,
+        string? outputTemplate = null,
+        Action<TContext, LoggerConfiguration>? configureLogger = null
+    ) : base(
+        configureLogger,
+        logEventLevel,
+        outputTemplate
     )
     {
         _context = context;
@@ -75,5 +83,10 @@ public abstract class TUnitTestRecord<TContext> : RocketSurgeryTestContext<TCont
 ///     The xunit test context
 /// </summary>
 [PublicAPI]
-public class TUnitTestRecord(TestContext context, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null)
-    : TUnitTestRecord<TUnitTestRecord>(context, logEventLevel, outputTemplate);
+public class TUnitTestRecord
+(
+    TestContext context,
+    LogEventLevel logEventLevel = LogEventLevel.Verbose,
+    string? outputTemplate = null,
+    Action<TUnitTestRecord, LoggerConfiguration>? configureLogger = null)
+    : TUnitTestRecord<TUnitTestRecord>(context, logEventLevel, outputTemplate, configureLogger);
