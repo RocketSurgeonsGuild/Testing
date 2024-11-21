@@ -57,8 +57,8 @@ public abstract class RocketSurgeryTestContext<TContext> : ILoggingTestContext
     private Logger CreateLogger()
     {
         RocketSurgeonsTestingDefaults.ConfigureLogging?.Invoke(_loggerConfiguration);
-        _configureLogger?.Invoke((TContext)this, _loggerConfiguration);
         ConfigureLogger((TContext)this, _loggerConfiguration);
+        _configureLogger?.Invoke((TContext)this, _loggerConfiguration);
         return _loggerConfiguration.CreateLogger();
     }
 

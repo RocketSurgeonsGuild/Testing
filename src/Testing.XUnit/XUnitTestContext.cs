@@ -37,13 +37,17 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
     /// <param name="outputHelper"></param>
     /// <param name="logEventLevel"></param>
     /// <param name="outputTemplate"></param>
-    protected XUnitTestContext(ITestOutputHelper outputHelper, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null) : base(
-        outputTemplate: outputTemplate
-    )
+    /// <param name="configureLogger"></param>
+    protected XUnitTestContext(
+        ITestOutputHelper outputHelper,
+        LogEventLevel logEventLevel = LogEventLevel.Verbose,
+        string? outputTemplate = null,
+        Action<TContext, LoggerConfiguration>? configureLogger = null
+    ) : base(configureLogger, logEventLevel, outputTemplate)
     {
         _logEventLevel = logEventLevel;
         TestOutputHelper = outputHelper;
-        Test = outputHelper.GetTest();
+        Test = outputHelper.GetTest()!;
     }
 
     /// <inheritdoc />
@@ -69,8 +73,9 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
 ///     The xunit test context
 /// </summary>
 [PublicAPI]
-public class XUnitTestContext(ITestOutputHelper outputHelper, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null)
-    : XUnitTestContext<XUnitTestContext>(outputHelper, logEventLevel, outputTemplate)
+public class XUnitTestContext(ITestOutputHelper outputHelper, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null,
+    Action<XUnitTestContext, LoggerConfiguration>? configureLogger = null)
+    : XUnitTestContext<XUnitTestContext>(outputHelper, logEventLevel, outputTemplate, configureLogger)
 {
     /// <summary>
     ///     Create the test context
@@ -78,10 +83,12 @@ public class XUnitTestContext(ITestOutputHelper outputHelper, LogEventLevel logE
     /// <param name="outputHelper"></param>
     /// <param name="logEventLevel"></param>
     /// <param name="outputTemplate"></param>
+    /// <param name="configureLogger"></param>
     /// <returns></returns>
     public static XUnitTestContext Create(
         ITestOutputHelper outputHelper,
         LogEventLevel logEventLevel = LogEventLevel.Verbose,
-        string? outputTemplate = null
-    ) => new(outputHelper, logEventLevel, outputTemplate);
+        string? outputTemplate = null,
+        Action<XUnitTestContext, LoggerConfiguration>? configureLogger = null
+    ) => new(outputHelper, logEventLevel, outputTemplate, configureLogger);
 }

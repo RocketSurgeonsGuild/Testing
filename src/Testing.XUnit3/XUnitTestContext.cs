@@ -21,11 +21,13 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
     /// <param name="testContextAccessor"></param>
     /// <param name="logEventLevel"></param>
     /// <param name="outputTemplate"></param>
+    /// <param name="configureLogger"></param>
     protected XUnitTestContext(
         ITestContextAccessor testContextAccessor,
         LogEventLevel logEventLevel = LogEventLevel.Verbose,
-        string? outputTemplate = null
-    ) : base(outputTemplate: outputTemplate)
+        string? outputTemplate = null,
+        Action<TContext, LoggerConfiguration>? configureLogger = null
+    ) : base(configureLogger, logEventLevel, outputTemplate)
     {
         _testContext = testContextAccessor.Current;
         _logEventLevel = logEventLevel;
@@ -158,5 +160,5 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
 ///     The xunit test context
 /// </summary>
 [PublicAPI]
-public class XUnitTestContext(ITestContextAccessor testContextAccessor, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null)
-    : XUnitTestContext<XUnitTestContext>(testContextAccessor, logEventLevel, outputTemplate);
+public class XUnitTestContext(ITestContextAccessor testContextAccessor, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null, Action<XUnitTestContext, LoggerConfiguration>? configureLogger = null)
+    : XUnitTestContext<XUnitTestContext>(testContextAccessor, logEventLevel, outputTemplate, configureLogger);
