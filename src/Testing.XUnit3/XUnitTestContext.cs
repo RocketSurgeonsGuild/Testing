@@ -160,5 +160,10 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
 ///     The xunit test context
 /// </summary>
 [PublicAPI]
-public class XUnitTestContext(ITestContextAccessor testContextAccessor, LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null, Action<XUnitTestContext, LoggerConfiguration>? configureLogger = null)
+public class XUnitTestContext
+(
+    ITestContextAccessor testContextAccessor,
+    LogEventLevel logEventLevel = LogEventLevel.Verbose,
+    string? outputTemplate = null,
+    Action<XUnitTestContext, LoggerConfiguration>? configureLogger = null)
     : XUnitTestContext<XUnitTestContext>(testContextAccessor, logEventLevel, outputTemplate, configureLogger);
