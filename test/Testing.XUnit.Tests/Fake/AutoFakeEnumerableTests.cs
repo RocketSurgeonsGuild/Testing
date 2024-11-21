@@ -1,15 +1,11 @@
-using System.Globalization;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
-using Serilog;
 using ILogger = Serilog.ILogger;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Fake;
 
-public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
-
     [Fact]
     public void Does_Not_Auto_Fake_Enumerable()
     {
@@ -89,11 +85,11 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
         a.Should().NotThrow();
     }
 
-    public interface Item { }
+    public interface Item;
 
-    private class A : Item { }
+    private class A : Item;
 
-    private class B : Item { }
+    private class B : Item;
 
     private class LoggerTest : Item
     {

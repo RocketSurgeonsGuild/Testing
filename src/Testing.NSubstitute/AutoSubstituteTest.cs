@@ -12,14 +12,14 @@ namespace Rocket.Surgery.Extensions.Testing;
 ///     A base class with AutoFake wired in for DryIoc
 /// </summary>
 public abstract class AutoSubstituteTest
-    (Action<AutoSubstituteTestContext, LoggerConfiguration> configureLogger)
-    : LoggerTest<AutoSubstituteTestContext>(new(configureLogger));
+    (Action<RocketSurgeryTestContext, LoggerConfiguration> configureLogger)
+    : AutoSubstituteTest<RocketSurgeryTestContext>(new(configureLogger));
 
 /// <summary>
 ///     A test using NSubstitute
 /// </summary>
 public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTest<TContext>(context)
-    where TContext : class, IAutoSubstituteTestContext
+    where TContext : class, ILoggingTestContext
 {
     private static readonly IConfiguration _readOnlyConfiguration = new ConfigurationBuilder().Build();
     private AutoSubstitute? _autoSubstitute;

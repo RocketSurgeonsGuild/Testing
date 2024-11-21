@@ -2451,7 +2451,7 @@ roslynator_unity_code_analysis.enabled = false
 roslynator_use_anonymous_function_or_method_group = method_group
 # Applicable to: rcs1207
 
-roslynator_use_block_body_when_declaration_spans_over_multiple_lines = true
+roslynator_use_block_body_when_declaration_spans_over_multiple_lines = false
 # Applicable to: rcs1016
 
 roslynator_use_block_body_when_expression_spans_over_multiple_lines = false

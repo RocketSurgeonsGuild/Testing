@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Mock;
 
-public class AutoMockEnumerableTests : AutoMockTest<TestOutputTestContext>
+public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void Does_Not_Auto_Fake_Enumerable()
@@ -84,13 +84,11 @@ public class AutoMockEnumerableTests : AutoMockTest<TestOutputTestContext>
         result.Should().Contain(fake4);
     }
 
-    public AutoMockEnumerableTests(ITestOutputHelper outputHelper) : base(Defaults.CreateTestOutput(outputHelper)) { }
+    public interface Item;
 
-    public interface Item { }
+    private class A : Item;
 
-    private class A : Item { }
-
-    private class B : Item { }
+    private class B : Item;
 
     private class LoggerTest : Item
     {

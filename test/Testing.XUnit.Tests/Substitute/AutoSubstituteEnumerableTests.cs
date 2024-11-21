@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Substitute;
 
-public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestContext>
+public class AutoSubstituteEnumerableTests(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void Does_Not_Auto_Substitute_Enumerable()
@@ -85,14 +85,11 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestCo
         a.Should().NotThrow();
     }
 
-    public AutoSubstituteEnumerableTests(ITestOutputHelper testOutputHelper)
-        : base(Defaults.CreateTestOutput(testOutputHelper)) { }
+    public interface Item;
 
-    public interface Item { }
+    private class A : Item;
 
-    private class A : Item { }
-
-    private class B : Item { }
+    private class B : Item;
 
     private class LoggerTest : Item
     {

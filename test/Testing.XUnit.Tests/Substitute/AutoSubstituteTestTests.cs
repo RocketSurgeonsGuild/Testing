@@ -8,7 +8,7 @@ using Arg = NSubstitute.Arg;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Substitute;
 
-public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public void Should_Create_Usable_Logger()
@@ -38,8 +38,8 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
     {
         var test = AutoSubstitute.Resolve<GenericLoggerImpl>();
         test.Write();
-        var testOutputHelper = AutoSubstitute.Resolve<ITestOutputHelper>();
-        testOutputHelper.Received().WriteLine(Arg.Any<string>());
+        var outputHelper = AutoSubstitute.Resolve<ITestOutputHelper>();
+        outputHelper.Received().WriteLine(Arg.Any<string>());
     }
 
     [Fact]
@@ -80,16 +80,16 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
         a.Should().Throw<TestBootstrapException>();
     }
 
-    private class Impl : AutoSubstituteTest<TestOutputTestContext>
+    private class Impl : AutoSubstituteTest<XUnitTestContext>
     {
-        public Impl(ITestOutputHelper outputHelper) : base(Defaults.CreateTestOutput(outputHelper))
+        public Impl(ITestOutputHelper outputHelper) : base(XUnitDefaults.CreateTestContext(outputHelper))
         {
             Logger.Error("abcd");
             Logger.Error("abcd {Something}", "somevalue");
         }
     }
 
-    private class DoubleAccess(ITestOutputHelper outputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    private class DoubleAccess(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         public IContainer Self => Container;
 
@@ -98,7 +98,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
             Container.GetRequiredService<IContainer>();
     }
 
-    private class LoggerImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    private class LoggerImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         public void Write()
         {
@@ -107,7 +107,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
         }
     }
 
-    private class LoggerFactoryImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    private class LoggerFactoryImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         public void Write()
         {
@@ -116,7 +116,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
         }
     }
 
-    public class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+    public class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         private ITestOutputHelper _otherHelper = outputHelper;
 
@@ -127,9 +127,9 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
         }
     }
 
-    private class MyItem : IItem { }
+    private class MyItem : IItem;
 
-    public interface IItem { }
+    public interface IItem;
 
     private class Optional(IItem? item = null)
     {

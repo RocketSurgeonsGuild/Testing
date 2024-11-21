@@ -13,14 +13,14 @@ namespace Rocket.Surgery.Extensions.Testing;
 ///     A base class with AutoFake wired in for DryIoc
 /// </summary>
 public abstract class AutoMockTest
-    (Action<AutoMockTestContext, LoggerConfiguration> configureLogger, MockBehavior mockBehavior = MockBehavior.Default)
-    : LoggerTest<AutoMockTestContext>(new(configureLogger, mockBehavior));
+    (Action<RocketSurgeryTestContext, LoggerConfiguration> configureLogger, MockBehavior mockBehavior = MockBehavior.Default)
+    : AutoMockTest<RocketSurgeryTestContext>(new(configureLogger), mockBehavior);
 
 /// <summary>
 ///     A base class with AutoFake wired in for DryIoc
 /// </summary>
-public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TContext>(context)
-    where TContext : class, IAutoMockTestContext
+public abstract class AutoMockTest<TContext>(TContext context, MockBehavior mockBehavior = MockBehavior.Default) : LoggerTest<TContext>(context)
+    where TContext : class, ILoggingTestContext
 {
     private static readonly IConfiguration _readOnlyConfiguration = new ConfigurationBuilder().Build();
     private AutoMock? _autoMock;
@@ -59,7 +59,7 @@ public abstract class AutoMockTest<TContext>(TContext context) : LoggerTest<TCon
     {
         if (_building) throw new TestBootstrapException($"Unable to access {nameof(AutoMock)} while the container is being constructed!");
         _building = true;
-        var autoFake = new AutoMock(new MockRepository(TestContext.MockBehavior), configureAction: ConfigureContainer, container: container);
+        var autoFake = new AutoMock(new MockRepository(mockBehavior), configureAction: ConfigureContainer, container: container);
         _building = false;
         return autoFake;
     }

@@ -14,16 +14,17 @@ namespace Rocket.Surgery.Extensions.Testing;
 ///     A base class with AutoFake wired in for DryIoc
 /// </summary>
 public abstract class AutoFakeTest
-    (Action<AutoFakeTestContext, LoggerConfiguration> configureLogger, Action<IFakeOptions>? fakeOptionsAction = null)
-    : LoggerTest<AutoFakeTestContext>(new(configureLogger, fakeOptionsAction));
+    (Action<RocketSurgeryTestContext, LoggerConfiguration> configureLogger, Action<IFakeOptions>? fakeOptionsAction = null)
+    : AutoFakeTest<RocketSurgeryTestContext>(new(configureLogger), fakeOptionsAction);
 
 /// <summary>
 ///     A base class with AutoFake wired in for DryIoc
 /// </summary>
-public abstract class AutoFakeTest<TContext>(TContext context) : LoggerTest<TContext>(context)
-    where TContext : class, IAutoFakeTestContext
+public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptions>? fakeOptionsAction = null) : LoggerTest<TContext>(context)
+    where TContext : class, ILoggingTestContext
 {
     private static readonly IConfiguration _readOnlyConfiguration = new ConfigurationBuilder().Build();
+    private readonly Action<IFakeOptions>? _fakeOptionsAction = fakeOptionsAction;
     private AutoFake? _autoFake;
     private bool _building;
 
@@ -61,7 +62,7 @@ public abstract class AutoFakeTest<TContext>(TContext context) : LoggerTest<TCon
     {
         if (_building) throw new TestBootstrapException($"Unable to access {nameof(AutoFake)} while the container is being constructed!");
         _building = true;
-        var autoFake = new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: TestContext.FakeOptionsAction, container: container);
+        var autoFake = new AutoFake(configureAction: ConfigureContainer, fakeOptionsAction: _fakeOptionsAction, container: container);
         _building = false;
         return autoFake;
     }

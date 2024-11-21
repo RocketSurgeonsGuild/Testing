@@ -6,13 +6,12 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
-using Rocket.Surgery.Extensions.Testing.XUnit.Tests;
 using Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
-public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
+public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [Fact]
     public async Task Should_Build_A_Context()
@@ -282,15 +281,15 @@ public class Class1
 
     public static IEnumerable<object[]> GeneratorTestResultsCustomizerData()
     {
-        yield return ["IncludeInputs", Customizers.Reset + Customizers.IncludeInputs,];
-        yield return ["IncludeReferences", Customizers.Reset + Customizers.IncludeReferences,];
-        yield return ["IncludeFileOptions", Customizers.Reset + Customizers.IncludeFileOptions,];
-        yield return ["IncludeParseOptions", Customizers.Reset + Customizers.IncludeParseOptions,];
-        yield return ["IncludeGlobalOptions", Customizers.Reset + Customizers.IncludeGlobalOptions,];
-        yield return ["Default + IncludeInputs", Customizers.Reset + Customizers.Default + Customizers.IncludeInputs,];
-        yield return ["Default + ExcludeReferences", Customizers.Reset + Customizers.Default + Customizers.ExcludeReferences,];
-        yield return ["Default + ExcludeFileOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeFileOptions,];
-        yield return ["Default + ExcludeGlobalOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeGlobalOptions,];
-        yield return ["Default + ExcludeParseOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeParseOptions,];
+        yield return ["IncludeInputs", Customizers.Reset + Customizers.IncludeInputs];
+        yield return ["IncludeReferences", Customizers.Reset + Customizers.IncludeReferences];
+        yield return ["IncludeFileOptions", Customizers.Reset + Customizers.IncludeFileOptions];
+        yield return ["IncludeParseOptions", Customizers.Reset + Customizers.IncludeParseOptions];
+        yield return ["IncludeGlobalOptions", Customizers.Reset + Customizers.IncludeGlobalOptions];
+        yield return ["Default + IncludeInputs", Customizers.Reset + Customizers.Default + Customizers.IncludeInputs];
+        yield return ["Default + ExcludeReferences", Customizers.Reset + Customizers.Default + Customizers.ExcludeReferences];
+        yield return ["Default + ExcludeFileOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeFileOptions];
+        yield return ["Default + ExcludeGlobalOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeGlobalOptions];
+        yield return ["Default + ExcludeParseOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeParseOptions];
     }
 }
