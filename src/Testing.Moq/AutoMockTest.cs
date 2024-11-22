@@ -95,8 +95,5 @@ public abstract class AutoMockTest<TContext>(TContext context, MockBehavior mock
     /// <summary>
     ///     A method that allows you to override and update the behavior of building the container
     /// </summary>
-    protected virtual IContainer BuildContainer(IContainer container)
-    {
-        return container;
-    }
+    protected virtual IContainer BuildContainer(IContainer container) => container;
 }
