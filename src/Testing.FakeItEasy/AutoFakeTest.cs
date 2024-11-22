@@ -110,8 +110,5 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
     /// <summary>
     ///     A method that allows you to override and update the behavior of building the container
     /// </summary>
-    protected virtual IContainer BuildContainer(IContainer container)
-    {
-        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
-    }
+    protected virtual IContainer BuildContainer(IContainer container) => container;
 }

@@ -66,10 +66,7 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
     /// <summary>
     ///     A method that allows you to override and update the behavior of building the container
     /// </summary>
-    protected virtual IContainer BuildContainer(IContainer container)
-    {
-        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
-    }
+    protected virtual IContainer BuildContainer(IContainer container) => container;
 
     /// <summary>
     ///     Populate the test class with the given configuration and services

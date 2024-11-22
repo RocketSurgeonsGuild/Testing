@@ -1,4 +1,5 @@
 using DryIoc;
+using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
@@ -55,8 +56,8 @@ public sealed class AutoMock : IDisposable
         );
 
         if (configureAction != null)
-            Container = configureAction.Invoke(container);
-        Container = container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
+            container = configureAction.Invoke(container);
+        Container = container.WithDependencyInjectionAdapter().Container;
     }
 
     /// <summary>
