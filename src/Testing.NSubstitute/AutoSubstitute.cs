@@ -29,7 +29,7 @@ public sealed class AutoSubstitute : IDisposable
                          )
                         .WithUndefinedTestDependenciesResolver(
                              request =>
-                                 Substitute.For(new[] { request.ServiceType, }, Array.Empty<object>())
+                                 Substitute.For(new[] { request.ServiceType }, Array.Empty<object>())
                          )
                         .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
