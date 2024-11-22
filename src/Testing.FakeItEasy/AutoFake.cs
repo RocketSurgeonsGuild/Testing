@@ -39,7 +39,7 @@ public sealed class AutoFake : IDisposable
             );
         if (configureAction != null)
             container = configureAction.Invoke(container);
-        Container = container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
+        Container = container.WithDependencyInjectionAdapter().Container;
     }
 
     /// <summary>
