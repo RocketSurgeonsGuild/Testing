@@ -39,7 +39,7 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
     protected AutoFake AutoFake => _autoFake ??= Rebuild();
 
     /// <summary>
-    ///     The DryIoc container
+    ///     The Service Provider
     /// </summary>
     protected IContainer Container
     {
@@ -48,9 +48,9 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
     }
 
     /// <summary>
-    ///     The Service Provider
+    ///     The DryIoc container
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoFake.Container;
+    protected IServiceProvider ServiceProvider => AutoFake.ServiceProvider;
 
     /// <summary>
     ///     Force the container to rebuild from scratch

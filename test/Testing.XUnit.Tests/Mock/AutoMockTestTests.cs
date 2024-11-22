@@ -26,7 +26,7 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
     [Fact]
     public void Should_Return_Self_For_ServiceProvider()
     {
-        ServiceProvider.GetRequiredService<IServiceProvider>().Should().BeOfType<DryIocServiceProvider>();
+        ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
     }
 
     [Fact]

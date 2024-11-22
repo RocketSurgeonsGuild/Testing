@@ -48,7 +48,7 @@ public abstract class AutoMockTest<TContext>(TContext context, MockBehavior mock
     /// <summary>
     ///     The Service Provider
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoMock.Container;
+    protected IServiceProvider ServiceProvider => AutoMock.ServiceProvider;
 
     /// <summary>
     ///     Force the container to rebuild from scratch

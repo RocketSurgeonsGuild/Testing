@@ -8,6 +8,7 @@ namespace Rocket.Surgery.Extensions.Testing;
 /// <summary>
 ///     Automatically creates substitute for requested services that haven't been registered
 /// </summary>
+[PublicAPI]
 public sealed class AutoSubstitute : IDisposable
 {
     /// <summary>
@@ -37,13 +38,18 @@ public sealed class AutoSubstitute : IDisposable
 
         if (configureAction != null)
             container = configureAction.Invoke(container);
-        Container = container.WithDependencyInjectionAdapter().Container;
+        ServiceProvider = container.WithDependencyInjectionAdapter();
     }
 
     /// <summary>
     ///     Gets the <see cref="IContainer" /> that handles the component resolution.
     /// </summary>
-    public IContainer Container { get; }
+    public IContainer Container => ServiceProvider.Container;
+
+    /// <summary>
+    /// The dryioc service provider
+    /// </summary>
+    public DryIocServiceProvider ServiceProvider { get; }
 
     /// <summary>
     ///     Resolve the specified type in the container (register it if needed).

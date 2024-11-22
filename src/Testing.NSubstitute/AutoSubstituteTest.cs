@@ -45,9 +45,9 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
     }
 
     /// <summary>
-    ///     The Service Provider
+    ///     The DryIoc container
     /// </summary>
-    protected IServiceProvider ServiceProvider => AutoSubstitute.Container;
+    protected IServiceProvider ServiceProvider => AutoSubstitute.ServiceProvider;
 
     /// <summary>
     ///     Force the container to rebuild from scratch
