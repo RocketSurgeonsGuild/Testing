@@ -35,7 +35,7 @@ public sealed class AutoSubstitute : IDisposable
             );
 
         if (configureAction != null)
-            Container = configureAction.Invoke(container);
+            container = configureAction.Invoke(container);
         Container = container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 

@@ -38,7 +38,7 @@ public sealed class AutoFake : IDisposable
                         .WithConcreteTypeDynamicRegistrations((_, _) => true, Reuse.Transient)
             );
         if (configureAction != null)
-            Container = configureAction.Invoke(container);
+            container = configureAction.Invoke(container);
         Container = container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
     }
 
