@@ -1,4 +1,5 @@
 using DryIoc;
+using DryIoc.Microsoft.DependencyInjection;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -25,7 +26,7 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
     [Fact]
     public void Should_Return_Self_For_ServiceProvider()
     {
-        ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
+        ServiceProvider.GetRequiredService<IServiceProvider>().Should().BeOfType<DryIocServiceProvider>();
     }
 
     [Fact]

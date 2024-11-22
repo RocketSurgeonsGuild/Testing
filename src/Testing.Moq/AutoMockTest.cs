@@ -97,6 +97,6 @@ public abstract class AutoMockTest<TContext>(TContext context, MockBehavior mock
     /// </summary>
     protected virtual IContainer BuildContainer(IContainer container)
     {
-        return container.WithDependencyInjectionAdapter().Container;
+        return container;
     }
 }
