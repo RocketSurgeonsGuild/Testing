@@ -68,7 +68,7 @@ public abstract class AutoSubstituteTest<TContext>(TContext context) : LoggerTes
     /// </summary>
     protected virtual IContainer BuildContainer(IContainer container)
     {
-        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
+        return container.WithDependencyInjectionAdapter().Container;
     }
 
     /// <summary>

@@ -112,6 +112,6 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
     /// </summary>
     protected virtual IContainer BuildContainer(IContainer container)
     {
-        return container.With(rules => rules.WithBaseMicrosoftDependencyInjectionRules(null));
+        return container.WithDependencyInjectionAdapter().Container;
     }
 }
