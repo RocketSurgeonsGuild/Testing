@@ -1,4 +1,5 @@
 using DryIoc;
+using DryIoc.Microsoft.DependencyInjection;
 using FakeItEasy.Creation;
 using FakeItEasy.Sdk;
 using Microsoft.Extensions.DependencyInjection;
