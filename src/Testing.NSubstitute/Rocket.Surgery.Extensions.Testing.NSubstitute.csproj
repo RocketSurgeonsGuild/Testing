@@ -12,6 +12,5 @@
         <PackageReference Include="Verify.NSubstitute" />
         <!-- Disabled for now to handle scenarios with enumerables -->
         <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj" PrivateAssets="contentfiles" />
-        <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles" />
     </ItemGroup>
 </Project>
