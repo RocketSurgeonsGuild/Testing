@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="utf-8" ?>
 <Project>
     <PropertyGroup>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
@@ -33,9 +32,9 @@
         <PackageVersion Include="TUnit.Core" Version="0.4.1" />
         <PackageVersion Include="Verify.DiffPlex" Version="3.1.2" />
         <PackageVersion Include="GitVersion.Tool" Version="6.0.5" />
-        <PackageVersion Include="Nuke.Common" Version="8.1.4" />
+        <PackageVersion Include="Nuke.Common" Version="9.0.1" />
         <PackageVersion Include="ReportGenerator" Version="5.4.1" />
-        <PackageVersion Include="Rocket.Surgery.Nuke" Version="2.8.119" />
+        <PackageVersion Include="Rocket.Surgery.Nuke" Version="2.9.1" />
         <PackageVersion Include="NuGet.ProjectModel" Version="6.12.1" />
         <PackageVersion Include="Buildalyzer" Version="7.1.0" />
         <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
@@ -56,8 +55,8 @@
         <PackageVersion Include="System.Interactive" Version="6.0.1" />
         <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
         <PackageVersion Include="System.Reactive" Version="6.0.1" />
-        <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-08" />
-        <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-03" />
+        <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-09" />
+        <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
         <PackageVersion Include="Microsoft.CodeCoverage" Version="17.12.0" />
         <PackageVersion Include="FakeItEasy" Version="8.3.0" />
         <PackageVersion Include="Autofac.Extras.FakeItEasy" Version="7.0.0" />
@@ -81,5 +80,6 @@
     </ItemGroup>
     <Import
         Project="$(MSBuildThisFileDirectory)/Directory.Packages.support.props"
-        Condition="Exists('$(MSBuildThisFileDirectory)/Directory.Packages.support.props')" />
+        Condition="Exists('$(MSBuildThisFileDirectory)/Directory.Packages.support.props')"
+    />
 </Project>
