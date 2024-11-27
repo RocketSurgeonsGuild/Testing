@@ -16,7 +16,6 @@
         <PackageReference Include="System.Interactive" />
         <PackageReference Include="System.Interactive.Async" />
         <PackageReference Include="System.Reactive" />
-        <ProjectReference Include="../Testing.Coverlet/Rocket.Surgery.Extensions.Testing.Coverlet.csproj" PrivateAssets="contentfiles" />
         <PackageReference
             Include="Polyfill"
             IncludeAssets="runtime;build;buildMultitargeting;buildTransitive;native;contentfiles;analyzers"

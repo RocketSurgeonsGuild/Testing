@@ -5,6 +5,5 @@
         <PackageReference Include="FluentAssertions" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
     </ItemGroup>
-    <Import Project="../src/Testing.Coverlet/build/Rocket.Surgery.Extensions.Testing.Coverlet.targets" />
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 </Project>
