@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Reflection;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
