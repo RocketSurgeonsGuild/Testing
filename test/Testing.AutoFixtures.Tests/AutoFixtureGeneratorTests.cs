@@ -49,6 +49,7 @@ public class AutoFixtureGeneratorTests
     [MemberData(nameof(ParameterArraySourceData.Data), MemberType = typeof(ParameterArraySourceData))]
     [MemberData(nameof(ValueTypeSourceData.Data), MemberType = typeof(ValueTypeSourceData))]
     [MemberData(nameof(NonAbstractReferenceTypeData.Data), MemberType = typeof(NonAbstractReferenceTypeData))]
+    [MemberData(nameof(UsingTypeNamespaceSourceData.Data), MemberType = typeof(UsingTypeNamespaceSourceData))]
     public async Task GivenAutoFixtureAttribute_WhenGenerate_ThenGeneratesAutoFixture(
         GeneratorTestContext context
     )
@@ -61,7 +62,6 @@ public class AutoFixtureGeneratorTests
         // Then
         await Verify(result).HashParameters().UseParameters(context.Id);
     }
-
 
     [Theory]
     [MemberData(nameof(GenerateMultipleFixturesData.Data), MemberType = typeof(GenerateMultipleFixturesData))]
