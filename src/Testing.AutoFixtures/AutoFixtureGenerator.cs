@@ -22,9 +22,9 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .ToList();
 
         var fullList =
-            new[] { Operator(namedTypeSymbol), }
+            new[] { Operator(namedTypeSymbol) }
                .Concat(parameterSymbols.Select(WithPropertyMethod))
-               .Concat(new[] { BuildBuildMethod(productionContext, namedTypeSymbol, parameterSymbols), })
+               .Concat(new[] { BuildBuildMethod(productionContext, namedTypeSymbol, parameterSymbols) })
                .Concat(
                     parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
                 );
@@ -36,11 +36,17 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
            .WithMembers(new(classDeclaration));
 
         var usingDirectives = new HashSet<string>(
-            parameterSymbols
-               .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
-               .Where(x => !string.IsNullOrWhiteSpace(x))
-               .Distinct()
-        ) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", namedTypeSymbol.OriginalDefinition.ContainingNamespace.ToDisplayString()}.Distinct().ToHashSet();
+                                  parameterSymbols
+                                     .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
+                                     .Where(x => !string.IsNullOrWhiteSpace(x))
+                                     .Distinct()
+                              )
+                              {
+                                  "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures",
+                                  namedTypeSymbol.OriginalDefinition.ContainingNamespace.ToDisplayString(),
+                              }
+                             .Distinct()
+                             .ToHashSet();
 
         var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
         if (fakeItEasy is { })
@@ -130,15 +136,10 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
     {
         public static IEqualityComparer<IParameterSymbol> Default { get; } = new ParameterReductionComparer();
 
-        public bool Equals(IParameterSymbol x, IParameterSymbol y)
-        {
-            return ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
-        }
+        public bool Equals(IParameterSymbol x, IParameterSymbol y) =>
+            ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
 
-        public int GetHashCode(IParameterSymbol obj)
-        {
-            return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
-        }
+        public int GetHashCode(IParameterSymbol obj) => SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
     }
 
     internal class NamespaceComparer : IComparer<string>
