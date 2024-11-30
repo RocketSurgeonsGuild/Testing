@@ -83,7 +83,7 @@ using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo
 {
-    [AutoFixture(typeof(NonAbstractReferenceType)]
+    [AutoFixture(typeof(NonAbstractReferenceType))]
     internal partial class NonAbstractReferenceTypeFixture
     {
     }
