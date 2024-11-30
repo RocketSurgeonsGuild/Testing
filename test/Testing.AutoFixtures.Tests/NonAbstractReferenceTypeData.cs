@@ -79,9 +79,10 @@ namespace Goony.Goo.Goo
 }";
 
     private const string AttributedFixtureSource = @"using System;
+using Goony.Goo.Goo;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Goony.Goo.Goo
+namespace Goony.Tests.Goo.Goo
 {
     [AutoFixture(typeof(NonAbstractReferenceType))]
     internal partial class NonAbstractReferenceTypeFixture

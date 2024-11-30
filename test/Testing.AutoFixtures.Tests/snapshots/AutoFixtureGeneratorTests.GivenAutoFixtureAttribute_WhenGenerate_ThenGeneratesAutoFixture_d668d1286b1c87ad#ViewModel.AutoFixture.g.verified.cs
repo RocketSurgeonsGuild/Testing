@@ -4,7 +4,7 @@ using Application.Features.ViewModels;
 using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Application.Features.ViewModels
+namespace Application.Tests.Features.ViewModels
 {
     internal sealed partial class ViewModelFixture : AutoFixtureBase<ViewModelFixture>
     {

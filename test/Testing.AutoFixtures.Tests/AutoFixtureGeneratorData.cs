@@ -29,6 +29,7 @@ internal class AutoFixtureGeneratorData : AutoFixtureSourceData
 
     private const string AttributedFixtureSource = @"using System;
 using System.Diagnostics;
+using Goony.Goo.Goo;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 

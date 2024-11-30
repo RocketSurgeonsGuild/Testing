@@ -40,7 +40,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
                .Where(x => !string.IsNullOrWhiteSpace(x))
                .Distinct()
-        ) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", };
+        ) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", namedTypeSymbol.OriginalDefinition.ContainingNamespace.ToDisplayString()}.Distinct().ToHashSet();
 
         var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
         if (fakeItEasy is { })

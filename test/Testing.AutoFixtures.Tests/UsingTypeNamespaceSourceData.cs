@@ -9,22 +9,22 @@ public class UsingTypeNamespaceSourceData : AutoFixtureSourceData
     public static TheoryData<GeneratorTestContext> Data =>
         new()
         {
-//            DefaultBuilder()
-//               .AddReferences(typeof(Fake))
-//               .AddSources(ClassSource, AttributedFixtureSource)
-//               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Fake))
+               .AddSources(ClassSource, AttributedFixtureSource)
+               .Build(),
             DefaultBuilder()
                .AddReferences(typeof(Substitute))
                .AddSources(ClassSource, AttributedFixtureSource)
                .Build(),
-//            DefaultBuilder()
-//               .AddReferences(typeof(Fake))
-//               .AddSources(AttributedSource)
-//               .Build(),
-//            DefaultBuilder()
-//               .AddReferences(typeof(Substitute))
-//               .AddSources(AttributedSource)
-//               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Fake))
+               .AddSources(AttributedSource)
+               .Build(),
+            DefaultBuilder()
+               .AddReferences(typeof(Substitute))
+               .AddSources(AttributedSource)
+               .Build(),
         };
 
 
@@ -62,6 +62,7 @@ namespace Application.Features.ViewModels
 }";
 
     private const string AttributedFixtureSource = @"using System;
+using Application.Features.ViewModels;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Application.Tests.Features.ViewModels
