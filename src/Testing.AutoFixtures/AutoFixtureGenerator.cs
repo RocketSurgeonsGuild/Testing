@@ -94,7 +94,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         context.RegisterPostInitializationOutput(
             initializationContext =>
             {
-                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.source);
+                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.Source());
                 initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
             }
         );
