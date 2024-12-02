@@ -18,15 +18,23 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         string fixtureName;
         if (SymbolEqualityComparer.Default.Equals(namedTypeSymbol.ContainingSymbol, namedTypeSymbol.ContainingNamespace))
         {
-            className = namedTypeSymbol.MetadataName;
-            fixtureName = namedTypeSymbol.MetadataName + Fixture;
+            className = namedTypeSymbol.Name;
         }
         else
         {
-            className = namedTypeSymbol.ContainingSymbol.MetadataName + "." + namedTypeSymbol.MetadataName;
-            fixtureName = namedTypeSymbol.ContainingSymbol.MetadataName + namedTypeSymbol.MetadataName + Fixture;
+            className = namedTypeSymbol.ContainingSymbol.Name + "." + namedTypeSymbol.Name;
         }
 
+        if (SymbolEqualityComparer.Default.Equals(targetSymbol.ContainingSymbol, targetSymbol.ContainingNamespace))
+        {
+            fixtureName = targetSymbol.Name.EndsWith(Fixture) ? targetSymbol.Name : targetSymbol.Name + Fixture;
+        }
+        else
+        {
+            fixtureName = targetSymbol.Name.EndsWith(Fixture)
+                ? targetSymbol.ContainingSymbol.Name + targetSymbol.Name
+                : targetSymbol.ContainingSymbol.Name + targetSymbol.Name + Fixture;
+        }
         var parameterSymbols =
             namedTypeSymbol
                .Constructors

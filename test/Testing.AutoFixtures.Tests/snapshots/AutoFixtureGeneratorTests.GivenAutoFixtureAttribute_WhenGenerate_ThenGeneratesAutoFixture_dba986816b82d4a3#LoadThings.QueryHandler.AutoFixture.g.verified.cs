@@ -1,10 +1,10 @@
-﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/QueryHandler.AutoFixture.g.cs
+﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/LoadThings.QueryHandler.AutoFixture.g.cs
 using System.Collections.ObjectModel;
 using Goony.Goo.Goo;
 using NSubstitute;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Goony.Goo.Goo
+namespace Goony.Tests.Goo.Goo
 {
     internal sealed partial class LoadThingsQueryHandlerFixture : AutoFixtureBase<LoadThingsQueryHandlerFixture>
     {
