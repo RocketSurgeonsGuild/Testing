@@ -14,6 +14,19 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         Compilation compilation
     )
     {
+        string className;
+        string fixtureName;
+        if (SymbolEqualityComparer.Default.Equals(namedTypeSymbol.ContainingSymbol, namedTypeSymbol.ContainingNamespace))
+        {
+            className = namedTypeSymbol.MetadataName;
+            fixtureName = namedTypeSymbol.MetadataName + Fixture;
+        }
+        else
+        {
+            className = namedTypeSymbol.ContainingSymbol.MetadataName + "." + namedTypeSymbol.MetadataName;
+            fixtureName = namedTypeSymbol.ContainingSymbol.MetadataName + namedTypeSymbol.MetadataName + Fixture;
+        }
+
         var parameterSymbols =
             namedTypeSymbol
                .Constructors
@@ -22,14 +35,14 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .ToList();
 
         var fullList =
-            new[] { Operator(namedTypeSymbol) }
-               .Concat(parameterSymbols.Select(WithPropertyMethod))
-               .Concat(new[] { BuildBuildMethod(productionContext, namedTypeSymbol, parameterSymbols) })
+            new[] { BuildOperator(className, fixtureName) }
+               .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol, fixtureName)))
+               .Concat([BuildBuildMethod(className, parameterSymbols)])
                .Concat(
                     parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
                 );
 
-        var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
+        var classDeclaration = BuildClassDeclaration(fixtureName)
            .WithMembers(new(fullList));
 
         var namespaceDeclaration = BuildNamespace(targetSymbol)
@@ -42,7 +55,8 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                                      .Distinct()
                               )
                               {
-                                  "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures",
+                                  "System.Collections.ObjectModel",
+                                  "Rocket.Surgery.Extensions.Testing.AutoFixtures",
                                   namedTypeSymbol.OriginalDefinition.ContainingNamespace.ToDisplayString(),
                               }
                              .Distinct()
@@ -72,7 +86,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .AddMembers(namespaceDeclaration)
                .NormalizeWhitespace();
 
-        productionContext.AddSource($"{namedTypeSymbol.Name}.AutoFixture.g.cs", unit.ToFullString());
+        productionContext.AddSource($"{className}.AutoFixture.g.cs", unit.ToFullString());
     }
 
     /// <inheritdoc />
@@ -83,14 +97,13 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .SyntaxProvider
                .ForAttributeWithMetadataName(
                     "Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureAttribute",
-                    (node, token) => node.IsKind(SyntaxKind.ClassDeclaration),
-                    (syntaxContext, token) => syntaxContext
+                    (node, _) => node.IsKind(SyntaxKind.ClassDeclaration),
+                    (syntaxContext, _) => syntaxContext
                 )
                .Combine(context.CompilationProvider);
 
         context.RegisterSourceOutput(syntaxProvider, generateFixtureBuilder);
 
-        // do generator things
         context.RegisterPostInitializationOutput(
             initializationContext =>
             {
@@ -124,10 +137,6 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                 return;
             }
 
-            // Loop through
-            // Check for a list of diagnostics to report
-            // report and exit
-            // Generate Stuffs™
             CurrentGenerator(classForFixture, syntaxContext.TargetSymbol, productionContext, compilation);
         }
     }
