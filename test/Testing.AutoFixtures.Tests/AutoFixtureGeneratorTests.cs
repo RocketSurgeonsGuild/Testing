@@ -50,6 +50,7 @@ public class AutoFixtureGeneratorTests
     [MemberData(nameof(ValueTypeSourceData.Data), MemberType = typeof(ValueTypeSourceData))]
     [MemberData(nameof(NonAbstractReferenceTypeData.Data), MemberType = typeof(NonAbstractReferenceTypeData))]
     [MemberData(nameof(UsingTypeNamespaceSourceData.Data), MemberType = typeof(UsingTypeNamespaceSourceData))]
+    [MemberData(nameof(NestedClassFixtureData.Data), MemberType = typeof(NestedClassFixtureData))]
     public async Task GivenAutoFixtureAttribute_WhenGenerate_ThenGeneratesAutoFixture(
         GeneratorTestContext context
     )

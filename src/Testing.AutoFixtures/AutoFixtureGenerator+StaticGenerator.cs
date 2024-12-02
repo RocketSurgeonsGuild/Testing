@@ -36,14 +36,12 @@ public partial class AutoFixtureGenerator
                );
     }
 
-    private static ClassDeclarationSyntax BuildClassDeclaration(ISymbol namedTypeSymbol)
+    private static ClassDeclarationSyntax BuildClassDeclaration(INamedTypeSymbol namedTypeSymbol, string fixtureName)
     {
-        var fixture = $"{namedTypeSymbol.Name}{Fixture}";
-
         return ClassDeclaration(
                    Identifier(
                        TriviaList(),
-                       fixture,
+                       fixtureName,
                        TriviaList(
                            Space
                        )
@@ -103,7 +101,7 @@ public partial class AutoFixtureGenerator
                                       .WithTypeArgumentList(
                                            TypeArgumentList(
                                                SingletonSeparatedList<TypeSyntax>(
-                                                   IdentifierName(fixture)
+                                                   IdentifierName(fixtureName)
                                                )
                                            )
                                        )
@@ -235,27 +233,21 @@ public partial class AutoFixtureGenerator
     }
 
     private static MemberDeclarationSyntax BuildBuildMethod(
-        SourceProductionContext productionContext,
-        ISymbol namedTypeSymbol,
+        string className,
         IEnumerable<IParameterSymbol> parameterSymbols
     )
     {
-        var list = new List<SyntaxNodeOrToken>();
+        List<SyntaxNodeOrToken> list = new();
         foreach (var parameterSymbol in parameterSymbols)
         {
             list.Add(Argument(IdentifierName($"_{parameterSymbol.Name}")));
             list.Add(Token(SyntaxKind.CommaToken));
         }
-//
-//        if (list.Count < 1)
-//        {
-//            ReportDiagnostic(productionContext, Diagnostics.AutoFixture0002, namedTypeSymbol.Locations.Last(_ => true));
-//        }
 
         list.RemoveAt(list.Count - 1);
         return GlobalStatement(
             LocalFunctionStatement(
-                    IdentifierName(namedTypeSymbol.Name),
+                    IdentifierName(className),
                     Identifier("Build")
                 )
                .WithModifiers(
@@ -266,7 +258,7 @@ public partial class AutoFixtureGenerator
                .WithExpressionBody(
                     ArrowExpressionClause(
                         ObjectCreationExpression(
-                                IdentifierName(namedTypeSymbol.Name)
+                                IdentifierName(className)
                             )
                            .WithArgumentList(
                                 ArgumentList(
@@ -281,14 +273,14 @@ public partial class AutoFixtureGenerator
         );
     }
 
-    private static MemberDeclarationSyntax WithPropertyMethod(IParameterSymbol constructorParameter)
+    private static MemberDeclarationSyntax WithPropertyMethod(IParameterSymbol constructorParameter, string fixtureName)
     {
         return GlobalStatement(
             LocalFunctionStatement(
                     IdentifierName(
                         Identifier(
                             TriviaList(),
-                            $"{constructorParameter.ContainingType.Name}{Fixture}",
+                            fixtureName,
                             TriviaList(
                                 Space
                             )
@@ -404,7 +396,7 @@ public partial class AutoFixtureGenerator
         }
     }
 
-    private static MemberDeclarationSyntax Operator(ISymbol namedTypeSymbol)
+    private static MemberDeclarationSyntax BuildOperator(string className, string fixtureName)
     {
         return ConversionOperatorDeclaration(
                    Token(
@@ -414,7 +406,7 @@ public partial class AutoFixtureGenerator
                            Space
                        )
                    ),
-                   IdentifierName(namedTypeSymbol.Name)
+                   IdentifierName(className)
                )
               .WithModifiers(
                    TokenList(
@@ -455,7 +447,7 @@ public partial class AutoFixtureGenerator
                                        IdentifierName(
                                            Identifier(
                                                TriviaList(),
-                                               $"{namedTypeSymbol.Name}{Fixture}",
+                                               fixtureName,
                                                TriviaList(
                                                    Space
                                                )
