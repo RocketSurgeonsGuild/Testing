@@ -14,27 +14,27 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         Compilation compilation
     )
     {
-        string className;
-        string fixtureName;
-        if (SymbolEqualityComparer.Default.Equals(namedTypeSymbol.ContainingSymbol, namedTypeSymbol.ContainingNamespace))
-        {
-            className = namedTypeSymbol.Name;
-        }
-        else
-        {
-            className = namedTypeSymbol.ContainingSymbol.Name + "." + namedTypeSymbol.Name;
-        }
+        var className = SymbolEqualityComparer.Default.Equals(
+            namedTypeSymbol.ContainingSymbol,
+            namedTypeSymbol.ContainingNamespace
+        )
+            ? namedTypeSymbol.Name
+            : namedTypeSymbol.ContainingSymbol.Name + "." + namedTypeSymbol.Name;
 
-        if (SymbolEqualityComparer.Default.Equals(targetSymbol.ContainingSymbol, targetSymbol.ContainingNamespace))
-        {
-            fixtureName = targetSymbol.Name.EndsWith(Fixture) ? targetSymbol.Name : targetSymbol.Name + Fixture;
-        }
-        else
-        {
-            fixtureName = targetSymbol.Name.EndsWith(Fixture)
-                ? targetSymbol.ContainingSymbol.Name + targetSymbol.Name
-                : targetSymbol.ContainingSymbol.Name + targetSymbol.Name + Fixture;
-        }
+        var fixtureName = SymbolEqualityComparer.Default.Equals(
+            targetSymbol.ContainingSymbol,
+            targetSymbol.ContainingNamespace
+        )
+            ? targetSymbol.Name.EndsWith(
+                Fixture
+            )
+                ? targetSymbol.Name
+                : targetSymbol.Name + Fixture
+            : targetSymbol.Name.EndsWith(
+                Fixture
+            )
+            ? targetSymbol.ContainingSymbol.Name + targetSymbol.Name
+            : targetSymbol.ContainingSymbol.Name + targetSymbol.Name + Fixture;
         var parameterSymbols =
             namedTypeSymbol
                .Constructors
