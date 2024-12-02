@@ -33,8 +33,8 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             : targetSymbol.Name.EndsWith(
                 Fixture
             )
-            ? targetSymbol.ContainingSymbol.Name + targetSymbol.Name
-            : targetSymbol.ContainingSymbol.Name + targetSymbol.Name + Fixture;
+                ? targetSymbol.ContainingSymbol.Name + targetSymbol.Name
+                : targetSymbol.ContainingSymbol.Name + targetSymbol.Name + Fixture;
         var parameterSymbols =
             namedTypeSymbol
                .Constructors
