@@ -42,7 +42,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                     parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
                 );
 
-        var classDeclaration = BuildClassDeclaration(namedTypeSymbol, fixtureName)
+        var classDeclaration = BuildClassDeclaration(fixtureName)
            .WithMembers(new(fullList));
 
         var namespaceDeclaration = BuildNamespace(targetSymbol)

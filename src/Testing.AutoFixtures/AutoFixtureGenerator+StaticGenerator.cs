@@ -36,7 +36,7 @@ public partial class AutoFixtureGenerator
                );
     }
 
-    private static ClassDeclarationSyntax BuildClassDeclaration(INamedTypeSymbol namedTypeSymbol, string fixtureName)
+    private static ClassDeclarationSyntax BuildClassDeclaration(string fixtureName)
     {
         return ClassDeclaration(
                    Identifier(
