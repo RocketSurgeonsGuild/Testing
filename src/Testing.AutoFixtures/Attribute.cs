@@ -2,7 +2,7 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 internal static class Attribute
 {
-    public static readonly string source = @$"#nullable enable
+    public static string Source() => @$"#nullable enable
 using System;
 using System.Diagnostics;
 

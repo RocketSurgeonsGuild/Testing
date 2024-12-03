@@ -14,6 +14,27 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
         Compilation compilation
     )
     {
+        var className = SymbolEqualityComparer.Default.Equals(
+            namedTypeSymbol.ContainingSymbol,
+            namedTypeSymbol.ContainingNamespace
+        )
+            ? namedTypeSymbol.Name
+            : namedTypeSymbol.ContainingSymbol.Name + "." + namedTypeSymbol.Name;
+
+        var fixtureName = SymbolEqualityComparer.Default.Equals(
+            targetSymbol.ContainingSymbol,
+            targetSymbol.ContainingNamespace
+        )
+            ? targetSymbol.Name.EndsWith(
+                Fixture
+            )
+                ? targetSymbol.Name
+                : targetSymbol.Name + Fixture
+            : targetSymbol.Name.EndsWith(
+                Fixture
+            )
+                ? targetSymbol.ContainingSymbol.Name + targetSymbol.Name
+                : targetSymbol.ContainingSymbol.Name + targetSymbol.Name + Fixture;
         var parameterSymbols =
             namedTypeSymbol
                .Constructors
@@ -22,25 +43,32 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .ToList();
 
         var fullList =
-            new[] { Operator(namedTypeSymbol), }
-               .Concat(parameterSymbols.Select(WithPropertyMethod))
-               .Concat(new[] { BuildBuildMethod(productionContext, namedTypeSymbol, parameterSymbols), })
+            new[] { BuildOperator(className, fixtureName) }
+               .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol, fixtureName)))
+               .Concat([BuildBuildMethod(className, parameterSymbols)])
                .Concat(
                     parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
                 );
 
-        var classDeclaration = BuildClassDeclaration(namedTypeSymbol)
+        var classDeclaration = BuildClassDeclaration(fixtureName)
            .WithMembers(new(fullList));
 
         var namespaceDeclaration = BuildNamespace(targetSymbol)
            .WithMembers(new(classDeclaration));
 
         var usingDirectives = new HashSet<string>(
-            parameterSymbols
-               .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
-               .Where(x => !string.IsNullOrWhiteSpace(x))
-               .Distinct()
-        ) { "System.Collections.ObjectModel", "Rocket.Surgery.Extensions.Testing.AutoFixtures", };
+                                  parameterSymbols
+                                     .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
+                                     .Where(x => !string.IsNullOrWhiteSpace(x))
+                                     .Distinct()
+                              )
+                              {
+                                  "System.Collections.ObjectModel",
+                                  "Rocket.Surgery.Extensions.Testing.AutoFixtures",
+                                  namedTypeSymbol.OriginalDefinition.ContainingNamespace.ToDisplayString(),
+                              }
+                             .Distinct()
+                             .ToHashSet();
 
         var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
         if (fakeItEasy is { })
@@ -66,7 +94,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .AddMembers(namespaceDeclaration)
                .NormalizeWhitespace();
 
-        productionContext.AddSource($"{namedTypeSymbol.Name}.AutoFixture.g.cs", unit.ToFullString());
+        productionContext.AddSource($"{className}.AutoFixture.g.cs", unit.ToFullString());
     }
 
     /// <inheritdoc />
@@ -77,18 +105,17 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                .SyntaxProvider
                .ForAttributeWithMetadataName(
                     "Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureAttribute",
-                    (node, token) => node.IsKind(SyntaxKind.ClassDeclaration),
-                    (syntaxContext, token) => syntaxContext
+                    (node, _) => node.IsKind(SyntaxKind.ClassDeclaration),
+                    (syntaxContext, _) => syntaxContext
                 )
                .Combine(context.CompilationProvider);
 
         context.RegisterSourceOutput(syntaxProvider, generateFixtureBuilder);
 
-        // do generator things
         context.RegisterPostInitializationOutput(
             initializationContext =>
             {
-                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.source);
+                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.Source());
                 initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
             }
         );
@@ -118,10 +145,6 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                 return;
             }
 
-            // Loop through
-            // Check for a list of diagnostics to report
-            // report and exit
-            // Generate Stuffs™
             CurrentGenerator(classForFixture, syntaxContext.TargetSymbol, productionContext, compilation);
         }
     }
@@ -130,15 +153,10 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
     {
         public static IEqualityComparer<IParameterSymbol> Default { get; } = new ParameterReductionComparer();
 
-        public bool Equals(IParameterSymbol x, IParameterSymbol y)
-        {
-            return ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
-        }
+        public bool Equals(IParameterSymbol x, IParameterSymbol y) =>
+            ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
 
-        public int GetHashCode(IParameterSymbol obj)
-        {
-            return SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
-        }
+        public int GetHashCode(IParameterSymbol obj) => SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
     }
 
     internal class NamespaceComparer : IComparer<string>

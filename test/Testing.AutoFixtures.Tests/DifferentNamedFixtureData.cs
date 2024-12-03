@@ -4,7 +4,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-internal class NonAbstractReferenceTypeData : AutoFixtureSourceData
+public class DifferentNamedFixtureData : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> Data =>
         new()
@@ -30,25 +30,24 @@ internal class NonAbstractReferenceTypeData : AutoFixtureSourceData
     private const string ClassSource = @"
 namespace Goony.Goo.Goo
 {
-    public class NonAbstractReferenceType
+    public static class Upsert
     {
-        public NonAbstractReferenceType(Fish one, Fish two, Color red, Color blue)
-        {
-            One = one;
-            Two = two;
-            Red = red;
-            Blue = blue;
-        }
+        public record Command : ICommand;
 
-        public Fish One { get; }
-        public Fish Two { get; }
-        public Color Red { get; }
-        public Color Blue { get; }
+        public class CommandHandler : ICommandHandler<Command>
+        {
+            public CommandHandler(IThing thing)
+            {
+                _thing = thing;
+            };
+
+            public Task Handle(Command command) => Task.CompletedTask;
+
+            private IThing _thing;
+        }
     }
 
-    public class Fish { }
-
-    public class Color { }
+    public interface IThing {}
 }";
 
     private const string AttributedSource = @"using System;
@@ -56,26 +55,25 @@ using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo
 {
-    [AutoFixture]
-    public class NonAbstractReferenceType
+    public static class Upsert
     {
-        public NonAbstractReferenceType(Fish one, Fish two, Color red, Color blue)
-        {
-            One = one;
-            Two = two;
-            Red = red;
-            Blue = blue;
-        }
+        public record Command : ICommand;
 
-        public Fish One { get; }
-        public Fish Two { get; }
-        public Color Red { get; }
-        public Color Blue { get; }
+        [AutoFixture]
+        public class CommandHandler : ICommandHandler<Command>
+        {
+            public CommandHandler(IThing thing)
+            {
+                _thing = thing;
+            };
+
+            public Task Handle(Command command) => Task.CompletedTask;
+
+            private IThing _thing;
+        }
     }
 
-    public class Fish { }
-
-    public class Color { }
+    public interface IThing {}
 }";
 
     private const string AttributedFixtureSource = @"using System;
@@ -84,8 +82,8 @@ using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Tests.Goo.Goo
 {
-    [AutoFixture(typeof(NonAbstractReferenceType))]
-    internal partial class NonAbstractReferenceTypeFixture
+    [AutoFixture(typeof(Upsert.CommandHandler))]
+    internal partial class DifferentNamedFixture
     {
     }
 }";

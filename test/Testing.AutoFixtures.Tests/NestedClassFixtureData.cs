@@ -4,7 +4,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-internal class NonAbstractReferenceTypeData : AutoFixtureSourceData
+public class NestedClassFixtureData : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> Data =>
         new()
@@ -30,25 +30,26 @@ internal class NonAbstractReferenceTypeData : AutoFixtureSourceData
     private const string ClassSource = @"
 namespace Goony.Goo.Goo
 {
-    public class NonAbstractReferenceType
+    public static class LoadThings
     {
-        public NonAbstractReferenceType(Fish one, Fish two, Color red, Color blue)
-        {
-            One = one;
-            Two = two;
-            Red = red;
-            Blue = blue;
-        }
+        public record Query : IQuery<Result>;
 
-        public Fish One { get; }
-        public Fish Two { get; }
-        public Color Red { get; }
-        public Color Blue { get; }
+        public record Result;
+
+        public class QueryHandler : IQueryHandler<Query, Result>
+        {
+            public QueryHandler(IThing thing)
+            {
+                _thing = thing;
+            };
+
+            public Task<Result> Handle(Query query) => Task.FromResult(new Result());
+
+            private IThing _thing;
+        }
     }
 
-    public class Fish { }
-
-    public class Color { }
+    public interface IThing {}
 }";
 
     private const string AttributedSource = @"using System;
@@ -56,26 +57,27 @@ using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo
 {
-    [AutoFixture]
-    public class NonAbstractReferenceType
+    public static class LoadThings
     {
-        public NonAbstractReferenceType(Fish one, Fish two, Color red, Color blue)
-        {
-            One = one;
-            Two = two;
-            Red = red;
-            Blue = blue;
-        }
+        public record Query : IQuery<Result>;
 
-        public Fish One { get; }
-        public Fish Two { get; }
-        public Color Red { get; }
-        public Color Blue { get; }
+        public record Result;
+
+        [AutoFixture]
+        public class QueryHandler : IQueryHandler<Query, Result>
+        {
+            public QueryHandler(IThing thing)
+            {
+                _thing = thing;
+            };
+
+            public Task<Result> Handle(Query query) => Task.FromResult(new Result());
+
+            private IThing _thing;
+        }
     }
 
-    public class Fish { }
-
-    public class Color { }
+    public interface IThing {}
 }";
 
     private const string AttributedFixtureSource = @"using System;
@@ -84,8 +86,8 @@ using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Tests.Goo.Goo
 {
-    [AutoFixture(typeof(NonAbstractReferenceType))]
-    internal partial class NonAbstractReferenceTypeFixture
+    [AutoFixture(typeof(LoadThings.QueryHandler))]
+    internal partial class LoadThingsQueryHandlerFixture
     {
     }
 }";

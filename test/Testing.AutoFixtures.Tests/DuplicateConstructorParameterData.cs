@@ -39,6 +39,7 @@ internal class DuplicateConstructorParameterData : AutoFixtureSourceData
 }";
 
     private const string AttributedFixtureSource = @"using System;
+using Goony.Goo.Goo;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo.Tests

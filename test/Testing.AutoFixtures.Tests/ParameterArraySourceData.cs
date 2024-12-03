@@ -140,7 +140,8 @@ namespace Goony.Goo.Goo
     }
 }";
 
-    private const string DeckAutoFixtureAttributedSource = @"using Rocket.Surgery.Extensions.Testing.AutoFixtures;
+    private const string DeckAutoFixtureAttributedSource = @"using Goony.Goo.Goo;
+using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 namespace Goony.Goo.Goo.Tests
 {

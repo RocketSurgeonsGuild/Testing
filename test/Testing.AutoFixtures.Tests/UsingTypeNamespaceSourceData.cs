@@ -4,7 +4,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-internal class NonAbstractReferenceTypeData : AutoFixtureSourceData
+public class UsingTypeNamespaceSourceData : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> Data =>
         new()
@@ -27,65 +27,48 @@ internal class NonAbstractReferenceTypeData : AutoFixtureSourceData
                .Build(),
         };
 
-    private const string ClassSource = @"
-namespace Goony.Goo.Goo
-{
-    public class NonAbstractReferenceType
-    {
-        public NonAbstractReferenceType(Fish one, Fish two, Color red, Color blue)
-        {
-            One = one;
-            Two = two;
-            Red = red;
-            Blue = blue;
-        }
 
-        public Fish One { get; }
-        public Fish Two { get; }
-        public Color Red { get; }
-        public Color Blue { get; }
+    private const string ClassSource = @"
+namespace Application.Features.ViewModels
+{
+    public class ViewModel
+    {
+        public ViewModel(IThing thing)
+        {
+        }
     }
 
-    public class Fish { }
-
-    public class Color { }
+    public interface IThing
+    {
+    }
 }";
 
     private const string AttributedSource = @"using System;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Goony.Goo.Goo
+namespace Application.Features.ViewModels
 {
     [AutoFixture]
-    public class NonAbstractReferenceType
+    public class ViewModel
     {
-        public NonAbstractReferenceType(Fish one, Fish two, Color red, Color blue)
+        public ViewModel(IThing thing)
         {
-            One = one;
-            Two = two;
-            Red = red;
-            Blue = blue;
         }
-
-        public Fish One { get; }
-        public Fish Two { get; }
-        public Color Red { get; }
-        public Color Blue { get; }
     }
 
-    public class Fish { }
-
-    public class Color { }
+    public interface IThing
+    {
+    }
 }";
 
     private const string AttributedFixtureSource = @"using System;
-using Goony.Goo.Goo;
+using Application.Features.ViewModels;
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Goony.Tests.Goo.Goo
+namespace Application.Tests.Features.ViewModels
 {
-    [AutoFixture(typeof(NonAbstractReferenceType))]
-    internal partial class NonAbstractReferenceTypeFixture
+    [AutoFixture(typeof(ViewModel))]
+    internal partial class ViewModelFixture
     {
     }
 }";
