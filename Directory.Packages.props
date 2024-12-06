@@ -46,7 +46,7 @@
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
         <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.0" />
         <PackageVersion Include="PolySharp" Version="1.15.0" />
-        <PackageVersion Include="Serilog" Version="4.1.0" />
+        <PackageVersion Include="Serilog" Version="4.2.0" />
         <PackageVersion Include="Serilog.Extensions.Logging" Version="8.0.0" />
         <PackageVersion Include="Serilog.Sinks.Observable" Version="3.0.0" />
         <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.5" />
