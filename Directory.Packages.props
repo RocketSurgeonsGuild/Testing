@@ -49,7 +49,7 @@
         <PackageVersion Include="Serilog" Version="4.2.0" />
         <PackageVersion Include="Serilog.Extensions.Logging" Version="8.0.0" />
         <PackageVersion Include="Serilog.Sinks.Observable" Version="3.0.0" />
-        <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.5" />
+        <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.19" />
         <PackageVersion Include="System.Collections.Immutable" Version="9.0.0" />
         <PackageVersion Include="System.Interactive" Version="6.0.1" />
         <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
