@@ -137,6 +137,9 @@ public class XUnitTestContext
     : XUnitTestContext<XUnitTestContext>(testContextAccessor, logEventLevel, outputTemplate, configureLogger)
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+
+/* Unmerged change from project 'Rocket.Surgery.Extensions.Testing.XUnit3(net9.0)'
+Before:
     private string DebuggerDisplay
     {
         get
@@ -144,4 +147,8 @@ public class XUnitTestContext
             return ToString();
         }
     }
+After:
+    private string DebuggerDisplay => ToString();
+*/
+    private string DebuggerDisplay => ToString();
 }
