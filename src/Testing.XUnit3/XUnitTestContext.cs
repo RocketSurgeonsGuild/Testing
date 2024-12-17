@@ -8,92 +8,59 @@ namespace Rocket.Surgery.Extensions.Testing;
 /// <summary>
 ///     The xunit test context
 /// </summary>
+/// <remarks>
+///     The xunit test context
+/// </remarks>
+/// <param name="testContextAccessor"></param>
+/// <param name="logEventLevel"></param>
+/// <param name="outputTemplate"></param>
+/// <param name="configureLogger"></param>
 [PublicAPI]
-public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TContext>, ITestContext
+public abstract class XUnitTestContext<TContext>(
+    ITestContextAccessor testContextAccessor,
+    LogEventLevel logEventLevel = LogEventLevel.Verbose,
+    string? outputTemplate = null,
+    Action<TContext, LoggerConfiguration>? configureLogger = null
+    ) : RocketSurgeryTestContext<TContext>(configureLogger, logEventLevel, outputTemplate), ITestContext
     where TContext : RocketSurgeryTestContext<TContext>, ILoggingTestContext, ITestContext
 {
-    private readonly LogEventLevel _logEventLevel;
-    private readonly ITestContext _testContext;
-
-    /// <summary>
-    ///     The xunit test context
-    /// </summary>
-    /// <param name="testContextAccessor"></param>
-    /// <param name="logEventLevel"></param>
-    /// <param name="outputTemplate"></param>
-    /// <param name="configureLogger"></param>
-    protected XUnitTestContext(
-        ITestContextAccessor testContextAccessor,
-        LogEventLevel logEventLevel = LogEventLevel.Verbose,
-        string? outputTemplate = null,
-        Action<TContext, LoggerConfiguration>? configureLogger = null
-    ) : base(configureLogger, logEventLevel, outputTemplate)
-    {
-        _testContext = testContextAccessor.Current;
-        _logEventLevel = logEventLevel;
-    }
+    private readonly LogEventLevel _logEventLevel = logEventLevel;
+    private readonly ITestContext _testContext = testContextAccessor.Current;
 
     /// <inheritdoc />
-    protected override void ConfigureLogger(TContext context, LoggerConfiguration loggerConfiguration)
-    {
-        loggerConfiguration
+    protected override void ConfigureLogger(TContext context, LoggerConfiguration loggerConfiguration) => loggerConfiguration
            .MinimumLevel.Is(_logEventLevel)
            .WriteTo.Sink(new XUnitSink(context));
-    }
 
     /// <inheritdoc />
-    public void AddAttachment(string name, string value)
-    {
-        _testContext.AddAttachment(name, value);
-    }
+    public void AddAttachment(string name, string value) => _testContext.AddAttachment(name, value);
 
     /// <inheritdoc />
-    public void AddAttachment(string name, byte[] value, string mediaType = "application/octet-stream")
-    {
-        _testContext.AddAttachment(name, value, mediaType);
-    }
+    public void AddAttachment(string name, byte[] value, string mediaType = "application/octet-stream") => _testContext.AddAttachment(name, value, mediaType);
 
     /// <inheritdoc />
-    public void AddWarning(string message)
-    {
-        _testContext.AddWarning(message);
-    }
+    public void AddWarning(string message) => _testContext.AddWarning(message);
 
     /// <inheritdoc />
-    public void CancelCurrentTest()
-    {
-        _testContext.CancelCurrentTest();
-    }
+    public void CancelCurrentTest() => _testContext.CancelCurrentTest();
 
     /// <inheritdoc />
-    public void SendDiagnosticMessage(string message)
-    {
-        _testContext.SendDiagnosticMessage(message);
-    }
+    public ValueTask<object?> GetFixture(Type fixtureType) => _testContext.GetFixture(fixtureType);
 
     /// <inheritdoc />
-    public void SendDiagnosticMessage(string format, object? arg0)
-    {
-        _testContext.SendDiagnosticMessage(format, arg0);
-    }
+    public void SendDiagnosticMessage(string message) => _testContext.SendDiagnosticMessage(message);
 
     /// <inheritdoc />
-    public void SendDiagnosticMessage(string format, object? arg0, object? arg1)
-    {
-        _testContext.SendDiagnosticMessage(format, arg0, arg1);
-    }
+    public void SendDiagnosticMessage(string format, object? arg0) => _testContext.SendDiagnosticMessage(format, arg0);
 
     /// <inheritdoc />
-    public void SendDiagnosticMessage(string format, object? arg0, object? arg1, object? arg2)
-    {
-        _testContext.SendDiagnosticMessage(format, arg0, arg1, arg2);
-    }
+    public void SendDiagnosticMessage(string format, object? arg0, object? arg1) => _testContext.SendDiagnosticMessage(format, arg0, arg1);
 
     /// <inheritdoc />
-    public void SendDiagnosticMessage(string format, params object?[] args)
-    {
-        _testContext.SendDiagnosticMessage(format, args);
-    }
+    public void SendDiagnosticMessage(string format, object? arg0, object? arg1, object? arg2) => _testContext.SendDiagnosticMessage(format, arg0, arg1, arg2);
+
+    /// <inheritdoc />
+    public void SendDiagnosticMessage(string format, params object?[] args) => _testContext.SendDiagnosticMessage(format, args);
 
     /// <inheritdoc />
     public IReadOnlyDictionary<string, TestAttachment>? Attachments => _testContext.Attachments;
@@ -160,10 +127,28 @@ public abstract class XUnitTestContext<TContext> : RocketSurgeryTestContext<TCon
 ///     The xunit test context
 /// </summary>
 [PublicAPI]
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class XUnitTestContext
 (
     ITestContextAccessor testContextAccessor,
     LogEventLevel logEventLevel = LogEventLevel.Verbose,
     string? outputTemplate = null,
     Action<XUnitTestContext, LoggerConfiguration>? configureLogger = null)
-    : XUnitTestContext<XUnitTestContext>(testContextAccessor, logEventLevel, outputTemplate, configureLogger);
+    : XUnitTestContext<XUnitTestContext>(testContextAccessor, logEventLevel, outputTemplate, configureLogger)
+{
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+
+    /* Unmerged change from project 'Rocket.Surgery.Extensions.Testing.XUnit3(net9.0)'
+    Before:
+        private string DebuggerDisplay
+        {
+            get
+            {
+                return ToString();
+            }
+        }
+    After:
+        private string DebuggerDisplay => ToString();
+    */
+    private string DebuggerDisplay => ToString();
+}

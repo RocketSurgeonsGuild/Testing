@@ -47,7 +47,7 @@
         <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.0" />
         <PackageVersion Include="PolySharp" Version="1.15.0" />
         <PackageVersion Include="Serilog" Version="4.2.0" />
-        <PackageVersion Include="Serilog.Extensions.Logging" Version="8.0.0" />
+        <PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.0" />
         <PackageVersion Include="Serilog.Sinks.Observable" Version="3.0.0" />
         <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.19" />
         <PackageVersion Include="System.Collections.Immutable" Version="9.0.0" />
@@ -71,11 +71,10 @@
         <PackageVersion Include="Verify.XUnitV3" Version="28.6.0" />
         <PackageVersion Include="xunit" Version="2.9.2" />
         <PackageVersion Include="xunit.abstractions" Version="2.0.3" />
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
-        <PackageVersion Include="Verify.Xunit" Version="28.6.0" />
+        <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.0" />
         <PackageVersion Include="Verify.SourceGenerators" Version="2.5.0" />
-        <PackageVersion Include="xunit.v3" Version="0.6.0-pre.7" />
-        <PackageVersion Include="xunit.v3.extensibility.core" Version="0.6.0-pre.7" />
+        <PackageVersion Include="xunit.v3" Version="1.0.0" />
+        <PackageVersion Include="xunit.v3.extensibility.core" Version="1.0.0" />
     </ItemGroup>
     <Import
         Project="$(MSBuildThisFileDirectory)/Directory.Packages.support.props"
