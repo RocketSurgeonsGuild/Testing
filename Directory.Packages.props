@@ -72,7 +72,6 @@
         <PackageVersion Include="xunit" Version="2.9.2" />
         <PackageVersion Include="xunit.abstractions" Version="2.0.3" />
         <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.0" />
-        <PackageVersion Include="Verify.Xunit" Version="28.6.0" />
         <PackageVersion Include="Verify.SourceGenerators" Version="2.5.0" />
         <PackageVersion Include="xunit.v3" Version="1.0.0" />
         <PackageVersion Include="xunit.v3.extensibility.core" Version="1.0.0" />
