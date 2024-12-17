@@ -138,17 +138,17 @@ public class XUnitTestContext
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
 
-/* Unmerged change from project 'Rocket.Surgery.Extensions.Testing.XUnit3(net9.0)'
-Before:
-    private string DebuggerDisplay
-    {
-        get
+    /* Unmerged change from project 'Rocket.Surgery.Extensions.Testing.XUnit3(net9.0)'
+    Before:
+        private string DebuggerDisplay
         {
-            return ToString();
+            get
+            {
+                return ToString();
+            }
         }
-    }
-After:
-    private string DebuggerDisplay => ToString();
-*/
+    After:
+        private string DebuggerDisplay => ToString();
+    */
     private string DebuggerDisplay => ToString();
 }
