@@ -6,6 +6,6 @@
         <PackageVersion Update="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
         <PackageVersion Update="Microsoft.Extensions.Logging" Version="8.0.0" />
         <PackageVersion Update="System.Collections.Immutable" Version="8.0.0" />
-        <PackageVersion Update="Serilog.Extensions.Logging" Version="8.0.0" />
+        <PackageVersion Update="Serilog.Extensions.Logging" Version="9.0.0" />
     </ItemGroup>
 </Project>
