@@ -2,9 +2,9 @@
 <Project>
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
         <PackageVersion Update="Microsoft.Extensions.Configuration" Version="8.0.0" />
-        <PackageVersion Update="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
-        <PackageVersion Update="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-        <PackageVersion Update="Microsoft.Extensions.Logging" Version="8.0.0" />
+        <PackageVersion Update="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+        <PackageVersion Update="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+        <PackageVersion Update="Microsoft.Extensions.Logging" Version="8.0.1" />
         <PackageVersion Update="System.Collections.Immutable" Version="8.0.0" />
         <PackageVersion Update="Serilog.Extensions.Logging" Version="8.0.0" />
     </ItemGroup>
