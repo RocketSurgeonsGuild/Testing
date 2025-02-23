@@ -5,14 +5,15 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests;
 
-public class LoggerTestTests : LoggerTest<XUnitTestContext>
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class LoggerTestTests : LoggerTest<XUnitTestContext>
 {
     [Fact]
     public Task Should_Create_Usable_Logger()
     {
         var helper = A.Fake<ITestOutputHelper>();
         using var _ = new Impl(helper);
-        A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
+        _ = A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
         return Task.CompletedTask;
     }
 
@@ -129,6 +130,15 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         _testOutputHelper = TestContext.TestOutputHelper;
 
     private readonly ITestOutputHelper _testOutputHelper;
+
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
 
     private class Impl : LoggerTest<XUnitTestContext>
     {

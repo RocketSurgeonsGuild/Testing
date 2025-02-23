@@ -6,13 +6,23 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Fake;
 
-public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public void Should_Create_Usable_Logger()
     {
-        AutoFake.Resolve<Impl>();
-        A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
+        _ = AutoFake.Resolve<Impl>();
+        _ = A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
     }
 
     [Fact]
@@ -20,7 +30,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     {
         var test = AutoFake.Resolve<LoggerImpl>();
         test.Write();
-        A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
+        _ = A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
     }
 
     [Fact]
@@ -28,7 +38,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     {
         var test = AutoFake.Resolve<LoggerFactoryImpl>();
         test.Write();
-        A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
+        _ = A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
     }
 
     [Fact]
@@ -36,7 +46,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     {
         var test = AutoFake.Resolve<GenericLoggerImpl>();
         test.Write();
-        A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
+        _ = A.CallTo(() => AutoFake.Resolve<ITestOutputHelper>().WriteLine(A<string>._)).MustHaveHappened();
     }
 
     [Fact]
@@ -47,24 +57,18 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     }
 
     [Fact]
-    public void Should_Return_Self_For_ServiceProvider()
-    {
-        ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
-    }
+    public void Should_Return_Self_For_ServiceProvider() => ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
 
     [Fact]
-    public void Should_Not_Fake_Optional_Parameters()
-    {
-        AutoFake.Resolve<Optional>().Item.ShouldBeNull();
-    }
+    public void Should_Not_Fake_Optional_Parameters() => AutoFake.Resolve<Optional>().Item.ShouldBeNull();
 
     [Fact]
     public void Should_Populate_Optional_Parameters_When_Provided()
     {
-        AutoFake.Provide<IItem>(new MyItem());
+        _ = AutoFake.Provide<IItem>(new MyItem());
         var a = AutoFake
-           .Resolve<Optional>()
-           .Item.ShouldNotBeNull();
+               .Resolve<Optional>()
+               .Item.ShouldNotBeNull();
         FakeItEasy.Fake.IsFake(a).ShouldBe(false);
     }
 
@@ -73,7 +77,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     {
         var access = AutoFake.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.ShouldThrow<TestBootstrapException>();
+        _ = a.ShouldThrow<TestBootstrapException>();
     }
 
     private class Impl : AutoFakeTest<XUnitTestContext>
@@ -112,8 +116,18 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
         }
     }
 
-    public class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+    [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+    internal class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
+        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+        private string DebuggerDisplay
+        {
+            get
+            {
+                return ToString();
+            }
+        }
+
         public void Write()
         {
             AutoFake.Resolve<ILogger<GenericLoggerImpl>>().LogError("abcd");
@@ -123,7 +137,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
 
     private class MyItem : IItem;
 
-    public interface IItem;
+    internal interface IItem;
 
     private class Optional(IItem? item = null)
     {

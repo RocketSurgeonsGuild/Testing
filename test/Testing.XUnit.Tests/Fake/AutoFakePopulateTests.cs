@@ -1,4 +1,4 @@
-﻿using DryIoc;
+using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,8 +6,18 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Fake;
 
-public class AutoFakePopulateTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class AutoFakePopulateTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public void Should_Populate_Configuration_And_Services()
     {

@@ -2,8 +2,18 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-public class AutoFixtureGeneratorTests
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class AutoFixtureGeneratorTests
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateAutoFixtureAttribute()
     {
@@ -20,7 +30,7 @@ public class AutoFixtureGeneratorTests
         var result = await generatorInstance.GenerateAsync();
 
         // Then
-        await Verify(result).ScrubLines(text => text.Contains("System.CodeDom.Compiler.GeneratedCode"));
+        _ = await Verify(result).ScrubLines(text => text.Contains("System.CodeDom.Compiler.GeneratedCode"));
     }
 
     [Fact]
@@ -39,7 +49,7 @@ public class AutoFixtureGeneratorTests
         var result = await generatorInstance.GenerateAsync();
 
         // Then
-        await Verify(result);
+        _ = await Verify(result);
     }
 
     [Theory]
@@ -61,7 +71,7 @@ public class AutoFixtureGeneratorTests
                .GenerateAsync();
 
         // Then
-        await Verify(result).HashParameters().UseParameters(context.Id);
+        _ = await Verify(result).HashParameters().UseParameters(context.Id);
     }
 
     [Theory]

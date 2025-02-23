@@ -3,22 +3,29 @@ using ILogger = Serilog.ILogger;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Fake;
 
-public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public void Does_Not_Auto_Fake_Enumerable()
     {
-        AutoFake.Provide<Item>(new A());
-        AutoFake.Provide<Item>(new B());
+        _ = AutoFake.Provide<Item>(new A());
+        _ = AutoFake.Provide<Item>(new B());
 
         AutoFake.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
     }
 
     [Fact]
-    public void Handle_Zero_Items()
-    {
-        AutoFake.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
-    }
+    public void Handle_Zero_Items() => AutoFake.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
 
     [Fact]
     public void Handle_One_Fake_Item()
@@ -79,12 +86,12 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
         var a = () =>
                 {
                     var lt = AutoFake.Resolve<LoggerTest>();
-                    AutoFake.Provide<Item>(lt);
+                    _ = AutoFake.Provide<Item>(lt);
                 };
         a.ShouldNotThrow();
     }
 
-    public interface Item;
+    internal interface Item;
 
     private class A : Item;
 
@@ -92,9 +99,6 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
 
     private class LoggerTest : Item
     {
-        public LoggerTest(ILogger logger)
-        {
-            ArgumentNullException.ThrowIfNull(logger);
-        }
+        public LoggerTest(ILogger logger) => ArgumentNullException.ThrowIfNull(logger);
     }
 }

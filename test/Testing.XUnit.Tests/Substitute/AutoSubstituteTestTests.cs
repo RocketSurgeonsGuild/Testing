@@ -7,12 +7,22 @@ using Arg = NSubstitute.Arg;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Substitute;
 
-public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public void Should_Create_Usable_Logger()
     {
-        AutoSubstitute.Resolve<Impl>();
+        _ = AutoSubstitute.Resolve<Impl>();
         AutoSubstitute.Resolve<ITestOutputHelper>().Received().WriteLine(Arg.Any<string>());
     }
 
@@ -49,33 +59,27 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
     }
 
     [Fact]
-    public void Should_Return_Self_For_ServiceProvider()
-    {
-        ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
-    }
+    public void Should_Return_Self_For_ServiceProvider() => ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
 
     [Fact]
-    public void Should_Not_Fake_Optional_Parameters()
-    {
-        AutoSubstitute.Resolve<Optional>().Item.ShouldBeNull();
-    }
+    public void Should_Not_Fake_Optional_Parameters() => AutoSubstitute.Resolve<Optional>().Item.ShouldBeNull();
 
     [Fact]
     public void Should_Populate_Optional_Parameters_When_Provided()
     {
-        AutoSubstitute.Provide<IItem>(new MyItem());
-        AutoSubstitute
+        _ = AutoSubstitute.Provide<IItem>(new MyItem());
+        _ = AutoSubstitute
            .Resolve<Optional>()
            .Item
            .ShouldNotBeNull();
     }
 
-    [Fact(Skip = "Not sure why this failing...")]
+    [Fact]
     public void Should_Fail_If_Container_Is_Touched_When_Building()
     {
         var access = AutoSubstitute.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.ShouldThrow<TestBootstrapException>();
+        _ = a.ShouldThrow<TestBootstrapException>();
     }
 
     private class Impl : AutoSubstituteTest<XUnitTestContext>
@@ -114,9 +118,17 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
         }
     }
 
-    public class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+    [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+    internal class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
-        private ITestOutputHelper _otherHelper = outputHelper;
+        [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+        private string DebuggerDisplay
+        {
+            get
+            {
+                return ToString();
+            }
+        }
 
         public void Write()
         {
@@ -127,7 +139,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
 
     private class MyItem : IItem;
 
-    public interface IItem;
+    internal interface IItem;
 
     private class Optional(IItem? item = null)
     {

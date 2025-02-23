@@ -3,13 +3,23 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Mock;
 
-public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public void Does_Not_Auto_Fake_Enumerable()
     {
-        AutoMock.Provide<Item>(new A());
-        AutoMock.Provide<Item>(new B());
+        _ = AutoMock.Provide<Item>(new A());
+        _ = AutoMock.Provide<Item>(new B());
 
         AutoMock.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
     }
@@ -20,16 +30,13 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var a = () =>
                 {
                     var lt = AutoMock.Resolve<LoggerTest>();
-                    AutoMock.Provide<Item>(lt);
+                    _ = AutoMock.Provide<Item>(lt);
                 };
         a.ShouldNotThrow();
     }
 
     [Fact]
-    public void Handle_Zero_Items()
-    {
-        AutoMock.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
-    }
+    public void Handle_Zero_Items() => AutoMock.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
 
     [Fact]
     public void Handle_One_Fake_Item()
@@ -83,7 +90,7 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         result.ShouldContain(fake4);
     }
 
-    public interface Item;
+    internal interface Item;
 
     private class A : Item;
 
@@ -93,10 +100,12 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
     {
         public LoggerTest(ILogger logger)
         {
-            if (logger == null)
+            if (logger is not null)
             {
-                throw new ArgumentNullException(nameof(logger));
+                return;
             }
+
+            throw new ArgumentNullException(nameof(logger));
         }
     }
 }
