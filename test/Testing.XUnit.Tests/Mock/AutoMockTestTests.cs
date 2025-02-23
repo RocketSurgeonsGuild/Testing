@@ -1,6 +1,5 @@
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit.Abstractions;
@@ -20,19 +19,19 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
     public void Should_Provide_Values()
     {
         var item = AutoMock.Provide(new MyItem());
-        ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        ServiceProvider.GetRequiredService<MyItem>().ShouldBeSameAs(item);
     }
 
     [Fact]
     public void Should_Return_Self_For_ServiceProvider()
     {
-        ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
+        ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
     }
 
     [Fact]
     public void Should_Not_Mock_Optional_Parameters()
     {
-        AutoMock.Resolve<Optional>().Item.Should().BeNull();
+        AutoMock.Resolve<Optional>().Item.ShouldBeNull();
     }
 
     [Fact]
@@ -40,9 +39,9 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
     {
         AutoMock.Provide<IItem>(new MyItem());
         var optional = AutoMock.Resolve<Optional>();
-        optional.Item.Should().NotBeNull();
+        optional.Item.ShouldNotBeNull();
         Action a = () => Moq.Mock.Get(optional);
-        a.Should().Throw<ArgumentException>();
+        a.ShouldThrow<ArgumentException>();
     }
 
     [Fact]
@@ -50,7 +49,7 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
     {
         var access = AutoMock.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<TestBootstrapException>();
+        a.ShouldThrow<TestBootstrapException>();
     }
 
     private class Impl : AutoMockTest<XUnitTestContext>

@@ -1,5 +1,4 @@
 using DryIoc;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -46,19 +45,19 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
     public void Should_Provide_Values()
     {
         var item = AutoSubstitute.Provide(new MyItem());
-        ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        ServiceProvider.GetRequiredService<MyItem>().ShouldBeSameAs(item);
     }
 
     [Fact]
     public void Should_Return_Self_For_ServiceProvider()
     {
-        ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
+        ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
     }
 
     [Fact]
     public void Should_Not_Fake_Optional_Parameters()
     {
-        AutoSubstitute.Resolve<Optional>().Item.Should().BeNull();
+        AutoSubstitute.Resolve<Optional>().Item.ShouldBeNull();
     }
 
     [Fact]
@@ -68,8 +67,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
         AutoSubstitute
            .Resolve<Optional>()
            .Item
-           .Should()
-           .NotBeNull();
+           .ShouldNotBeNull();
     }
 
     [Fact(Skip = "Not sure why this failing...")]
@@ -77,7 +75,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
     {
         var access = AutoSubstitute.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<TestBootstrapException>();
+        a.ShouldThrow<TestBootstrapException>();
     }
 
     private class Impl : AutoSubstituteTest<XUnitTestContext>

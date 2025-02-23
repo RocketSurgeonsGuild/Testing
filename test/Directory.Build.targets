@@ -2,7 +2,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeCoverage" />
         <PackageReference Include="FakeItEasy" />
-        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="Shouldly" />
+        <Using Include="Shouldly" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
     </ItemGroup>
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />

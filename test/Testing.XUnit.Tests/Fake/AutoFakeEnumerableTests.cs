@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Xunit.Abstractions;
 using ILogger = Serilog.ILogger;
 
@@ -12,13 +11,13 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
         AutoFake.Provide<Item>(new A());
         AutoFake.Provide<Item>(new B());
 
-        AutoFake.Resolve<IEnumerable<Item>>().Should().HaveCount(2);
+        AutoFake.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
     }
 
     [Fact]
     public void Handle_Zero_Items()
     {
-        AutoFake.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
+        AutoFake.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
     }
 
     [Fact]
@@ -27,8 +26,8 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
         var fake1 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoFake.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(1);
-        result.Should().Contain(fake1);
+        result.Count().ShouldBe(1);
+        result.ShouldContain(fake1);
     }
 
     [Fact]
@@ -38,9 +37,9 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
         var fake2 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoFake.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(2);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
+        result.Count().ShouldBe(2);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
     }
 
     [Fact]
@@ -51,10 +50,10 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
         var fake3 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoFake.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(3);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
+        result.Count().ShouldBe(3);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
     }
 
     [Fact]
@@ -66,11 +65,11 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
         var fake4 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoFake.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(4);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
-        result.Should().Contain(fake4);
+        result.Count().ShouldBe(4);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
+        result.ShouldContain(fake4);
     }
 
     [Fact]
@@ -82,7 +81,7 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
                     var lt = AutoFake.Resolve<LoggerTest>();
                     AutoFake.Provide<Item>(lt);
                 };
-        a.Should().NotThrow();
+        a.ShouldNotThrow();
     }
 
     public interface Item;

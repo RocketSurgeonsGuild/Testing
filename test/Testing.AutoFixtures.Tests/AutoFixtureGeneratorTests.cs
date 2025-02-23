@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
@@ -75,8 +74,7 @@ public class AutoFixtureGeneratorTests
         // Then
         result
            .Results
-           .Should()
-           .Contain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
+           .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
     }
 
     [Theory]
@@ -89,7 +87,6 @@ public class AutoFixtureGeneratorTests
         // Then
         result
            .Results
-           .Should()
-           .Contain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0002.Id));
+           .ShouldContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0002.Id));
     }
 }

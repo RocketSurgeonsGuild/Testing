@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Loader;
 using System.Text;
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -29,7 +28,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .WithCustomizer(Customizers.IncludeContextId)
                      .Build();
         await Verify(context.GenerateAsync());
-        context.AssemblyLoadContext.Should().Be(AssemblyLoadContext.Default);
+        context.AssemblyLoadContext.ShouldBe(AssemblyLoadContext.Default);
     }
 
     [Fact]

@@ -17,7 +17,6 @@
         <GlobalPackageReference Include="Roslynator.CodeFixes" Version="4.13.1" />
         <GlobalPackageReference Include="Roslynator.Refactorings" Version="4.13.1" />
         <GlobalPackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
-        <GlobalPackageReference Include="FluentAssertions.Analyzers" Version="0.34.1" />
         <PackageVersion Include="xunit.analyzers" Version="1.20.0" />
         <GlobalPackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     </ItemGroup>
@@ -60,7 +59,7 @@
         <PackageVersion Include="Microsoft.CodeCoverage" Version="17.13.0" />
         <PackageVersion Include="FakeItEasy" Version="8.3.0" />
         <PackageVersion Include="Autofac.Extras.FakeItEasy" Version="7.0.0" />
-        <PackageVersion Include="FluentAssertions" Version="7.0.0" />
+        <PackageVersion Include="Shouldly" Version="4.3.0" />
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
         <PackageVersion Include="Moq" Version="4.20.72" />
         <PackageVersion Include="NSubstitute" Version="5.3.0" />

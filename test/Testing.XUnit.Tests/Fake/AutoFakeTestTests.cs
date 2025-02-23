@@ -1,6 +1,5 @@
 ﻿using DryIoc;
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
@@ -44,30 +43,29 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     public void Should_Provide_Values()
     {
         var item = AutoFake.Provide(new MyItem());
-        ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        ServiceProvider.GetRequiredService<MyItem>().ShouldBeSameAs(item);
     }
 
     [Fact]
     public void Should_Return_Self_For_ServiceProvider()
     {
-        ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
+        ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
     }
 
     [Fact]
     public void Should_Not_Fake_Optional_Parameters()
     {
-        AutoFake.Resolve<Optional>().Item.Should().BeNull();
+        AutoFake.Resolve<Optional>().Item.ShouldBeNull();
     }
 
     [Fact]
     public void Should_Populate_Optional_Parameters_When_Provided()
     {
         AutoFake.Provide<IItem>(new MyItem());
-        AutoFake
+        var a = AutoFake
            .Resolve<Optional>()
-           .Item.Should()
-           .NotBeNull()
-           .And.Match(z => !FakeItEasy.Fake.IsFake(z));
+           .Item.ShouldNotBeNull();
+        FakeItEasy.Fake.IsFake(a).ShouldBe(false);
     }
 
     [Fact]
@@ -75,7 +73,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     {
         var access = AutoFake.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<TestBootstrapException>();
+        a.ShouldThrow<TestBootstrapException>();
     }
 
     private class Impl : AutoFakeTest<XUnitTestContext>

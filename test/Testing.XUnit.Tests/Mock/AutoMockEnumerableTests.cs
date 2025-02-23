@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
@@ -12,7 +11,7 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         AutoMock.Provide<Item>(new A());
         AutoMock.Provide<Item>(new B());
 
-        AutoMock.Resolve<IEnumerable<Item>>().Should().HaveCount(2);
+        AutoMock.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
     }
 
     [Fact]
@@ -23,13 +22,13 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
                     var lt = AutoMock.Resolve<LoggerTest>();
                     AutoMock.Provide<Item>(lt);
                 };
-        a.Should().NotThrow();
+        a.ShouldNotThrow();
     }
 
     [Fact]
     public void Handle_Zero_Items()
     {
-        AutoMock.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
+        AutoMock.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
     }
 
     [Fact]
@@ -38,8 +37,8 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var fake1 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(1);
-        result.Should().Contain(fake1);
+        result.Count().ShouldBe(1);
+        result.ShouldContain(fake1);
     }
 
     [Fact]
@@ -49,9 +48,9 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var fake2 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(2);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
+        result.Count().ShouldBe(2);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
     }
 
     [Fact]
@@ -62,10 +61,10 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var fake3 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(3);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
+        result.Count().ShouldBe(3);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
     }
 
     [Fact]
@@ -77,11 +76,11 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var fake4 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(4);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
-        result.Should().Contain(fake4);
+        result.Count().ShouldBe(4);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
+        result.ShouldContain(fake4);
     }
 
     public interface Item;

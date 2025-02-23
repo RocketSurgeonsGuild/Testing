@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
@@ -12,13 +11,13 @@ public class AutoSubstituteEnumerableTests(ITestOutputHelper outputHelper) : Aut
         AutoSubstitute.Provide<Item>(new A());
         AutoSubstitute.Provide<Item>(new B());
 
-        AutoSubstitute.Resolve<IEnumerable<Item>>().Should().HaveCount(2);
+        AutoSubstitute.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
     }
 
     [Fact]
     public void Handle_Zero_Items()
     {
-        AutoSubstitute.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
+        AutoSubstitute.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
     }
 
     [Fact]
@@ -27,8 +26,8 @@ public class AutoSubstituteEnumerableTests(ITestOutputHelper outputHelper) : Aut
         var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(1);
-        result.Should().Contain(fake1);
+        result.Count().ShouldBe(1);
+        result.ShouldContain(fake1);
     }
 
     [Fact]
@@ -38,9 +37,9 @@ public class AutoSubstituteEnumerableTests(ITestOutputHelper outputHelper) : Aut
         var fake2 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(2);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
+        result.Count().ShouldBe(2);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
     }
 
     [Fact]
@@ -51,10 +50,10 @@ public class AutoSubstituteEnumerableTests(ITestOutputHelper outputHelper) : Aut
         var fake3 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(3);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
+        result.Count().ShouldBe(3);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
     }
 
     [Fact]
@@ -66,11 +65,11 @@ public class AutoSubstituteEnumerableTests(ITestOutputHelper outputHelper) : Aut
         var fake4 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(4);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
-        result.Should().Contain(fake4);
+        result.Count().ShouldBe(4);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
+        result.ShouldContain(fake4);
     }
 
     [Fact(Skip = "Obsolete?")]
@@ -82,7 +81,7 @@ public class AutoSubstituteEnumerableTests(ITestOutputHelper outputHelper) : Aut
                     var lt = AutoSubstitute.Resolve<LoggerTest>();
                     AutoSubstitute.Provide<Item>(lt);
                 };
-        a.Should().NotThrow();
+        a.ShouldNotThrow();
     }
 
     public interface Item;
