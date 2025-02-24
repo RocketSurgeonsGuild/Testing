@@ -117,7 +117,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XU
     }
 
     [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
-    internal class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+    public class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
     {
         [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private string DebuggerDisplay

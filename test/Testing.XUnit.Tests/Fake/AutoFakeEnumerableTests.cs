@@ -91,7 +91,7 @@ public  class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFake
         a.ShouldNotThrow();
     }
 
-    internal interface Item;
+    public interface Item;
 
     private class A : Item;
 

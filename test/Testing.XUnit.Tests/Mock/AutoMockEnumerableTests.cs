@@ -90,7 +90,7 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         result.ShouldContain(fake4);
     }
 
-    internal interface Item;
+    public interface Item;
 
     private class A : Item;
 
