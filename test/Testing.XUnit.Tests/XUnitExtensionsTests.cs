@@ -3,7 +3,7 @@
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests;
 
 [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
-internal class XUnitExtensionsTests(ITestOutputHelper outputHelper) : LoggerTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+public class XUnitExtensionsTests(ITestOutputHelper outputHelper) : LoggerTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
     private string DebuggerDisplay

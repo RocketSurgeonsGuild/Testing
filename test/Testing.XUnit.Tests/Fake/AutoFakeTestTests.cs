@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Fake;
 
 [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
-internal class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
     private string DebuggerDisplay

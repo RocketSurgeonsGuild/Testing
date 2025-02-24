@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Mock;
 
 [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
-internal class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
+public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
     private string DebuggerDisplay

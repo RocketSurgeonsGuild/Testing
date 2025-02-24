@@ -1,19 +1,20 @@
 using FakeItEasy;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
+using Shouldly;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests;
 
 [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
-internal class LoggerTestTests : LoggerTest<XUnitTestContext>
+public class LoggerTestTests : LoggerTest<XUnitTestContext>
 {
     [Fact]
     public Task Should_Create_Usable_Logger()
     {
         var helper = A.Fake<ITestOutputHelper>();
         using var _ = new Impl(helper);
-        _ = A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
+        A.CallTo(() => helper.WriteLine(A<string>._)).MustHaveHappened();
         return Task.CompletedTask;
     }
 

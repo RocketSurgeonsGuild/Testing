@@ -3,7 +3,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
 [System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
-internal class AutoFixtureGeneratorTests
+public class AutoFixtureGeneratorTests
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
     private string DebuggerDisplay
