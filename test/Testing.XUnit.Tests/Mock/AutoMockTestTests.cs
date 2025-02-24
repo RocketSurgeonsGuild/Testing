@@ -1,18 +1,26 @@
 using DryIoc;
-using DryIoc.Microsoft.DependencyInjection;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Mock;
 
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public void Should_Create_Usable_Logger()
     {
-        AutoMock.Resolve<Impl>();
+        _ = AutoMock.Resolve<Impl>();
         AutoMock.Mock<ITestOutputHelper>().Verify(x => x.WriteLine(It.IsAny<string>()), Times.AtLeastOnce);
     }
 
@@ -20,29 +28,23 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
     public void Should_Provide_Values()
     {
         var item = AutoMock.Provide(new MyItem());
-        ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        ServiceProvider.GetRequiredService<MyItem>().ShouldBeSameAs(item);
     }
 
     [Fact]
-    public void Should_Return_Self_For_ServiceProvider()
-    {
-        ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
-    }
+    public void Should_Return_Self_For_ServiceProvider() => ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
 
     [Fact]
-    public void Should_Not_Mock_Optional_Parameters()
-    {
-        AutoMock.Resolve<Optional>().Item.Should().BeNull();
-    }
+    public void Should_Not_Mock_Optional_Parameters() => AutoMock.Resolve<Optional>().Item.ShouldBeNull();
 
     [Fact]
     public void Should_Populate_Optional_Parameters_When_Provided()
     {
-        AutoMock.Provide<IItem>(new MyItem());
+        _ = AutoMock.Provide<IItem>(new MyItem());
         var optional = AutoMock.Resolve<Optional>();
-        optional.Item.Should().NotBeNull();
+        _ = optional.Item.ShouldNotBeNull();
         Action a = () => Moq.Mock.Get(optional);
-        a.Should().Throw<ArgumentException>();
+        _ = a.ShouldThrow<ArgumentException>();
     }
 
     [Fact]
@@ -50,7 +52,7 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
     {
         var access = AutoMock.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<TestBootstrapException>();
+        _ = a.ShouldThrow<TestBootstrapException>();
     }
 
     private class Impl : AutoMockTest<XUnitTestContext>
@@ -73,7 +75,7 @@ public class AutoMockTestTests(ITestOutputHelper outputHelper) : AutoMockTest<XU
 
     private class MyItem : IItem;
 
-    public interface IItem;
+    internal interface IItem;
 
     private class Optional(IItem? item = null)
     {

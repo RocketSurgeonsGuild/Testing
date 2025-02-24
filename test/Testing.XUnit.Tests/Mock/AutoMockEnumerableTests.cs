@@ -1,18 +1,27 @@
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests.Mock;
 
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public void Does_Not_Auto_Fake_Enumerable()
     {
-        AutoMock.Provide<Item>(new A());
-        AutoMock.Provide<Item>(new B());
+        _ = AutoMock.Provide<Item>(new A());
+        _ = AutoMock.Provide<Item>(new B());
 
-        AutoMock.Resolve<IEnumerable<Item>>().Should().HaveCount(2);
+        AutoMock.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
     }
 
     [Fact]
@@ -21,16 +30,13 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var a = () =>
                 {
                     var lt = AutoMock.Resolve<LoggerTest>();
-                    AutoMock.Provide<Item>(lt);
+                    _ = AutoMock.Provide<Item>(lt);
                 };
-        a.Should().NotThrow();
+        a.ShouldNotThrow();
     }
 
     [Fact]
-    public void Handle_Zero_Items()
-    {
-        AutoMock.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
-    }
+    public void Handle_Zero_Items() => AutoMock.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
 
     [Fact]
     public void Handle_One_Fake_Item()
@@ -38,8 +44,8 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var fake1 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(1);
-        result.Should().Contain(fake1);
+        result.Count().ShouldBe(1);
+        result.ShouldContain(fake1);
     }
 
     [Fact]
@@ -49,9 +55,9 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var fake2 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(2);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
+        result.Count().ShouldBe(2);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
     }
 
     [Fact]
@@ -62,10 +68,10 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var fake3 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(3);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
+        result.Count().ShouldBe(3);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
     }
 
     [Fact]
@@ -77,14 +83,14 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
         var fake4 = AutoMock.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoMock.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(4);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
-        result.Should().Contain(fake4);
+        result.Count().ShouldBe(4);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
+        result.ShouldContain(fake4);
     }
 
-    public interface Item;
+    internal interface Item;
 
     private class A : Item;
 
@@ -94,10 +100,12 @@ public class AutoMockEnumerableTests(ITestOutputHelper outputHelper) : AutoMockT
     {
         public LoggerTest(ILogger logger)
         {
-            if (logger == null)
+            if (logger is not null)
             {
-                throw new ArgumentNullException(nameof(logger));
+                return;
             }
+
+            throw new ArgumentNullException(nameof(logger));
         }
     }
 }

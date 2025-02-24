@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Loader;
 using System.Text;
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -11,8 +10,18 @@ using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public async Task Should_Build_A_Context()
     {
@@ -28,8 +37,8 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddPreprocessorSymbol("SOMETHING", "SOMETHING_ELSE")
                      .WithCustomizer(Customizers.IncludeContextId)
                      .Build();
-        await Verify(context.GenerateAsync());
-        context.AssemblyLoadContext.Should().Be(AssemblyLoadContext.Default);
+        _ = await Verify(context.GenerateAsync());
+        context.AssemblyLoadContext.ShouldBe(AssemblyLoadContext.Default);
     }
 
     [Fact]
@@ -40,7 +49,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddSources("public class Test { }")
                      .AddSources(SourceText.From("public class Test2 { }", Encoding.UTF8))
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -51,7 +60,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .WithGenerator<MyInputLikeSourceGenerator>()
                      .AddSources("public class Test { }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -62,18 +71,18 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddSource("Test.cs", "public class Test { }")
                      .AddSource("Test2.cs", SourceText.From("public class Test2 { }", Encoding.UTF8))
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
     public async Task Should_Add_Options()
     {
         var customText = A.Fake<AdditionalText>();
-        A.CallTo(() => customText.Path).Returns("custom.txt");
-        A.CallTo(() => customText.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
+        _ = A.CallTo(() => customText.Path).Returns("custom.txt");
+        _ = A.CallTo(() => customText.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
         var customSyntax = A.Fake<SyntaxTree>();
-        A.CallTo(() => customSyntax.FilePath).Returns("custom.cs");
-        A.CallTo(() => customSyntax.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
+        _ = A.CallTo(() => customSyntax.FilePath).Returns("custom.cs");
+        _ = A.CallTo(() => customSyntax.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
 
 
         var context = GeneratorTestContextBuilder
@@ -84,22 +93,22 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddOption(customSyntax, "custom_option", "custom_value")
                      .AddSources(SourceText.From("public class Test2 { }", Encoding.UTF8))
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
     public async Task Should_Add_Additional_Texts()
     {
         var customText = A.Fake<AdditionalText>();
-        A.CallTo(() => customText.Path).Returns("custom.txt");
-        A.CallTo(() => customText.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
+        _ = A.CallTo(() => customText.Path).Returns("custom.txt");
+        _ = A.CallTo(() => customText.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
         var context = GeneratorTestContextBuilder
                      .Create()
                      .AddAdditionalText("some.csv", "a,b,c")
                      .AddAdditionalText("some-other.csv", SourceText.From("d,e,f", Encoding.UTF8))
                      .AddAdditionalTexts(customText)
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -110,7 +119,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddReferences(GetType().Assembly)
                      .AddReferences(typeof(GeneratorTestResult))
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -118,9 +127,9 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
     {
         var context = GeneratorTestContextBuilder
                      .Create()
-                     .WithAnalyzer(typeof(TestAnalyzer))
+                     .WithAnalyzer<TestAnalyzer>()
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -132,7 +141,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .WithAnalyzer<TestAnalyzer>()
                      .WithCodeFix<TestCodeFix>()
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -143,7 +152,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddMarkup("Code.cs", "[*c*]")
                      .WithCodeRefactoring<TestRefactoring>()
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -151,7 +160,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
     {
         var context = GeneratorTestContextBuilder
            .Create();
-        await Verify(context.GenerateAnalyzer<TestAnalyzer>());
+        _ = await Verify(context.GenerateAnalyzer<TestAnalyzer>());
     }
 
     [Fact]
@@ -162,7 +171,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddSources("")
                      .WithAnalyzer<TestAnalyzer>()
                      .Build();
-        await Verify(context.GenerateCodeFix<TestCodeFix>());
+        _ = await Verify(context.GenerateCodeFix<TestCodeFix>());
     }
 
     [Fact]
@@ -172,7 +181,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .Create()
                      .AddMarkup("Code.cs", "[*c*]")
                      .Build();
-        await Verify(context.GenerateCodeRefactoring<TestRefactoring>());
+        _ = await Verify(context.GenerateCodeRefactoring<TestRefactoring>());
     }
 
     [Fact]
@@ -195,9 +204,9 @@ public class Class1
         var context = GeneratorTestContextBuilder
                      .Create()
                      .AddCompilationReferences(assemblyA)
-                     .AddSources(@"public class A { public Sample.DependencyOne.Class1 Class1 { get; set; } }")
+                     .AddSources("public class A { public Sample.DependencyOne.Class1 Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -205,9 +214,9 @@ public class Class1
     {
         var context = GeneratorTestContextBuilder
                      .Create()
-                     .AddSources(@"public class A { public Class1 Class1 { get; set; } }")
+                     .AddSources("public class A { public Class1 Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -217,9 +226,9 @@ public class Class1
                      .Create()
                      .WithLogger(Logger)
                      .WithGenerator<MySourceGenerator>()
-                     .AddSources(@"public class A { public GeneratorTest Class1 { get; set; } }")
+                     .AddSources("public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -229,9 +238,9 @@ public class Class1
                      .Create()
                      .WithGenerator<MySourceGenerator>()
                      .IgnoreOutputFile("test.g.cs")
-                     .AddSources(@"public class A { public GeneratorTest Class1 { get; set; } }")
+                     .AddSources("public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Fact]
@@ -241,9 +250,9 @@ public class Class1
                      .Create()
                      .WithLogger(Logger)
                      .WithGenerator<MyIncrementalGenerator>()
-                     .AddSources(@"public class A { public GeneratorTest Class1 { get; set; } }")
+                     .AddSources("public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        _ = await Verify(context.GenerateAsync());
     }
 
     [Theory]
@@ -259,7 +268,7 @@ public class Class1
                      .WithDiagnosticSeverity(diagnosticSeverity)
                      .WithGenerator<MyDiagnosticGenerator>()
                      .Build();
-        await Verify(context.GenerateAsync()).UseParameters(diagnosticSeverity);
+        _ = await Verify(context.GenerateAsync()).UseParameters(diagnosticSeverity);
     }
 
     [Theory]
@@ -276,20 +285,20 @@ public class Class1
                      .AddSource("file.cs", "")
                      .WithGenerator<MySourceGenerator>()
                      .Build();
-        await Verify(context.GenerateAsync()).HashParameters().UseParameters(name);
+        _ = await Verify(context.GenerateAsync()).HashParameters().UseParameters(name);
     }
 
     public static IEnumerable<object[]> GeneratorTestResultsCustomizerData()
     {
-        yield return ["IncludeInputs", Customizers.Reset + Customizers.IncludeInputs];
-        yield return ["IncludeReferences", Customizers.Reset + Customizers.IncludeReferences];
-        yield return ["IncludeFileOptions", Customizers.Reset + Customizers.IncludeFileOptions];
-        yield return ["IncludeParseOptions", Customizers.Reset + Customizers.IncludeParseOptions];
-        yield return ["IncludeGlobalOptions", Customizers.Reset + Customizers.IncludeGlobalOptions];
-        yield return ["Default + IncludeInputs", Customizers.Reset + Customizers.Default + Customizers.IncludeInputs];
-        yield return ["Default + ExcludeReferences", Customizers.Reset + Customizers.Default + Customizers.ExcludeReferences];
-        yield return ["Default + ExcludeFileOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeFileOptions];
-        yield return ["Default + ExcludeGlobalOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeGlobalOptions];
-        yield return ["Default + ExcludeParseOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeParseOptions];
+        yield return new object[] { "IncludeInputs", Customizers.Reset + Customizers.IncludeInputs };
+        yield return new object[] { "IncludeReferences", Customizers.Reset + Customizers.IncludeReferences };
+        yield return new object[] { "IncludeFileOptions", Customizers.Reset + Customizers.IncludeFileOptions };
+        yield return new object[] { "IncludeParseOptions", Customizers.Reset + Customizers.IncludeParseOptions };
+        yield return new object[] { "IncludeGlobalOptions", Customizers.Reset + Customizers.IncludeGlobalOptions };
+        yield return new object[] { "Default + IncludeInputs", Customizers.Reset + Customizers.Default + Customizers.IncludeInputs };
+        yield return new object[] { "Default + ExcludeReferences", Customizers.Reset + Customizers.Default + Customizers.ExcludeReferences };
+        yield return new object[] { "Default + ExcludeFileOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeFileOptions };
+        yield return new object[] { "Default + ExcludeGlobalOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeGlobalOptions };
+        yield return new object[] { "Default + ExcludeParseOptions", Customizers.Reset + Customizers.Default + Customizers.ExcludeParseOptions };
     }
 }

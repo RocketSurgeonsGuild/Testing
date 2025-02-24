@@ -1,10 +1,19 @@
-using FluentAssertions;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class AutoFixtureGeneratorTests
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Fact]
     public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateAutoFixtureAttribute()
     {
@@ -21,7 +30,7 @@ public class AutoFixtureGeneratorTests
         var result = await generatorInstance.GenerateAsync();
 
         // Then
-        await Verify(result).ScrubLines(text => text.Contains("System.CodeDom.Compiler.GeneratedCode"));
+        _ = await Verify(result).ScrubLines(text => text.Contains("System.CodeDom.Compiler.GeneratedCode"));
     }
 
     [Fact]
@@ -40,7 +49,7 @@ public class AutoFixtureGeneratorTests
         var result = await generatorInstance.GenerateAsync();
 
         // Then
-        await Verify(result);
+        _ = await Verify(result);
     }
 
     [Theory]
@@ -62,7 +71,7 @@ public class AutoFixtureGeneratorTests
                .GenerateAsync();
 
         // Then
-        await Verify(result).HashParameters().UseParameters(context.Id);
+        _ = await Verify(result).HashParameters().UseParameters(context.Id);
     }
 
     [Theory]
@@ -75,8 +84,7 @@ public class AutoFixtureGeneratorTests
         // Then
         result
            .Results
-           .Should()
-           .Contain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
+           .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
     }
 
     [Theory]
@@ -89,7 +97,6 @@ public class AutoFixtureGeneratorTests
         // Then
         result
            .Results
-           .Should()
-           .Contain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0002.Id));
+           .ShouldContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0002.Id));
     }
 }

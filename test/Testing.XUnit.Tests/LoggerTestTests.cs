@@ -1,11 +1,12 @@
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
+using Shouldly;
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit.Tests;
 
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class LoggerTestTests : LoggerTest<XUnitTestContext>
 {
     [Fact]
@@ -29,7 +30,7 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -48,7 +49,7 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
     }
 
@@ -64,7 +65,7 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -83,7 +84,7 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
     }
 
@@ -95,12 +96,12 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         var logger = factory.CreateLogger("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
 
         ExcludeSourceContext("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -115,13 +116,13 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Should().HaveCount(2);
+        logs.Count().ShouldBe(2);
 
         IncludeSourceContext("MyLogger");
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
     }
 
@@ -130,6 +131,15 @@ public class LoggerTestTests : LoggerTest<XUnitTestContext>
         _testOutputHelper = TestContext.TestOutputHelper;
 
     private readonly ITestOutputHelper _testOutputHelper;
+
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
 
     private class Impl : LoggerTest<XUnitTestContext>
     {
