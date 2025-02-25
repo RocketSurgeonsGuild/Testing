@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Serilog;
 using Serilog.Events;
+// ReSharper disable UseCollectionExpression
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -159,7 +160,7 @@ public record GeneratorTestContext
     /// </summary>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    public async Task<GeneratorTestResults> GenerateAsync()
+    public async Task<GeneratorTestResults> GenerateAsync(CancellationToken cancellationToken = default)
     {
         _logger.Information("Starting Generation for {SourceCount}", _sources.Length);
         if (_logger.IsEnabled(LogEventLevel.Verbose))
@@ -173,7 +174,7 @@ public record GeneratorTestContext
 
         var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _parseOptions, _sources, _additionalTexts);
 
-        var compilation = (CSharpCompilation?)await project.GetCompilationAsync().ConfigureAwait(false);
+        var compilation = (CSharpCompilation?)await project.GetCompilationAsync(cancellationToken).ConfigureAwait(false);
         if (compilation is null) throw new InvalidOperationException("Could not compile the sources");
 
         var diagnostics = compilation.GetDiagnostics();
@@ -244,7 +245,7 @@ public record GeneratorTestContext
                 foreach (var t in trees)
                 {
                     _logger.Verbose("    FilePath: {Name}", t.FilePath);
-                    _logger.Verbose("    Source:\n{Name}", ( await t.GetTextAsync().ConfigureAwait(false) ).ToString());
+                    _logger.Verbose("    Source:\n{Name}", ( await t.GetTextAsync(cancellationToken).ConfigureAwait(false) ).ToString());
                 }
             }
 
@@ -278,7 +279,7 @@ public record GeneratorTestContext
                 new AnalyzerOptions(_additionalTexts, new OptionsProvider(_fileOptions, _globalOptions))
             );
 
-            analysisResult = await compilationWithAnalyzers.GetAnalysisResultAsync(CancellationToken.None);
+            analysisResult = await compilationWithAnalyzers.GetAnalysisResultAsync(cancellationToken);
             foreach (var analyzer in analyzers)
             {
                 var analyzerResults = analysisResult.GetAllDiagnostics(analyzer.Value);
@@ -316,7 +317,7 @@ public record GeneratorTestContext
             _logger.Information("--- Code Fix Providers ---");
             foreach (var provider in projectInformation.CodeFixProviders.Values)
             {
-                results = await results.AddCodeFix(provider);
+                results = await results.AddCodeFix(provider, cancellationToken);
             }
         }
 
@@ -325,7 +326,7 @@ public record GeneratorTestContext
             _logger.Information("--- Code Refactoring Providers ---");
             foreach (var provider in projectInformation.CodeRefactoringProviders.Values)
             {
-                results = await results.AddCodeRefactoring(provider);
+                results = await results.AddCodeRefactoring(provider, cancellationToken);
             }
         }
 
