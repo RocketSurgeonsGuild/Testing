@@ -24,6 +24,7 @@ internal partial class Pipeline : NukeBuild,
     ICanPackWithDotNetCore,
     ICanClean,
     IHaveCommonLintTargets,
+    IRemoveUnusedDependencies,
     // IHavePublicApis,
     IGenerateCodeCoverageReport,
     IGenerateCodeCoverageSummary,
@@ -42,29 +43,36 @@ internal partial class Pipeline : NukeBuild,
 
     [NonEntryTarget]
     private Target Default => _ => _
-                                 .DependsOn(Restore)
-                                 .DependsOn(Build)
-                                 .DependsOn(Test)
-                                 .DependsOn(Pack);
+                                  .DependsOn(Restore)
+                                  .DependsOn(Build)
+                                  .DependsOn(Test)
+                                  .DependsOn(Pack);
+
+    [Solution(GenerateProjects = true)]
+    private Solution Solution { get; } = null!;
 
     public Target Build => _ => _;
     public Target Pack => _ => _;
     public Target Clean => _ => _;
-    public Target Lint => _ => _;
     public Target Restore => _ => _;
+    Nuke.Common.ProjectModel.Solution IHaveSolution.Solution => Solution;
+
+    [GitVersion(NoFetch = true, NoCache = false)]
+    public GitVersion GitVersion { get; } = null!;
+
     public Target Test => _ => _;
+    public Target Lint => _ => _;
 
     /// <summary>
-    /// Only run the JetBrains cleanup code when running on the server
+    ///     Only run the JetBrains cleanup code when running on the server
     /// </summary>
     public Target JetBrainsCleanupCode => _ => _
                                               .Inherit<ICanDotNetFormat>(x => x.JetBrainsCleanupCode)
                                               .OnlyWhenStatic(() => IsServerBuild);
 
-    [Solution(GenerateProjects = true)] private Solution Solution { get; } = null!;
-    Nuke.Common.ProjectModel.Solution IHaveSolution.Solution => Solution;
+    [OptionalGitRepository]
+    public GitRepository? GitRepository { get; }
 
-    [OptionalGitRepository] public GitRepository? GitRepository { get; }
-    [GitVersion(NoFetch = true, NoCache = false)] public GitVersion GitVersion { get; } = null!;
-    [Parameter("Configuration to build")] public Configuration Configuration { get; } = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    [Parameter("Configuration to build")]
+    public Configuration Configuration { get; } = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 }
