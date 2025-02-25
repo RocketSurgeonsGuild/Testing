@@ -577,9 +577,10 @@ public record GeneratorTestContextBuilder
     /// <summary>
     ///     Generate and return the results of the generators
     /// </summary>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public Task<GeneratorTestResults> GenerateAsync()
+    public Task<GeneratorTestResults> GenerateAsync(CancellationToken cancellationToken = default)
     {
-        return Build().GenerateAsync();
+        return Build().GenerateAsync(cancellationToken);
     }
 }
