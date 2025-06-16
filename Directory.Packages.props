@@ -53,8 +53,8 @@
         <PackageVersion Include="Serilog.Sinks.Observable" Version="3.0.0" />
         <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.19" />
         <PackageVersion Include="System.Collections.Immutable" Version="9.0.6" />
-        <PackageVersion Include="System.Interactive" Version="6.0.1" />
-        <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
+        <PackageVersion Include="System.Interactive" Version="6.0.3" />
+        <PackageVersion Include="System.Interactive.Async" Version="6.0.3" />
         <PackageVersion Include="System.Reactive" Version="6.0.1" />
         <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-09" />
         <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
