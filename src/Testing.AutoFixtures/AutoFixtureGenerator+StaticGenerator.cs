@@ -580,9 +580,8 @@ public partial class AutoFixtureGenerator
 
     private static bool ReportAutoFixture0001(INamedTypeSymbol classForFixture, SourceProductionContext productionContext)
     {
-        if (classForFixture.Constructors.All(x => x.Parameters.IsDefaultOrEmpty))
+        if (classForFixture.Constructors.All(methodSymbol => methodSymbol.Parameters.IsDefaultOrEmpty))
         {
-            ReportDiagnostic(productionContext, AutoFixture0001.Descriptor, classForFixture.Locations);
             return true;
         }
 
