@@ -29,16 +29,16 @@ public class AutoFixture0001 : DiagnosticAnalyzer
         analysisContext.RegisterSyntaxNodeAction(
             action: context =>
                     {
-                        var classDeclaration = (ClassDeclarationSyntax)context.Node;
-                        var hasAttribute =
-                            classDeclaration.AttributeLists.Any(listSyntax => listSyntax.Attributes.Any(syntax => syntax.IsAutoFixtureAttribute()));
-
-                        var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToImmutableList();
-
-                        if (!hasAttribute)
+                        if (context.Node is not ClassDeclarationSyntax classDeclaration)
                         {
                             return;
                         }
+                        if (!classDeclaration.AttributeLists.Any(listSyntax => listSyntax.Attributes.Any(syntax => syntax.IsAutoFixtureAttribute())))
+                        {
+                            return;
+                        }
+
+                        var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToImmutableList();
 
                         if (constructors.All(constructorDeclarationSyntax =>
                                                  constructorDeclarationSyntax.ParameterList.Parameters.All(parameterSyntax =>
