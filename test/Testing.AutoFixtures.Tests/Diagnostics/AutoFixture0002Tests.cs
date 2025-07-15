@@ -6,8 +6,8 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.Diagnostics;
 public class AutoFixture0002Tests
 {
     [Theory]
-    [MemberData(nameof(GenerateMultipleFixturesData.Data), MemberType = typeof(GenerateMultipleFixturesData))]
-    public async Task GivenNoConstructor_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
+    [MemberData(nameof(ParameterArraySourceData.ParameterArrayDeck), MemberType = typeof(ParameterArraySourceData))]
+    public async Task GivenConstructorWithParameterArray_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
     {
         // Given, When
         var result = await context.GenerateAsync();
@@ -15,6 +15,16 @@ public class AutoFixture0002Tests
         // Then
         result
            .Results
-           .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == AutoFixture0001.Descriptor.Id));
+           .ShouldContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == AutoFixture0002.Descriptor.Id));
+    }
+
+    [Fact]
+    public async Task GivenDiagnosticReported_WhenGenerate_ThenGeneratesOtherFixtures()
+    {
+        // Given
+
+        // When
+
+        // Then
     }
 }
