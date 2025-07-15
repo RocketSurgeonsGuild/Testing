@@ -18,13 +18,27 @@ public class AutoFixture0001Tests
            .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == AutoFixture0001.Descriptor.Id));
     }
 
-    [Fact]
-    public async Task GivenDiagnosticReported_WhenGenerate_ThenGeneratesOtherFixtures()
+    [Theory]
+    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
+    public async Task GivenConstructor_WhenGenerate_ThenDoesNotReportsDiagnostic(GeneratorTestContext context)
     {
-        // Given
-
-        // When
+        // Given, When
+        var result = await context.GenerateAsync();
 
         // Then
+        result
+           .Results
+           .ShouldNotContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == AutoFixture0001.Descriptor.Id));
+    }
+
+    [Theory]
+    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
+    public async Task GivenDiagnosticReported_WhenGenerate_ThenGeneratesOtherFixtures(GeneratorTestContext context)
+    {
+        // Given, When
+        var result = await context.GenerateAsync();
+
+        // Then
+        _ = await Verify(result).HashParameters().UseParameters(context.Id);
     }
 }

@@ -1,5 +1,6 @@
 using FakeItEasy;
 using NSubstitute;
+using Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
@@ -11,10 +12,12 @@ public class GenerateMultipleFixturesData : AutoFixtureSourceData
         {
             DefaultBuilder()
                .AddReferences(typeof(Fake))
+               .WithAnalyzer<AutoFixture0001>()
                .AddSources(ClassSource, AttributedFixtureSource)
                .Build(),
             DefaultBuilder()
                .AddReferences(typeof(Substitute))
+               .WithAnalyzer<AutoFixture0001>()
                .AddSources(ClassSource, AttributedFixtureSource)
                .Build(),
         };
