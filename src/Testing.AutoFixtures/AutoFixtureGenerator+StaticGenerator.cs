@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
@@ -581,7 +582,7 @@ public partial class AutoFixtureGenerator
     {
         if (classForFixture.Constructors.All(x => x.Parameters.IsDefaultOrEmpty))
         {
-            ReportDiagnostic(productionContext, Diagnostics.AutoFixture0001, classForFixture.Locations);
+            ReportDiagnostic(productionContext, AutoFixture0001.Descriptor, classForFixture.Locations);
             return true;
         }
 
@@ -608,7 +609,7 @@ public partial class AutoFixtureGenerator
                                 .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
                                 .SelectMany(tuple => tuple.parameterSymbol.Locations))
         {
-            productionContext.ReportDiagnostic(Diagnostic.Create(Diagnostics.AutoFixture0002, location));
+            productionContext.ReportDiagnostic(Diagnostic.Create(AutoFixture0002.Descriptor, location));
             if (!reported)
             {
                 reported = true;
