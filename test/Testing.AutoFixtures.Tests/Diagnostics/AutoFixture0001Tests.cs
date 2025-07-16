@@ -6,7 +6,8 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.Diagnostics;
 public class AutoFixture0001Tests
 {
     [Theory]
-    [MemberData(nameof(GenerateMultipleFixturesData.Data), MemberType = typeof(GenerateMultipleFixturesData))]
+    [MemberData(nameof(NoConstructorData.Data), MemberType = typeof(NoConstructorData))]
+    [MemberData(nameof(AutoFixture0001Data.DiagnosticReported), MemberType = typeof(AutoFixture0001Data))]
     public async Task GivenNoConstructor_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
     {
         // Given, When
@@ -20,6 +21,8 @@ public class AutoFixture0001Tests
 
     [Theory]
     [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
+    [MemberData(nameof(NoConstructorData.Data), MemberType = typeof(NoConstructorData))]
+    [MemberData(nameof(AutoFixture0001Data.DiagnosticReported), MemberType = typeof(AutoFixture0001Data))]
     public async Task GivenConstructor_WhenGenerate_ThenDoesNotReportsDiagnostic(GeneratorTestContext context)
     {
         // Given, When
@@ -32,7 +35,7 @@ public class AutoFixture0001Tests
     }
 
     [Theory]
-    [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
+    [MemberData(nameof(AutoFixture0001Data.DiagnosticReported), MemberType = typeof(AutoFixture0001Data))]
     public async Task GivenDiagnosticReported_WhenGenerate_ThenGeneratesOtherFixtures(GeneratorTestContext context)
     {
         // Given, When
