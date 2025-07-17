@@ -12,12 +12,12 @@ public class NoConstructorData : AutoFixtureSourceData
         {
             DefaultBuilder()
                .AddReferences(typeof(Fake))
-               .WithAnalyzer<AutoFixture0001>()
+               .WithAnalyzer<Rsaf0001>()
                .AddSources(ClassSource, AttributedFixtureSource)
                .Build(),
             DefaultBuilder()
                .AddReferences(typeof(Substitute))
-               .WithAnalyzer<AutoFixture0001>()
+               .WithAnalyzer<Rsaf0001>()
                .AddSources(ClassSource, AttributedFixtureSource)
                .Build(),
         };

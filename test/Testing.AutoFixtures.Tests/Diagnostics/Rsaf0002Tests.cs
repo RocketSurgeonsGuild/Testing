@@ -3,7 +3,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.Diagnostics;
 
-public class AutoFixture0002Tests
+public class Rsaf0002Tests
 {
     [Theory]
     [MemberData(nameof(ParameterArraySourceData.ParameterArrayDeck), MemberType = typeof(ParameterArraySourceData))]
@@ -15,7 +15,7 @@ public class AutoFixture0002Tests
         // Then
         result
            .Results
-           .ShouldContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == AutoFixture0002.Descriptor.Id));
+           .ShouldContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Rsaf0002.Descriptor.Id));
     }
 
     [Fact]

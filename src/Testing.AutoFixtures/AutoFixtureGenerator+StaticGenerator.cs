@@ -608,7 +608,7 @@ public partial class AutoFixtureGenerator
                                 .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
                                 .SelectMany(tuple => tuple.parameterSymbol.Locations))
         {
-            productionContext.ReportDiagnostic(Diagnostic.Create(AutoFixture0002.Descriptor, location));
+            productionContext.ReportDiagnostic(Diagnostic.Create(Rsaf0002.Descriptor, location));
             if (!reported)
             {
                 reported = true;
