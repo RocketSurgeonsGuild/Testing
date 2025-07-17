@@ -7,14 +7,14 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
-public class AutoFixture0001 : DiagnosticAnalyzer
+public class Rsaf0001 : DiagnosticAnalyzer
 {
     /// <summary>
     ///     Diagnostic for unsupported classes with no constructors.
     /// </summary>
     public static DiagnosticDescriptor Descriptor = new(
-        nameof(AutoFixture0001),
-        "classes without constructors are currently not supported.",
+        nameof(Rsaf0001),
+        "classes without constructors are currently not supported",
         "",
         "Support",
         DiagnosticSeverity.Info,
