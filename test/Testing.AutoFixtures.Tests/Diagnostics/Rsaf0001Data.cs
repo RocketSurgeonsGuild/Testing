@@ -4,7 +4,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.Diagnostics;
 
-internal class AutoFixture0001Data : AutoFixtureSourceData
+internal class Rsaf0001Data : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> DiagnosticReported =>
         new()

@@ -11,8 +11,8 @@ public abstract class AutoFixtureSourceData
         return GeneratorTestContextBuilder
               .Create()
               .WithGenerator<AutoFixtureGenerator>()
-              .WithAnalyzer<AutoFixture0001>()
-              .WithAnalyzer<AutoFixture0002>()
+              .WithAnalyzer<Rsaf0001>()
+              .WithAnalyzer<Rsaf0002>()
               .AddReferences(typeof(ILogger<>))
               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
               .IgnoreOutputFile("AutoFixtureBase.g.cs");
