@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@631c7dc4f80f88219c5ee78fee08c6b62fac8da1
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
         with:
           clean: 'false'
           fetch-depth: '0'
