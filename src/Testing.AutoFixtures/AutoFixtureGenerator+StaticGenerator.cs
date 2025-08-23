@@ -592,28 +592,28 @@ public partial class AutoFixtureGenerator
     private static bool ReportAutoFixture0002(INamedTypeSymbol namedTypeSymbol, SourceProductionContext productionContext)
     {
         var reported = false;
-        foreach (var location in namedTypeSymbol
-                                .Constructors
-                                .SelectMany(methodSymbol => methodSymbol.Parameters)
-                                .Distinct(ParameterReductionComparer.Default)
-                                .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol })
-                                .Select(
-                                     tuple => new
-                                     {
-                                         tuple.isArrayType,
-                                         tuple.parameterSymbol,
-                                         hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
-                                     }
-                                 )
-                                .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
-                                .SelectMany(tuple => tuple.parameterSymbol.Locations))
-        {
-            productionContext.ReportDiagnostic(Diagnostic.Create(Rsaf0002.Descriptor, location));
-            if (!reported)
-            {
-                reported = true;
-            }
-        }
+//        foreach (var location in namedTypeSymbol
+//                                .Constructors
+//                                .SelectMany(methodSymbol => methodSymbol.Parameters)
+//                                .Distinct(ParameterReductionComparer.Default)
+//                                .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol })
+//                                .Select(
+//                                     tuple => new
+//                                     {
+//                                         tuple.isArrayType,
+//                                         tuple.parameterSymbol,
+//                                         hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
+//                                     }
+//                                 )
+//                                .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
+//                                .SelectMany(tuple => tuple.parameterSymbol.Locations))
+//        {
+//            productionContext.ReportDiagnostic(Diagnostic.Create(Rsaf0002.Descriptor, location));
+//            if (!reported)
+//            {
+//                reported = true;
+//            }
+//        }
 
         return reported;
     }
