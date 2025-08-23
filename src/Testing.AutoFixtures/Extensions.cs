@@ -10,6 +10,11 @@ internal static class Extensions
         => accessibility.Contains(symbol.DeclaredAccessibility);
 
     public static bool HasPublicAccess(this ConstructorDeclarationSyntax syntax) => syntax.Modifiers.Any(token => token.IsKind(SyntaxKind.PublicKeyword));
+
+    public static bool IsAutoFixture(this ClassDeclarationSyntax syntax)
+    {
+        return syntax.Identifier.Text is "AutoFixtureBase" or "AutoFixture" or "GeneratedCode" or "AutoFixtureAttribute";
+    }
     public static bool IsAutoFixtureAttribute(this AttributeSyntax syntax)
     {
         var name = GetLastIdentifier(syntax.Name);

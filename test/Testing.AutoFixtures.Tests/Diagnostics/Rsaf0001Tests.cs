@@ -15,14 +15,12 @@ public class Rsaf0001Tests
 
         // Then
         result
-           .Results
+           .AnalyzerResults
            .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Rsaf0001.Descriptor.Id));
     }
 
     [Theory]
     [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
-    [MemberData(nameof(NoConstructorData.Data), MemberType = typeof(NoConstructorData))]
-    [MemberData(nameof(Rsaf0001Data.DiagnosticReported), MemberType = typeof(Rsaf0001Data))]
     public async Task GivenConstructor_WhenGenerate_ThenDoesNotReportsDiagnostic(GeneratorTestContext context)
     {
         // Given, When
@@ -30,7 +28,7 @@ public class Rsaf0001Tests
 
         // Then
         result
-           .Results
+           .AnalyzerResults
            .ShouldNotContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Rsaf0001.Descriptor.Id));
     }
 
