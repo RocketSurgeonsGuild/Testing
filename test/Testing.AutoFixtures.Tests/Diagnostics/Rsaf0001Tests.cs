@@ -21,6 +21,7 @@ public class Rsaf0001Tests
 
     [Theory]
     [MemberData(nameof(AutoFixtureGeneratorData.Data), MemberType = typeof(AutoFixtureGeneratorData))]
+    [MemberData(nameof(DuplicateConstructorParameterData.Data), MemberType = typeof(DuplicateConstructorParameterData))]
     public async Task GivenConstructor_WhenGenerate_ThenDoesNotReportsDiagnostic(GeneratorTestContext context)
     {
         // Given, When

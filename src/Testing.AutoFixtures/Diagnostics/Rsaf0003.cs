@@ -7,14 +7,14 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
-public class Rsaf0001 : DiagnosticAnalyzer
+public class Rsaf0003 : DiagnosticAnalyzer
 {
     /// <summary>
-    ///     Diagnostic for unsupported classes with no constructors.
+    ///     Diagnostic for unsupported classes with multiple constructors.
     /// </summary>
     public static DiagnosticDescriptor Descriptor = new(
-        nameof(Rsaf0001),
-        "classes without constructors are currently not supported",
+        nameof(Rsaf0003),
+        "classes with multiple constructors are currently select the one with the most parameters",
         "",
         "Support",
         DiagnosticSeverity.Info,
@@ -56,7 +56,7 @@ public class Rsaf0001 : DiagnosticAnalyzer
 
                         var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToImmutableList();
 
-                        if (constructors.All(constructorDeclarationSyntax => constructorDeclarationSyntax.ParameterList.Parameters.Count == 0))
+                        if (constructors.Count is > 0 and > 1)
                         {
                             context.ReportDiagnostic(Diagnostic.Create(Descriptor, classDeclaration.GetLocation()));
                         }
