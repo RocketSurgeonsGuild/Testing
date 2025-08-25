@@ -1,20 +1,12 @@
 using Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
+using System.Diagnostics;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+[DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class AutoFixtureGeneratorTests
 {
-    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-    private string DebuggerDisplay
-    {
-        get
-        {
-            return ToString();
-        }
-    }
-
     [Fact]
     public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateAutoFixtureAttribute()
     {
@@ -75,4 +67,6 @@ public class AutoFixtureGeneratorTests
         _ = await Verify(result).HashParameters().UseParameters(context.Id);
     }
 
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay => ToString();
 }
