@@ -3,8 +3,18 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.Diagnostics;
 
-public class Rsaf0001Tests
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class Rsaf0001Tests
 {
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay
+    {
+        get
+        {
+            return ToString();
+        }
+    }
+
     [Theory]
     [MemberData(nameof(NoConstructorData.Data), MemberType = typeof(NoConstructorData))]
     [MemberData(nameof(Rsaf0001Data.DiagnosticReported), MemberType = typeof(Rsaf0001Data))]

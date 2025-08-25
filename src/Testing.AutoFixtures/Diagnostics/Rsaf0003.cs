@@ -7,8 +7,61 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
+[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class Rsaf0003 : DiagnosticAnalyzer
 {
+    /// <inheritdoc />
+    public override void Initialize(AnalysisContext analysisContext)
+    {
+        analysisContext.EnableConcurrentExecution();
+        analysisContext.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
+        analysisContext.RegisterSyntaxNodeAction(
+            context =>
+            {
+                if (context.Node is not ClassDeclarationSyntax classDeclaration)
+                {
+                    return;
+                }
+
+                if (classDeclaration.Modifiers.Any(x => x.IsKind(SyntaxKind.StaticKeyword)))
+                {
+                    return;
+                }
+
+                if (classDeclaration.IsAutoFixture())
+                {
+                    return;
+                }
+
+                if (classDeclaration.AttributeLists.Any(listSyntax => listSyntax.Attributes.Any(syntax => syntax.HasAutoFixtureAttribute())))
+                {
+                    return;
+                }
+
+                if (classDeclaration.Identifier.Text.EndsWith("Fixture"))
+                {
+                    return;
+                }
+
+                var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToImmutableList();
+
+                if (!( constructors.Count is > 0 and > 1 ))
+                {
+                    return;
+                }
+
+                context.ReportDiagnostic(Diagnostic.Create(Descriptor, classDeclaration.GetLocation()));
+            },
+            SyntaxKind.ClassDeclaration
+        );
+    }
+
+    /// <inheritdoc />
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = [Descriptor];
+
+    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay => ToString();
+
     /// <summary>
     ///     Diagnostic for unsupported classes with multiple constructors.
     /// </summary>
@@ -20,51 +73,4 @@ public class Rsaf0003 : DiagnosticAnalyzer
         DiagnosticSeverity.Info,
         true
     );
-
-    /// <inheritdoc />
-    public override void Initialize(AnalysisContext analysisContext)
-    {
-        analysisContext.EnableConcurrentExecution();
-        analysisContext.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
-        analysisContext.RegisterSyntaxNodeAction(
-            action: context =>
-                    {
-                        if (context.Node is not ClassDeclarationSyntax classDeclaration)
-                        {
-                            return;
-                        }
-
-                        if (classDeclaration.Modifiers.Any(x => x.IsKind(SyntaxKind.StaticKeyword)))
-                        {
-                            return;
-                        }
-
-                        if (classDeclaration.IsAutoFixture())
-                        {
-                            return;
-                        }
-
-                        if (classDeclaration.AttributeLists.Any(listSyntax => listSyntax.Attributes.Any(syntax => syntax.HasAutoFixtureAttribute())))
-                        {
-                            return;
-                        }
-
-                        if (classDeclaration.Identifier.Text.EndsWith("Fixture"))
-                        {
-                            return;
-                        }
-
-                        var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToImmutableList();
-
-                        if (constructors.Count is > 0 and > 1)
-                        {
-                            context.ReportDiagnostic(Diagnostic.Create(Descriptor, classDeclaration.GetLocation()));
-                        }
-                    },
-            syntaxKinds: SyntaxKind.ClassDeclaration
-        );
-    }
-
-    /// <inheritdoc />
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = [Descriptor];
 }
