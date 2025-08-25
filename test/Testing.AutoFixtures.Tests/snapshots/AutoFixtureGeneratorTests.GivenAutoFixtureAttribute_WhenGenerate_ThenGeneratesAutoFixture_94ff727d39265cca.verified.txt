@@ -6,13 +6,24 @@
         Title: classes without constructors are currently not supported,
         Severity: Info,
         WarningLevel: 1,
-        Location: Input2.cs: (2,4)-(6,5),
+        Location: Input0.cs: (19,4)-(19,25),
+        MessageFormat: ,
+        Message: ,
+        Category: Support
+      },
+      {
+        Id: Rsaf0001,
+        Title: classes without constructors are currently not supported,
+        Severity: Info,
+        WarningLevel: 1,
+        Location: Input0.cs: (21,4)-(21,26),
         MessageFormat: ,
         Message: ,
         Category: Support
       }
     ],
-    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0002: []
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0002: [],
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0003: []
   },
   FinalDiagnostics: [],
   GeneratorDiagnostics: {

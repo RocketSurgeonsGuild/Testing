@@ -11,11 +11,17 @@ internal static class Extensions
 
     public static bool HasPublicAccess(this ConstructorDeclarationSyntax syntax) => syntax.Modifiers.Any(token => token.IsKind(SyntaxKind.PublicKeyword));
 
-    public static bool IsAutoFixture(this ClassDeclarationSyntax syntax)
-    {
-        return syntax.Identifier.Text is "AutoFixtureBase" or "AutoFixture" or "GeneratedCode" or "AutoFixtureAttribute";
-    }
+    public static bool IsAutoFixture(this ClassDeclarationSyntax classDeclarationSyntax) =>
+        classDeclarationSyntax.AttributeLists.Any(listSyntax => listSyntax.Attributes.Any(syntax => syntax.HasAutoFixtureAttribute()))
+     || classDeclarationSyntax.Identifier.Text is "AutoFixtureBase" or "AutoFixture" or "GeneratedCode" or "AutoFixtureAttribute";
+
     public static bool IsAutoFixtureAttribute(this AttributeSyntax syntax)
+    {
+        var name = GetLastIdentifier(syntax.Name);
+        return name is "AutoFixtureAttribute" or "AutoFixture";
+    }
+
+    public static bool HasAutoFixtureAttribute(this AttributeSyntax syntax)
     {
         var name = GetLastIdentifier(syntax.Name);
         return name is "AutoFixtureAttribute" or "AutoFixture";

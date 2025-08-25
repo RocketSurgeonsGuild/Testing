@@ -13,6 +13,7 @@ public abstract class AutoFixtureSourceData
               .WithGenerator<AutoFixtureGenerator>()
               .WithAnalyzer<Rsaf0001>()
               .WithAnalyzer<Rsaf0002>()
+              .WithAnalyzer<Rsaf0003>()
               .AddReferences(typeof(ILogger<>))
               .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
               .IgnoreOutputFile("AutoFixtureBase.g.cs");

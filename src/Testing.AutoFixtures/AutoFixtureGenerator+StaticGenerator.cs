@@ -135,7 +135,6 @@ public partial class AutoFixtureGenerator
     {
         var isAbstract = parameterSymbol.IsAbstract;
         var isInterface = parameterSymbol.Type.TypeKind == TypeKind.Interface;
-        var isValueType = parameterSymbol.Type.IsValueType;
 
         var symbolName = $"_{parameterSymbol.Name}";
         if (!isAbstract && !isInterface)
@@ -541,22 +540,6 @@ public partial class AutoFixtureGenerator
         }
     }
 
-    private static void ReportDiagnostic(
-        SourceProductionContext productionContext,
-        DiagnosticDescriptor diagnosticDescriptor,
-        IEnumerable<Location> locations
-    )
-    {
-        ReportDiagnostic(productionContext, diagnosticDescriptor, locations.ToArray());
-    }
-
-    private static void ReportDiagnostic(SourceProductionContext productionContext, DiagnosticDescriptor diagnosticDescriptor, params Location[] locations)
-    {
-        foreach (var location in locations)
-        {
-            productionContext.ReportDiagnostic(Diagnostic.Create(diagnosticDescriptor, location));
-        }
-    }
 
     private const string Fixture = nameof(Fixture);
 
