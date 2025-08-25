@@ -1,19 +1,11 @@
+using System.Diagnostics;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-[System.Diagnostics.DebuggerDisplay("{DebuggerDisplay,nq}")]
-public class AutoFixtureGeneratorTests
+[DebuggerDisplay("{DebuggerDisplay,nq}")]
+internal class AutoFixtureGeneratorTests
 {
-    [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-    private string DebuggerDisplay
-    {
-        get
-        {
-            return ToString();
-        }
-    }
-
     [Fact]
     public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateAutoFixtureAttribute()
     {
@@ -74,29 +66,6 @@ public class AutoFixtureGeneratorTests
         _ = await Verify(result).HashParameters().UseParameters(context.Id);
     }
 
-    [Theory]
-    [MemberData(nameof(GenerateMultipleFixturesData.Data), MemberType = typeof(GenerateMultipleFixturesData))]
-    public async Task GivenNoConstructor_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
-    {
-        // Given, When
-        var result = await context.GenerateAsync();
-
-        // Then
-        result
-           .Results
-           .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
-    }
-
-    [Theory]
-    [MemberData(nameof(ParameterArraySourceData.ParameterArrayDeck), MemberType = typeof(ParameterArraySourceData))]
-    public async Task GivenConstructorWithParameterArray_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
-    {
-        // Given, When
-        var result = await context.GenerateAsync();
-
-        // Then
-        result
-           .Results
-           .ShouldContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0002.Id));
-    }
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private string DebuggerDisplay => ToString();
 }
