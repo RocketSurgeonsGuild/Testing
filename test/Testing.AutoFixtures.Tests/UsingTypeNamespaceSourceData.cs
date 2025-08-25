@@ -4,7 +4,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-public class UsingTypeNamespaceSourceData : AutoFixtureSourceData
+internal class UsingTypeNamespaceSourceData : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> Data =>
         new()
