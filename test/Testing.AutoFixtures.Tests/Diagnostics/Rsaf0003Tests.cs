@@ -3,7 +3,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.Diagnostics;
 
-public class Rsaf0003Tests
+internal class Rsaf0003Tests
 {
     [Theory]
     [MemberData(nameof(DuplicateConstructorParameterData.Data), MemberType = typeof(DuplicateConstructorParameterData))]

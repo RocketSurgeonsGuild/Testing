@@ -1,11 +1,10 @@
-using Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
-using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 using System.Diagnostics;
+using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
-public class AutoFixtureGeneratorTests
+internal class AutoFixtureGeneratorTests
 {
     [Fact]
     public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateAutoFixtureAttribute()

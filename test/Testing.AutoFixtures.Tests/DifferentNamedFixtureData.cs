@@ -7,8 +7,7 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 internal class DifferentNamedFixtureData : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> Data =>
-        new()
-        {
+        [
             DefaultBuilder()
                .AddReferences(typeof(Fake))
                .AddSources(ClassSource, AttributedFixtureSource)
@@ -25,7 +24,7 @@ internal class DifferentNamedFixtureData : AutoFixtureSourceData
                .AddReferences(typeof(Substitute))
                .AddSources(AttributedSource)
                .Build(),
-        };
+        ];
 
     private const string ClassSource = @"
 namespace Goony.Goo.Goo
