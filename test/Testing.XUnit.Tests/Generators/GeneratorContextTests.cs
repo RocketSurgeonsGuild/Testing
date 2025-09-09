@@ -14,13 +14,7 @@ namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
 public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<XUnitTestContext>(XUnitDefaults.CreateTestContext(outputHelper))
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-    private string DebuggerDisplay
-    {
-        get
-        {
-            return ToString();
-        }
-    }
+    private string DebuggerDisplay => ToString();
 
     [Fact]
     public async Task Should_Build_A_Context()
@@ -57,7 +51,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
     {
         var context = GeneratorTestContextBuilder
                      .Create()
-                     .WithGenerator<MyInputLikeSourceGenerator>()
+                     .WithGenerator<MyIncrementalGenerator>()
                      .AddSources("public class Test { }")
                      .Build();
         _ = await Verify(context.GenerateAsync());
@@ -225,7 +219,7 @@ public class Class1
         var context = GeneratorTestContextBuilder
                      .Create()
                      .WithLogger(Logger)
-                     .WithGenerator<MySourceGenerator>()
+                     .WithGenerator<MyIncrementalGenerator>()
                      .AddSources("public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
         _ = await Verify(context.GenerateAsync());
@@ -236,7 +230,7 @@ public class Class1
     {
         var context = GeneratorTestContextBuilder
                      .Create()
-                     .WithGenerator<MySourceGenerator>()
+                     .WithGenerator<MyIncrementalGenerator>()
                      .IgnoreOutputFile("test.g.cs")
                      .AddSources("public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
@@ -283,7 +277,7 @@ public class Class1
                      .AddGlobalOption("b", "key")
                      .IgnoreOutputFile("test.g.cs")
                      .AddSource("file.cs", "")
-                     .WithGenerator<MySourceGenerator>()
+                     .WithGenerator<MyIncrementalGenerator>()
                      .Build();
         _ = await Verify(context.GenerateAsync()).HashParameters().UseParameters(name);
     }

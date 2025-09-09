@@ -26,6 +26,7 @@ public abstract class XUnitTestContext<TContext>(
 {
     private readonly LogEventLevel _logEventLevel = logEventLevel;
     private readonly ITestContext _testContext = testContextAccessor.Current;
+    private ConcurrentDictionary<string, object?> _keyValueStorage;
 
     /// <inheritdoc />
     protected override void ConfigureLogger(TContext context, LoggerConfiguration loggerConfiguration) => loggerConfiguration
@@ -36,7 +37,13 @@ public abstract class XUnitTestContext<TContext>(
     public void AddAttachment(string name, string value) => _testContext.AddAttachment(name, value);
 
     /// <inheritdoc />
+    public void AddAttachment(string name, string value, bool replaceExistingValue) => _testContext.AddAttachment(name, value, replaceExistingValue);
+
+    /// <inheritdoc />
     public void AddAttachment(string name, byte[] value, string mediaType = "application/octet-stream") => _testContext.AddAttachment(name, value, mediaType);
+
+    /// <inheritdoc />
+    public void AddAttachment(string name, byte[] value, bool replaceExistingValue, string mediaType = "application/octet-stream") => throw new NotImplementedException();
 
     /// <inheritdoc />
     public void AddWarning(string message) => _testContext.AddWarning(message);
@@ -69,7 +76,7 @@ public abstract class XUnitTestContext<TContext>(
     public CancellationToken CancellationToken => _testContext.CancellationToken;
 
     /// <inheritdoc />
-    public Dictionary<string, object?> KeyValueStorage => _testContext.KeyValueStorage;
+    ConcurrentDictionary<string, object?> ITestContext.KeyValueStorage => _keyValueStorage;
 
     /// <inheritdoc />
     public TestPipelineStage PipelineStage => _testContext.PipelineStage;
@@ -137,18 +144,5 @@ public class XUnitTestContext
     : XUnitTestContext<XUnitTestContext>(testContextAccessor, logEventLevel, outputTemplate, configureLogger)
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-
-    /* Unmerged change from project 'Rocket.Surgery.Extensions.Testing.XUnit3(net9.0)'
-    Before:
-        private string DebuggerDisplay
-        {
-            get
-            {
-                return ToString();
-            }
-        }
-    After:
-        private string DebuggerDisplay => ToString();
-    */
-    private string DebuggerDisplay => ToString();
+    private string DebuggerDisplay => ToString() ?? "";
 }

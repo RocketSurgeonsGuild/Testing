@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-        <Nullable>enable</Nullable>
-        <IsPackable>false</IsPackable>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="Serilog.Sinks.XUnit" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="xunit" />
-        <PackageReference Include="xunit.runner.visualstudio" />
-        <PackageReference Include="Verify.Xunit" />
-        <PackageReference Include="Verify.SourceGenerators" />
-        <PackageReference Include="xunit.analyzers" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog.Sinks.XUnit" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Verify.Xunit" />
+    <PackageReference Include="Verify.SourceGenerators" />
+    <PackageReference Include="xunit.analyzers" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Testing.Fixtures\Rocket.Surgery.Extensions.Testing.Fixtures.csproj" />

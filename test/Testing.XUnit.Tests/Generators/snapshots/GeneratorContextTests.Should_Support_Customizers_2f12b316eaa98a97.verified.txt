@@ -6,7 +6,7 @@
   },
   FinalDiagnostics: [],
   GeneratorDiagnostics: {
-    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MySourceGenerator: []
+    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MyIncrementalGenerator: []
   },
   References: [
     mscorlib.dll,
