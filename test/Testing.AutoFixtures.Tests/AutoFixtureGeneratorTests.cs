@@ -6,13 +6,7 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 public class AutoFixtureGeneratorTests
 {
     [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-    private string DebuggerDisplay
-    {
-        get
-        {
-            return ToString();
-        }
-    }
+    private string DebuggerDisplay => ToString();
 
     [Fact]
     public async Task GivenAutoFixture_WhenGenerate_ThenShouldGenerateAutoFixtureAttribute()

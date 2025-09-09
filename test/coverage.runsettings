@@ -87,7 +87,9 @@
                 <ModulePath>.*ReportGenerator\.dll</ModulePath>
                 <ModulePath>.*Rocket\.Surgery\.MSBuild\.CI\.dll</ModulePath>
                 <ModulePath>.*Rocket\.Surgery\.MSBuild\.GitVersion\.dll</ModulePath>
+                <ModulePath>.*Rocket\.Surgery\.MSBuild\.GlobalAnalyzerConfig\.dll</ModulePath>
                 <ModulePath>.*Rocket\.Surgery\.MSBuild\.SourceLink\.dll</ModulePath>
+                <ModulePath>.*Rocket\.Surgery\.MyAssembly\.dll</ModulePath>
                 <ModulePath>.*Rocket\.Surgery\.Nuke\.dll</ModulePath>
                 <ModulePath>.*Roslynator\.Analyzers\.dll</ModulePath>
                 <ModulePath>.*Roslynator\.CodeAnalysis\.Analyzers\.dll</ModulePath>
@@ -99,8 +101,6 @@
                 <ModulePath>.*Serilog\.Sinks\.Observable\.dll</ModulePath>
                 <ModulePath>.*Serilog\.Sinks\.XUnit\.dll</ModulePath>
                 <ModulePath>.*Shouldly\.dll</ModulePath>
-                <ModulePath>.*System\.Collections\.Immutable\.dll</ModulePath>
-                <ModulePath>.*System\.Interactive\.Async\.dll</ModulePath>
                 <ModulePath>.*System\.Interactive\.dll</ModulePath>
                 <ModulePath>.*System\.Reactive\.dll</ModulePath>
                 <ModulePath>.*TUnit\.Core\.dll</ModulePath>

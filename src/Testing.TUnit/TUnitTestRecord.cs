@@ -7,8 +7,8 @@ namespace Rocket.Surgery.Extensions.Testing;
 ///     The xunit test context
 /// </summary>
 [PublicAPI]
-public abstract class TUnitTestRecord<TContext> : RocketSurgeryTestContext<TContext>, ITUnitTestRecord
-    where TContext : RocketSurgeryTestContext<TContext>, ILoggingTestContext, ITUnitTestRecord
+public abstract class TUnitTestRecord<TContext> : RocketSurgeryTestContext<TContext>
+    where TContext : RocketSurgeryTestContext<TContext>, ILoggingTestContext
 {
     private readonly TestContext _context;
     private readonly LogEventLevel _logEventLevel;
@@ -42,37 +42,7 @@ public abstract class TUnitTestRecord<TContext> : RocketSurgeryTestContext<TCont
            .MinimumLevel.Is(_logEventLevel)
            .WriteTo.Sink(new TUnitSink(_context));
     }
-
-    /// <inheritdoc />
-    public TestContextEvents Events => _context.Events;
-
-    /// <inheritdoc />
-    public DateTimeOffset? TestStart => _context.TestStart;
-
-    /// <inheritdoc />
-    public TestDetails TestDetails => _context.TestDetails;
-
-    /// <inheritdoc />
-    public int CurrentRetryAttempt => _context.CurrentRetryAttempt;
-
-    /// <inheritdoc />
-    public IReadOnlyList<ArgumentDisplayFormatter> ArgumentDisplayFormatters => _context.ArgumentDisplayFormatters;
-
-    /// <inheritdoc />
-    public IReadOnlyList<Timing> Timings => _context.Timings;
-
-    /// <inheritdoc />
-    public Dictionary<string, object?> ObjectBag => _context.ObjectBag;
-
-    public TestResult? Result => _context.Result;
-
-    /// <inheritdoc />
-    public void SuppressReportingResult()
-    {
-        _context.SuppressReportingResult();
-    }
-
-    /// <inheritdoc />
+    
     public void AddArtifact(Artifact artifact)
     {
         _context.AddArtifact(artifact);
