@@ -12,22 +12,16 @@
         <PackageReference Include="xunit.analyzers" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference
-            Include="..\..\src\Testing.NSubstitute\Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />
-        <ProjectReference
-            Include="..\..\src\Testing.Moq\Rocket.Surgery.Extensions.Testing.Moq.csproj" />
-        <ProjectReference
-            Include="..\..\src\Testing.FakeItEasy\Rocket.Surgery.Extensions.Testing.FakeItEasy.csproj" />
-        <ProjectReference
-            Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
+        <ProjectReference Include="..\..\src\Testing.NSubstitute\Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />
+        <ProjectReference Include="..\..\src\Testing.Moq\Rocket.Surgery.Extensions.Testing.Moq.csproj" />
+        <ProjectReference Include="..\..\src\Testing.FakeItEasy\Rocket.Surgery.Extensions.Testing.FakeItEasy.csproj" />
+        <ProjectReference Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference
-            Include="..\..\src\Testing.XUnit\Rocket.Surgery.Extensions.Testing.XUnit.csproj" />
+        <ProjectReference Include="..\..\src\Testing.XUnit\Rocket.Surgery.Extensions.Testing.XUnit.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Content CopyToOutputDirectory="PreserveNewest"
-            Include="Fixtures/**/*.csproj;Fixtures/**/*.props;Fixtures/**/*.targets" />
+        <Content CopyToOutputDirectory="PreserveNewest" Include="Fixtures/**/*.csproj;Fixtures/**/*.props;Fixtures/**/*.targets" />
         <Compile Remove="Fixtures/**/*.cs" />
     </ItemGroup>
 </Project>

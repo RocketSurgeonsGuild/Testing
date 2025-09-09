@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference
-      Include="..\..\src\Testing.Fixtures\Rocket.Surgery.Extensions.Testing.Fixtures.csproj" />
+    <ProjectReference Include="..\..\src\Testing.Fixtures\Rocket.Surgery.Extensions.Testing.Fixtures.csproj" />
   </ItemGroup>
 
 </Project>

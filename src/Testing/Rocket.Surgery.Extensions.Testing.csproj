@@ -12,8 +12,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="Microsoft.Extensions.Logging" />
-        <PackageReference Include="System.Collections.Immutable"
-            Condition="'$(TargetFramework)' == 'net8.0' or '$(TargetFramework)' == 'net9.0'" />
+        <PackageReference Include="System.Collections.Immutable" Condition="'$(TargetFramework)' == 'net8.0' or '$(TargetFramework)' == 'net9.0'" />
         <PackageReference Include="System.Interactive" />
         <PackageReference Include="System.Interactive.Async" Condition="'$(TargetFramework)' == 'net8.0' or '$(TargetFramework)' == 'net9.0'" />
         <PackageReference Include="System.Reactive" />

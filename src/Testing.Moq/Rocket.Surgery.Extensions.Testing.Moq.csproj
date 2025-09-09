@@ -11,8 +11,7 @@
         <PackageReference Include="Verify.Moq" />
         <!-- Disabled for now to handle scenarios with enumerables -->
         <!-- <PackageReference Include="Autofac.Extras.Moq" /> -->
-        <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj"
-            PrivateAssets="contentfiles;analyzers" />
+        <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj" PrivateAssets="contentfiles;analyzers" />
     </ItemGroup>
     <ItemGroup>
         <None Include="build/*.*" Pack="true" PackagePath="build" />
