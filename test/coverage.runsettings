@@ -59,7 +59,7 @@
                 <ModulePath>.*FakeItEasy\.Analyzer\.CSharp\.dll</ModulePath>
                 <ModulePath>.*FakeItEasy\.dll</ModulePath>
                 <ModulePath>.*GitVersion\.Tool\.dll</ModulePath>
-                <ModulePath>.*JetBrains\.Annotations\.dll</ModulePath>
+                <ModulePath>.*JetBrains\.Annotations\.Sources\.dll</ModulePath>
                 <ModulePath>.*JetBrains\.dotCover\.CommandLineTools\.dll</ModulePath>
                 <ModulePath>.*JetBrains\.ExternalAnnotations\.dll</ModulePath>
                 <ModulePath>.*JetBrains\.ReSharper\.GlobalTools\.dll</ModulePath>
@@ -101,7 +101,6 @@
                 <ModulePath>.*Serilog\.Sinks\.Observable\.dll</ModulePath>
                 <ModulePath>.*Serilog\.Sinks\.XUnit\.dll</ModulePath>
                 <ModulePath>.*Shouldly\.dll</ModulePath>
-                <ModulePath>.*System\.Interactive\.dll</ModulePath>
                 <ModulePath>.*System\.Reactive\.dll</ModulePath>
                 <ModulePath>.*TUnit\.Core\.dll</ModulePath>
                 <ModulePath>.*Verify\.DiffPlex\.dll</ModulePath>
