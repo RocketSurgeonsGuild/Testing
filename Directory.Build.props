@@ -24,7 +24,7 @@
         <AnalysisLevel>latest</AnalysisLevel>
         <WarningsAsErrors>RS0017</WarningsAsErrors>
         <!--        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
-<!--        <NoWarn>$(NoWarn);RS0036;CS1591</NoWarn>-->
+        <!--        <NoWarn>$(NoWarn);RS0036;CS1591</NoWarn>-->
         <!--        <WarningsNotAsErrors></WarningsNotAsErrors>-->
 
         <NuGetAudit>true</NuGetAudit>

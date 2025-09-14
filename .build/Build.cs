@@ -6,6 +6,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
+
 using Rocket.Surgery.Nuke.DotNetCore;
 
 [PublicAPI]
@@ -68,7 +69,7 @@ internal partial class Pipeline : NukeBuild,
     /// </summary>
     public Target JetBrainsCleanupCode => _ => _
                                               .Inherit<ICanDotNetFormat>(x => x.JetBrainsCleanupCode)
-                                              .OnlyWhenStatic(() => IsServerBuild);
+                                              .OnlyWhenStatic(() => false);
 
     [OptionalGitRepository]
     public GitRepository? GitRepository { get; }

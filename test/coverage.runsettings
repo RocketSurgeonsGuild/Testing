@@ -101,7 +101,6 @@
                 <ModulePath>.*Serilog\.Sinks\.Observable\.dll</ModulePath>
                 <ModulePath>.*Serilog\.Sinks\.XUnit\.dll</ModulePath>
                 <ModulePath>.*Shouldly\.dll</ModulePath>
-                <ModulePath>.*System\.Interactive\.dll</ModulePath>
                 <ModulePath>.*System\.Reactive\.dll</ModulePath>
                 <ModulePath>.*TUnit\.Core\.dll</ModulePath>
                 <ModulePath>.*Verify\.DiffPlex\.dll</ModulePath>
