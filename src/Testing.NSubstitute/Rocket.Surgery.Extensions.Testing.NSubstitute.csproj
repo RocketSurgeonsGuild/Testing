@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
         <IsTestProject>false</IsTestProject>
         <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
         <IsMagicProject>true</IsMagicProject>
@@ -11,6 +11,7 @@
         <PackageReference Include="NSubstitute" />
         <PackageReference Include="Verify.NSubstitute" />
         <!-- Disabled for now to handle scenarios with enumerables -->
-        <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj" PrivateAssets="contentfiles" />
+        <ProjectReference Include="../Testing/Rocket.Surgery.Extensions.Testing.csproj"
+            PrivateAssets="contentfiles" />
     </ItemGroup>
 </Project>

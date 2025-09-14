@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <RootNamespace>Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests</RootNamespace>
@@ -29,8 +29,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
-        <ProjectReference Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
+        <ProjectReference
+            Include="..\..\src\Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
+        <ProjectReference
+            Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
     </ItemGroup>
 
 </Project>
