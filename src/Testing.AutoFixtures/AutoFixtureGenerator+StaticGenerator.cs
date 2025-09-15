@@ -137,8 +137,8 @@ public partial class AutoFixtureGenerator
         var isInterface = parameterSymbol.Type.TypeKind == TypeKind.Interface;
 
         var symbolName = $"_{parameterSymbol.Name}";
-        return  !isAbstract && !isInterface 
-            ?   FieldDeclaration(
+        return !isAbstract && !isInterface
+            ? FieldDeclaration(
                     VariableDeclaration(
                             IdentifierName(
                                 Identifier(
@@ -170,8 +170,8 @@ public partial class AutoFixtureGenerator
                     TokenList(
                         Token(SyntaxKind.PrivateKeyword)
                     )
-                )  
-            :   FieldDeclaration(
+                )
+            : FieldDeclaration(
                    VariableDeclaration(
                            IdentifierName(
                                Identifier(
@@ -489,8 +489,8 @@ public partial class AutoFixtureGenerator
     {
         var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
 
-        return  fakeItEasy is { } 
-            ?  InvocationExpression(
+        return fakeItEasy is { }
+            ? InvocationExpression(
                 MemberAccessExpression(
                     SyntaxKind.SimpleMemberAccessExpression,
                     IdentifierName("A"),
@@ -501,8 +501,8 @@ public partial class AutoFixtureGenerator
                             typeArgumentListSyntax(symbol)
                         )
                 )
-            ) 
-            :  InvocationExpression(
+            )
+            : InvocationExpression(
             MemberAccessExpression(
                 SyntaxKind.SimpleMemberAccessExpression,
                 IdentifierName(
@@ -533,12 +533,9 @@ public partial class AutoFixtureGenerator
     {
         var targetSymbol = syntaxContext.TargetSymbol as INamedTypeSymbol;
 
-        if (syntaxContext.Attributes[0].ConstructorArguments.Length == 0)
-        {
-            return targetSymbol;
-        }
-
-        return  syntaxContext.Attributes[0].ConstructorArguments[0].Value is INamedTypeSymbol namedTypeSymbol  ?  namedTypeSymbol  :   null;
+        return  syntaxContext.Attributes[0].ConstructorArguments.Length == 0 
+            ?  targetSymbol 
+            :  syntaxContext.Attributes[0].ConstructorArguments[0].Value is INamedTypeSymbol namedTypeSymbol ? namedTypeSymbol : null;
     }
 
     private static bool ReportAutoFixture0001(INamedTypeSymbol classForFixture, SourceProductionContext productionContext) => classForFixture.Constructors.All(methodSymbol => methodSymbol.Parameters.IsDefaultOrEmpty);

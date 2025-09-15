@@ -57,7 +57,7 @@ public class Rsaf0003 : DiagnosticAnalyzer
 
                         var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToImmutableList();
 
-                        if (!( constructors.Count is > 0 and > 1 ))
+                        if (constructors.Count is not ( > 0 and > 1 ))
                         {
                             return;
                         }

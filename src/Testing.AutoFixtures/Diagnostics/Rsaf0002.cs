@@ -69,7 +69,7 @@ public class Rsaf0002 : DiagnosticAnalyzer
             }
 
             // If the containing symbol is a named type, return it
-            return  context.ContainingSymbol is INamedTypeSymbol namedTypeSymbol  ?  namedTypeSymbol  : ( context.ContainingSymbol?.ContainingType );
+            return context.ContainingSymbol is INamedTypeSymbol namedTypeSymbol ? namedTypeSymbol : ( context.ContainingSymbol?.ContainingType );
         }
     }
 

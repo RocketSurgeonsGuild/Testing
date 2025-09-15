@@ -57,7 +57,7 @@ public class Rsaf0001 : DiagnosticAnalyzer
 
                         var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToImmutableList();
 
-                        if (!constructors.All(constructorDeclarationSyntax => !constructorDeclarationSyntax.ParameterList.Parameters.Any()))
+                        if (constructors.Any(constructorDeclarationSyntax => constructorDeclarationSyntax.ParameterList.Parameters.Any()))
                         {
                             return;
                         }
