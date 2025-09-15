@@ -533,9 +533,9 @@ public partial class AutoFixtureGenerator
     {
         var targetSymbol = syntaxContext.TargetSymbol as INamedTypeSymbol;
 
-        return  syntaxContext.Attributes[0].ConstructorArguments.Length == 0 
-            ?  targetSymbol 
-            :  syntaxContext.Attributes[0].ConstructorArguments[0].Value is INamedTypeSymbol namedTypeSymbol ? namedTypeSymbol : null;
+        return syntaxContext.Attributes[0].ConstructorArguments.Length == 0
+            ? targetSymbol
+            : syntaxContext.Attributes[0].ConstructorArguments[0].Value is INamedTypeSymbol namedTypeSymbol ? namedTypeSymbol : null;
     }
 
     private static bool ReportAutoFixture0001(INamedTypeSymbol classForFixture, SourceProductionContext productionContext) => classForFixture.Constructors.All(methodSymbol => methodSymbol.Parameters.IsDefaultOrEmpty);
