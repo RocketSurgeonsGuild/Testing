@@ -41,21 +41,10 @@ internal partial class Pipeline : NukeBuild,
     /// </summary>
     public static int Main() => Execute<Pipeline>(x => x.Default);
 
-    [NonEntryTarget]
-    private Target Default => _ => _
-                                  .DependsOn(Restore)
-                                  .DependsOn(Build)
-                                  .DependsOn(Test)
-                                  .DependsOn(Pack);
-
-    [Solution(GenerateProjects = true)]
-    private Solution Solution { get; } = null!;
-
     public Target Build => _ => _;
     public Target Pack => _ => _;
     public Target Clean => _ => _;
     public Target Restore => _ => _;
-    Nuke.Common.ProjectModel.Solution IHaveSolution.Solution => Solution;
 
     [GitVersion(NoFetch = true, NoCache = false)]
     public GitVersion GitVersion { get; } = null!;
@@ -75,4 +64,16 @@ internal partial class Pipeline : NukeBuild,
 
     [Parameter("Configuration to build")]
     public Configuration Configuration { get; } = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+
+    [NonEntryTarget]
+    private Target Default => _ => _
+                                  .DependsOn(Restore)
+                                  .DependsOn(Build)
+                                  .DependsOn(Test)
+                                  .DependsOn(Pack);
+
+    [Solution(GenerateProjects = true)]
+    private Solution Solution { get; } = null!;
+
+    Nuke.Common.ProjectModel.Solution IHaveSolution.Solution => Solution;
 }

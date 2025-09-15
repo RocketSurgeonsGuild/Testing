@@ -4,11 +4,10 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
-public class GenerateMultipleFixturesData : AutoFixtureSourceData
+internal class GenerateMultipleFixturesData : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> Data =>
-        new()
-        {
+        [
             DefaultBuilder()
                .AddReferences(typeof(Fake))
                .AddSources(ClassSource, AttributedFixtureSource)
@@ -17,7 +16,7 @@ public class GenerateMultipleFixturesData : AutoFixtureSourceData
                .AddReferences(typeof(Substitute))
                .AddSources(ClassSource, AttributedFixtureSource)
                .Build(),
-        };
+        ];
 
     private const string ClassSource =
         @"namespace Goony.Goo.Goo

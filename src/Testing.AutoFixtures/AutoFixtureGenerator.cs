@@ -7,96 +7,6 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 [Generator]
 public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
 {
-    private static void CurrentGenerator(
-        INamedTypeSymbol namedTypeSymbol,
-        ISymbol targetSymbol,
-        SourceProductionContext productionContext,
-        Compilation compilation
-    )
-    {
-        var className = SymbolEqualityComparer.Default.Equals(
-            namedTypeSymbol.ContainingSymbol,
-            namedTypeSymbol.ContainingNamespace
-        )
-            ? namedTypeSymbol.Name
-            : namedTypeSymbol.ContainingSymbol.Name + "." + namedTypeSymbol.Name;
-
-        var fixtureName = SymbolEqualityComparer.Default.Equals(
-            targetSymbol.ContainingSymbol,
-            targetSymbol.ContainingNamespace
-        )
-            ? targetSymbol.Name.EndsWith(
-                Fixture
-            )
-                ? targetSymbol.Name
-                : targetSymbol.Name + Fixture
-            : targetSymbol.Name.EndsWith(
-                Fixture
-            )
-                ? targetSymbol.ContainingSymbol.Name + targetSymbol.Name
-                : targetSymbol.ContainingSymbol.Name + targetSymbol.Name + Fixture;
-        var parameterSymbols =
-            namedTypeSymbol
-               .Constructors
-               .SelectMany(methodSymbol => methodSymbol.Parameters)
-               .Distinct(ParameterReductionComparer.Default)
-               .ToList();
-
-        var fullList =
-            new[] { BuildOperator(className, fixtureName) }
-               .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol, fixtureName)))
-               .Concat([BuildBuildMethod(className, parameterSymbols)])
-               .Concat(
-                    parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
-                );
-
-        var classDeclaration = BuildClassDeclaration(fixtureName)
-           .WithMembers(new(fullList));
-
-        var namespaceDeclaration = BuildNamespace(targetSymbol)
-           .WithMembers(new(classDeclaration));
-
-        var usingDirectives = new HashSet<string>(
-                                  parameterSymbols
-                                     .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
-                                     .Where(x => !string.IsNullOrWhiteSpace(x))
-                                     .Distinct()
-                              )
-                              {
-                                  "System.Collections.ObjectModel",
-                                  "Rocket.Surgery.Extensions.Testing.AutoFixtures",
-                                  namedTypeSymbol.OriginalDefinition.ContainingNamespace.ToDisplayString(),
-                              }
-                             .Distinct()
-                             .ToHashSet();
-
-        var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
-        if (fakeItEasy is { })
-        {
-            usingDirectives.Add(fakeItEasy.ContainingNamespace.ToDisplayString());
-        }
-
-        var substituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
-        if (substituteMetadata is { })
-        {
-            usingDirectives.Add(substituteMetadata.ContainingNamespace.ToDisplayString());
-        }
-
-        var usingDirectiveSyntax =
-            usingDirectives
-               .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
-               .Select(x => UsingDirective(ParseName(x)))
-               .ToArray();
-
-        var unit =
-            CompilationUnit()
-               .AddUsings(usingDirectiveSyntax)
-               .AddMembers(namespaceDeclaration)
-               .NormalizeWhitespace();
-
-        productionContext.AddSource($"{className}.AutoFixture.g.cs", unit.ToFullString());
-    }
-
     /// <inheritdoc />
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -120,12 +30,12 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             }
         );
 
-        void generateFixtureBuilder(
+        static void generateFixtureBuilder(
             SourceProductionContext productionContext,
             (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
         )
         {
-            ( var syntaxContext, var compilation ) = valueTuple;
+            var (syntaxContext, compilation) = valueTuple;
 
             var classForFixture = GetClassForFixture(syntaxContext);
 
@@ -151,18 +61,15 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
 
     internal class ParameterReductionComparer : IEqualityComparer<IParameterSymbol>
     {
-        public static IEqualityComparer<IParameterSymbol> Default { get; } = new ParameterReductionComparer();
-
         public bool Equals(IParameterSymbol x, IParameterSymbol y) =>
-            ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
+            ( SymbolEqualityComparer.Default.Equals(x.Type, y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
 
         public int GetHashCode(IParameterSymbol obj) => SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
+        public static IEqualityComparer<IParameterSymbol> Default { get; } = new ParameterReductionComparer();
     }
 
     internal class NamespaceComparer : IComparer<string>
     {
-        public static NamespaceComparer Default { get; } = new();
-
         public int Compare(string x, string y)
         {
             // Check if both namespaces start with "System"
@@ -170,15 +77,107 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             var yIsSystem = y.StartsWith("System", StringComparison.Ordinal);
 
             return xIsSystem switch
-                   {
-                       // If only one of them starts with "System", prioritize it
-                       true when !yIsSystem => -1,
-                       false when yIsSystem => 1,
-                       // If both start with "System" or neither does, compare them alphabetically
-                       true when yIsSystem   => string.Compare(x, y, StringComparison.Ordinal),
-                       false when !yIsSystem => string.Compare(x, y, StringComparison.Ordinal),
-                       _                     => xIsSystem ? -1 : 1,
-                   };
+            {
+                // If only one of them starts with "System", prioritize it
+                true when !yIsSystem => -1,
+                false when yIsSystem => 1,
+                // If both start with "System" or neither does, compare them alphabetically
+                true when yIsSystem => string.CompareOrdinal(x, y),
+                false when !yIsSystem => string.CompareOrdinal(x, y),
+                _ => xIsSystem ? -1 : 1,
+            };
         }
+
+        public static NamespaceComparer Default { get; } = new();
+    }
+
+    private static void CurrentGenerator(
+        INamedTypeSymbol namedTypeSymbol,
+        ISymbol targetSymbol,
+        SourceProductionContext productionContext,
+        Compilation compilation
+    )
+    {
+        var className = ( SymbolEqualityComparer.Default.Equals(
+            namedTypeSymbol.ContainingSymbol,
+            namedTypeSymbol.ContainingNamespace
+        ) )
+            ? namedTypeSymbol.Name
+            : namedTypeSymbol.ContainingSymbol.Name + "." + namedTypeSymbol.Name;
+
+        var fixtureName = ( SymbolEqualityComparer.Default.Equals(
+            targetSymbol.ContainingSymbol,
+            targetSymbol.ContainingNamespace
+        ) )
+            ? ( targetSymbol.Name.EndsWith(
+                Fixture
+            ) )
+                ? targetSymbol.Name
+                : targetSymbol.Name + Fixture
+            : ( targetSymbol.Name.EndsWith(
+                Fixture
+            ) )
+                ? targetSymbol.ContainingSymbol.Name + targetSymbol.Name
+                : targetSymbol.ContainingSymbol.Name + targetSymbol.Name + Fixture;
+        var parameterSymbols =
+            namedTypeSymbol
+               .Constructors
+               .SelectMany(methodSymbol => methodSymbol.Parameters)
+               .Distinct(ParameterReductionComparer.Default)
+               .ToList();
+
+        var fullList =
+            new[] { BuildOperator(className, fixtureName) }
+               .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol, fixtureName)))
+               .Concat([BuildBuildMethod(className, parameterSymbols)])
+               .Concat(
+                    parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
+                );
+
+        var classDeclaration = BuildClassDeclaration(fixtureName)
+           .WithMembers([.. fullList]);
+
+        var namespaceDeclaration = BuildNamespace(targetSymbol)
+           .WithMembers(new(classDeclaration));
+
+        var usingDirectives = new HashSet<string>(
+                                  parameterSymbols
+                                     .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? "")
+                                     .Where(x => !string.IsNullOrWhiteSpace(x))
+                                     .Distinct()
+                              )
+                              {
+                                  "System.Collections.ObjectModel",
+                                  "Rocket.Surgery.Extensions.Testing.AutoFixtures",
+                                  namedTypeSymbol.OriginalDefinition.ContainingNamespace.ToDisplayString(),
+                              }
+                             .Distinct()
+                             .ToHashSet();
+
+        var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
+        if (fakeItEasy is { })
+        {
+            _ = usingDirectives.Add(fakeItEasy.ContainingNamespace.ToDisplayString());
+        }
+
+        var substituteMetadata = compilation.GetTypeByMetadataName("NSubstitute.Substitute");
+        if (substituteMetadata is { })
+        {
+            _ = usingDirectives.Add(substituteMetadata.ContainingNamespace.ToDisplayString());
+        }
+
+        var usingDirectiveSyntax =
+            usingDirectives
+               .OrderBy(usingDirective => usingDirective, NamespaceComparer.Default)
+               .Select(x => UsingDirective(ParseName(x)))
+               .ToArray();
+
+        var unit =
+            CompilationUnit()
+               .AddUsings(usingDirectiveSyntax)
+               .AddMembers(namespaceDeclaration)
+               .NormalizeWhitespace();
+
+        productionContext.AddSource($"{className}.AutoFixture.g.cs", unit.ToFullString());
     }
 }
