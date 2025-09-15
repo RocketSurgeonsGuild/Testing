@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -56,10 +57,12 @@ public class Rsaf0001 : DiagnosticAnalyzer
 
                         var constructors = classDeclaration.Members.OfType<ConstructorDeclarationSyntax>().ToImmutableList();
 
-                        if (constructors.All(constructorDeclarationSyntax => constructorDeclarationSyntax.ParameterList.Parameters.Count == 0))
+                        if (!constructors.All(constructorDeclarationSyntax => !constructorDeclarationSyntax.ParameterList.Parameters.Any()))
                         {
-                            context.ReportDiagnostic(Diagnostic.Create(Descriptor, classDeclaration.GetLocation()));
+                            return;
                         }
+
+                        context.ReportDiagnostic(Diagnostic.Create(Descriptor, classDeclaration.GetLocation()));
                     },
             syntaxKinds: SyntaxKind.ClassDeclaration
         );

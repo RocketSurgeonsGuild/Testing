@@ -1,5 +1,7 @@
 using FakeItEasy;
+
 using NSubstitute;
+
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
@@ -7,8 +9,7 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 internal class NestedClassFixtureData : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> Data =>
-        new()
-        {
+        [
             DefaultBuilder()
                .AddReferences(typeof(Fake))
                .AddSources(ClassSource, AttributedFixtureSource)
@@ -25,7 +26,7 @@ internal class NestedClassFixtureData : AutoFixtureSourceData
                .AddReferences(typeof(Substitute))
                .AddSources(AttributedSource)
                .Build(),
-        };
+        ];
 
     private const string ClassSource = @"
 namespace Goony.Goo.Goo

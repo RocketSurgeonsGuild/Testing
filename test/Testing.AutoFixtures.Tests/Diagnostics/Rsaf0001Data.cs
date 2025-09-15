@@ -1,5 +1,7 @@
 using FakeItEasy;
+
 using NSubstitute;
+
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.Diagnostics;
@@ -7,8 +9,7 @@ namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.Diagnostics;
 internal class Rsaf0001Data : AutoFixtureSourceData
 {
     public static TheoryData<GeneratorTestContext> DiagnosticReported =>
-        new()
-        {
+        [
             DefaultBuilder()
                .AddReferences(typeof(Fake))
                .AddSources(ValidSource, ValidAttributedFixtureSource, InvalidSource, InvalidAttributedFixtureSource)
@@ -17,7 +18,7 @@ internal class Rsaf0001Data : AutoFixtureSourceData
                .AddReferences(typeof(Substitute))
                .AddSources(ValidSource, ValidAttributedFixtureSource, InvalidSource, InvalidAttributedFixtureSource)
                .Build(),
-        };
+        ];
 
     private const string ValidAttributedFixtureSource = @"using System;
 using System.Diagnostics;

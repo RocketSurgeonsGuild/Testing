@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -31,7 +32,7 @@ public class Rsaf0002 : DiagnosticAnalyzer
                     {
                         var namedTypeSymbol = GetNamedTypeSymbolDirectly(context);
 
-                        if (namedTypeSymbol == null)
+                        if (namedTypeSymbol is null)
                         {
                             return;
                         }
@@ -42,11 +43,11 @@ public class Rsaf0002 : DiagnosticAnalyzer
                                                 .Distinct(ParameterReductionComparer.Default)
                                                 .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol })
                                                 .Select(tuple => new
-                                                     {
-                                                         tuple.isArrayType,
-                                                         tuple.parameterSymbol,
-                                                         hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
-                                                     }
+                                                {
+                                                    tuple.isArrayType,
+                                                    tuple.parameterSymbol,
+                                                    hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
+                                                }
                                                  )
                                                 .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
                                                 .SelectMany(tuple => tuple.parameterSymbol.Locations))
@@ -57,7 +58,7 @@ public class Rsaf0002 : DiagnosticAnalyzer
             syntaxKinds: SyntaxKind.ClassDeclaration
         );
 
-        INamedTypeSymbol? GetNamedTypeSymbolDirectly(SyntaxNodeAnalysisContext context)
+        static INamedTypeSymbol? GetNamedTypeSymbolDirectly(SyntaxNodeAnalysisContext context)
         {
             if (context.Node is TypeDeclarationSyntax typeDeclaration)
             {
@@ -68,12 +69,7 @@ public class Rsaf0002 : DiagnosticAnalyzer
             }
 
             // If the containing symbol is a named type, return it
-            if (context.ContainingSymbol is INamedTypeSymbol namedTypeSymbol)
-            {
-                return namedTypeSymbol;
-            }
-
-            return context.ContainingSymbol?.ContainingType;
+            return  context.ContainingSymbol is INamedTypeSymbol namedTypeSymbol  ?  namedTypeSymbol  : ( context.ContainingSymbol?.ContainingType );
         }
     }
 

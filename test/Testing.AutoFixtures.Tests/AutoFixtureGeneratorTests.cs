@@ -1,4 +1,3 @@
-using Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
@@ -68,5 +67,4 @@ public class AutoFixtureGeneratorTests
         // Then
         _ = await Verify(result).HashParameters().UseParameters(context.Id);
     }
-
 }

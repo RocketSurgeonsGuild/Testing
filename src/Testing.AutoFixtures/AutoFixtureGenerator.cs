@@ -51,14 +51,14 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator
                 );
 
         var classDeclaration = BuildClassDeclaration(fixtureName)
-           .WithMembers(new(fullList));
+           .WithMembers([.. fullList]);
 
         var namespaceDeclaration = BuildNamespace(targetSymbol)
            .WithMembers(new(classDeclaration));
 
         var usingDirectives = new HashSet<string>(
                                   parameterSymbols
-                                     .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
+                                     .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? "")
                                      .Where(x => !string.IsNullOrWhiteSpace(x))
                                      .Distinct()
                               )
@@ -119,12 +119,12 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator
                                                  }
         );
 
-        void generateFixtureBuilder(
+        static void generateFixtureBuilder(
             SourceProductionContext productionContext,
             (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
         )
         {
-            ( var syntaxContext, var compilation ) = valueTuple;
+            (var syntaxContext, var compilation) = valueTuple;
 
             var classForFixture = GetClassForFixture(syntaxContext);
 
