@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -134,12 +135,10 @@ public partial class AutoFixtureGenerator
     {
         var isAbstract = parameterSymbol.IsAbstract;
         var isInterface = parameterSymbol.Type.TypeKind == TypeKind.Interface;
-        var isValueType = parameterSymbol.Type.IsValueType;
 
         var symbolName = $"_{parameterSymbol.Name}";
-        if (!isAbstract && !isInterface)
-        {
-            return FieldDeclaration(
+        return !isAbstract && !isInterface
+            ? FieldDeclaration(
                     VariableDeclaration(
                             IdentifierName(
                                 Identifier(
@@ -171,10 +170,8 @@ public partial class AutoFixtureGenerator
                     TokenList(
                         Token(SyntaxKind.PrivateKeyword)
                     )
-                );
-        }
-
-        return FieldDeclaration(
+                )
+            : FieldDeclaration(
                    VariableDeclaration(
                            IdentifierName(
                                Identifier(
@@ -233,7 +230,7 @@ public partial class AutoFixtureGenerator
         IEnumerable<IParameterSymbol> parameterSymbols
     )
     {
-        List<SyntaxNodeOrToken> list = new();
+        List<SyntaxNodeOrToken> list = [];
         foreach (var parameterSymbol in parameterSymbols)
         {
             list.Add(Argument(IdentifierName($"_{parameterSymbol.Name}")));
@@ -379,17 +376,14 @@ public partial class AutoFixtureGenerator
 
         SyntaxToken withTypeOrParameterName(IParameterSymbol parameterSymbol)
         {
-            var primitiveName = $"{char.ToUpper(parameterSymbol.Name[0])}{parameterSymbol.Name.Substring(1, parameterSymbol.Name.Length - 1)}";
+            var primitiveName = $"{ char.ToUpper(parameterSymbol.Name[0]).ToString()}{parameterSymbol.Name[1..]}";
             var splitLastCamel = useParameterName(parameterSymbol) ? primitiveName : SplitLastCamel(parameterSymbol);
             return Identifier($"With{splitLastCamel}");
         }
 
-        bool useParameterName(IParameterSymbol parameterSymbol)
-        {
-            return parameterSymbol.Type.TypeKind != TypeKind.Interface
-             || parameterSymbol.Type.IsValueType
-             || !parameterSymbol.Type.IsAbstract;
-        }
+        bool useParameterName(IParameterSymbol parameterSymbol) => parameterSymbol.Type.TypeKind != TypeKind.Interface
+            || parameterSymbol.Type.IsValueType
+            || !parameterSymbol.Type.IsAbstract;
     }
 
     private static MemberDeclarationSyntax BuildOperator(string className, string fixtureName) =>
@@ -495,9 +489,8 @@ public partial class AutoFixtureGenerator
     {
         var fakeItEasy = compilation.GetTypeByMetadataName("FakeItEasy.Fake");
 
-        if (fakeItEasy is { })
-        {
-            return InvocationExpression(
+        return fakeItEasy is { }
+            ? InvocationExpression(
                 MemberAccessExpression(
                     SyntaxKind.SimpleMemberAccessExpression,
                     IdentifierName("A"),
@@ -508,10 +501,8 @@ public partial class AutoFixtureGenerator
                             typeArgumentListSyntax(symbol)
                         )
                 )
-            );
-        }
-
-        return InvocationExpression(
+            )
+            : InvocationExpression(
             MemberAccessExpression(
                 SyntaxKind.SimpleMemberAccessExpression,
                 IdentifierName(
@@ -529,32 +520,11 @@ public partial class AutoFixtureGenerator
                     )
             )
         );
-
-        TypeArgumentListSyntax typeArgumentListSyntax(IParameterSymbol parameterSymbol)
-        {
-            return TypeArgumentList(
-                SingletonSeparatedList<TypeSyntax>(
-                    ParseName(parameterSymbol.Type.GetGenericDisplayName())
-                )
+        static TypeArgumentListSyntax typeArgumentListSyntax(IParameterSymbol parameterSymbol) => TypeArgumentList(
+            SingletonSeparatedList<TypeSyntax>(
+                ParseName(parameterSymbol.Type.GetGenericDisplayName())
+            )
             );
-        }
-    }
-
-    private static void ReportDiagnostic(
-        SourceProductionContext productionContext,
-        DiagnosticDescriptor diagnosticDescriptor,
-        IEnumerable<Location> locations
-    )
-    {
-        ReportDiagnostic(productionContext, diagnosticDescriptor, locations.ToArray());
-    }
-
-    private static void ReportDiagnostic(SourceProductionContext productionContext, DiagnosticDescriptor diagnosticDescriptor, params Location[] locations)
-    {
-        foreach (var location in locations)
-        {
-            productionContext.ReportDiagnostic(Diagnostic.Create(diagnosticDescriptor, location));
-        }
     }
 
     private const string Fixture = nameof(Fixture);
@@ -563,57 +533,38 @@ public partial class AutoFixtureGenerator
     {
         var targetSymbol = syntaxContext.TargetSymbol as INamedTypeSymbol;
 
-        if (syntaxContext.Attributes[0].ConstructorArguments.Length == 0)
-        {
-            return targetSymbol;
-        }
-
-        if (syntaxContext.Attributes[0].ConstructorArguments[0].Value is INamedTypeSymbol namedTypeSymbol)
-        {
-            return namedTypeSymbol;
-        }
-
-        return null;
+        return syntaxContext.Attributes[0].ConstructorArguments.Length == 0
+            ? targetSymbol
+            : syntaxContext.Attributes[0].ConstructorArguments[0].Value is INamedTypeSymbol namedTypeSymbol ? namedTypeSymbol : null;
     }
 
-
-    private static bool ReportAutoFixture0001(INamedTypeSymbol classForFixture, SourceProductionContext productionContext)
-    {
-        if (classForFixture.Constructors.All(x => x.Parameters.IsDefaultOrEmpty))
-        {
-            ReportDiagnostic(productionContext, Diagnostics.AutoFixture0001, classForFixture.Locations);
-            return true;
-        }
-
-        return false;
-    }
-
+    private static bool ReportAutoFixture0001(INamedTypeSymbol classForFixture, SourceProductionContext productionContext) => classForFixture.Constructors.All(methodSymbol => methodSymbol.Parameters.IsDefaultOrEmpty);
 
     private static bool ReportAutoFixture0002(INamedTypeSymbol namedTypeSymbol, SourceProductionContext productionContext)
     {
-        var reported = false;
-        foreach (var location in namedTypeSymbol
-                                .Constructors
-                                .SelectMany(methodSymbol => methodSymbol.Parameters)
-                                .Distinct(ParameterReductionComparer.Default)
-                                .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol })
-                                .Select(
-                                     tuple => new
-                                     {
-                                         tuple.isArrayType,
-                                         tuple.parameterSymbol,
-                                         hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
-                                     }
-                                 )
-                                .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
-                                .SelectMany(tuple => tuple.parameterSymbol.Locations))
-        {
-            productionContext.ReportDiagnostic(Diagnostic.Create(Diagnostics.AutoFixture0002, location));
-            if (!reported)
-            {
-                reported = true;
-            }
-        }
+        const bool reported = false;
+        //        foreach (var location in namedTypeSymbol
+        //                                .Constructors
+        //                                .SelectMany(methodSymbol => methodSymbol.Parameters)
+        //                                .Distinct(ParameterReductionComparer.Default)
+        //                                .Select(parameterSymbol => new { parameterSymbol, isArrayType = parameterSymbol.Type is IArrayTypeSymbol })
+        //                                .Select(
+        //                                     tuple => new
+        //                                     {
+        //                                         tuple.isArrayType,
+        //                                         tuple.parameterSymbol,
+        //                                         hasParamsKeyWord = tuple.parameterSymbol.ToDisplayString().Contains("params"),
+        //                                     }
+        //                                 )
+        //                                .Where(tuple => tuple.isArrayType && tuple.hasParamsKeyWord)
+        //                                .SelectMany(tuple => tuple.parameterSymbol.Locations))
+        //        {
+        //            productionContext.ReportDiagnostic(Diagnostic.Create(Rsaf0002.Descriptor, location));
+        //            if (!reported)
+        //            {
+        //                reported = true;
+        //            }
+        //        }
 
         return reported;
     }

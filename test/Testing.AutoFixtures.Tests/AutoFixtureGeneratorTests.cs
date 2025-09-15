@@ -67,30 +67,4 @@ public class AutoFixtureGeneratorTests
         // Then
         _ = await Verify(result).HashParameters().UseParameters(context.Id);
     }
-
-    [Theory]
-    [MemberData(nameof(GenerateMultipleFixturesData.Data), MemberType = typeof(GenerateMultipleFixturesData))]
-    public async Task GivenNoConstructor_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
-    {
-        // Given, When
-        var result = await context.GenerateAsync();
-
-        // Then
-        result
-           .Results
-           .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0001.Id));
-    }
-
-    [Theory]
-    [MemberData(nameof(ParameterArraySourceData.ParameterArrayDeck), MemberType = typeof(ParameterArraySourceData))]
-    public async Task GivenConstructorWithParameterArray_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
-    {
-        // Given, When
-        var result = await context.GenerateAsync();
-
-        // Then
-        result
-           .Results
-           .ShouldContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Diagnostics.AutoFixture0002.Id));
-    }
 }

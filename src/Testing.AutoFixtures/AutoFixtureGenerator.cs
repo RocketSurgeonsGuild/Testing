@@ -5,7 +5,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
 [Generator]
-public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGenerator
+public partial class AutoFixtureGenerator : IIncrementalGenerator
 {
     private static void CurrentGenerator(
         INamedTypeSymbol namedTypeSymbol,
@@ -51,14 +51,14 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
                 );
 
         var classDeclaration = BuildClassDeclaration(fixtureName)
-           .WithMembers(new(fullList));
+           .WithMembers([.. fullList]);
 
         var namespaceDeclaration = BuildNamespace(targetSymbol)
            .WithMembers(new(classDeclaration));
 
         var usingDirectives = new HashSet<string>(
                                   parameterSymbols
-                                     .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? string.Empty)
+                                     .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? "")
                                      .Where(x => !string.IsNullOrWhiteSpace(x))
                                      .Distinct()
                               )
@@ -112,20 +112,19 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
 
         context.RegisterSourceOutput(syntaxProvider, generateFixtureBuilder);
 
-        context.RegisterPostInitializationOutput(
-            initializationContext =>
-            {
-                initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.Source());
-                initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
-            }
+        context.RegisterPostInitializationOutput(initializationContext =>
+                                                 {
+                                                     initializationContext.AddSource("AutoFixtureAttribute.g.cs", Attribute.Source());
+                                                     initializationContext.AddSource($"{nameof(AutoFixtureBase)}.g.cs", AutoFixtureBase.Source);
+                                                 }
         );
 
-        void generateFixtureBuilder(
+        static void generateFixtureBuilder(
             SourceProductionContext productionContext,
             (GeneratorAttributeSyntaxContext context, Compilation compilation) valueTuple
         )
         {
-            ( var syntaxContext, var compilation ) = valueTuple;
+            (var syntaxContext, var compilation) = valueTuple;
 
             var classForFixture = GetClassForFixture(syntaxContext);
 
@@ -146,39 +145,6 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator //, ISourceGen
             }
 
             CurrentGenerator(classForFixture, syntaxContext.TargetSymbol, productionContext, compilation);
-        }
-    }
-
-    internal class ParameterReductionComparer : IEqualityComparer<IParameterSymbol>
-    {
-        public static IEqualityComparer<IParameterSymbol> Default { get; } = new ParameterReductionComparer();
-
-        public bool Equals(IParameterSymbol x, IParameterSymbol y) =>
-            ( x.Type.Equals(y.Type) && x.Name.Equals(y.Name) ) || SymbolEqualityComparer.Default.Equals(x, y);
-
-        public int GetHashCode(IParameterSymbol obj) => SymbolEqualityComparer.Default.GetHashCode(obj.Type) + obj.Type.GetHashCode() + obj.Name.GetHashCode();
-    }
-
-    internal class NamespaceComparer : IComparer<string>
-    {
-        public static NamespaceComparer Default { get; } = new();
-
-        public int Compare(string x, string y)
-        {
-            // Check if both namespaces start with "System"
-            var xIsSystem = x.StartsWith("System", StringComparison.Ordinal);
-            var yIsSystem = y.StartsWith("System", StringComparison.Ordinal);
-
-            return xIsSystem switch
-                   {
-                       // If only one of them starts with "System", prioritize it
-                       true when !yIsSystem => -1,
-                       false when yIsSystem => 1,
-                       // If both start with "System" or neither does, compare them alphabetically
-                       true when yIsSystem   => string.Compare(x, y, StringComparison.Ordinal),
-                       false when !yIsSystem => string.Compare(x, y, StringComparison.Ordinal),
-                       _                     => xIsSystem ? -1 : 1,
-                   };
         }
     }
 }
