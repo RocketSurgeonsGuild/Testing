@@ -59,7 +59,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator
         var usingDirectives = new HashSet<string>(
                                   parameterSymbols
                                      .Select(symbol => symbol.Type.ContainingNamespace?.ToDisplayString() ?? "")
-                                     .Where(x => !string.IsNullOrWhiteSpace(x))
+                                     .Where(containingNamespace => !string.IsNullOrWhiteSpace(containingNamespace) && containingNamespace != "<global namespace>")
                                      .Distinct()
                               )
                               {
