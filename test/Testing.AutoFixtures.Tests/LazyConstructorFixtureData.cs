@@ -1,5 +1,7 @@
 using FakeItEasy;
+
 using NSubstitute;
+
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
