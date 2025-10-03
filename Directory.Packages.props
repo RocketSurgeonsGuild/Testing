@@ -54,7 +54,7 @@
         <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.19" />
 
 
-        <PackageVersion Include="System.Reactive" Version="6.0.2" />
+        <PackageVersion Include="System.Reactive" Version="6.1.0" />
         <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-09" />
         <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
         <PackageVersion Include="Microsoft.CodeCoverage" Version="17.14.1" />
