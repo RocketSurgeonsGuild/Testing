@@ -20,7 +20,7 @@
         <GlobalPackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
         <PackageVersion Include="xunit.analyzers" Version="1.25.0" />
         <GlobalPackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
-        <GlobalPackageReference Include="JetBrains.ExternalAnnotations" Version="10.2.165" />
+        <GlobalPackageReference Include="JetBrains.ExternalAnnotations" Version="10.2.166" />
     </ItemGroup>
     <ItemGroup>
         <PackageVersion Include="JetBrains.Annotations.Sources" Version="2025.2.2" />
