@@ -58,7 +58,7 @@
         <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-09" />
         <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
         <PackageVersion Include="Microsoft.CodeCoverage" Version="17.14.1" />
-        <PackageVersion Include="FakeItEasy" Version="8.3.0" />
+        <PackageVersion Include="FakeItEasy" Version="9.0.0" />
 
         <PackageVersion Include="Shouldly" Version="4.3.0" />
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
