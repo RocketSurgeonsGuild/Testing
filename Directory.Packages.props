@@ -38,11 +38,11 @@
         <PackageVersion Include="Rocket.Surgery.Nuke" Version="2.9.12" />
         <PackageVersion Include="NuGet.ProjectModel" Version="6.14.0" />
 
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.14.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.Features" Version="4.14.0" />
-        <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.14.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="5.0.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.Features" Version="5.0.0" />
+        <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="5.0.0" />
         <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
         <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.3" />
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
