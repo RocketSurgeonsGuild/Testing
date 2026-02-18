@@ -1,9 +1,8 @@
 ﻿{
   FinalDiagnostics: [],
   GeneratorDiagnostics: {
-    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MyIncrementalGenerator: []
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator: []
   },
-  InputDiagnostics: [],
   ParseOptions: {
     DocumentationMode: Parse
   },
@@ -12,6 +11,7 @@
     netstandard.dll,
     System.Core.dll,
     System.dll,
+    System.Private.CoreLib.dll,
     System.Private.CoreLib.dll,
     System.Runtime.dll
   ]

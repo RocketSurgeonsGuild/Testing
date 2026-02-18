@@ -1,11 +1,12 @@
 ﻿{
+  FileOptions: {
+    test.g.cs: {
+      a: value
+    }
+  },
   FinalDiagnostics: [],
   GeneratorDiagnostics: {
     Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MyIncrementalGenerator: []
-  },
-  InputDiagnostics: [],
-  ParseOptions: {
-    DocumentationMode: Parse
   },
   References: [
     mscorlib.dll,

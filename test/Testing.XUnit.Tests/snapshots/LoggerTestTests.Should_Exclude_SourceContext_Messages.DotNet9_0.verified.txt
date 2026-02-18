@@ -1,8 +1,0 @@
-﻿[
-  {
-    Method: ITestOutputHelper.WriteLine(string message),
-    Arguments: [
-      [info] Info
-    ]
-  }
-]

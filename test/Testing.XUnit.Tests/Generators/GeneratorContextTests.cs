@@ -1,11 +1,15 @@
-﻿using System.Runtime.Loader;
+using System.Runtime.Loader;
 using System.Text;
+
 using FakeItEasy;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
+
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 using Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators;
+
 using Xunit.Abstractions;
 
 namespace Rocket.Surgery.Extensions.Testing.Tests.Generators;
@@ -77,7 +81,6 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
         var customSyntax = A.Fake<SyntaxTree>();
         _ = A.CallTo(() => customSyntax.FilePath).Returns("custom.cs");
         _ = A.CallTo(() => customSyntax.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
-
 
         var context = GeneratorTestContextBuilder
                      .Create()
@@ -279,7 +282,7 @@ public class Class1
                      .AddSource("file.cs", "")
                      .WithGenerator<MyIncrementalGenerator>()
                      .Build();
-        _ = await Verify(context.GenerateAsync()).HashParameters().UseParameters(name);
+        _ = await Verify(context.GenerateAsync()).UseParameters(name);
     }
 
     public static IEnumerable<object[]> GeneratorTestResultsCustomizerData()

@@ -3,10 +3,6 @@
   GeneratorDiagnostics: {
     Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MyIncrementalGenerator: []
   },
-  InputDiagnostics: [],
-  ParseOptions: {
-    DocumentationMode: Parse
-  },
   References: [
     mscorlib.dll,
     netstandard.dll,

@@ -26,6 +26,6 @@ public class Rsaf0003Tests
         var result = await context.GenerateAsync();
 
         // Then
-        _ = await Verify(result).HashParameters().UseParameters(context.Id);
+        _ = await Verify(result).UseParameters(context.Id);
     }
 }
