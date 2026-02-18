@@ -1,0 +1,11 @@
+﻿{
+  FileOptions: {
+    test.g.cs: {
+      a: value
+    }
+  },
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MyIncrementalGenerator: []
+  }
+}

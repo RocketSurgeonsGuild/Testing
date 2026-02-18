@@ -1,0 +1,15 @@
+﻿{
+  FinalDiagnostics: [],
+  InputDiagnostics: [],
+  ParseOptions: {
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

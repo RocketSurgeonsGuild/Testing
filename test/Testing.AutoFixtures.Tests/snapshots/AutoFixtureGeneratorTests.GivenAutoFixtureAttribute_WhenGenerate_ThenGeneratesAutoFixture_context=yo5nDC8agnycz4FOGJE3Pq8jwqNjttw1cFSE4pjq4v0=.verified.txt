@@ -1,0 +1,24 @@
+﻿{
+  AnalyzerDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0001: [],
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0002: [],
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0003: []
+  },
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator: []
+  },
+  ParseOptions: {
+    DocumentationMode: Parse
+  },
+  References: [
+    Microsoft.Extensions.Logging.Abstractions.dll,
+    mscorlib.dll,
+    netstandard.dll,
+    NSubstitute.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

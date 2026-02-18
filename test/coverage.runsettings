@@ -61,7 +61,6 @@
                 <ModulePath>.*GitVersion\.Tool\.dll</ModulePath>
                 <ModulePath>.*JetBrains\.Annotations\.Sources\.dll</ModulePath>
                 <ModulePath>.*JetBrains\.dotCover\.CommandLineTools\.dll</ModulePath>
-                <ModulePath>.*JetBrains\.ExternalAnnotations\.dll</ModulePath>
                 <ModulePath>.*JetBrains\.ReSharper\.GlobalTools\.dll</ModulePath>
                 <ModulePath>.*Microsoft\.CodeAnalysis\.Analyzers\.dll</ModulePath>
                 <ModulePath>.*Microsoft\.CodeAnalysis\.BannedApiAnalyzers\.dll</ModulePath>

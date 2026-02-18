@@ -1,0 +1,71 @@
+﻿{
+  AnalyzerDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.TestAnalyzer: [
+      {
+        Id: TEST0001,
+        Title: title,
+        Severity: Warning,
+        WarningLevel: 1,
+        Location: : (0,0)-(0,0),
+        MessageFormat: message,
+        Message: message,
+        Category: category
+      }
+    ]
+  },
+  CodeFixes: {
+    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.TestCodeFix: [
+      {
+        CodeActions: [
+          {
+            Title: Test Code Action,
+            Tags: null,
+            TextChanges: {
+              Input0.cs: [
+                {
+                  Length: 0,
+                  NewText: NewText
+                }
+              ]
+            }
+          }
+        ],
+        Diagnostic: {
+          Id: TEST0001,
+          Title: title,
+          Severity: Warning,
+          WarningLevel: 1,
+          Location: : (0,0)-(0,0),
+          MessageFormat: message,
+          Message: message,
+          Category: category
+        },
+        Document: Input0.cs
+      }
+    ]
+  },
+  FinalDiagnostics: [
+    {
+      Id: TEST0001,
+      Title: title,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: : (0,0)-(0,0),
+      MessageFormat: message,
+      Message: message,
+      Category: category
+    }
+  ],
+  InputDiagnostics: [],
+  ParseOptions: {
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

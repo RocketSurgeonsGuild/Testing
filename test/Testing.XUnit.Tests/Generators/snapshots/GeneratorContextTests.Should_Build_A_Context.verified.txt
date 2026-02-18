@@ -1,0 +1,20 @@
+﻿{
+  ContextId: aMGDjiZvcYUvRa8XCojQ4BCkZvWSaWLF4CQN1vyXlmw=,
+  FinalDiagnostics: [],
+  InputDiagnostics: [],
+  ParseOptions: {
+    DocumentationMode: Diagnose,
+    PreprocessorSymbolNames: [
+      SOMETHING,
+      SOMETHING_ELSE
+    ]
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

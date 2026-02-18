@@ -1,0 +1,40 @@
+﻿{
+  AnalyzerDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.TestAnalyzer: [
+      {
+        Id: TEST0001,
+        Title: title,
+        Severity: Warning,
+        WarningLevel: 1,
+        Location: : (0,0)-(0,0),
+        MessageFormat: message,
+        Message: message,
+        Category: category
+      }
+    ]
+  },
+  FinalDiagnostics: [
+    {
+      Id: TEST0001,
+      Title: title,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: : (0,0)-(0,0),
+      MessageFormat: message,
+      Message: message,
+      Category: category
+    }
+  ],
+  InputDiagnostics: [],
+  ParseOptions: {
+    DocumentationMode: Parse
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}
