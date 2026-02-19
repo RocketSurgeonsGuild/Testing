@@ -23,8 +23,8 @@
         <GlobalPackageReference Include="JetBrains.Annotations.Sources" Version="2025.2.4" Condition="$(MSBuildProjectName) != '.build'" />
     </ItemGroup>
     <ItemGroup>
-        <PackageVersion Include="JetBrains.dotCover.CommandLineTools" Version="2025.3.2" />
-        <PackageVersion Include="JetBrains.ReSharper.GlobalTools" Version="2025.3.2" />
+        <PackageVersion Include="JetBrains.dotCover.CommandLineTools" Version="2025.3.3" />
+        <PackageVersion Include="JetBrains.ReSharper.GlobalTools" Version="2025.3.3" />
         <PackageVersion Include="Polyfill" Version="9.9.0" />
         <PackageVersion Include="Serilog.Sinks.Spectre" Version="0.5.0" />
         <PackageVersion Include="TUnit" Version="1.16.4" />
