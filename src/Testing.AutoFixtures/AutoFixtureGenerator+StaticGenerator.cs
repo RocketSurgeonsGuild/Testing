@@ -237,7 +237,10 @@ public partial class AutoFixtureGenerator
             list.Add(Token(SyntaxKind.CommaToken));
         }
 
-        list.RemoveAt(list.Count - 1);
+        if (list.Count > 0)
+        {
+            list.RemoveAt(list.Count - 1);
+        }
         return GlobalStatement(
             LocalFunctionStatement(
                     IdentifierName(className),

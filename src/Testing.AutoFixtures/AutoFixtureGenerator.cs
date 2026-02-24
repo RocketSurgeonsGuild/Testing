@@ -39,6 +39,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator
             namedTypeSymbol
                .Constructors
                .SelectMany(methodSymbol => methodSymbol.Parameters)
+               .Where(p => !SymbolEqualityComparer.Default.Equals(p.Type, namedTypeSymbol))
                .Distinct(ParameterReductionComparer.Default)
                .ToList();
 
@@ -105,7 +106,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator
                .SyntaxProvider
                .ForAttributeWithMetadataName(
                     "Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureAttribute",
-                    (node, _) => node.IsKind(SyntaxKind.ClassDeclaration),
+                    (node, _) => node.IsKind(SyntaxKind.ClassDeclaration) || node.IsKind(SyntaxKind.RecordDeclaration),
                     (syntaxContext, _) => syntaxContext
                 )
                .Combine(context.CompilationProvider);
