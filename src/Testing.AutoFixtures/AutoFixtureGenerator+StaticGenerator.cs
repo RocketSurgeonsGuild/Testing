@@ -136,14 +136,16 @@ public partial class AutoFixtureGenerator
         var isAbstract = parameterSymbol.IsAbstract;
         var isInterface = parameterSymbol.Type.TypeKind == TypeKind.Interface;
 
+        var (fieldType, initializer) = GetFieldTypeAndInitializer(parameterSymbol, compilation);
         var symbolName = $"_{parameterSymbol.Name}";
-        return !isAbstract && !isInterface
+
+        return !isAbstract && !isInterface && initializer is null
             ? FieldDeclaration(
                     VariableDeclaration(
                             IdentifierName(
                                 Identifier(
                                     TriviaList(),
-                                    parameterSymbol.Type.GetGenericDisplayName(),
+                                    fieldType,
                                     TriviaList(
                                         Space
                                     )
@@ -176,7 +178,7 @@ public partial class AutoFixtureGenerator
                            IdentifierName(
                                Identifier(
                                    TriviaList(),
-                                   parameterSymbol.Type.GetGenericDisplayName(),
+                                   fieldType,
                                    TriviaList(
                                        Space
                                    )
@@ -196,7 +198,7 @@ public partial class AutoFixtureGenerator
                                    )
                                   .WithInitializer(
                                        EqualsValueClause(
-                                               GetFieldInvocation(compilation, parameterSymbol)
+                                               initializer ?? GetFieldInvocation(compilation, parameterSymbol)
                                            )
                                           .WithEqualsToken(
                                                Token(
@@ -223,6 +225,31 @@ public partial class AutoFixtureGenerator
                    )
                )
               .WithTrailingTrivia(LineFeed);
+    }
+
+    private static (string fieldType, ExpressionSyntax? initializer) GetFieldTypeAndInitializer(IParameterSymbol parameterSymbol, Compilation compilation)
+    {
+        var fieldType = parameterSymbol.Type.GetGenericDisplayName();
+        ExpressionSyntax? initializer = null;
+
+        if (parameterSymbol.Type is INamedTypeSymbol namedTypeSymbol && namedTypeSymbol.IsGenericType)
+        {
+            var fullMetadataName = namedTypeSymbol.OriginalDefinition.ToDisplayString();
+            if (fullMetadataName is "System.Collections.Generic.IEnumerable<T>" or "System.Collections.Generic.IList<T>" or "System.Collections.Generic.ICollection<T>")
+            {
+                var typeArgument = namedTypeSymbol.TypeArguments[0].GetGenericDisplayName();
+                fieldType = $"Collection<{typeArgument}>";
+                initializer = ImplicitObjectCreationExpression();
+            }
+            else if (fullMetadataName is "System.Collections.Generic.IReadOnlyList<T>" or "System.Collections.Generic.IReadOnlyCollection<T>")
+            {
+                var typeArgument = namedTypeSymbol.TypeArguments[0].GetGenericDisplayName();
+                fieldType = $"List<{typeArgument}>";
+                initializer = ImplicitObjectCreationExpression();
+            }
+        }
+
+        return (fieldType, initializer);
     }
 
     private static MemberDeclarationSyntax BuildBuildMethod(
@@ -269,8 +296,9 @@ public partial class AutoFixtureGenerator
         );
     }
 
-    private static MemberDeclarationSyntax WithPropertyMethod(IParameterSymbol constructorParameter, string fixtureName)
+    private static MemberDeclarationSyntax WithPropertyMethod(IParameterSymbol constructorParameter, string fixtureName, Compilation compilation)
     {
+        var (fieldType, _) = GetFieldTypeAndInitializer(constructorParameter, compilation);
         return GlobalStatement(
             LocalFunctionStatement(
                     IdentifierName(
@@ -305,7 +333,7 @@ public partial class AutoFixtureGenerator
                                         IdentifierName(
                                             Identifier(
                                                 TriviaList(),
-                                                constructorParameter.Type.GetGenericDisplayName(),
+                                                fieldType,
                                                 TriviaList(
                                                     Space
                                                 )

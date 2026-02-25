@@ -45,7 +45,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator
 
         var fullList =
             new[] { BuildOperator(className, fixtureName) }
-               .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol, fixtureName)))
+               .Concat(parameterSymbols.Select(symbol => WithPropertyMethod(symbol, fixtureName, compilation)))
                .Concat([BuildBuildMethod(className, parameterSymbols)])
                .Concat(
                     parameterSymbols.Select(symbol => BuildFields(symbol, compilation))
