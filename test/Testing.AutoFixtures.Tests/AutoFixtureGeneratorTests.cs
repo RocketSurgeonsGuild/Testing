@@ -57,6 +57,7 @@ public class AutoFixtureGeneratorTests
     [MemberData(nameof(DifferentNamedFixtureData.Data), MemberType = typeof(DifferentNamedFixtureData))]
     [MemberData(nameof(LazyConstructorFixtureData.Data), MemberType = typeof(LazyConstructorFixtureData))]
     [MemberData(nameof(RecordConstructorFixtureData.Data), MemberType = typeof(RecordConstructorFixtureData))]
+    [MemberData(nameof(CollectionExpressionFixtureData.Data), MemberType = typeof(CollectionExpressionFixtureData))]
     public async Task GivenAutoFixtureAttribute_WhenGenerate_ThenGeneratesAutoFixture(
         GeneratorTestContext context
     )

@@ -12,18 +12,16 @@ internal class RecordConstructorFixtureData : AutoFixtureSourceData
     ];
 
     private const string RecordSource = @"
-namespace Goony.Goo.Goo
+namespace Goony.Goo.Goo;
 
 public record UserAccount(string UserId, string? LastLogin = null, string? ExpiringRefresh = null);
 ";
     private const string RecordFixture = @"
 using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
-namespace Goony.Goo.Goo.Tests
+namespace Goony.Goo.Goo.Tests;
 
 [AutoFixture(typeof(UserAccount))]
 public record UserAccountFixture;
 ";
 }
-
-public record UserAccount(string UserId, string? LastLogin = null, string? ExpiringRefresh = null);
