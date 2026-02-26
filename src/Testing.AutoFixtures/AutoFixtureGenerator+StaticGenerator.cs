@@ -133,13 +133,127 @@ public partial class AutoFixtureGenerator
         Compilation compilation
     )
     {
-        var isAbstract = parameterSymbol.IsAbstract;
+        var isAbstract = parameterSymbol.Type.IsAbstract;
         var isInterface = parameterSymbol.Type.TypeKind == TypeKind.Interface;
 
         var (fieldType, initializer) = GetFieldTypeAndInitializer(parameterSymbol, compilation);
         var symbolName = $"_{parameterSymbol.Name}";
 
-        return !isAbstract && !isInterface && initializer is null
+        if (initializer is not null)
+        {
+            return FieldDeclaration(
+                   VariableDeclaration(
+                           IdentifierName(
+                               Identifier(
+                                   TriviaList(),
+                                   fieldType,
+                                   TriviaList(
+                                       Space
+                                   )
+                               )
+                           )
+                       )
+                      .WithVariables(
+                           SingletonSeparatedList(
+                               VariableDeclarator(
+                                       Identifier(
+                                           TriviaList(),
+                                           symbolName,
+                                           TriviaList(
+                                               Space
+                                           )
+                                       )
+                                   )
+                                  .WithInitializer(
+                                       EqualsValueClause(
+                                               initializer
+                                           )
+                                          .WithEqualsToken(
+                                               Token(
+                                                   TriviaList(),
+                                                   SyntaxKind.EqualsToken,
+                                                   TriviaList(
+                                                       Space
+                                                   )
+                                               )
+                                           )
+                                   )
+                           )
+                       )
+               )
+              .WithModifiers(
+                   TokenList(
+                       Token(
+                           TriviaList(),
+                           SyntaxKind.PrivateKeyword,
+                           TriviaList(
+                               Space
+                           )
+                       )
+                   )
+               )
+              .WithTrailingTrivia(LineFeed);
+        }
+
+        var isKnownCollection = parameterSymbol.Type.Name is "IEnumerable" or "IList" or "ICollection" or "IReadOnlyList" or "IReadOnlyCollection";
+
+        if (isKnownCollection && parameterSymbol.Type is INamedTypeSymbol { IsGenericType: true })
+        {
+             return FieldDeclaration(
+                   VariableDeclaration(
+                           IdentifierName(
+                               Identifier(
+                                   TriviaList(),
+                                   fieldType,
+                                   TriviaList(
+                                       Space
+                                   )
+                               )
+                           )
+                       )
+                      .WithVariables(
+                           SingletonSeparatedList(
+                               VariableDeclarator(
+                                       Identifier(
+                                           TriviaList(),
+                                           symbolName,
+                                           TriviaList(
+                                               Space
+                                           )
+                                       )
+                                   )
+                                  .WithInitializer(
+                                       EqualsValueClause(
+                                               CollectionExpression(SeparatedList<CollectionElementSyntax>())
+                                           )
+                                          .WithEqualsToken(
+                                               Token(
+                                                   TriviaList(),
+                                                   SyntaxKind.EqualsToken,
+                                                   TriviaList(
+                                                       Space
+                                                   )
+                                               )
+                                           )
+                                   )
+                           )
+                       )
+               )
+              .WithModifiers(
+                   TokenList(
+                       Token(
+                           TriviaList(),
+                           SyntaxKind.PrivateKeyword,
+                           TriviaList(
+                               Space
+                           )
+                       )
+                   )
+               )
+              .WithTrailingTrivia(LineFeed);
+        }
+
+        return !isAbstract && !isInterface
             ? FieldDeclaration(
                     VariableDeclaration(
                             IdentifierName(
@@ -198,7 +312,7 @@ public partial class AutoFixtureGenerator
                                    )
                                   .WithInitializer(
                                        EqualsValueClause(
-                                               initializer ?? GetFieldInvocation(compilation, parameterSymbol)
+                                               GetFieldInvocation(compilation, parameterSymbol)
                                            )
                                           .WithEqualsToken(
                                                Token(
@@ -234,16 +348,44 @@ public partial class AutoFixtureGenerator
 
         if (parameterSymbol.Type is INamedTypeSymbol namedTypeSymbol && namedTypeSymbol.IsGenericType)
         {
-            var fullMetadataName = namedTypeSymbol.OriginalDefinition.ToDisplayString();
-            if (fullMetadataName is "System.Collections.Generic.IEnumerable<T>" or "System.Collections.Generic.IList<T>" or "System.Collections.Generic.ICollection<T>")
+            var originalDefinition = namedTypeSymbol.OriginalDefinition;
+            var iEnumerable = compilation.GetTypeByMetadataName("System.Collections.Generic.IEnumerable`1");
+            var iList = compilation.GetTypeByMetadataName("System.Collections.Generic.IList`1");
+            var iCollection = compilation.GetTypeByMetadataName("System.Collections.Generic.ICollection`1");
+            var iReadOnlyList = compilation.GetTypeByMetadataName("System.Collections.Generic.IReadOnlyList`1");
+            var iReadOnlyCollection = compilation.GetTypeByMetadataName("System.Collections.Generic.IReadOnlyCollection`1");
+
+            var isCollectionInterface = SymbolEqualityComparer.Default.Equals(originalDefinition, iEnumerable)
+             || SymbolEqualityComparer.Default.Equals(originalDefinition, iList)
+             || SymbolEqualityComparer.Default.Equals(originalDefinition, iCollection)
+             || SymbolEqualityComparer.Default.Equals(originalDefinition, iReadOnlyList)
+             || SymbolEqualityComparer.Default.Equals(originalDefinition, iReadOnlyCollection);
+
+            if (!isCollectionInterface)
             {
-                var typeArgument = namedTypeSymbol.TypeArguments[0].GetGenericDisplayName();
+                var fullMetadataName = originalDefinition.ToDisplayString();
+                isCollectionInterface = fullMetadataName is "System.Collections.Generic.IEnumerable<T>"
+                    or "System.Collections.Generic.IList<T>"
+                    or "System.Collections.Generic.ICollection<T>"
+                    or "System.Collections.Generic.IReadOnlyList<T>"
+                    or "System.Collections.Generic.IReadOnlyCollection<T>";
+            }
+
+            if (isCollectionInterface)
+            {
                 initializer = CollectionExpression(SeparatedList<CollectionElementSyntax>());
             }
-            else if (fullMetadataName is "System.Collections.Generic.IReadOnlyList<T>" or "System.Collections.Generic.IReadOnlyCollection<T>")
+            else
             {
-                var typeArgument = namedTypeSymbol.TypeArguments[0].GetGenericDisplayName();
-                initializer = CollectionExpression(SeparatedList<CollectionElementSyntax>());
+                var displayString = namedTypeSymbol.ToDisplayString();
+                if (displayString.StartsWith("System.Collections.Generic.IEnumerable<") ||
+                    displayString.StartsWith("System.Collections.Generic.IList<") ||
+                    displayString.StartsWith("System.Collections.Generic.ICollection<") ||
+                    displayString.StartsWith("System.Collections.Generic.IReadOnlyList<") ||
+                    displayString.StartsWith("System.Collections.Generic.IReadOnlyCollection<"))
+                {
+                    initializer = CollectionExpression(SeparatedList<CollectionElementSyntax>());
+                }
             }
         }
 
