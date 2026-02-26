@@ -238,14 +238,12 @@ public partial class AutoFixtureGenerator
             if (fullMetadataName is "System.Collections.Generic.IEnumerable<T>" or "System.Collections.Generic.IList<T>" or "System.Collections.Generic.ICollection<T>")
             {
                 var typeArgument = namedTypeSymbol.TypeArguments[0].GetGenericDisplayName();
-                fieldType = $"Collection<{typeArgument}>";
-                initializer = ImplicitObjectCreationExpression();
+                initializer = CollectionExpression(SeparatedList<CollectionElementSyntax>());
             }
             else if (fullMetadataName is "System.Collections.Generic.IReadOnlyList<T>" or "System.Collections.Generic.IReadOnlyCollection<T>")
             {
                 var typeArgument = namedTypeSymbol.TypeArguments[0].GetGenericDisplayName();
-                fieldType = $"List<{typeArgument}>";
-                initializer = ImplicitObjectCreationExpression();
+                initializer = CollectionExpression(SeparatedList<CollectionElementSyntax>());
             }
         }
 

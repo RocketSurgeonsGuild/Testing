@@ -12,6 +12,6 @@ namespace Goony.Goo.Goo.Tests
         public static implicit operator Deck(DeckFixture fixture) => fixture.Build();
         public DeckFixture WithEnumerable(System.Collections.Generic.IEnumerable<Goony.Goo.Goo.Card> cards) => With(ref _cards, cards);
         private Deck Build() => new Deck(_cards);
-        private System.Collections.Generic.IEnumerable<Goony.Goo.Goo.Card> _cards = Substitute.For<System.Collections.Generic.IEnumerable<Goony.Goo.Goo.Card>>();
+        private System.Collections.Generic.IEnumerable<Goony.Goo.Goo.Card> _cards = [];
     }
 }
