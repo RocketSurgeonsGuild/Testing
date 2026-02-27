@@ -1,4 +1,5 @@
 using System.Text;
+
 using Microsoft.CodeAnalysis;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
@@ -7,9 +8,9 @@ public static class Methods
 {
     public static string GetFullMetadataName(this ISymbol? s)
     {
-        if (s == null || IsRootNamespace(s))
+        if (s is null || IsRootNamespace(s))
         {
-            return string.Empty;
+            return "";
         }
 
         var sb = new StringBuilder(s.MetadataName);
@@ -38,22 +39,19 @@ public static class Methods
         static bool IsRootNamespace(ISymbol symbol)
         {
             INamespaceSymbol? s;
-            return ( s = symbol as INamespaceSymbol ) != null && s.IsGlobalNamespace;
+            return ( s = symbol as INamespaceSymbol ) is not null && s.IsGlobalNamespace;
         }
     }
 
-    public static bool IsOpenGenericType(this INamedTypeSymbol type)
-    {
-        return type.IsGenericType
-         && ( type.IsUnboundGenericType
-             || type.TypeArguments.All(z => z.TypeKind == TypeKind.TypeParameter) );
-    }
+    public static bool IsOpenGenericType(this INamedTypeSymbol type) => type.IsGenericType
+        && ( type.IsUnboundGenericType
+            || type.TypeArguments.All(z => z.TypeKind == TypeKind.TypeParameter) );
 
     public static string GetGenericDisplayName(this ISymbol? symbol)
     {
-        if (symbol == null || IsRootNamespace(symbol))
+        if (symbol is null || IsRootNamespace(symbol))
         {
-            return string.Empty;
+            return "";
         }
 
         var sb = new StringBuilder(symbol.MetadataName);
@@ -88,7 +86,7 @@ public static class Methods
         var workingSymbol = symbol.ContainingSymbol;
 
         if (workingSymbol is null)
-            return string.Empty;
+            return "";
 
         while (!IsRootNamespace(workingSymbol))
         {
@@ -108,7 +106,7 @@ public static class Methods
         static bool IsRootNamespace(ISymbol symbol)
         {
             INamespaceSymbol? s;
-            return ( s = symbol as INamespaceSymbol ) != null && s.IsGlobalNamespace;
+            return ( s = symbol as INamespaceSymbol ) is not null && s.IsGlobalNamespace;
         }
     }
 }
