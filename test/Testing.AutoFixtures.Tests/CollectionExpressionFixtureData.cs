@@ -37,4 +37,3 @@ namespace Goony.Goo.Goo.Tests;
 public record CollectionSupportFixture;
 ";
 }
-

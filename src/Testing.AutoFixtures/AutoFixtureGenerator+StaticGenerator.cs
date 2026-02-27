@@ -197,63 +197,60 @@ public partial class AutoFixtureGenerator
 
         var isKnownCollection = parameterSymbol.Type.Name is "IEnumerable" or "IList" or "ICollection" or "IReadOnlyList" or "IReadOnlyCollection";
 
-        if (isKnownCollection && parameterSymbol.Type is INamedTypeSymbol { IsGenericType: true })
-        {
-             return FieldDeclaration(
-                   VariableDeclaration(
-                           IdentifierName(
-                               Identifier(
-                                   TriviaList(),
-                                   fieldType,
-                                   TriviaList(
-                                       Space
-                                   )
-                               )
-                           )
-                       )
-                      .WithVariables(
-                           SingletonSeparatedList(
-                               VariableDeclarator(
-                                       Identifier(
-                                           TriviaList(),
-                                           symbolName,
-                                           TriviaList(
-                                               Space
-                                           )
-                                       )
-                                   )
-                                  .WithInitializer(
-                                       EqualsValueClause(
-                                               CollectionExpression(SeparatedList<CollectionElementSyntax>())
-                                           )
-                                          .WithEqualsToken(
-                                               Token(
-                                                   TriviaList(),
-                                                   SyntaxKind.EqualsToken,
-                                                   TriviaList(
-                                                       Space
-                                                   )
-                                               )
-                                           )
-                                   )
-                           )
-                       )
-               )
-              .WithModifiers(
-                   TokenList(
-                       Token(
-                           TriviaList(),
-                           SyntaxKind.PrivateKeyword,
-                           TriviaList(
-                               Space
-                           )
-                       )
-                   )
-               )
-              .WithTrailingTrivia(LineFeed);
-        }
-
-        return !isAbstract && !isInterface
+        return  isKnownCollection && parameterSymbol.Type is INamedTypeSymbol { IsGenericType: true } 
+            ?   FieldDeclaration(
+                  VariableDeclaration(
+                          IdentifierName(
+                              Identifier(
+                                  TriviaList(),
+                                  fieldType,
+                                  TriviaList(
+                                      Space
+                                  )
+                              )
+                          )
+                      )
+                     .WithVariables(
+                          SingletonSeparatedList(
+                              VariableDeclarator(
+                                      Identifier(
+                                          TriviaList(),
+                                          symbolName,
+                                          TriviaList(
+                                              Space
+                                          )
+                                      )
+                                  )
+                                 .WithInitializer(
+                                      EqualsValueClause(
+                                              CollectionExpression(SeparatedList<CollectionElementSyntax>())
+                                          )
+                                         .WithEqualsToken(
+                                              Token(
+                                                  TriviaList(),
+                                                  SyntaxKind.EqualsToken,
+                                                  TriviaList(
+                                                      Space
+                                                  )
+                                              )
+                                          )
+                                  )
+                          )
+                      )
+              )
+             .WithModifiers(
+                  TokenList(
+                      Token(
+                          TriviaList(),
+                          SyntaxKind.PrivateKeyword,
+                          TriviaList(
+                              Space
+                          )
+                      )
+                  )
+              )
+             .WithTrailingTrivia(LineFeed)  
+            :   !isAbstract && !isInterface
             ? FieldDeclaration(
                     VariableDeclaration(
                             IdentifierName(
