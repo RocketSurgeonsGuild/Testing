@@ -92,14 +92,7 @@ public static class Methods
 
         while (!IsRootNamespace(workingSymbol))
         {
-            if (workingSymbol is ITypeSymbol && last is ITypeSymbol)
-            {
-                sb.Insert(0, '+');
-            }
-            else
-            {
-                sb.Insert(0, '.');
-            }
+            sb.Insert(0, '.');
 
             sb.Insert(
                 0,
@@ -107,6 +100,7 @@ public static class Methods
             );
             //sb.Insert(0, symbol.MetadataName);
             workingSymbol = workingSymbol.ContainingSymbol;
+            last = workingSymbol;
         }
 
         return sb.ToString();
