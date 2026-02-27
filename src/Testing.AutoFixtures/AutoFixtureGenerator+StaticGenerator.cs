@@ -197,8 +197,8 @@ public partial class AutoFixtureGenerator
 
         var isKnownCollection = parameterSymbol.Type.Name is "IEnumerable" or "IList" or "ICollection" or "IReadOnlyList" or "IReadOnlyCollection";
 
-        return  isKnownCollection && parameterSymbol.Type is INamedTypeSymbol { IsGenericType: true } 
-            ?   FieldDeclaration(
+        return isKnownCollection && parameterSymbol.Type is INamedTypeSymbol { IsGenericType: true }
+            ? FieldDeclaration(
                   VariableDeclaration(
                           IdentifierName(
                               Identifier(
@@ -249,8 +249,8 @@ public partial class AutoFixtureGenerator
                       )
                   )
               )
-             .WithTrailingTrivia(LineFeed)  
-            :   !isAbstract && !isInterface
+             .WithTrailingTrivia(LineFeed)
+            : !isAbstract && !isInterface
             ? FieldDeclaration(
                     VariableDeclaration(
                             IdentifierName(
