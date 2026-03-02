@@ -6,6 +6,8 @@
 *.user
 *.sln.docstates
 
+.DS_Store
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -207,12 +209,4 @@ src/Cake.Scripts/tools/tools/
 codealike.json
 
 # Rider
-.idea/
-
-# mac OS
-.DS_STORE
-/test/Testing.Tests/Fixtures/Directory.Packages.props
-ImplicitPackageReferences.props
-ImplicitPackageReferences.targets
-
 *.received.*
