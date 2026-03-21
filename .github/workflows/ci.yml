@@ -106,11 +106,11 @@ jobs:
           clean: 'false'
           fetch-depth: '0'
       - name: 🔨 Use .NET Core 8.0 SDK
-        uses: actions/setup-dotnet@v5.1.0
+        uses: actions/setup-dotnet@v5.2.0
         with:
           dotnet-version: '8.0.x'
       - name: 🔨 Use .NET Core 10.0 SDK
-        uses: actions/setup-dotnet@v5.1.0
+        uses: actions/setup-dotnet@v5.2.0
         with:
           dotnet-version: '10.0.x'
       - name: ⚒️ dotnet tool restore
@@ -170,7 +170,7 @@ jobs:
       - name: 🚀 Publish Codecov Coverage
         if: always() && (github.event_name != 'pull_request' && github.event_name != 'pull_request_target') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.user.login != 'renovate[bot]' && github.event.pull_request.user.login != 'dependabot[bot]')
         continue-on-error: true
-        uses: codecov/codecov-action@v5.5.2
+        uses: codecov/codecov-action@v5.5.3
         with:
           name: 'actions'
           token: '${{ secrets.CODECOV_TOKEN }}'
