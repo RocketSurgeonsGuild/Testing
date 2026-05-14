@@ -69,6 +69,6 @@ public class AutoFixtureGeneratorTests
                .GenerateAsync();
 
         // Then
-        _ = await Verify(result).UseParameters(context.Id);
+        _ = await Verify(result).UseFileName(context.Id);
     }
 }
