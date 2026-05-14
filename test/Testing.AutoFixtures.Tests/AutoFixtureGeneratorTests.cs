@@ -69,6 +69,6 @@ public class AutoFixtureGeneratorTests
                .GenerateAsync();
 
         // Then
-        _ = await Verify(result).UseFileName(context.Id);
+        _ = await Verify(result).UseFileName(context.Id.Replace('/', '-').Replace('+', '-').TrimEnd('='));
     }
 }

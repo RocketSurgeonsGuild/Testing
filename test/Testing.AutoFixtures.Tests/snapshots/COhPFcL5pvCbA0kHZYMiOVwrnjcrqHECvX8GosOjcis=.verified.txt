@@ -6,7 +6,17 @@
         Title: classes without constructors are currently not supported,
         Severity: Info,
         WarningLevel: 1,
-        Location: Input1.cs: (5,1)-(5,39),
+        Location: Input0.cs: (19,4)-(19,25),
+        MessageFormat: ,
+        Message: ,
+        Category: Support
+      },
+      {
+        Id: Rsaf0001,
+        Title: classes without constructors are currently not supported,
+        Severity: Info,
+        WarningLevel: 1,
+        Location: Input0.cs: (21,4)-(21,26),
         MessageFormat: ,
         Message: ,
         Category: Support
@@ -26,6 +36,7 @@
     Microsoft.Extensions.Logging.Abstractions.dll,
     mscorlib.dll,
     netstandard.dll,
+    NSubstitute.dll,
     System.Core.dll,
     System.dll,
     System.Private.CoreLib.dll,
