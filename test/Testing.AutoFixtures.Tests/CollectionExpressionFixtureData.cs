@@ -34,6 +34,6 @@ using Rocket.Surgery.Extensions.Testing.AutoFixtures;
 namespace Goony.Goo.Goo.Tests;
 
 [AutoFixture(typeof(CollectionSupport))]
-public record CollectionSupportFixture;
+internal sealed partial class CollectionSupportFixture { }
 ";
 }

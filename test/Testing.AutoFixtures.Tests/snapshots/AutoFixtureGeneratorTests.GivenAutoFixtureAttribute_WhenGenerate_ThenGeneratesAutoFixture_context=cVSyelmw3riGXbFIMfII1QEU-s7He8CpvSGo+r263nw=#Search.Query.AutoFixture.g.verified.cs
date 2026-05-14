@@ -1,4 +1,4 @@
-//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/Search.Query.AutoFixture.g.cs
+﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/Search.Query.AutoFixture.g.cs
 using System.Collections.ObjectModel;
 using Goony.Goo.Goo;
 using NSubstitute;
