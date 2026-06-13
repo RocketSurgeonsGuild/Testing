@@ -29,7 +29,7 @@
         <PackageVersion Include="Serilog.Sinks.Spectre" Version="0.5.0" />
         <PackageVersion Include="TUnit" Version="1.54.0" />
         <PackageVersion Include="TUnit.Core" Version="1.54.0" />
-        <PackageVersion Include="Verify.DiffPlex" Version="3.1.2" />
+        <PackageVersion Include="Verify.DiffPlex" Version="3.2.0" />
         <PackageVersion Include="GitVersion.Tool" Version="6.7.0" />
         <PackageVersion Include="Nuke.Common" Version="9.0.4" />
         <PackageVersion Include="ReportGenerator" Version="5.5.10" />
@@ -60,9 +60,9 @@
         <PackageVersion Include="Verify.FakeItEasy" Version="2.1.0" />
         <PackageVersion Include="Verify.Moq" Version="2.2.0" />
         <PackageVersion Include="Verify.NSubstitute" Version="2.1.0" />
-        <PackageVersion Include="Verify.TUnit" Version="31.18.0" />
+        <PackageVersion Include="Verify.TUnit" Version="31.19.1" />
         <PackageVersion Include="Verify.XUnit" Version="31.12.5" />
-        <PackageVersion Include="Verify.XUnitV3" Version="31.18.0" />
+        <PackageVersion Include="Verify.XUnitV3" Version="31.19.1" />
         <PackageVersion Include="xunit" Version="2.9.3" />
         <PackageVersion Include="xunit.abstractions" Version="2.0.3" />
         <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
