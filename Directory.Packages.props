@@ -20,7 +20,7 @@
         <GlobalPackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
         <PackageVersion Include="xunit.analyzers" Version="1.27.0" />
         <GlobalPackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
-        <GlobalPackageReference Include="JetBrains.Annotations.Sources" Version="2025.2.4" Condition="$(MSBuildProjectName) != '.build'" />
+        <GlobalPackageReference Include="JetBrains.Annotations.Sources" Version="2026.2.0" Condition="$(MSBuildProjectName) != '.build'" />
     </ItemGroup>
     <ItemGroup>
         <PackageVersion Include="JetBrains.dotCover.CommandLineTools" Version="2026.1.3" />
