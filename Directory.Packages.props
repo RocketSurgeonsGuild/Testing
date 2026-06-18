@@ -48,7 +48,7 @@
         <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
         <PackageVersion Include="Serilog.Sinks.Observable" Version="3.0.0" />
         <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.19" />
-        <PackageVersion Include="System.Reactive" Version="7.0.0-preview.20" />
+        <PackageVersion Include="System.Reactive" Version="7.0.0-rc.1" />
         <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-09" />
         <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
         <PackageVersion Include="Microsoft.CodeCoverage" Version="18.5.1" />
