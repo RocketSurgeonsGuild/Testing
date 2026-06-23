@@ -1,0 +1,441 @@
+lockfile_version: '1'
+generated_at: '2026-06-23T02:59:59.334492+00:00'
+apm_version: 0.20.0
+dependencies:
+- repo_url: antfu/skills
+  host: github.com
+  resolved_commit: a74f281a27dadc02397bc1a174b0f2c97531b6ae
+  virtual_path: skills/vitepress
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/vitepress
+  - .agents/skills/vitepress/GENERATION.md
+  - .agents/skills/vitepress/SKILL.md
+  - .agents/skills/vitepress/references/advanced-i18n.md
+  - .agents/skills/vitepress/references/advanced-ssr.md
+  - .agents/skills/vitepress/references/core-cli.md
+  - .agents/skills/vitepress/references/core-config.md
+  - .agents/skills/vitepress/references/core-markdown.md
+  - .agents/skills/vitepress/references/core-routing.md
+  - .agents/skills/vitepress/references/features-code-blocks.md
+  - .agents/skills/vitepress/references/features-data-loading.md
+  - .agents/skills/vitepress/references/features-dynamic-routes.md
+  - .agents/skills/vitepress/references/features-vue.md
+  - .agents/skills/vitepress/references/recipes-deploy.md
+  - .agents/skills/vitepress/references/theme-config.md
+  - .agents/skills/vitepress/references/theme-custom.md
+  - .agents/skills/vitepress/references/theme-customization.md
+  - .claude/skills/vitepress
+  - .claude/skills/vitepress/GENERATION.md
+  - .claude/skills/vitepress/SKILL.md
+  - .claude/skills/vitepress/references/advanced-i18n.md
+  - .claude/skills/vitepress/references/advanced-ssr.md
+  - .claude/skills/vitepress/references/core-cli.md
+  - .claude/skills/vitepress/references/core-config.md
+  - .claude/skills/vitepress/references/core-markdown.md
+  - .claude/skills/vitepress/references/core-routing.md
+  - .claude/skills/vitepress/references/features-code-blocks.md
+  - .claude/skills/vitepress/references/features-data-loading.md
+  - .claude/skills/vitepress/references/features-dynamic-routes.md
+  - .claude/skills/vitepress/references/features-vue.md
+  - .claude/skills/vitepress/references/recipes-deploy.md
+  - .claude/skills/vitepress/references/theme-config.md
+  - .claude/skills/vitepress/references/theme-custom.md
+  - .claude/skills/vitepress/references/theme-customization.md
+  deployed_file_hashes:
+    .agents/skills/vitepress/GENERATION.md: sha256:9975841aa0e936aa1206a7de82e8ec7d26fc3185602f5a52b07b8c99199722d6
+    .agents/skills/vitepress/SKILL.md: sha256:eba57687640159cd74333a6d0abcc1c6e7967883b978bc801b9a8fb461021d8c
+    .agents/skills/vitepress/references/advanced-i18n.md: sha256:f02730bf4a60fa84407702e1a498479368d8b29b7547c8250d2619a760d7ddfb
+    .agents/skills/vitepress/references/advanced-ssr.md: sha256:43c09afc3c929c454e9284aea36eab56824c2d42ce5bc7ed1bdb8edbd5c5c188
+    .agents/skills/vitepress/references/core-cli.md: sha256:b86f4d8eb18872173572a6aabf58838cab4e4832cc929cdce3f93c1c42412845
+    .agents/skills/vitepress/references/core-config.md: sha256:85c6a7ee227c47143fdc8e59b5b2e29bfbbf8499c893b7ce6589c2304f469e35
+    .agents/skills/vitepress/references/core-markdown.md: sha256:681277acf237146f0d0b0ffcd088c94e0407982cf01e2ab6ccb0a6ea9af8f136
+    .agents/skills/vitepress/references/core-routing.md: sha256:74c9bf8b8ce351946613cff34b97db6bdc7d88fe442c5423c2efa54e2eaed1a0
+    .agents/skills/vitepress/references/features-code-blocks.md: sha256:ff90e40c8e9494b22745539da477bf9f6255b4da03121bdd5f6a72cb2c61355f
+    .agents/skills/vitepress/references/features-data-loading.md: sha256:92d4364e51dd2647d4738c3869bc7115c1a38277da3eb949fcdec137311f2737
+    .agents/skills/vitepress/references/features-dynamic-routes.md: sha256:eeeb11ddcdac84c91861d713634ddfb93cd3e60375bf66aa65407c3487b613fa
+    .agents/skills/vitepress/references/features-vue.md: sha256:ee803953825a52ca7b7701eb3e6e3b6b3db49d102932c7d60747c5311d9cbb17
+    .agents/skills/vitepress/references/recipes-deploy.md: sha256:7483c7dee28e329b8dbf5a6b6cc67c561d267f3029999ce79e2c7f2b96fa154a
+    .agents/skills/vitepress/references/theme-config.md: sha256:7f32c617ba83793a5648f06064111feb3a223037a077ff43debfbebb4e6def32
+    .agents/skills/vitepress/references/theme-custom.md: sha256:e550a9e5c6db2df707a9187ee0c9710fcd559f0d7e53892bbd1b1c1467305208
+    .agents/skills/vitepress/references/theme-customization.md: sha256:cf39c44fc10d908abc2c660603ccb00e08f5c17b6de49657a0055327a855a381
+    .claude/skills/vitepress/GENERATION.md: sha256:9975841aa0e936aa1206a7de82e8ec7d26fc3185602f5a52b07b8c99199722d6
+    .claude/skills/vitepress/SKILL.md: sha256:eba57687640159cd74333a6d0abcc1c6e7967883b978bc801b9a8fb461021d8c
+    .claude/skills/vitepress/references/advanced-i18n.md: sha256:f02730bf4a60fa84407702e1a498479368d8b29b7547c8250d2619a760d7ddfb
+    .claude/skills/vitepress/references/advanced-ssr.md: sha256:43c09afc3c929c454e9284aea36eab56824c2d42ce5bc7ed1bdb8edbd5c5c188
+    .claude/skills/vitepress/references/core-cli.md: sha256:b86f4d8eb18872173572a6aabf58838cab4e4832cc929cdce3f93c1c42412845
+    .claude/skills/vitepress/references/core-config.md: sha256:85c6a7ee227c47143fdc8e59b5b2e29bfbbf8499c893b7ce6589c2304f469e35
+    .claude/skills/vitepress/references/core-markdown.md: sha256:681277acf237146f0d0b0ffcd088c94e0407982cf01e2ab6ccb0a6ea9af8f136
+    .claude/skills/vitepress/references/core-routing.md: sha256:74c9bf8b8ce351946613cff34b97db6bdc7d88fe442c5423c2efa54e2eaed1a0
+    .claude/skills/vitepress/references/features-code-blocks.md: sha256:ff90e40c8e9494b22745539da477bf9f6255b4da03121bdd5f6a72cb2c61355f
+    .claude/skills/vitepress/references/features-data-loading.md: sha256:92d4364e51dd2647d4738c3869bc7115c1a38277da3eb949fcdec137311f2737
+    .claude/skills/vitepress/references/features-dynamic-routes.md: sha256:eeeb11ddcdac84c91861d713634ddfb93cd3e60375bf66aa65407c3487b613fa
+    .claude/skills/vitepress/references/features-vue.md: sha256:ee803953825a52ca7b7701eb3e6e3b6b3db49d102932c7d60747c5311d9cbb17
+    .claude/skills/vitepress/references/recipes-deploy.md: sha256:7483c7dee28e329b8dbf5a6b6cc67c561d267f3029999ce79e2c7f2b96fa154a
+    .claude/skills/vitepress/references/theme-config.md: sha256:7f32c617ba83793a5648f06064111feb3a223037a077ff43debfbebb4e6def32
+    .claude/skills/vitepress/references/theme-custom.md: sha256:e550a9e5c6db2df707a9187ee0c9710fcd559f0d7e53892bbd1b1c1467305208
+    .claude/skills/vitepress/references/theme-customization.md: sha256:cf39c44fc10d908abc2c660603ccb00e08f5c17b6de49657a0055327a855a381
+  content_hash: sha256:4cb4b38f31b0de634d10fe185af829f418032562d722a53520c926f6e694a7c9
+- repo_url: diegosouzapw/awesome-omni-skills
+  host: github.com
+  resolved_commit: eb0888e610c027b5ac37daec092e64e83cd802a3
+  virtual_path: skills/mise-configurator-v2
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/mise-configurator-v2
+  - .agents/skills/mise-configurator-v2/ORIGIN.md
+  - .agents/skills/mise-configurator-v2/SKILL.md
+  - .agents/skills/mise-configurator-v2/metadata.json
+  - .claude/skills/mise-configurator-v2
+  - .claude/skills/mise-configurator-v2/ORIGIN.md
+  - .claude/skills/mise-configurator-v2/SKILL.md
+  - .claude/skills/mise-configurator-v2/metadata.json
+  deployed_file_hashes:
+    .agents/skills/mise-configurator-v2/ORIGIN.md: sha256:b1d1d3c4cb876dd32d6a0992b52a89ed89613fee4ed368d2797c33248031ac7f
+    .agents/skills/mise-configurator-v2/SKILL.md: sha256:baa446fc8ecced9b80584a40fa5facd8ea7af3a1f3b44a4c418c848ffa1b3bca
+    .agents/skills/mise-configurator-v2/metadata.json: sha256:b0c867987ca18b021665cba81b68d98e4959543bba35969c79c593e00cede1ff
+    .claude/skills/mise-configurator-v2/ORIGIN.md: sha256:b1d1d3c4cb876dd32d6a0992b52a89ed89613fee4ed368d2797c33248031ac7f
+    .claude/skills/mise-configurator-v2/SKILL.md: sha256:baa446fc8ecced9b80584a40fa5facd8ea7af3a1f3b44a4c418c848ffa1b3bca
+    .claude/skills/mise-configurator-v2/metadata.json: sha256:b0c867987ca18b021665cba81b68d98e4959543bba35969c79c593e00cede1ff
+  content_hash: sha256:ca26118b486f85b567f542c5eeb2589c5deb6b2b07289daa4d28c9a0102fbbad
+- repo_url: dotnet/modernize-dotnet
+  host: github.com
+  resolved_commit: f3b670df0cbe94c567cf6817b91f90c5e5a5bd5c
+  virtual_path: plugins/modernize-dotnet
+  is_virtual: true
+  package_type: marketplace_plugin
+  deployed_files:
+  - .claude/agents/modernize-dotnet.md
+  - .github/agents/modernize-dotnet.agent.md
+  - .github/hooks/modernize-dotnet-hooks.json
+  deployed_file_hashes:
+    .claude/agents/modernize-dotnet.md: sha256:e0dc213c02753bc6a611f77ebd5e0aab5bf205a2d511b62b03ec6e4fadc52405
+    .github/agents/modernize-dotnet.agent.md: sha256:e0dc213c02753bc6a611f77ebd5e0aab5bf205a2d511b62b03ec6e4fadc52405
+    .github/hooks/modernize-dotnet-hooks.json: sha256:93f0235aff3ea05f01e2a072d8af7920b6a38238e5b0a0b0c67eaf3345228cea
+  content_hash: sha256:4c29f51a67f01d9379fb8c7c60e61ffe1791d0b3557a21bda5d097a13d9e666a
+- repo_url: dotnet/skills
+  host: github.com
+  resolved_commit: 5ad4286d06f428a01b421a54adc2e9e07a1c3406
+  package_type: marketplace_plugin
+  content_hash: sha256:becf5ab4de62af11dde9030afb747959560e48eec63401a0f8d3a65be222f746
+- repo_url: github/awesome-copilot
+  host: github.com
+  resolved_commit: 56a508cca5cbb30a2440534a1f377887d86b9747
+  virtual_path: plugins/context-engineering
+  is_virtual: true
+  package_type: marketplace_plugin
+  deployed_files:
+  - .agents/skills/context-map
+  - .agents/skills/context-map/SKILL.md
+  - .agents/skills/refactor-plan
+  - .agents/skills/refactor-plan/SKILL.md
+  - .agents/skills/what-context-needed
+  - .agents/skills/what-context-needed/SKILL.md
+  - .claude/agents/context-architect.md
+  - .claude/skills/context-map
+  - .claude/skills/context-map/SKILL.md
+  - .claude/skills/refactor-plan
+  - .claude/skills/refactor-plan/SKILL.md
+  - .claude/skills/what-context-needed
+  - .claude/skills/what-context-needed/SKILL.md
+  - .github/agents/context-architect.agent.md
+  deployed_file_hashes:
+    .agents/skills/context-map/SKILL.md: sha256:af0037b06a0b56a5014e16a32538ac419725638659428b7e229ed5bbb9087a37
+    .agents/skills/refactor-plan/SKILL.md: sha256:93741df0042a15c01ae8589e72014dcf53c557c11ca1df69c29737534c312c29
+    .agents/skills/what-context-needed/SKILL.md: sha256:65ed7445bf561a5e5199ac77478d2691c05019e0dc32fdddc23db9e45bd9d135
+    .claude/agents/context-architect.md: sha256:6da7a854a670d2810fc61b173eea2500a2af644d8292f58e3d440ac2d120ee0d
+    .claude/skills/context-map/SKILL.md: sha256:af0037b06a0b56a5014e16a32538ac419725638659428b7e229ed5bbb9087a37
+    .claude/skills/refactor-plan/SKILL.md: sha256:93741df0042a15c01ae8589e72014dcf53c557c11ca1df69c29737534c312c29
+    .claude/skills/what-context-needed/SKILL.md: sha256:65ed7445bf561a5e5199ac77478d2691c05019e0dc32fdddc23db9e45bd9d135
+    .github/agents/context-architect.agent.md: sha256:6da7a854a670d2810fc61b173eea2500a2af644d8292f58e3d440ac2d120ee0d
+  content_hash: sha256:6d5ed9518d725ff8ff634939759a4b1069b1b89ef9a885bfedd6df569722d473
+- repo_url: github/awesome-copilot
+  host: github.com
+  resolved_commit: 56a508cca5cbb30a2440534a1f377887d86b9747
+  virtual_path: plugins/csharp-dotnet-development
+  is_virtual: true
+  package_type: marketplace_plugin
+  deployed_files:
+  - .agents/skills/aspnet-minimal-api-openapi
+  - .agents/skills/aspnet-minimal-api-openapi/SKILL.md
+  - .agents/skills/csharp-async
+  - .agents/skills/csharp-async/SKILL.md
+  - .agents/skills/csharp-mstest
+  - .agents/skills/csharp-mstest/SKILL.md
+  - .agents/skills/csharp-nunit
+  - .agents/skills/csharp-nunit/SKILL.md
+  - .agents/skills/csharp-tunit
+  - .agents/skills/csharp-tunit/SKILL.md
+  - .agents/skills/csharp-xunit
+  - .agents/skills/csharp-xunit/SKILL.md
+  - .agents/skills/dotnet-best-practices
+  - .agents/skills/dotnet-best-practices/SKILL.md
+  - .agents/skills/dotnet-upgrade
+  - .agents/skills/dotnet-upgrade/SKILL.md
+  - .claude/agents/expert-dotnet-software-engineer.md
+  - .claude/skills/aspnet-minimal-api-openapi
+  - .claude/skills/aspnet-minimal-api-openapi/SKILL.md
+  - .claude/skills/csharp-async
+  - .claude/skills/csharp-async/SKILL.md
+  - .claude/skills/csharp-mstest
+  - .claude/skills/csharp-mstest/SKILL.md
+  - .claude/skills/csharp-nunit
+  - .claude/skills/csharp-nunit/SKILL.md
+  - .claude/skills/csharp-tunit
+  - .claude/skills/csharp-tunit/SKILL.md
+  - .claude/skills/csharp-xunit
+  - .claude/skills/csharp-xunit/SKILL.md
+  - .claude/skills/dotnet-best-practices
+  - .claude/skills/dotnet-best-practices/SKILL.md
+  - .claude/skills/dotnet-upgrade
+  - .claude/skills/dotnet-upgrade/SKILL.md
+  - .github/agents/expert-dotnet-software-engineer.agent.md
+  deployed_file_hashes:
+    .agents/skills/aspnet-minimal-api-openapi/SKILL.md: sha256:16e632ce8cb514d413e968811a2e07b8e0f1e97c6e2e93174efd6cec2e49e86f
+    .agents/skills/csharp-async/SKILL.md: sha256:d52c0812a3e4325ab0d89aebd074efe5e6246e722522180f8613ef3c72a72acc
+    .agents/skills/csharp-mstest/SKILL.md: sha256:325e70e82f3edecb7312a7e504a89e87c8fb684c8f2aa55df6f29905ef1bf859
+    .agents/skills/csharp-nunit/SKILL.md: sha256:f03540e3fc328ca1325293a7339e2268f2cbf0d5698a2741b79dabb1c94335ba
+    .agents/skills/csharp-tunit/SKILL.md: sha256:60bda4de96d73461f44acea9ef0978a5b4eadb0a1d764fd0398b66a75bfd2e03
+    .agents/skills/csharp-xunit/SKILL.md: sha256:7a2d020e24a5788c4999c05c86902599bb31a5df70b2595b37c00beb802cdb49
+    .agents/skills/dotnet-best-practices/SKILL.md: sha256:3181f44dfc866313c96cd784a7f003b4b109836a6f02648f95b3323e73e85d62
+    .agents/skills/dotnet-upgrade/SKILL.md: sha256:9e3e789579cc333971b04deaa3627e4e6fadfa2ad237f60a63730c34e8554587
+    .claude/agents/expert-dotnet-software-engineer.md: sha256:28a306e1a700abd0435f1fd6aef365341ac2519cc460f0c83a6f2a93332bf915
+    .claude/skills/aspnet-minimal-api-openapi/SKILL.md: sha256:16e632ce8cb514d413e968811a2e07b8e0f1e97c6e2e93174efd6cec2e49e86f
+    .claude/skills/csharp-async/SKILL.md: sha256:d52c0812a3e4325ab0d89aebd074efe5e6246e722522180f8613ef3c72a72acc
+    .claude/skills/csharp-mstest/SKILL.md: sha256:325e70e82f3edecb7312a7e504a89e87c8fb684c8f2aa55df6f29905ef1bf859
+    .claude/skills/csharp-nunit/SKILL.md: sha256:f03540e3fc328ca1325293a7339e2268f2cbf0d5698a2741b79dabb1c94335ba
+    .claude/skills/csharp-tunit/SKILL.md: sha256:60bda4de96d73461f44acea9ef0978a5b4eadb0a1d764fd0398b66a75bfd2e03
+    .claude/skills/csharp-xunit/SKILL.md: sha256:7a2d020e24a5788c4999c05c86902599bb31a5df70b2595b37c00beb802cdb49
+    .claude/skills/dotnet-best-practices/SKILL.md: sha256:3181f44dfc866313c96cd784a7f003b4b109836a6f02648f95b3323e73e85d62
+    .claude/skills/dotnet-upgrade/SKILL.md: sha256:9e3e789579cc333971b04deaa3627e4e6fadfa2ad237f60a63730c34e8554587
+    .github/agents/expert-dotnet-software-engineer.agent.md: sha256:28a306e1a700abd0435f1fd6aef365341ac2519cc460f0c83a6f2a93332bf915
+  content_hash: sha256:50c15691d05dac6ab39fb591fc6d56b629b1104f7321ec23aa5ab00e171d5cd9
+- repo_url: majiayu000/claude-skill-registry
+  host: github.com
+  resolved_commit: e279b06baf58da10886c43d49821c5da8e22aa88
+  virtual_path: skills/data/hk-setup
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/hk-setup
+  - .agents/skills/hk-setup/SKILL.md
+  - .agents/skills/hk-setup/metadata.json
+  - .claude/skills/hk-setup
+  - .claude/skills/hk-setup/SKILL.md
+  - .claude/skills/hk-setup/metadata.json
+  deployed_file_hashes:
+    .agents/skills/hk-setup/SKILL.md: sha256:ba796eb14050d00d1070737be9895ec72ef90ce36aa1b239670efb472334ca6c
+    .agents/skills/hk-setup/metadata.json: sha256:cc5a5f4f3509f7eccb85ea4e27aa32f7b0c330d8c3d8bcbcb1d04468ccaa91e2
+    .claude/skills/hk-setup/SKILL.md: sha256:ba796eb14050d00d1070737be9895ec72ef90ce36aa1b239670efb472334ca6c
+    .claude/skills/hk-setup/metadata.json: sha256:cc5a5f4f3509f7eccb85ea4e27aa32f7b0c330d8c3d8bcbcb1d04468ccaa91e2
+  content_hash: sha256:0eada7424168bf04bcb05b41b8d55db9abc32c819d4455c9b7a1815d39fad3ff
+- repo_url: sickn33/antigravity-awesome-skills
+  host: github.com
+  resolved_commit: 8e26a629cefb398681a00263b4a669b024c355a3
+  virtual_path: plugins/antigravity-awesome-skills-claude/skills/mise-configurator
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/mise-configurator
+  - .agents/skills/mise-configurator/SKILL.md
+  - .claude/skills/mise-configurator
+  - .claude/skills/mise-configurator/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/mise-configurator/SKILL.md: sha256:2b1898e86abd3c81bc4f869cdac2ee250d8bf2ad99d399c06a3ca54ae7b1bcc6
+    .claude/skills/mise-configurator/SKILL.md: sha256:2b1898e86abd3c81bc4f869cdac2ee250d8bf2ad99d399c06a3ca54ae7b1bcc6
+  content_hash: sha256:696eeb54b100091124646bebc1e5c4f6c4887167379971aa2b70b2bfb814c947
+- repo_url: terrylica/cc-skills
+  host: github.com
+  resolved_commit: 4ee54d962b4f620d80af0a56b34647b204c62bc2
+  virtual_path: plugins/itp/skills/mise-configuration
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/mise-configuration
+  - .agents/skills/mise-configuration/SKILL.md
+  - .agents/skills/mise-configuration/references/anti-patterns.md
+  - .agents/skills/mise-configuration/references/evolution-log.md
+  - .agents/skills/mise-configuration/references/github-tokens.md
+  - .agents/skills/mise-configuration/references/hub-spoke-architecture.md
+  - .agents/skills/mise-configuration/references/monorepo-workspace.md
+  - .agents/skills/mise-configuration/references/patterns.md
+  - .agents/skills/mise-configuration/references/task-orchestration.md
+  - .claude/skills/mise-configuration
+  - .claude/skills/mise-configuration/SKILL.md
+  - .claude/skills/mise-configuration/references/anti-patterns.md
+  - .claude/skills/mise-configuration/references/evolution-log.md
+  - .claude/skills/mise-configuration/references/github-tokens.md
+  - .claude/skills/mise-configuration/references/hub-spoke-architecture.md
+  - .claude/skills/mise-configuration/references/monorepo-workspace.md
+  - .claude/skills/mise-configuration/references/patterns.md
+  - .claude/skills/mise-configuration/references/task-orchestration.md
+  deployed_file_hashes:
+    .agents/skills/mise-configuration/SKILL.md: sha256:6c9a484f36941ce5c2114ab09570da6f168d00a274988b476c84876acf468323
+    .agents/skills/mise-configuration/references/anti-patterns.md: sha256:e25cb53084a6be21870a5c5e56d197b8d82b44bb1f3b8c28ee9b1c4f864f9955
+    .agents/skills/mise-configuration/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .agents/skills/mise-configuration/references/github-tokens.md: sha256:015befa484793094107b4f964d4cb6b82136a7f1a19008012ce280eeb208801e
+    .agents/skills/mise-configuration/references/hub-spoke-architecture.md: sha256:2f1dc2e199f35fddb040fef82b07dc893006ec91f9c13e188060fd874ee6c3e0
+    .agents/skills/mise-configuration/references/monorepo-workspace.md: sha256:fbbc48f8f92c128459aa9a43a8c91c7778fcf11456253fe966a5fa28c015efd7
+    .agents/skills/mise-configuration/references/patterns.md: sha256:b97d1a22769c146e33b2aadebd81e304372f2b3d7e3cf354681894cf8ba0c821
+    .agents/skills/mise-configuration/references/task-orchestration.md: sha256:83dcd63c756b7635215c741ec1ddeb62ce477380ac80f6a74686d8dacfce02c3
+    .claude/skills/mise-configuration/SKILL.md: sha256:6c9a484f36941ce5c2114ab09570da6f168d00a274988b476c84876acf468323
+    .claude/skills/mise-configuration/references/anti-patterns.md: sha256:e25cb53084a6be21870a5c5e56d197b8d82b44bb1f3b8c28ee9b1c4f864f9955
+    .claude/skills/mise-configuration/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .claude/skills/mise-configuration/references/github-tokens.md: sha256:015befa484793094107b4f964d4cb6b82136a7f1a19008012ce280eeb208801e
+    .claude/skills/mise-configuration/references/hub-spoke-architecture.md: sha256:2f1dc2e199f35fddb040fef82b07dc893006ec91f9c13e188060fd874ee6c3e0
+    .claude/skills/mise-configuration/references/monorepo-workspace.md: sha256:fbbc48f8f92c128459aa9a43a8c91c7778fcf11456253fe966a5fa28c015efd7
+    .claude/skills/mise-configuration/references/patterns.md: sha256:b97d1a22769c146e33b2aadebd81e304372f2b3d7e3cf354681894cf8ba0c821
+    .claude/skills/mise-configuration/references/task-orchestration.md: sha256:83dcd63c756b7635215c741ec1ddeb62ce477380ac80f6a74686d8dacfce02c3
+  content_hash: sha256:0f125b4b212fa4083132aac5ddaab297c719fa672f4d757103456ff4e7ec083d
+- repo_url: terrylica/cc-skills
+  host: github.com
+  resolved_commit: 4ee54d962b4f620d80af0a56b34647b204c62bc2
+  virtual_path: plugins/itp/skills/mise-tasks
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/mise-tasks
+  - .agents/skills/mise-tasks/SKILL.md
+  - .agents/skills/mise-tasks/references/advanced.md
+  - .agents/skills/mise-tasks/references/arguments.md
+  - .agents/skills/mise-tasks/references/bootstrap-monorepo.md
+  - .agents/skills/mise-tasks/references/env-integration.md
+  - .agents/skills/mise-tasks/references/evolution-log.md
+  - .agents/skills/mise-tasks/references/patterns.md
+  - .agents/skills/mise-tasks/references/polyglot-affected.md
+  - .agents/skills/mise-tasks/references/release-workflow-patterns.md
+  - .agents/skills/mise-tasks/references/task-levels.md
+  - .claude/skills/mise-tasks
+  - .claude/skills/mise-tasks/SKILL.md
+  - .claude/skills/mise-tasks/references/advanced.md
+  - .claude/skills/mise-tasks/references/arguments.md
+  - .claude/skills/mise-tasks/references/bootstrap-monorepo.md
+  - .claude/skills/mise-tasks/references/env-integration.md
+  - .claude/skills/mise-tasks/references/evolution-log.md
+  - .claude/skills/mise-tasks/references/patterns.md
+  - .claude/skills/mise-tasks/references/polyglot-affected.md
+  - .claude/skills/mise-tasks/references/release-workflow-patterns.md
+  - .claude/skills/mise-tasks/references/task-levels.md
+  deployed_file_hashes:
+    .agents/skills/mise-tasks/SKILL.md: sha256:8756e6ade1d4fe9b5226ff790ef958d2ac86ea3e6a42b6433f4f0f5c4c008ba2
+    .agents/skills/mise-tasks/references/advanced.md: sha256:d70e1b833f89195e478fe0e386cb9a3bd7ace502697bf0bd6831649fa245b38e
+    .agents/skills/mise-tasks/references/arguments.md: sha256:4f9d07b342725026a081e86487269b460f9807b15a039ebfc0de9d4febfa5380
+    .agents/skills/mise-tasks/references/bootstrap-monorepo.md: sha256:ec4ffbbec43c860bb486e7a01b10685c5261750b12d4dc66a4b2b4f71660900e
+    .agents/skills/mise-tasks/references/env-integration.md: sha256:85e2775028ecd771152a6aefed96660107317d86ec93881ad125d3081ec3b8db
+    .agents/skills/mise-tasks/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .agents/skills/mise-tasks/references/patterns.md: sha256:cbe700bbd83fa381a3456e3801cbe1cd513be3d4fc52ba0c88c2510e2ea817b9
+    .agents/skills/mise-tasks/references/polyglot-affected.md: sha256:3b8df123b233e9455d0a118f986376d1413649b148457572c75860ecd305f62e
+    .agents/skills/mise-tasks/references/release-workflow-patterns.md: sha256:e80daa92db24d9a0f208c5aabe259a5350135547f26db36cf49bd52002dd695b
+    .agents/skills/mise-tasks/references/task-levels.md: sha256:9e56385a65fbecdb5048198b83fe7f4e16235c27fe92212f64dfa5a53cecb978
+    .claude/skills/mise-tasks/SKILL.md: sha256:8756e6ade1d4fe9b5226ff790ef958d2ac86ea3e6a42b6433f4f0f5c4c008ba2
+    .claude/skills/mise-tasks/references/advanced.md: sha256:d70e1b833f89195e478fe0e386cb9a3bd7ace502697bf0bd6831649fa245b38e
+    .claude/skills/mise-tasks/references/arguments.md: sha256:4f9d07b342725026a081e86487269b460f9807b15a039ebfc0de9d4febfa5380
+    .claude/skills/mise-tasks/references/bootstrap-monorepo.md: sha256:ec4ffbbec43c860bb486e7a01b10685c5261750b12d4dc66a4b2b4f71660900e
+    .claude/skills/mise-tasks/references/env-integration.md: sha256:85e2775028ecd771152a6aefed96660107317d86ec93881ad125d3081ec3b8db
+    .claude/skills/mise-tasks/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .claude/skills/mise-tasks/references/patterns.md: sha256:cbe700bbd83fa381a3456e3801cbe1cd513be3d4fc52ba0c88c2510e2ea817b9
+    .claude/skills/mise-tasks/references/polyglot-affected.md: sha256:3b8df123b233e9455d0a118f986376d1413649b148457572c75860ecd305f62e
+    .claude/skills/mise-tasks/references/release-workflow-patterns.md: sha256:e80daa92db24d9a0f208c5aabe259a5350135547f26db36cf49bd52002dd695b
+    .claude/skills/mise-tasks/references/task-levels.md: sha256:9e56385a65fbecdb5048198b83fe7f4e16235c27fe92212f64dfa5a53cecb978
+  content_hash: sha256:dd93054927a344583aa870ad9f0fa62340395c6a96fded9622afcd25b966e286
+- repo_url: terrylica/cc-skills
+  host: github.com
+  resolved_commit: 4ee54d962b4f620d80af0a56b34647b204c62bc2
+  virtual_path: plugins/mise
+  is_virtual: true
+  package_type: marketplace_plugin
+  deployed_files:
+  - .agents/skills/list-repo-tasks
+  - .agents/skills/list-repo-tasks/SKILL.md
+  - .agents/skills/list-repo-tasks/references/evolution-log.md
+  - .agents/skills/run-full-release
+  - .agents/skills/run-full-release/SKILL.md
+  - .agents/skills/run-full-release/references/evolution-log.md
+  - .agents/skills/show-env-status
+  - .agents/skills/show-env-status/SKILL.md
+  - .agents/skills/show-env-status/references/evolution-log.md
+  - .agents/skills/sred-commit
+  - .agents/skills/sred-commit/SKILL.md
+  - .agents/skills/sred-commit/references/evolution-log.md
+  - .claude/skills/list-repo-tasks
+  - .claude/skills/list-repo-tasks/SKILL.md
+  - .claude/skills/list-repo-tasks/references/evolution-log.md
+  - .claude/skills/run-full-release
+  - .claude/skills/run-full-release/SKILL.md
+  - .claude/skills/run-full-release/references/evolution-log.md
+  - .claude/skills/show-env-status
+  - .claude/skills/show-env-status/SKILL.md
+  - .claude/skills/show-env-status/references/evolution-log.md
+  - .claude/skills/sred-commit
+  - .claude/skills/sred-commit/SKILL.md
+  - .claude/skills/sred-commit/references/evolution-log.md
+  deployed_file_hashes:
+    .agents/skills/list-repo-tasks/SKILL.md: sha256:d83cba02568f44f4aa754bd500ad4fefb9fc98d9a6b7632dbe2ccbb0912eaefb
+    .agents/skills/list-repo-tasks/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .agents/skills/run-full-release/SKILL.md: sha256:2779f8b512e9a0b35f629f2701592ad7010e417f29637efd6d913a9e370678a3
+    .agents/skills/run-full-release/references/evolution-log.md: sha256:85151cd003c6feb94326e0bf5cd46454d06bf65c3a9ac66389d354b36881767e
+    .agents/skills/show-env-status/SKILL.md: sha256:a98f383a5968880638d90397606d3d7ee935be33b3b9b929d3973cea94282063
+    .agents/skills/show-env-status/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .agents/skills/sred-commit/SKILL.md: sha256:24f82dfe65889aa8b09ca692604f319343d2d68e9c32f37b3104f04c8c8c5f52
+    .agents/skills/sred-commit/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .claude/skills/list-repo-tasks/SKILL.md: sha256:d83cba02568f44f4aa754bd500ad4fefb9fc98d9a6b7632dbe2ccbb0912eaefb
+    .claude/skills/list-repo-tasks/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .claude/skills/run-full-release/SKILL.md: sha256:2779f8b512e9a0b35f629f2701592ad7010e417f29637efd6d913a9e370678a3
+    .claude/skills/run-full-release/references/evolution-log.md: sha256:85151cd003c6feb94326e0bf5cd46454d06bf65c3a9ac66389d354b36881767e
+    .claude/skills/show-env-status/SKILL.md: sha256:a98f383a5968880638d90397606d3d7ee935be33b3b9b929d3973cea94282063
+    .claude/skills/show-env-status/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+    .claude/skills/sred-commit/SKILL.md: sha256:24f82dfe65889aa8b09ca692604f319343d2d68e9c32f37b3104f04c8c8c5f52
+    .claude/skills/sred-commit/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
+  content_hash: sha256:e87a6ab412ff5040f34f2540bad9968f57359260e2bc1e4f7654f3344dfe0ec4
+- repo_url: yvgude/lean-ctx
+  host: github.com
+  resolved_commit: 45cd29224b4a168f364900fc12995ff180458037
+  package_type: marketplace_plugin
+  deployed_files:
+  - .agents/skills/lean-ctx
+  - .agents/skills/lean-ctx/SKILL.md
+  - .agents/skills/lean-ctx/scripts/install.sh
+  - .claude/skills/lean-ctx
+  - .claude/skills/lean-ctx/SKILL.md
+  - .claude/skills/lean-ctx/scripts/install.sh
+  deployed_file_hashes:
+    .agents/skills/lean-ctx/SKILL.md: sha256:005e7ad77bc09804bbe37d1a8a5aa7129dbf66d7a8bfb3e25eb8afa4d85e48a0
+    .agents/skills/lean-ctx/scripts/install.sh: sha256:7b42ea292086ea57dc6a1514e094fa37840b5a24ad8ebf5f26a7eb87fa1b03f0
+    .claude/skills/lean-ctx/SKILL.md: sha256:005e7ad77bc09804bbe37d1a8a5aa7129dbf66d7a8bfb3e25eb8afa4d85e48a0
+    .claude/skills/lean-ctx/scripts/install.sh: sha256:7b42ea292086ea57dc6a1514e094fa37840b5a24ad8ebf5f26a7eb87fa1b03f0
+  content_hash: sha256:80aba55537ab73057ca55b0e66c91eac78c5f1abd3452715275b7ebeb45cb798
+mcp_servers:
+- io.github.github/github-mcp-server
+- io.github.upstash/context7
+- microsoftdocs/mcp
+- nuget
+mcp_configs:
+  io.github.github/github-mcp-server:
+    name: io.github.github/github-mcp-server
+  io.github.upstash/context7:
+    name: io.github.upstash/context7
+  microsoftdocs/mcp:
+    name: microsoftdocs/mcp
+  nuget:
+    name: nuget
+    transport: stdio
+    registry: false
+    command: nuget-mcp-server
+local_deployed_files:
+- .agents/skills/context7-mcp
+- .agents/skills/context7-mcp/SKILL.md
+- .claude/rules/context7.md
+- .claude/rules/neo4j-knowledgebase.md
+- .claude/skills/context7-mcp
+- .claude/skills/context7-mcp/SKILL.md
+- .github/instructions/context7.instructions.md
+- .github/instructions/neo4j-knowledgebase.instructions.md
+local_deployed_file_hashes:
+  .agents/skills/context7-mcp/SKILL.md: sha256:6f07fd4d6cbf96c00c66ef859c2981efb0795315069f55af30c0ae4f28b77690
+  .claude/rules/context7.md: sha256:0f66072fffde531a3b65ad1fca2a0a719b2c0a146f79a32230e1566aa917a792
+  .claude/rules/neo4j-knowledgebase.md: sha256:416db8f43b40abd878578c0e11c3eb5531c646a5ac77d6df62e4f3ee0876088e
+  .claude/skills/context7-mcp/SKILL.md: sha256:6f07fd4d6cbf96c00c66ef859c2981efb0795315069f55af30c0ae4f28b77690
+  .github/instructions/context7.instructions.md: sha256:c2faee057cf9de0bd7fcf511743479ab2755f09b0274d3ba69ad157ff5757d24
+  .github/instructions/neo4j-knowledgebase.instructions.md: sha256:1c54cb072667363a83ba46ba02b1d25d022f9a5b9256b5c9f17d63b22793c6db
