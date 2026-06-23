@@ -1,0 +1,10 @@
+{
+  "PostToolUse": [
+    {
+      "type": "command",
+      "bash": "bash hooks/scripts/track-telemetry.sh",
+      "powershell": "powershell -File hooks/scripts/track-telemetry.ps1",
+      "_apm_source": "modernize-dotnet"
+    }
+  ]
+}

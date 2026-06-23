@@ -1,7 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+        <TargetFramework>net10.0</TargetFramework>
         <IsTestProject>false</IsTestProject>
         <IsMagicProject>true</IsMagicProject>
     </PropertyGroup>
@@ -14,5 +13,4 @@
         <PackageReference Include="Serilog" />
         <PackageReference Include="Verify.SourceGenerators" />
     </ItemGroup>
-
 </Project>
