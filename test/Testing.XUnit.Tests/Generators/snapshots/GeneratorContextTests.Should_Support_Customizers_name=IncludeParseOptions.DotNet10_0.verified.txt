@@ -1,9 +1,0 @@
-﻿{
-  FinalDiagnostics: [],
-  GeneratorDiagnostics: {
-    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MyIncrementalGenerator: []
-  },
-  ParseOptions: {
-    DocumentationMode: Parse
-  }
-}

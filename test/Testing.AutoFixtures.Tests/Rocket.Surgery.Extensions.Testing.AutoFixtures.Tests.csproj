@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-        <Nullable>enable</Nullable>
-        <IsPackable>false</IsPackable>
         <RootNamespace>Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests</RootNamespace>
         <AssemblyName>Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests</AssemblyName>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <NoWarn>$(NoWarn);RS1036;RS1016</NoWarn>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,12 +16,9 @@
         <PackageReference Include="Verify.DiffPlex" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Serilog.Sinks.XUnit" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" />
-        <PackageReference Include="xunit" />
-        <PackageReference Include="xunit.runner.visualstudio" />
-        <PackageReference Include="Verify.Xunit" />
         <PackageReference Include="Verify.SourceGenerators" />
+        <PackageReference Include="Verify.XUnitV3" />
+        <PackageReference Include="xunit.v3" />
         <PackageReference Include="xunit.analyzers" />
     </ItemGroup>
 
@@ -32,5 +30,4 @@
         <ProjectReference Include="..\..\src\Testing.AutoFixtures\Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
         <ProjectReference Include="..\..\src\Testing.SourceGenerators\Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
     </ItemGroup>
-
 </Project>

@@ -19,7 +19,6 @@
     <File Path="Directory.Build.props" />
     <File Path="Directory.Build.targets" />
     <File Path="Directory.Packages.props" />
-    <File Path="Directory.Packages.support.props" />
     <File Path="dotnet-tools.json" />
     <File Path="GitReleaseManager.yaml" />
     <File Path="GitVersion.yml" />
@@ -62,11 +61,9 @@
     <Project Path="src/Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.csproj" />
     <Project Path="src/Testing.FakeItEasy/Rocket.Surgery.Extensions.Testing.FakeItEasy.csproj" />
     <Project Path="src/Testing.Fixtures/Rocket.Surgery.Extensions.Testing.Fixtures.csproj" />
-    <Project Path="src/Testing.Moq/Rocket.Surgery.Extensions.Testing.Moq.csproj" />
     <Project Path="src/Testing.NSubstitute/Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />
     <Project Path="src/Testing.SourceGenerators/Rocket.Surgery.Extensions.Testing.SourceGenerators.csproj" />
     <Project Path="src/Testing.TUnit/Rocket.Surgery.Extensions.Testing.TUnit.csproj" />
-    <Project Path="src/Testing.XUnit/Rocket.Surgery.Extensions.Testing.XUnit.csproj" />
     <Project Path="src/Testing.XUnit3/Rocket.Surgery.Extensions.Testing.XUnit3.csproj" />
     <Project Path="src/Testing/Rocket.Surgery.Extensions.Testing.csproj" />
   </Folder>
@@ -76,6 +73,5 @@
     <File Path="Directory.Build.targets" />
     <Project Path="test/Testing.AutoFixtures.Tests/Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.csproj" />
     <Project Path="test/Testing.Fixtures.Tests/Rocket.Surgery.Extensions.Testing.Fixtures.Tests.csproj" />
-    <Project Path="test/Testing.XUnit.Tests/Rocket.Surgery.Extensions.Testing.XUnit.Tests.csproj" />
   </Folder>
 </Solution>

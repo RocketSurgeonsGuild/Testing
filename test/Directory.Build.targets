@@ -1,6 +1,5 @@
 <Project>
     <ItemGroup>
-        <PackageReference Include="Microsoft.CodeCoverage" />
         <PackageReference Include="FakeItEasy" />
         <PackageReference Include="Shouldly" />
         <Using Include="Shouldly" />
