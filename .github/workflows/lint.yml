@@ -6,9 +6,9 @@ on:
             - main
             - next
     merge_group:
-      branches:
-        - "main"
-        - "next"
+        branches:
+            - main
+            - next
 
 permissions:
     actions: read
@@ -52,7 +52,7 @@ jobs:
                   cache: true
             - name: 🧹 Lint (hk fix)
               run: |
-                  hk fix --from-ref $DEFAULT_BRANCH --to-ref $HEAD
+                  hk fix --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
               env:
                   DEFAULT_BRANCH: ${{ github.event.pull_request.base.sha }}
                   HEAD: ${{ github.event.pull_request.head.sha }}

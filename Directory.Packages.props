@@ -24,12 +24,12 @@
         <GlobalPackageReference Include="JetBrains.Annotations.Sources" Version="2026.2.0" Condition="$(MSBuildProjectName) != '.build'" />
     </ItemGroup>
     <ItemGroup>
+        <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
+        <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="1.8.5" />
         <PackageVersion Include="Rocket.Surgery.ModularPipelines.Extensions" Version="0.1.4" />
         <PackageVersion Include="Sourcy.DotNet" Version="1.1.1" />
         <PackageVersion Include="Sourcy.Git" Version="1.1.1" />
         <PackageVersion Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52" />
-        <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.8.0" />
-        <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.2.3" />
         <PackageVersion Include="Polyfill" Version="10.10.0" />
         <PackageVersion Include="Serilog.Sinks.Spectre" Version="0.5.0" />
         <PackageVersion Include="TUnit" Version="1.56.25" />

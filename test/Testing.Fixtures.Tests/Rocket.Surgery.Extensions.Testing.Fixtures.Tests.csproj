@@ -10,6 +10,8 @@
         <PackageReference Include="Verify.XUnitV3" />
         <PackageReference Include="xunit.v3" />
         <PackageReference Include="xunit.analyzers" />
+        <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" OverrideVersion="18.8.0" />
+        <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" OverrideVersion="2.2.3" />
     </ItemGroup>
 
     <ItemGroup>
