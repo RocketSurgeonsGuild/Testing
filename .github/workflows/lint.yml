@@ -38,7 +38,7 @@ jobs:
               with:
                   clean: 'false'
                   fetch-depth: '0'
-                  ref: ${{ github.event.pull_request.head.ref }}
+                  ref: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.RSG_BOT_TOKEN }}
             - name: Get Head Commit Message
@@ -54,8 +54,8 @@ jobs:
               run: |
                   hk fix --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
               env:
-                  DEFAULT_BRANCH: ${{ github.event.pull_request.base.sha }}
-                  HEAD: ${{ github.event.pull_request.head.sha }}
+                  DEFAULT_BRANCH: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+                  HEAD: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
             - name: Add & Commit
               env:
                   GITHUB_TOKEN: ${{ secrets.RSG_BOT_TOKEN }}
@@ -64,4 +64,4 @@ jobs:
               with:
                   commit_message: Automatically linting code
                   repo: ${{ github.repository }}
-                  branch: ${{ github.event.pull_request.head.ref }}
+                  branch: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
