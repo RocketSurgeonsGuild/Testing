@@ -13,7 +13,7 @@ on:
 permissions:
     actions: read
     checks: write
-    contents: read
+    contents: write
     deployments: read
     id-token: none
     issues: write
@@ -65,11 +65,9 @@ jobs:
                   DEFAULT_BRANCH: ${{ github.event.merge_group.base_sha }}
                   HEAD: ${{ github.event.merge_group.head_sha }}
             - name: Add & Commit
+              if: github.event_name == 'pull_request_target' && !contains(steps.commit-message.outputs.message, 'Automatically linting code')
+              uses: stefanzweifel/git-auto-commit-action@v7
               env:
                   GITHUB_TOKEN: ${{ secrets.RSG_BOT_TOKEN }}
-              if: github.event_name == 'pull_request_target' && !contains(steps.commit-message.outputs.message, 'Automatically linting code')
-              uses: planetscale/ghcommit-action@v0.2.20
               with:
                   commit_message: Automatically linting code
-                  repo: ${{ github.repository }}
-                  branch: ${{ github.event.pull_request.head.ref }}
