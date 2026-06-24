@@ -55,15 +55,15 @@ jobs:
               run: |
                   hk fix --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
               env:
-                  DEFAULT_BRANCH: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
-                  HEAD: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  DEFAULT_BRANCH: ${{ github.event.pull_request.base.sha }}
+                  HEAD: ${{ github.event.pull_request.head.sha }}
             - name: 🧹 Lint (hk check)
               if: github.event_name == 'merge_group'
               run: |
                   hk check --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
               env:
-                  DEFAULT_BRANCH: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
-                  HEAD: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  DEFAULT_BRANCH: ${{ github.event.merge_group.base_sha }}
+                  HEAD: ${{ github.event.merge_group.head_sha }}
             - name: Add & Commit
               env:
                   GITHUB_TOKEN: ${{ secrets.RSG_BOT_TOKEN }}
