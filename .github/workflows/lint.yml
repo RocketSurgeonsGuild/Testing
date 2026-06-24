@@ -26,7 +26,7 @@ permissions:
     statuses: write
 
 concurrency:
-    group: lint-${{ github.event.pull_request.number }}
+    group: lint-${{ github.event.pull_request.number || github.run_id }}
     cancel-in-progress: true
 
 jobs:
@@ -38,8 +38,8 @@ jobs:
               with:
                   clean: 'false'
                   fetch-depth: '0'
-                  ref: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
-                  repository: ${{ github.event.pull_request.head.repo.full_name }}
+                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
                   token: ${{ secrets.RSG_BOT_TOKEN }}
             - name: Get Head Commit Message
               id: commit-message
@@ -51,17 +51,25 @@ jobs:
                   install: true
                   cache: true
             - name: 🧹 Lint (hk fix)
+              if: github.event_name == 'pull_request_target'
               run: |
                   hk fix --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
               env:
-                  DEFAULT_BRANCH: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
-                  HEAD: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+                  DEFAULT_BRANCH: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+                  HEAD: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+            - name: 🧹 Lint (hk check)
+              if: github.event_name == 'merge_group'
+              run: |
+                  hk check --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
+              env:
+                  DEFAULT_BRANCH: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+                  HEAD: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
             - name: Add & Commit
               env:
                   GITHUB_TOKEN: ${{ secrets.RSG_BOT_TOKEN }}
-              if: ${{ !contains(steps.commit-message.outputs.message, 'Automatically linting code') }}
+              if: github.event_name == 'pull_request_target' && !contains(steps.commit-message.outputs.message, 'Automatically linting code')
               uses: planetscale/ghcommit-action@v0.2.20
               with:
                   commit_message: Automatically linting code
                   repo: ${{ github.repository }}
-                  branch: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+                  branch: ${{ github.event.pull_request.head.ref }}
