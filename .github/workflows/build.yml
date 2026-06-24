@@ -36,12 +36,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v6
+              uses: actions/checkout@v7
               with:
                   clean: 'false'
                   fetch-depth: '0'
             - name: 🛠️ Setup mise
-              uses: jdx/mise-action@v2
+              uses: jdx/mise-action@v4
               with:
                   install: true
                   cache: true
@@ -75,7 +75,7 @@ jobs:
             - name: 🚀 Publish Coverage Comment
               if: always() && (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
               continue-on-error: true
-              uses: marocchino/sticky-pull-request-comment@v2
+              uses: marocchino/sticky-pull-request-comment@v3.0.4
               with:
                   header: Coverage
                   path: artifacts/coverage/summary/SummaryGithub.md
@@ -83,7 +83,7 @@ jobs:
             - name: 🚀 Publish Codecov Coverage
               if: always() && (github.event_name != 'pull_request' && github.event_name != 'pull_request_target') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.user.login != 'renovate[bot]' && github.event.pull_request.user.login != 'dependabot[bot]')
               continue-on-error: true
-              uses: codecov/codecov-action@v5.5.5
+              uses: codecov/codecov-action@v7.0.0
               with:
                   name: actions
                   token: ${{ secrets.CODECOV_TOKEN }}
