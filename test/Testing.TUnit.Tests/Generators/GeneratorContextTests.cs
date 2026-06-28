@@ -8,7 +8,7 @@ using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.TUnit.Tests.Generators;
 
-public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create(global::TUnit.Core.TestContext.Current!))
+public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create())
 {
     [Test]
     public async Task Should_Build_A_Context()

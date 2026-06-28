@@ -18,6 +18,7 @@
         <GlobalPackageReference Include="Roslynator.CodeFixes" Version="4.15.0" />
         <GlobalPackageReference Include="Roslynator.Refactorings" Version="4.15.0" />
         <GlobalPackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
+        <PackageVersion Include="BeaKona.AutoInterfaceGenerator" Version="1.0.46" />
         <PackageVersion Include="Verify.XunitV3" Version="31.20.0" />
         <PackageVersion Include="xunit.analyzers" Version="1.27.0" />
         <GlobalPackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />

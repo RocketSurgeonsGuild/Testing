@@ -6,9 +6,13 @@
         <IsMagicProject>true</IsMagicProject>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="BeaKona.AutoInterfaceGenerator" PrivateAssets="all" />
         <PackageReference Include="xunit.v3.extensibility.core" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Testing\Rocket.Surgery.Extensions.Testing.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="template.scriban" />
     </ItemGroup>
 </Project>

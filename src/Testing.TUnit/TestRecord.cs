@@ -9,30 +9,32 @@ namespace Rocket.Surgery.Extensions.Testing;
 /// <remarks>
 ///     The xunit test context
 /// </remarks>
-/// <param name="context"></param>
 /// <param name="logEventLevel"></param>
 /// <param name="outputTemplate"></param>
 /// <param name="configureLogger"></param>
 [PublicAPI]
-public abstract class TUnitTestRecord<TContext>(
-    TestContext context,
-    LogEventLevel logEventLevel = LogEventLevel.Verbose,
-    string? outputTemplate = null,
-    Action<TContext, LoggerConfiguration>? configureLogger = null
-    ) : RocketSurgeryTestContext<TContext>(
-    configureLogger,
-    logEventLevel,
-    outputTemplate
-    )
-    where TContext : RocketSurgeryTestContext<TContext>, ILoggingTestContext
+public abstract partial class TestRecord<TContext>
+    (LogEventLevel logEventLevel = LogEventLevel.Verbose, string? outputTemplate = null, Action<TContext, LoggerConfiguration>? configureLogger = null)
+    : RocketSurgeryTestContext<TContext>(configureLogger, logEventLevel, outputTemplate)
+    where TContext : RocketSurgeryTestContext<TContext>
 {
-    private readonly TestContext _context = context;
+    /// <summary>
+    /// Represents the current test context for xUnit tests.
+    /// </summary>
+    /// <remarks>
+    /// Provides access to the active test context during the execution of a test.
+    /// This property is typically used to retrieve contextual information or perform
+    /// test-specific logging operations.
+    /// </remarks>
+    public TestContext TestContext { get; } = TestContext.Current!;
+
     private readonly LogEventLevel _logEventLevel = logEventLevel;
 
     /// <inheritdoc />
-    protected override void ConfigureLogger(TContext context, LoggerConfiguration loggerConfiguration) => loggerConfiguration
-        .MinimumLevel.Is(_logEventLevel)
-        .WriteTo.Sink(new Sink(_context));
+    protected override void ConfigureLogger(TContext context, LoggerConfiguration loggerConfiguration) =>
+        loggerConfiguration
+           .MinimumLevel.Is(_logEventLevel)
+           .WriteTo.Sink(new Sink(TestContext));
 }
 
 /// <summary>
@@ -41,22 +43,19 @@ public abstract class TUnitTestRecord<TContext>(
 [PublicAPI]
 public class TestRecord
 (
-    TestContext context,
     LogEventLevel logEventLevel = LogEventLevel.Verbose,
     string? outputTemplate = null,
     Action<TestRecord, LoggerConfiguration>? configureLogger = null)
-    : TUnitTestRecord<TestRecord>(context, logEventLevel, outputTemplate, configureLogger)
+    : TestRecord<TestRecord>(logEventLevel, outputTemplate, configureLogger)
 {
     /// <summary>
     ///     Create the test record
     /// </summary>
-    /// <param name="testContext"></param>
     /// <param name="logEventLevel"></param>
     /// <param name="outputTemplate"></param>
     /// <returns></returns>
     public static TestRecord Create(
-        TestContext testContext,
         LogEventLevel logEventLevel = LogEventLevel.Verbose,
         string? outputTemplate = null
-    ) => new(testContext, logEventLevel, outputTemplate);
+    ) => new(logEventLevel, outputTemplate);
 }
