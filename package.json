@@ -19,7 +19,7 @@
         "@prettier/plugin-xml": "3.4.2",
         "@standard-config/prettier": "1.13.3",
         "prettier": "3.8.4",
-        "prettier-plugin-powershell": "2.1.5",
+        "prettier-plugin-powershell": "2.1.6",
         "prettier-plugin-toml": "2.0.6",
         "prettier-plugin-yaml": "1.2.0"
     }
