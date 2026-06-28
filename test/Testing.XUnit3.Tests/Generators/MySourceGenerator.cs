@@ -1,14 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit3.Tests.Generators;
 
 [Generator]
-public class MySourceGenerator : ISourceGenerator
+public class MySourceGenerator : IIncrementalGenerator
 {
-    public void Initialize(GeneratorInitializationContext context)
-    {
-        context.RegisterForPostInitialization(z => z.AddSource("test.g.cs", "public class GeneratorTest { }"));
-    }
-
     public void Execute(GeneratorExecutionContext context) { }
+    public void Initialize(IncrementalGeneratorInitializationContext context) => context.RegisterPostInitializationOutput(z => z.AddSource("test.g.cs", "public class GeneratorTest { }"));
 }

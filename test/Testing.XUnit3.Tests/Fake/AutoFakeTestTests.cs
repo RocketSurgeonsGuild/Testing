@@ -1,6 +1,5 @@
-﻿using DryIoc;
+using DryIoc;
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -43,20 +42,14 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
     public void Should_Provide_Values()
     {
         var item = AutoFake.Provide(new MyItem());
-        ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        ServiceProvider.GetRequiredService<MyItem>().ShouldBeSameAs(item);
     }
 
     [Fact]
-    public void Should_Return_Self_For_ServiceProvider()
-    {
-        ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
-    }
+    public void Should_Return_Self_For_ServiceProvider() => ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
 
     [Fact]
-    public void Should_Not_Fake_Optional_Parameters()
-    {
-        AutoFake.Resolve<Optional>().Item.Should().BeNull();
-    }
+    public void Should_Not_Fake_Optional_Parameters() => AutoFake.Resolve<Optional>().Item.ShouldBeNull();
 
     [Fact]
     public void Should_Populate_Optional_Parameters_When_Provided()
@@ -64,9 +57,8 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
         AutoFake.Provide<IItem>(new MyItem());
         AutoFake
            .Resolve<Optional>()
-           .Item.Should()
-           .NotBeNull()
-           .And.Match(z => !FakeItEasy.Fake.IsFake(z));
+           .Item.ShouldNotBeNull();
+        FakeItEasy.Fake.IsFake(AutoFake.Resolve<Optional>().Item!).ShouldBeFalse();
     }
 
     [Fact]
@@ -74,7 +66,7 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
     {
         var access = AutoFake.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<TestBootstrapException>();
+        a.ShouldThrow<TestBootstrapException>();
     }
 
     private class Impl : AutoFakeTest<TestOutputTestContext>
@@ -90,11 +82,9 @@ public class AutoFakeTestTests(ITestOutputHelper outputHelper) : AutoFakeTest<Te
     {
         public IContainer Self => Container;
 
-        protected override IContainer BuildContainer(IContainer container)
-        {
+        protected override IContainer BuildContainer(IContainer container) =>
             // invalid do not touch ServiceProvider or Container while constructing the container....
-            return Container.GetRequiredService<IContainer>();
-        }
+            Container.GetRequiredService<IContainer>();
     }
 
     private class LoggerImpl(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))

@@ -10,7 +10,7 @@ public class Rsaf0003Tests
     public async Task GivenNoConstructor_WhenGenerate_ThenReportsDiagnostic(GeneratorTestContext context)
     {
         // Given, When
-        var result = await context.GenerateAsync();
+        var result = await context.GenerateAsync(TestContext.Current.CancellationToken);
 
         // Then
         result
@@ -23,7 +23,7 @@ public class Rsaf0003Tests
     public async Task GivenDiagnosticReported_WhenGenerate_ThenGeneratesOtherFixtures(GeneratorTestContext context)
     {
         // Given, When
-        var result = await context.GenerateAsync();
+        var result = await context.GenerateAsync(TestContext.Current.CancellationToken);
 
         // Then
         _ = await Verify(result).UseParameters(context.Id);

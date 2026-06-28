@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 using Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
@@ -13,6 +14,7 @@ internal abstract class AutoFixtureSourceData
         .WithAnalyzer<Rsaf0001>()
         .WithAnalyzer<Rsaf0002>()
         .WithAnalyzer<Rsaf0003>()
+        .WithDiagnosticSeverity(DiagnosticSeverity.Info)
         .AddReferences(typeof(ILogger<>))
         .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
         .IgnoreOutputFile("AutoFixtureBase.g.cs");

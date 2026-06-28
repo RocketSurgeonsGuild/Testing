@@ -10,8 +10,8 @@
         <PackageReference Include="TUnit" />
         <PackageReference Include="Verify.TUnit" />
         <PackageReference Include="Serilog.Sinks.Spectre" />
-        <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" OverrideVersion="18.8.0" />
-        <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" OverrideVersion="2.2.3" />
+        <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" VersionOverride="18.8.0" />
+        <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" VersionOverride="2.2.3" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\src\Testing.NSubstitute\Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />
@@ -24,5 +24,6 @@
     <ItemGroup>
         <Content CopyToOutputDirectory="PreserveNewest" Include="Fixtures/**/*.csproj;Fixtures/**/*.props;Fixtures/**/*.targets" />
         <Compile Remove="Fixtures/**/*.cs" />
+        <Compile Remove="Generators/snapshots/**/*.cs" />
     </ItemGroup>
 </Project>

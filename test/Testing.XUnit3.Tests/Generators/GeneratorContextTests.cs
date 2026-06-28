@@ -1,4 +1,4 @@
-﻿using System.Runtime.Loader;
+using System.Runtime.Loader;
 using System.Text;
 using FakeItEasy;
 using Microsoft.CodeAnalysis;
@@ -117,7 +117,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
     {
         var context = GeneratorTestContextBuilder
                      .Create()
-                     .WithAnalyzer(typeof(TestAnalyzer))
+                     .WithAnalyzer<TestAnalyzer>()
                      .Build();
         await Verify(context.GenerateAsync());
     }

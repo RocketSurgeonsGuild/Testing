@@ -1,10 +1,9 @@
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 
 namespace Rocket.Surgery.Extensions.Testing.TUnit.Tests;
 
-public class LoggerTestTests() : LoggerTest<TestOutputTestContext>(Defaults.CreateTestOutput())
+public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create(global::TUnit.Core.TestContext.Current!))
 {
     [Test]
     public Task Should_Create_A_Log_Stream()
@@ -18,7 +17,7 @@ public class LoggerTestTests() : LoggerTest<TestOutputTestContext>(Defaults.Crea
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -37,7 +36,7 @@ public class LoggerTestTests() : LoggerTest<TestOutputTestContext>(Defaults.Crea
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
     }
 
@@ -53,7 +52,7 @@ public class LoggerTestTests() : LoggerTest<TestOutputTestContext>(Defaults.Crea
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -72,7 +71,7 @@ public class LoggerTestTests() : LoggerTest<TestOutputTestContext>(Defaults.Crea
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
     }
 
@@ -84,12 +83,12 @@ public class LoggerTestTests() : LoggerTest<TestOutputTestContext>(Defaults.Crea
         var logger = Factory.CreateLogger("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
 
         ExcludeSourceContext("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -104,13 +103,13 @@ public class LoggerTestTests() : LoggerTest<TestOutputTestContext>(Defaults.Crea
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Should().HaveCount(2);
+        logs.Count().ShouldBe(2);
 
         IncludeSourceContext("MyLogger");
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
     }
 }
