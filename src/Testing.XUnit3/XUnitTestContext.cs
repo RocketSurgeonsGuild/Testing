@@ -1,7 +1,6 @@
 using Serilog;
 using Serilog.Events;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Rocket.Surgery.Extensions.Testing;
 
@@ -16,7 +15,7 @@ namespace Rocket.Surgery.Extensions.Testing;
 /// <param name="outputTemplate"></param>
 /// <param name="configureLogger"></param>
 [PublicAPI]
-public abstract class XUnitTestContext<TContext>(
+public abstract partial class XUnitTestContext<TContext>(
     ITestContextAccessor testContextAccessor,
     LogEventLevel logEventLevel = LogEventLevel.Verbose,
     string? outputTemplate = null,
@@ -25,109 +24,14 @@ public abstract class XUnitTestContext<TContext>(
     where TContext : RocketSurgeryTestContext<TContext>, ILoggingTestContext, ITestContext
 {
     private readonly LogEventLevel _logEventLevel = logEventLevel;
+    [BeaKona.AutoInterface(TemplateFileName = "template.scriban")]
     private readonly ITestContext _testContext = testContextAccessor.Current;
-    private ConcurrentDictionary<string, object?> _keyValueStorage;
 
     /// <inheritdoc />
     protected override void ConfigureLogger(TContext context, LoggerConfiguration loggerConfiguration) => loggerConfiguration
            .MinimumLevel.Is(_logEventLevel)
            .WriteTo.Sink(new XUnitSink(context));
 
-    /// <inheritdoc />
-    public void AddAttachment(string name, string value) => _testContext.AddAttachment(name, value);
-
-    /// <inheritdoc />
-    public void AddAttachment(string name, string value, bool replaceExistingValue) => _testContext.AddAttachment(name, value, replaceExistingValue);
-
-    /// <inheritdoc />
-    public void AddAttachment(string name, byte[] value, string mediaType = "application/octet-stream") => _testContext.AddAttachment(name, value, mediaType);
-
-    /// <inheritdoc />
-    public void AddAttachment(string name, byte[] value, bool replaceExistingValue, string mediaType = "application/octet-stream") => throw new NotImplementedException();
-
-    /// <inheritdoc />
-    public void AddWarning(string message) => _testContext.AddWarning(message);
-
-    /// <inheritdoc />
-    public void CancelCurrentTest() => _testContext.CancelCurrentTest();
-
-    /// <inheritdoc />
-    public ValueTask<object?> GetFixture(Type fixtureType) => _testContext.GetFixture(fixtureType);
-
-    /// <inheritdoc />
-    public void SendDiagnosticMessage(string message) => _testContext.SendDiagnosticMessage(message);
-
-    /// <inheritdoc />
-    public void SendDiagnosticMessage(string format, object? arg0) => _testContext.SendDiagnosticMessage(format, arg0);
-
-    /// <inheritdoc />
-    public void SendDiagnosticMessage(string format, object? arg0, object? arg1) => _testContext.SendDiagnosticMessage(format, arg0, arg1);
-
-    /// <inheritdoc />
-    public void SendDiagnosticMessage(string format, object? arg0, object? arg1, object? arg2) => _testContext.SendDiagnosticMessage(format, arg0, arg1, arg2);
-
-    /// <inheritdoc />
-    public void SendDiagnosticMessage(string format, params object?[] args) => _testContext.SendDiagnosticMessage(format, args);
-
-    /// <inheritdoc />
-    public IReadOnlyDictionary<string, TestAttachment>? Attachments => _testContext.Attachments;
-
-    /// <inheritdoc />
-    public CancellationToken CancellationToken => _testContext.CancellationToken;
-
-    /// <inheritdoc />
-    ConcurrentDictionary<string, object?> ITestContext.KeyValueStorage => _keyValueStorage;
-
-    /// <inheritdoc />
-    public TestPipelineStage PipelineStage => _testContext.PipelineStage;
-
-    /// <inheritdoc />
-    public ITest? Test => _testContext.Test;
-
-    /// <inheritdoc />
-    public ITestAssembly? TestAssembly => _testContext.TestAssembly;
-
-    /// <inheritdoc />
-    public TestEngineStatus? TestAssemblyStatus => _testContext.TestAssemblyStatus;
-
-    /// <inheritdoc />
-    public ITestCase? TestCase => _testContext.TestCase;
-
-    /// <inheritdoc />
-    public TestEngineStatus? TestCaseStatus => _testContext.TestCaseStatus;
-
-    /// <inheritdoc />
-    public ITestClass? TestClass => _testContext.TestClass;
-
-    /// <inheritdoc />
-    public object? TestClassInstance => _testContext.TestClassInstance;
-
-    /// <inheritdoc />
-    public TestEngineStatus? TestClassStatus => _testContext.TestClassStatus;
-
-    /// <inheritdoc />
-    public ITestCollection? TestCollection => _testContext.TestCollection;
-
-    /// <inheritdoc />
-    public TestEngineStatus? TestCollectionStatus => _testContext.TestCollectionStatus;
-
-    /// <inheritdoc />
-    public ITestMethod? TestMethod => _testContext.TestMethod;
-
-    /// <inheritdoc />
-    public TestEngineStatus? TestMethodStatus => _testContext.TestMethodStatus;
-
-    /// <inheritdoc />
-    public ITestOutputHelper? TestOutputHelper => _testContext.TestOutputHelper;
-
-    /// <inheritdoc />
-    public TestResultState? TestState => _testContext.TestState;
-
-    /// <inheritdoc />
-    public TestEngineStatus? TestStatus => _testContext.TestStatus;
-
-    /// <inheritdoc />
-    public IReadOnlyList<string>? Warnings => _testContext.Warnings;
 }
 
 /// <summary>

@@ -3,7 +3,7 @@ using Serilog.Events;
 
 namespace Rocket.Surgery.Extensions.Testing.TUnit.Tests;
 
-public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create(global::TUnit.Core.TestContext.Current!))
+public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create())
 {
     [Test]
     public Task Should_Create_A_Log_Stream()
