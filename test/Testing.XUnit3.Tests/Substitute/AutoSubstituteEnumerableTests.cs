@@ -88,9 +88,6 @@ public class AutoSubstituteEnumerableTests(ITestOutputHelper testOutputHelper) :
 
     private class LoggerTest : Item
     {
-        public LoggerTest(ILogger logger)
-        {
-            ArgumentNullException.ThrowIfNull(logger);
-        }
+        public LoggerTest(ILogger logger) => ArgumentNullException.ThrowIfNull(logger);
     }
 }

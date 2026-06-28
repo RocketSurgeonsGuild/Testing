@@ -32,7 +32,7 @@ internal class TestOutputSink(ITestOutputHelper testOutputHelper, ITextFormatter
         ArgumentNullException.ThrowIfNull(logEvent);
         var output = new StringWriter();
         textFormatter.Format(logEvent, output);
-        string message = output.ToString().Trim();
+        var message = output.ToString().Trim();
         testOutputHelper.WriteLine(message);
     }
 }

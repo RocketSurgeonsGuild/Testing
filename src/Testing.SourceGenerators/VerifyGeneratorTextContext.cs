@@ -140,7 +140,7 @@ public static class VerifyGeneratorTextContext
 
         static GeneratorTestResultsCustomizer executeDelegate(GeneratorTestResultsCustomizer customizer)
         {
-            return  customizer.GetInvocationList() is { Length: > 0, } methods 
+            return customizer.GetInvocationList() is { Length: > 0, } methods
                 ? ( (results, target, data) =>
                        {
                            foreach (var method in methods.OfType<GeneratorTestResultsCustomizer>())
