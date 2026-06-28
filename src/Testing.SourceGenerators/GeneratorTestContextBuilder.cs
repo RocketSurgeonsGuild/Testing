@@ -140,6 +140,27 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="preprocessorSymbolNames"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddPreprocessorSymbol(params IEnumerable<string> preprocessorSymbolNames)
+    {
+        var preprocessorSymbolNameList = preprocessorSymbolNames.ToList();
+        return this with
+        {
+            _parseOptions = new(
+                _parseOptions.LanguageVersion,
+                _parseOptions.DocumentationMode,
+                _parseOptions.Kind,
+                _parseOptions.PreprocessorSymbolNames.Union(preprocessorSymbolNameList).ToArray()
+            ),
+        };
+    }
+
+    /// <summary>
+    ///     Add a preprocessor symbol to the compilation
+    /// </summary>
+    /// <param name="preprocessorSymbolNames"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddPreprocessorSymbol(params IReadOnlyCollection<string> preprocessorSymbolNames)
     {
         return this with
@@ -266,12 +287,12 @@ public record GeneratorTestContextBuilder
     [OverloadResolutionPriority(-1)]
     public GeneratorTestContextBuilder AddCompilationReferences(params GeneratorTestResults[] additionalCompilations)
     {
-        return  additionalCompilations.Any(z => z.MetadataReference is null) 
+        return additionalCompilations.Any(z => z.MetadataReference is null)
             ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
             : ( AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
-        {
-            _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name)),
-        } );
+            {
+                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name)),
+            } );
     }
 
     /// <summary>
@@ -279,14 +300,32 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="additionalCompilations"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddCompilationReferences(params IEnumerable<GeneratorTestResults> additionalCompilations)
+    {
+        var generatorTestResultsEnumerable = additionalCompilations.ToList();
+        return generatorTestResultsEnumerable.Any(z => z.MetadataReference is null)
+            ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
+            : AddReferencesInternal(generatorTestResultsEnumerable.Select(z => z.MetadataReference!).ToArray()) with
+            {
+                _referenceNames = _referenceNames.Union(generatorTestResultsEnumerable.Select(z => z.Assembly!.GetName().Name)),
+            };
+    }
+
+    /// <summary>
+    ///     Add an in memory compiled assembly to the compilation
+    /// </summary>
+    /// <param name="additionalCompilations"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddCompilationReferences(params IReadOnlyCollection<GeneratorTestResults> additionalCompilations)
     {
-        return  additionalCompilations.Any(z => z.MetadataReference is null) 
+        return additionalCompilations.Any(z => z.MetadataReference is null)
             ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
             : ( AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
-        {
-            _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name)),
-        } );
+            {
+                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name)),
+            } );
     }
 
     /// <summary>
@@ -312,6 +351,26 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="assemblyNames"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddReferences(params IEnumerable<string> assemblyNames)
+    {
+        var assemblyNameList = assemblyNames.ToList();
+        // this "core assemblies hack" is from https://stackoverflow.com/a/47196516/4418060
+        var coreAssemblyPath = Path.GetDirectoryName(typeof(object).Assembly.Location)!;
+        return AddReferencesInternal(
+                assemblyNameList.Select(z => MetadataReference.CreateFromFile(Path.Combine(coreAssemblyPath, z))).OfType<MetadataReference>().ToArray()
+            ) with
+        {
+            _referenceNames = _referenceNames.Union(assemblyNameList),
+        };
+    }
+
+    /// <summary>
+    ///     Add references to the given assembly names
+    /// </summary>
+    /// <param name="assemblyNames"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddReferences(params IReadOnlyCollection<string> assemblyNames)
     {
         // this "core assemblies hack" is from https://stackoverflow.com/a/47196516/4418060
@@ -349,6 +408,28 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="references"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddReferences(params IEnumerable<MetadataReference> references)
+    {
+        var referenceList = references.ToList();
+        var names = _referenceNames.ToBuilder();
+        foreach (var reference in referenceList)
+        {
+            names.Add(Path.GetFileName(reference.Display ?? ""));
+        }
+
+        return AddReferencesInternal(referenceList) with
+        {
+            _referenceNames = names.ToImmutable(),
+        };
+    }
+
+    /// <summary>
+    ///     Add a set of metadata references to the compilation
+    /// </summary>
+    /// <param name="references"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddReferences(params IReadOnlyCollection<MetadataReference> references)
     {
         var names = _referenceNames.ToBuilder();
@@ -376,6 +457,19 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="references"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddReferences(params IEnumerable<Type> references)
+    {
+        var referenceList = references.ToList();
+        return AddReferences(referenceList.Select(z => z.Assembly).ToArray());
+    }
+
+    /// <summary>
+    ///     Add a set of metadata references to the compilation using the runtime type to identify the assembly
+    /// </summary>
+    /// <param name="references"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddReferences(params IReadOnlyCollection<Type> references) => AddReferences(references.Select(z => z.Assembly).ToArray());
 
     /// <summary>
@@ -391,11 +485,28 @@ public record GeneratorTestContextBuilder
             _referenceNames = _referenceNames.Union(references.Select(z => z.GetName().Name ?? "")),
         };
     }
+
     /// <summary>
     ///     Add a set of metadata references to the compilation using the runtime assembly to identify the assembly
     /// </summary>
     /// <param name="references"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddReferences(params IEnumerable<Assembly> references)
+    {
+        var referenceList = references.ToList();
+        return AddReferencesInternal(referenceList.Select(z => MetadataReference.CreateFromFile(z.Location)).OfType<MetadataReference>().ToArray()) with
+        {
+            _referenceNames = _referenceNames.Union(referenceList.Select(z => z.GetName().Name ?? "")),
+        };
+    }
+
+    /// <summary>
+    ///     Add a set of metadata references to the compilation using the runtime assembly to identify the assembly
+    /// </summary>
+    /// <param name="references"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddReferences(params IReadOnlyCollection<Assembly> references)
     {
         return AddReferencesInternal(references.Select(z => MetadataReference.CreateFromFile(z.Location)).OfType<MetadataReference>().ToArray()) with
@@ -454,6 +565,19 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="additionalSources"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddSources(params IEnumerable<SourceText> additionalSources)
+    {
+        var sourceList = additionalSources.ToList();
+        return this with { _sources = _sources.AddRange(sourceList.Select(z => new NamedSourceText(z))), };
+    }
+
+    /// <summary>
+    ///     Add the given source text to the compilation
+    /// </summary>
+    /// <param name="additionalSources"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddSources(params IReadOnlyCollection<SourceText> additionalSources) => this with { _sources = _sources.AddRange(additionalSources.Select(z => new NamedSourceText(z))), };
 
     /// <summary>
@@ -475,6 +599,22 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="additionalSources"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddSources(params IEnumerable<string> additionalSources)
+    {
+        var sourceList = additionalSources.ToList();
+        return this with
+        {
+            _sources = _sources.AddRange(sourceList.Select(s => SourceText.From(s, Encoding.UTF8)).Select(z => new NamedSourceText(z))),
+        };
+    }
+
+    /// <summary>
+    ///     Add the given source text to the compilation as a string
+    /// </summary>
+    /// <param name="additionalSources"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddSources(params IReadOnlyCollection<string> additionalSources)
     {
         return this with
@@ -527,6 +667,19 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="additionalTexts"></param>
     /// <returns></returns>
+    [OverloadResolutionPriority(0)]
+    public GeneratorTestContextBuilder AddAdditionalTexts(params IEnumerable<AdditionalText> additionalTexts)
+    {
+        var additionalTextList = additionalTexts.ToList();
+        return this with { _additionalTexts = _additionalTexts.AddRange(additionalTextList), };
+    }
+
+    /// <summary>
+    ///     Add the given additional text to the compilation
+    /// </summary>
+    /// <param name="additionalTexts"></param>
+    /// <returns></returns>
+    [OverloadResolutionPriority(1)]
     public GeneratorTestContextBuilder AddAdditionalTexts(params IReadOnlyCollection<AdditionalText> additionalTexts) => this with { _additionalTexts = _additionalTexts.AddRange(additionalTexts), };
 
     /// <summary>
