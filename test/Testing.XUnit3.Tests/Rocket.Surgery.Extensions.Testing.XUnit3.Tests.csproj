@@ -12,6 +12,7 @@
         <PackageReference Include="xunit.analyzers" />
         <PackageReference Include="Serilog.Sinks.Spectre" />
         <PackageReference Include="Verify.SourceGenerators" />
+        <Using Include="Xunit" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\src\Testing.NSubstitute\Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />

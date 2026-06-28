@@ -1,9 +1,8 @@
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit3.Tests.Substitute;
 
-public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestContext>
+public class AutoSubstituteEnumerableTests(ITestOutputHelper testOutputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(testOutputHelper))
 {
     [Fact]
     public void Does_Not_Auto_Substitute_Enumerable()
@@ -11,14 +10,11 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestCo
         AutoSubstitute.Provide<Item>(new A());
         AutoSubstitute.Provide<Item>(new B());
 
-        AutoSubstitute.Resolve<IEnumerable<Item>>().Should().HaveCount(2);
+        AutoSubstitute.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
     }
 
     [Fact]
-    public void Handle_Zero_Items()
-    {
-        AutoSubstitute.Resolve<IEnumerable<Item>>().Should().HaveCount(0);
-    }
+    public void Handle_Zero_Items() => AutoSubstitute.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
 
     [Fact]
     public void Handle_One_Substitute_Item()
@@ -26,8 +22,8 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestCo
         var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(1);
-        result.Should().Contain(fake1);
+        result.Count().ShouldBe(1);
+        result.ShouldContain(fake1);
     }
 
     [Fact]
@@ -37,9 +33,9 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestCo
         var fake2 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(2);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
+        result.Count().ShouldBe(2);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
     }
 
     [Fact]
@@ -50,10 +46,10 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestCo
         var fake3 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(3);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
+        result.Count().ShouldBe(3);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
     }
 
     [Fact]
@@ -65,11 +61,11 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestCo
         var fake4 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Should().HaveCount(4);
-        result.Should().Contain(fake1);
-        result.Should().Contain(fake2);
-        result.Should().Contain(fake3);
-        result.Should().Contain(fake4);
+        result.Count().ShouldBe(4);
+        result.ShouldContain(fake1);
+        result.ShouldContain(fake2);
+        result.ShouldContain(fake3);
+        result.ShouldContain(fake4);
     }
 
     [Fact(Skip = "Obsolete?")]
@@ -81,11 +77,8 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestCo
                     var lt = AutoSubstitute.Resolve<LoggerTest>();
                     AutoSubstitute.Provide<Item>(lt);
                 };
-        a.Should().NotThrow();
+        a.ShouldNotThrow();
     }
-
-    public AutoSubstituteEnumerableTests(ITestOutputHelper testOutputHelper)
-        : base(Defaults.CreateTestOutput(testOutputHelper)) { }
 
     public interface Item { }
 
@@ -95,12 +88,6 @@ public class AutoSubstituteEnumerableTests : AutoSubstituteTest<TestOutputTestCo
 
     private class LoggerTest : Item
     {
-        public LoggerTest(ILogger logger)
-        {
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-        }
+        public LoggerTest(ILogger logger) => ArgumentNullException.ThrowIfNull(logger);
     }
 }

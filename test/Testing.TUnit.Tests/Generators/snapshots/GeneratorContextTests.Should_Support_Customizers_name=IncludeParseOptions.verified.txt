@@ -1,0 +1,9 @@
+{
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.TUnit.Tests.Generators.MySourceGenerator: []
+  },
+  ParseOptions: {
+    DocumentationMode: Parse
+  }
+}

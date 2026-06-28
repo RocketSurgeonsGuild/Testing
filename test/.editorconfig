@@ -1,4 +1,4 @@
-﻿[*]
+[*]
 dotnet_diagnostic.CS0436.severity = none
 dotnet_diagnostic.CA1014.severity = none
 dotnet_diagnostic.CA1031.severity = none
@@ -28,6 +28,7 @@ dotnet_diagnostic.IDE0060.severity = none
 dotnet_diagnostic.RCS1163.severity = none
 dotnet_diagnostic.IL2026.severity = none
 dotnet_diagnostic.IL2067.severity = none
+dotnet_diagnostic.RS1038.severity = none
 resharper_possible_multiple_enumeration_highlighting = none
 resharper_template_is_not_compile_time_constant_problem_highlighting = none
 resharper_inconsistent_naming_highlighting = none

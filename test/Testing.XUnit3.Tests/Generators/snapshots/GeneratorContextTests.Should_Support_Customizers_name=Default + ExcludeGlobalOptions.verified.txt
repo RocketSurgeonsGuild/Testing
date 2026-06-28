@@ -1,0 +1,19 @@
+{
+  FileOptions: {
+    test.g.cs: {
+      a: value
+    }
+  },
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.XUnit3.Tests.Generators.MySourceGenerator: []
+  },
+  References: [
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

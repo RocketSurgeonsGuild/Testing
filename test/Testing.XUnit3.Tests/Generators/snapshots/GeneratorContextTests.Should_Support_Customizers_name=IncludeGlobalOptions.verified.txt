@@ -1,0 +1,9 @@
+{
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.XUnit3.Tests.Generators.MySourceGenerator: []
+  },
+  GlobalOptions: {
+    b: key
+  }
+}

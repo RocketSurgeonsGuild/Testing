@@ -1,5 +1,4 @@
 using DryIoc;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -45,20 +44,14 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
     public void Should_Provide_Values()
     {
         var item = AutoSubstitute.Provide(new MyItem());
-        ServiceProvider.GetRequiredService<MyItem>().Should().BeSameAs(item);
+        ServiceProvider.GetRequiredService<MyItem>().ShouldBeSameAs(item);
     }
 
     [Fact]
-    public void Should_Return_Self_For_ServiceProvider()
-    {
-        ServiceProvider.GetRequiredService<IServiceProvider>().Should().Be(ServiceProvider);
-    }
+    public void Should_Return_Self_For_ServiceProvider() => ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
 
     [Fact]
-    public void Should_Not_Fake_Optional_Parameters()
-    {
-        AutoSubstitute.Resolve<Optional>().Item.Should().BeNull();
-    }
+    public void Should_Not_Fake_Optional_Parameters() => AutoSubstitute.Resolve<Optional>().Item.ShouldBeNull();
 
     [Fact]
     public void Should_Populate_Optional_Parameters_When_Provided()
@@ -67,8 +60,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
         AutoSubstitute
            .Resolve<Optional>()
            .Item
-           .Should()
-           .NotBeNull();
+           .ShouldNotBeNull();
     }
 
     [Fact]
@@ -76,7 +68,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
     {
         var access = AutoSubstitute.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.Should().Throw<TestBootstrapException>();
+        a.ShouldThrow<TestBootstrapException>();
     }
 
     private class Impl : AutoSubstituteTest<TestOutputTestContext>
@@ -92,11 +84,9 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
     {
         public IContainer Self => Container;
 
-        protected override IContainer BuildContainer(IContainer container)
-        {
+        protected override IContainer BuildContainer(IContainer container) =>
             // invalid do not touch ServiceProvider or Container while constructing the container....
-            return Container.GetRequiredService<IContainer>();
-        }
+            Container.GetRequiredService<IContainer>();
     }
 
     private class LoggerImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
@@ -119,7 +109,7 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
 
     public class GenericLoggerImpl(ITestOutputHelper outputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
     {
-        private ITestOutputHelper _otherHelper = outputHelper;
+        private readonly ITestOutputHelper _otherHelper = outputHelper;
 
         public void Write()
         {

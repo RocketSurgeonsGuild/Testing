@@ -1,5 +1,4 @@
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 
@@ -9,10 +8,9 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
 {
     private readonly ITestOutputHelper _testOutputHelper;
 
-    public LoggerTestTests(ITestOutputHelper testOutputHelper) : base(Defaults.CreateTestOutput(testOutputHelper)) {
+    public LoggerTestTests(ITestOutputHelper testOutputHelper) : base(Defaults.CreateTestOutput(testOutputHelper)) =>
         // this is the wrapped one.
         _testOutputHelper = TestContext.TestOutputHelper;
-    }
 
     [Fact]
     public Task Should_Create_Usable_Logger()
@@ -34,7 +32,7 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -53,7 +51,7 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
     }
 
@@ -69,7 +67,7 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -88,7 +86,7 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
     }
 
@@ -100,12 +98,12 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         var logger = factory.CreateLogger("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
 
         ExcludeSourceContext("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Should().HaveCount(1);
+        logs.Count().ShouldBe(1);
         return Task.CompletedTask;
     }
 
@@ -120,19 +118,14 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Should().HaveCount(2);
+        logs.Count().ShouldBe(2);
 
         IncludeSourceContext("MyLogger");
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Should().HaveCount(3);
+        logs.Count().ShouldBe(3);
         return Task.CompletedTask;
-    }
-
-    private async Task VerifyOutput()
-    {
-        await Verify(FakeItEasy.Fake.GetCalls(_testOutputHelper));
     }
 
     private class Impl : LoggerTest<TestOutputTestContext>

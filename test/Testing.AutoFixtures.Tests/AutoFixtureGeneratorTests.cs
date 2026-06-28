@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
@@ -15,13 +16,14 @@ public class AutoFixtureGeneratorTests
         var generatorInstance =
             GeneratorTestContextBuilder
                .Create()
+               .WithDiagnosticSeverity(DiagnosticSeverity.Info)
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(List<>))
                .IgnoreOutputFile("AutoFixtureBase.g.cs")
                .Build();
 
         // When
-        var result = await generatorInstance.GenerateAsync();
+        var result = await generatorInstance.GenerateAsync(TestContext.Current.CancellationToken);
 
         // Then
         _ = await Verify(result).ScrubLines(text => text.Contains("System.CodeDom.Compiler.GeneratedCode"));
@@ -34,13 +36,14 @@ public class AutoFixtureGeneratorTests
         var generatorInstance =
             GeneratorTestContextBuilder
                .Create()
+               .WithDiagnosticSeverity(DiagnosticSeverity.Info)
                .WithGenerator<AutoFixtureGenerator>()
                .AddReferences(typeof(List<>))
                .IgnoreOutputFile("AutoFixtureAttribute.g.cs")
                .Build();
 
         // When
-        var result = await generatorInstance.GenerateAsync();
+        var result = await generatorInstance.GenerateAsync(TestContext.Current.CancellationToken);
 
         // Then
         _ = await Verify(result);
@@ -66,7 +69,7 @@ public class AutoFixtureGeneratorTests
         // Given, When
         var result =
             await context
-               .GenerateAsync();
+               .GenerateAsync(TestContext.Current.CancellationToken);
 
         // Then
         _ = await Verify(result).UseFileName(context.Id.Replace('/', '-').Replace('+', '-').TrimEnd('='));

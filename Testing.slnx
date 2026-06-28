@@ -73,5 +73,7 @@
     <File Path="Directory.Build.targets" />
     <Project Path="test/Testing.AutoFixtures.Tests/Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests.csproj" />
     <Project Path="test/Testing.Fixtures.Tests/Rocket.Surgery.Extensions.Testing.Fixtures.Tests.csproj" />
+    <Project Path="test/Testing.TUnit.Tests/Rocket.Surgery.Extensions.Testing.TUnit.Tests.csproj" />
+    <Project Path="test/Testing.XUnit3.Tests/Rocket.Surgery.Extensions.Testing.XUnit3.Tests.csproj" />
   </Folder>
 </Solution>

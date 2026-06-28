@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.Text;
 
@@ -21,7 +21,7 @@ public static class VerifyGeneratorTextContext
         bool includeInputs = false,
         bool includeOptions = true,
         DiagnosticSeverity? diagnosticSeverityFilter = null
-        // ReSharper enable ParameterHidesMember
+    // ReSharper enable ParameterHidesMember
     )
     {
         Initialize(
@@ -38,10 +38,7 @@ public static class VerifyGeneratorTextContext
     ///     Initializes the context
     /// </summary>
     /// <param name="customizers"></param>
-    public static void Initialize(params GeneratorTestResultsCustomizer[] customizers)
-    {
-        Initialize(null, customizers);
-    }
+    public static void Initialize(params GeneratorTestResultsCustomizer[] customizers) => Initialize(null, customizers);
 
     /// <summary>
     ///     Initializes the context
@@ -107,8 +104,8 @@ public static class VerifyGeneratorTextContext
                    }
 
                    data["FinalDiagnostics"] = target.FinalDiagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults();
-                   data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
-                   data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.OrderDiagnosticResults());
+                   data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults());
+                   data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults());
 
                    if (target.CodeFixResults.Count > 0)
                    {
@@ -139,42 +136,27 @@ public static class VerifyGeneratorTextContext
                    return new(data, targets);
                };
 
-        static GeneratorTestResultsCustomizer generatorTestResultsCustomizer(GeneratorTestResultsCustomizer seed, GeneratorTestResultsCustomizer value)
-        {
-            return seed + value;
-        }
+        static GeneratorTestResultsCustomizer generatorTestResultsCustomizer(GeneratorTestResultsCustomizer seed, GeneratorTestResultsCustomizer value) => seed + value;
 
         static GeneratorTestResultsCustomizer executeDelegate(GeneratorTestResultsCustomizer customizer)
         {
-            if (customizer.GetInvocationList() is { Length: > 0, } methods)
-            {
-                return (results, target, data) =>
+            return customizer.GetInvocationList() is { Length: > 0, } methods
+                ? ( (results, target, data) =>
                        {
                            foreach (var method in methods.OfType<GeneratorTestResultsCustomizer>())
                            {
                                method.Invoke(results, target, data);
                            }
-                       };
-            }
-
-            return customizer;
+                       } )
+                : customizer;
         }
     }
 
-    private static ConversionResult Convert(GeneratorTestResult target, IReadOnlyDictionary<string, object> context)
-    {
-        return new(new { target.Diagnostics, }, target.SyntaxTrees.Select(Customizers.Selector));
-    }
+    private static ConversionResult Convert(GeneratorTestResult target, IReadOnlyDictionary<string, object> context) => new(new { target.Diagnostics, }, target.SyntaxTrees.Select(Customizers.Selector));
 
-    private static ConversionResult Convert(AnalyzerTestResult target, IReadOnlyDictionary<string, object> context)
-    {
-        return new(new { target.Diagnostics, }, Enumerable.Empty<Target>());
-    }
+    private static ConversionResult Convert(AnalyzerTestResult target, IReadOnlyDictionary<string, object> context) => new(new { target.Diagnostics, }, []);
 
-    private static ConversionResult Convert(CompletionTestResult target, IReadOnlyDictionary<string, object> context)
-    {
-        return new(new { target.CompletionLists, }, Enumerable.Empty<Target>());
-    }
+    private static ConversionResult Convert(CompletionTestResult target, IReadOnlyDictionary<string, object> context) => new(new { target.CompletionLists, }, []);
 
     private static ConversionResult Convert(CodeRefactoringTestResult target, IReadOnlyDictionary<string, object> context)
     {
@@ -464,9 +446,6 @@ public static class VerifyGeneratorTextContext
     private class LocationConverter :
         WriteOnlyJsonConverter<Location>
     {
-        public override void Write(VerifyJsonWriter writer, Location value)
-        {
-            writer.WriteValue(value.GetMappedLineSpan().ToString().Replace("\\", "/"));
-        }
+        public override void Write(VerifyJsonWriter writer, Location value) => writer.WriteValue(value.GetMappedLineSpan().ToString().Replace("\\", "/"));
     }
 }

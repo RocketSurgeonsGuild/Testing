@@ -2,7 +2,7 @@ amends "package://github.com/jdx/hk/releases/download/v1.48.0/hk@1.48.0#/Config.
 import "package://github.com/jdx/hk/releases/download/v1.48.0/hk@1.48.0#/Builtins.pkl"
 
 // Solution the .NET formatters operate against.
-local solution = "Indago.slnx"
+local solution = "Testing.slnx"
 
 local excludeDiagnostics = new Listing<String> {
   "CA1869"

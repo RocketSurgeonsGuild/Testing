@@ -1,19 +1,13 @@
-﻿using FakeItEasy.Creation;
-using Moq;
+using FakeItEasy.Creation;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Spectre;
 
 namespace Rocket.Surgery.Extensions.Testing.TUnit.Tests;
 
-public class TestOutputTestContext : RocketSurgeryTestContext<TestOutputTestContext>, IAutoFakeTestContext, IAutoMockTestContext, IAutoSubstituteTestContext
+public class TestOutputTestContext(LogEventLevel logEventLevel = LogEventLevel.Verbose) : RocketSurgeryTestContext<TestOutputTestContext>
 {
-    private readonly LogEventLevel _logEventLevel;
-
-    public TestOutputTestContext(LogEventLevel logEventLevel = LogEventLevel.Verbose)
-    {
-        _logEventLevel = logEventLevel;
-    }
+    private readonly LogEventLevel _logEventLevel = logEventLevel;
 
     protected override void ConfigureLogger(TestOutputTestContext context, LoggerConfiguration loggerConfiguration)
     {
@@ -23,5 +17,4 @@ public class TestOutputTestContext : RocketSurgeryTestContext<TestOutputTestCont
     }
 
     public Action<IFakeOptions>? FakeOptionsAction => null;
-    public MockBehavior MockBehavior => MockBehavior.Default;
 }

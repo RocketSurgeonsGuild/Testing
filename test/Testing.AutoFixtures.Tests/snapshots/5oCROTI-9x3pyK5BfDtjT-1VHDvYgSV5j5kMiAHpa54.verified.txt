@@ -1,4 +1,4 @@
-﻿{
+{
   AnalyzerDiagnostics: {
     Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0001: [],
     Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0002: [],
@@ -15,7 +15,108 @@
       }
     ]
   },
-  FinalDiagnostics: [],
+  FinalDiagnostics: [
+    {
+      Id: Rsaf0003,
+      Title: classes with multiple constructors are currently select the one with the most parameters,
+      Severity: Info,
+      WarningLevel: 1,
+      Location: Input0.cs: (2,4)-(15,5),
+      MessageFormat: ,
+      Message: ,
+      Category: Support
+    },
+    {
+      Id: CS8669,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs: (35,62)-(35,63),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8669),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8669,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs: (35,90)-(35,91),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8669),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8669,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs: (57,62)-(57,63),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8669),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8669,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs: (72,56)-(72,57),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8669),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8669,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs: (72,84)-(72,85),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8669),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    },
+    {
+      Id: CS8669,
+      Title: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs: (91,56)-(91,57),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8669),
+      MessageFormat: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Message: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. Auto-generated code requires an explicit '#nullable' directive in source.,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry
+      ]
+    }
+  ],
   GeneratorDiagnostics: {
     Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator: []
   },

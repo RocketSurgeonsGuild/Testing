@@ -1,0 +1,9 @@
+{
+  FinalDiagnostics: [],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.XUnit.Tests.Generators.MyIncrementalGenerator: []
+  },
+  GlobalOptions: {
+    b: key
+  }
+}
