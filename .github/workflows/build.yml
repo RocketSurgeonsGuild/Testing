@@ -78,6 +78,6 @@ jobs:
             # main branch publishes to GitHub Pages (FR-027/028, SC-010).
             - name: 📤 Upload Pages artifact
               if: github.ref == 'refs/heads/main'
-              uses: actions/upload-pages-artifact@v3
+              uses: actions/upload-pages-artifact@v5
               with:
                   path: artifacts/docs
