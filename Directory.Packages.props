@@ -27,7 +27,7 @@
     <ItemGroup>
         <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
         <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="1.9.1" />
-        <PackageVersion Include="Rocket.Surgery.ModularPipelines.Extensions" Version="0.1.10" />
+        <PackageVersion Include="Rocket.Surgery.ModularPipelines.Extensions" Version="0.1.11" />
         <PackageVersion Include="Sourcy.DotNet" Version="1.1.1" />
         <PackageVersion Include="Sourcy.Git" Version="1.1.1" />
         <PackageVersion Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52" />
