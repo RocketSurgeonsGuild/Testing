@@ -7,7 +7,7 @@ on:
             - next
         tags:
             - v*
-    pull_request_target:
+    pull_request:
         branches:
             - main
             - next
@@ -17,19 +17,9 @@ on:
             - next
 
 permissions:
-    actions: read
-    checks: write
     contents: read
-    deployments: read
-    id-token: none
-    issues: write
-    discussions: none
-    packages: none
-    pages: none
-    pull-requests: write
-    repository-projects: none
-    security-events: none
-    statuses: write
+    pages: write
+    id-token: write
 
 jobs:
     build:
@@ -53,6 +43,9 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NUGET_API_KEY: ${{ secrets.RSG_NUGET_API_KEY }}
+            - name: 🏺 Save GitHub event
+              if: always()
+              run: cp "$GITHUB_EVENT_PATH" artifacts/event.json || true
             - name: 🏺 Publish logs
               if: always()
               uses: actions/upload-artifact@v7
@@ -65,35 +58,28 @@ jobs:
               with:
                   name: test data
                   path: artifacts/tests/
-            - name: 🚀 Publish Test Results
-              if: always()
-              uses: EnricoMi/publish-unit-test-result-action@v2
-              with:
-                  files: artifacts/tests/**/*.trx
             - name: 🏺 Publish coverage data
               if: always()
               uses: actions/upload-artifact@v7
               with:
                   name: coverage
                   path: artifacts/coverage/
-            - name: 🚀 Publish Coverage Comment
-              if: always() && (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
-              continue-on-error: true
-              uses: marocchino/sticky-pull-request-comment@v3.0.4
-              with:
-                  header: Coverage
-                  path: artifacts/coverage/summary/SummaryGithub.md
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: 🚀 Publish Codecov Coverage
-              if: always() && (github.event_name != 'pull_request' && github.event_name != 'pull_request_target') || ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.event.pull_request.user.login != 'renovate[bot]' && github.event.pull_request.user.login != 'dependabot[bot]')
-              continue-on-error: true
-              uses: codecov/codecov-action@v7.0.0
-              with:
-                  name: actions
-                  token: ${{ secrets.CODECOV_TOKEN }}
             - name: 🏺 Publish NuGet Packages
               if: always()
               uses: actions/upload-artifact@v7
               with:
                   name: nuget
                   path: artifacts/nuget/
+            - name: 🏺 Publish event
+              if: always()
+              uses: actions/upload-artifact@v7
+              with:
+                  name: event
+                  path: artifacts/event.json
+            # Docs are built into artifacts/docs by the canonical pipeline (DocsModule). Only the
+            # main branch publishes to GitHub Pages (FR-027/028, SC-010).
+            - name: 📤 Upload Pages artifact
+              if: github.ref == 'refs/heads/main'
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: artifacts/docs
