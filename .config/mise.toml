@@ -4,7 +4,7 @@
 "github:yvgude/lean-ctx" = { version = "v3.8.8", bin = "lean-ctx" }
 hk = "1.48.0"
 pkl = "0.31.1"
-bun = "1.3.14"
+node = "24.16.0"
 actionlint = "1.7.12"
 prettier = "3.8.4"
 
@@ -20,13 +20,15 @@ dotnet = [{ version = "8.0.14", runtime = "dotnet" }, { version = "10.0.301" }]
 "dotnet:verify.tool" = "0.7.0"
 "dotnet:gitreleasemanager.tool" = "0.20.0"
 "dotnet:NuGet.Mcp.Server" = "1.4.3"
-"npm:vitepress" = "v2.0.0-alpha.17"
+"pipx:git+https://github.com/github/spec-kit.git" = "latest"
+"npm:@bradygaster/squad-cli" = "0.10.0"
 # dotnet
 
 [tasks]
 build = { run = "dotnet run build/Build.cs" }
-docs = { run = "vitepress dev docs" }
-docs-preview = { run = "vitepress preview docs" }
+docs = { run = "npm run dev --workspace docs", description = "Start Astro/Starlight dev server" }
+"docs:preview" = { run = "npm run preview --workspace docs", description = "Preview built Starlight site" }
+"docs:build" = { run = "npm run build --workspace docs", description = "Build the Starlight site (API reference is generated in-process by the Astro XML loader)" }
 "roslyn-lsp" = { run = "bash build/scripts/install-roslyn-lsp.sh", description = "Install the Microsoft Roslyn language server for this RID" }
 "pkl-vscode" = { run = "bash build/scripts/install-pkl-vscode.sh", description = "Install the Pkl VS Code extension (not in marketplace; installed from VSIX)" }
 
@@ -36,6 +38,10 @@ prereleases = true
 
 [env]
 HK_MISE = 1
+# Keep npm's download cache inside the mise data dir so jdx/mise-action's
+# cache (which caches MISE_DATA_DIR / ~/.local/share/mise) also persists npm
+# tarballs across CI runs. `npm ci` still wipes node_modules, but reuses these.
+npm_config_cache = "{{env.HOME}}/.local/share/mise/npm-cache"
 # Microsoft Roslyn language server (Microsoft.CodeAnalysis.LanguageServer), installed by the
 # `roslyn-lsp` task from the Azure DevOps vs-impl feed. The wrapper lands on PATH below.
 ROSLYN_LSP_VERSION = "4.8.0-7.26274.14"

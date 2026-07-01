@@ -1,7 +1,8 @@
-name: Lint
+name: autofix.ci
 
 on:
-    pull_request_target:
+    pull_request:
+    push:
         branches:
             - main
             - next
@@ -10,20 +11,11 @@ on:
             - main
             - next
 
+# Read-only: autofix.ci pushes the fix commit server-side via its GitHub App,
+# so the workflow itself never needs write access or a secret. This is what makes
+# running a formatter over untrusted fork code safe.
 permissions:
-    actions: read
-    checks: write
-    contents: write
-    deployments: read
-    id-token: none
-    issues: write
-    discussions: none
-    packages: none
-    pages: none
-    pull-requests: write
-    repository-projects: none
-    security-events: none
-    statuses: write
+    contents: read
 
 concurrency:
     group: lint-${{ github.event.pull_request.number || github.run_id }}
@@ -38,37 +30,33 @@ jobs:
               with:
                   clean: 'false'
                   fetch-depth: '0'
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
-                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
-                  token: ${{ secrets.RSG_BOT_TOKEN }}
-            - name: Get Head Commit Message
-              id: commit-message
-              run: |
-                  echo "message=$(git show -s --format=%s)" >> "$GITHUB_OUTPUT"
             - name: 🛠️ Setup mise
               uses: jdx/mise-action@v4
               with:
                   install: true
                   cache: true
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-            - name: 🧹 Lint (hk fix)
-              if: github.event_name == 'pull_request_target'
-              run: |
-                  hk fix --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
-              env:
-                  DEFAULT_BRANCH: ${{ github.event.pull_request.base.sha }}
-                  HEAD: ${{ github.event.pull_request.head.sha }}
-            - name: 🧹 Lint (hk check)
+            # merge_group: hard gate only — no autofix in the merge queue.
+            - name: 🧹 Lint (hk check) — merge_group
               if: github.event_name == 'merge_group'
               run: |
                   hk check --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
               env:
                   DEFAULT_BRANCH: ${{ github.event.merge_group.base_sha }}
                   HEAD: ${{ github.event.merge_group.head_sha }}
-            - name: Add & Commit
-              if: github.event_name == 'pull_request_target' && !contains(steps.commit-message.outputs.message, 'Automatically linting code')
-              uses: stefanzweifel/git-auto-commit-action@v7
+            # pull_request (same-repo AND fork): apply fixes into the working tree.
+            # autofix.ci uploads the diff and commits it back to the PR (incl. forks).
+            - name: 🧹 Lint (hk fix)
+              if: github.event_name == 'pull_request'
+              run: |
+                  hk fix --from-ref "$DEFAULT_BRANCH" --to-ref "$HEAD"
               env:
-                  GITHUB_TOKEN: ${{ secrets.RSG_BOT_TOKEN }}
+                  DEFAULT_BRANCH: ${{ github.event.pull_request.base.sha }}
+                  HEAD: ${{ github.event.pull_request.head.sha }}
+            # Must be the LAST step: pushes the working-tree changes back as a
+            # verified commit (and fails the check when a fix was needed).
+            - name: ✍️ Apply fixes (autofix.ci)
+              if: github.event_name == 'pull_request'
+              uses: autofix-ci/action@v1.3.4
               with:
-                  commit_message: Automatically linting code
+                  commit-message: Automatically linting code

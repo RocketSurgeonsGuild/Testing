@@ -9,6 +9,7 @@ local excludeDiagnostics = new Listing<String> {
   "CA2255"
   "CS0103"
   "CS0108"
+  "CS1061"
   "CS0246"
   "CS1591"
   "CS8602"
@@ -29,6 +30,22 @@ local excludeDiagnostics = new Listing<String> {
   "RCS1251"
   "RCS1264"
   "RS0026"
+}
+
+local excludes = new Listing<String> {
+  "**/obj/**/*"
+  "**/bin/**/*"
+  ".git/**/*"
+  ".vs/**/*"
+  ".vscode/**/*"
+  ".idea/**/*"
+  ".claude/**/*"
+  ".agents/**/*"
+  ".apm/**/*"
+  ".copilot/**/*"
+  ".squad/**/*"
+  "**/*.verified.*"
+  "**/*.received.*"
 }
 
 local excludedDiagnosticsString = excludeDiagnostics.join(" ")
@@ -76,6 +93,7 @@ local linters = new Mapping<String, Step> {
   // ["jb-cleanupcode"] = jbCleanupCode
 }
 
+exclude = excludes
 hooks {
   ["pre-commit"] {
     fix = true

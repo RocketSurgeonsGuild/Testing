@@ -223,3 +223,22 @@ apm_modules/
 # Pkl VS Code extension VSIX cache (installed via mise `pkl-vscode` task)
 .pkl-vscode/
 .temp/
+# Squad: ignore runtime state (logs, inbox, sessions)
+.squad/orchestration-log/
+.squad/log/
+.squad/decisions/inbox/
+.squad/sessions/
+.squad/.scratch/
+.squad/.cache/
+# Squad: SubSquad activation file (local to this machine)
+.squad-workstream
+dist/
+.astro/
+*.local.toml
+
+# Docs: auto-generated API reference (regenerated in CI via xmldocmd --clean).
+# Keep the hand-written section landing page (api/index.md); ignore the generated tree.
+docs/src/content/docs/api/**
+!docs/src/content/docs/api/index.md
+.playwright-mcp/
+docs/api/
