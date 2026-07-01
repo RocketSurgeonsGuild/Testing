@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using DryIoc;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,8 @@ public static class DryIocExtensions
     {
         var dictionary = new ConcurrentDictionary<Type, Factory>();
         return rules.WithUnknownServiceResolvers(
-            ( rules.UnknownServiceResolvers ?? Array.Empty<Rules.UnknownServiceResolver>() ).ToImmutableList().Add(
+            [
+                .. ( rules.UnknownServiceResolvers ?? [] ),
                 request =>
                 {
                     var serviceType = request.ServiceType;
@@ -41,8 +43,8 @@ public static class DryIocExtensions
 
                     return instance;
                 }
-            ).ToArray()
-        );
+,
+            ]);
     }
 
     /// <summary>
@@ -55,7 +57,8 @@ public static class DryIocExtensions
     {
         var dictionary = new ConcurrentDictionary<Type, Factory>();
         return rules.WithUnknownServiceResolvers(
-            ( rules.UnknownServiceResolvers ?? Array.Empty<Rules.UnknownServiceResolver>() ).ToImmutableList().Add(
+            [
+                .. ( rules.UnknownServiceResolvers ?? [] ),
                 request =>
                 {
                     var serviceType = request.ServiceType;
@@ -73,7 +76,7 @@ public static class DryIocExtensions
 
                     return instance;
                 }
-            ).ToArray()
-        );
+,
+            ]);
     }
 }
