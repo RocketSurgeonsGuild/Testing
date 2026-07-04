@@ -643,7 +643,7 @@ public record GeneratorTestContextBuilder
     {
         return this with
         {
-            _markedLocations = _markedLocations.Add(name, new(source.Location, source.Trigger)),
+            _markedLocations = _markedLocations.SetItem(name, new(source.Location, source.Trigger)),
             _sources = _sources.Add(new(SourceText.From(source.Code, Encoding.UTF8)) { Name = name, }),
         };
     }
@@ -726,14 +726,14 @@ public record GeneratorTestContextBuilder
     public GeneratorTestContextBuilder AddOption(string path, string key, string value)
     {
         var rootOptions = _options;
-        if (rootOptions.TryGetValue(path, out var fileOptions))
+        if (_options.TryGetValue(path, out var fileOptions))
         {
-            fileOptions = fileOptions.Add(key, value);
+            fileOptions = fileOptions.SetItem(key, value);
             rootOptions = rootOptions.SetItem(path, fileOptions);
         }
         else
         {
-            rootOptions = rootOptions.SetItem(path, ImmutableDictionary<string, string>.Empty.Add(key, value));
+            rootOptions = rootOptions.SetItem(path, ImmutableDictionary<string, string>.Empty.SetItem(key, value));
         }
 
         return this with { _options = rootOptions, };
@@ -745,7 +745,7 @@ public record GeneratorTestContextBuilder
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder AddGlobalOption(string key, string value) => this with { _globalOptions = _globalOptions.Add(key, value), };
+    public GeneratorTestContextBuilder AddGlobalOption(string key, string value) => this with { _globalOptions = _globalOptions.SetItem(key, value), };
 
     /// <summary>
     ///     Create the <see cref="GeneratorTestContext" /> from the builder
