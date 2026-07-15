@@ -31,7 +31,7 @@
         <PackageVersion Include="Sourcy.DotNet" Version="1.1.1" />
         <PackageVersion Include="Sourcy.Git" Version="1.1.1" />
         <PackageVersion Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52" />
-        <PackageVersion Include="Polyfill" Version="11.0.0" />
+        <PackageVersion Include="Polyfill" Version="11.0.1" />
         <PackageVersion Include="Serilog.Sinks.Spectre" Version="0.6.0" />
         <PackageVersion Include="TUnit" Version="1.58.0" />
         <PackageVersion Include="TUnit.Core" Version="1.58.0" />
