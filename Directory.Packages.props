@@ -48,7 +48,7 @@
         <PackageVersion Include="Serilog" Version="4.3.1" />
         <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
         <PackageVersion Include="Serilog.Sinks.Observable" Version="3.0.0" />
-        <PackageVersion Include="System.Reactive" Version="7.0.0-rc.1" />
+        <PackageVersion Include="System.Reactive" Version="7.0.0" />
         <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-09" />
         <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
         <PackageVersion Include="FakeItEasy" Version="9.0.1" />
