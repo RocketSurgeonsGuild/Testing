@@ -11,7 +11,7 @@
         <PackageReference Include="Verify.TUnit" />
         <PackageReference Include="Serilog.Sinks.Spectre" />
         <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" VersionOverride="18.8.0" />
-        <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" VersionOverride="2.2.3" />
+        <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" VersionOverride="2.3.2" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\src\Testing.NSubstitute\Rocket.Surgery.Extensions.Testing.NSubstitute.csproj" />
