@@ -10,7 +10,7 @@
         <PackageReference Include="TUnit" />
         <PackageReference Include="Verify.TUnit" />
         <PackageReference Include="Serilog.Sinks.Spectre" />
-        <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" VersionOverride="18.8.0" />
+        <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" VersionOverride="18.9.0" />
         <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" VersionOverride="2.2.3" />
     </ItemGroup>
     <ItemGroup>
