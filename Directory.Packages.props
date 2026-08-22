@@ -20,7 +20,7 @@
         <GlobalPackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
         <PackageVersion Include="BeaKona.AutoInterfaceGenerator" Version="1.0.46" />
         <PackageVersion Include="Verify.XunitV3" Version="31.20.0" />
-        <PackageVersion Include="xunit.analyzers" Version="1.27.0" />
+        <PackageVersion Include="xunit.analyzers" Version="2.0.0" />
         <GlobalPackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
         <GlobalPackageReference Include="JetBrains.Annotations.Sources" Version="2026.2.0" Condition="$(MSBuildProjectName) != '.build'" />
     </ItemGroup>
@@ -59,7 +59,7 @@
         <PackageVersion Include="Verify.TUnit" Version="31.20.0" />
         <PackageVersion Include="Verify.XUnitV3" Version="31.20.0" />
         <PackageVersion Include="Verify.SourceGenerators" Version="2.5.0" />
-        <PackageVersion Include="xunit.v3" Version="3.2.2" />
-        <PackageVersion Include="xunit.v3.extensibility.core" Version="3.2.2" />
+        <PackageVersion Include="xunit.v3" Version="4.0.0" />
+        <PackageVersion Include="xunit.v3.extensibility.core" Version="4.0.0" />
     </ItemGroup>
 </Project>
