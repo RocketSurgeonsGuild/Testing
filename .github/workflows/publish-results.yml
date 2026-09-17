@@ -77,7 +77,7 @@ jobs:
                      github.event.workflow_run.actor.login != 'dependabot[bot]')
                   )
               continue-on-error: true
-              uses: codecov/codecov-action@v7.1.0
+              uses: codecov/codecov-action@v7.1.1
               with:
                   name: actions
                   token: ${{ secrets.CODECOV_TOKEN }}
