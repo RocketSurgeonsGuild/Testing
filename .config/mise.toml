@@ -3,7 +3,7 @@
 "github:eljulians/skillfile" = { version = "v1.7.1", bin = "skillfile" }
 "github:yvgude/lean-ctx" = { version = "v3.8.8", bin = "lean-ctx" }
 hk = "1.48.0"
-pkl = "0.31.1"
+pkl = "0.32.1"
 node = "24.16.0"
 actionlint = "1.7.12"
 prettier = "3.8.4"
