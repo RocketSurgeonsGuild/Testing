@@ -6,7 +6,7 @@ hk = "1.48.0"
 pkl = "0.31.1"
 node = "24.16.0"
 actionlint = "1.7.12"
-prettier = "3.8.4"
+prettier = "3.9.9"
 
 dotnet = [{ version = "8.0.14", runtime = "dotnet" }, { version = "10.0.301" }]
 "dotnet:gitversion.tool" = "6.6.0"
