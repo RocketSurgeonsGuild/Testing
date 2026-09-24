@@ -1,6 +1,6 @@
 [tools]
 "github:microsoft/apm" = { version = "v0.20.0", bin = "apm" }
-"github:eljulians/skillfile" = { version = "v1.7.1", bin = "skillfile" }
+"github:eljulians/skillfile" = { version = "v1.9.2", bin = "skillfile" }
 "github:yvgude/lean-ctx" = { version = "v3.8.8", bin = "lean-ctx" }
 hk = "1.48.0"
 pkl = "0.31.1"
