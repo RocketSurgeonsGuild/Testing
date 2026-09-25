@@ -1,0 +1,7 @@
+{
+  "name": "mise-npm-install",
+  "private": true,
+  "dependencies": {
+    "@bradygaster/squad-cli": "0.10.0"
+  }
+}
