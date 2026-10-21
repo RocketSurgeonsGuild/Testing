@@ -9,6 +9,8 @@
         "lambdageek.msbuild-structured-log-viewer",
         "github.vscode-github-actions",
         "christian-kohler.path-intellisense",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "astro-build.astro-vscode",
+        "hideoo.starlight-links"
     ]
 }

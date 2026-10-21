@@ -1,0 +1,34 @@
+---
+title: Rocket Surgery Testing — Test Helpers for .NET
+description: Test base classes with captured logging, auto-mocking containers for FakeItEasy and NSubstitute, fixture builders, and a harness for testing Roslyn source generators.
+template: splash
+hero:
+    title: Rocket Surgery Testing
+    tagline: Logging-aware test base classes, auto-mocking, fixture builders and Roslyn generator test harnesses for .NET.
+    actions:
+        - text: Get Started
+          link: ./guide/
+          icon: right-arrow
+          variant: primary
+        - text: View on GitHub
+          link: https://github.com/RocketSurgeonsGuild/Testing
+          icon: external
+          variant: minimal
+---
+
+import { CardGrid, Card } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Logs You Can Assert On" icon="document">
+    `LoggerTest` wires Serilog to your test framework's output and lets you capture log events inside a block and assert on them.
+  </Card>
+  <Card title="Auto-Mocking Containers" icon="puzzle">
+    `AutoFakeTest` and `AutoSubstituteTest` resolve your system under test from a DryIoc container that fakes every dependency it doesn't know about.
+  </Card>
+  <Card title="Fixture Builders" icon="pencil">
+    Write fluent builders with `ITestFixtureBuilder`, or let `[AutoFixture]` generate them from a constructor.
+  </Card>
+  <Card title="Generator Test Harness" icon="setting">
+    `GeneratorTestContextBuilder` compiles sources, runs generators, analyzers, code fixes and refactorings, and snapshots the results with Verify.
+  </Card>
+</CardGrid>

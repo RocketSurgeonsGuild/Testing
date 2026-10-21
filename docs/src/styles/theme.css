@@ -1,0 +1,32 @@
+/* Testing brand theme — the repo's lavender/magenta accent (#c66df6). */
+:root {
+    --sl-color-accent-low: #33163f;
+    --sl-color-accent: #b84ff0;
+    --sl-color-accent-high: #e2bdfb;
+    --sl-color-white: #f3eef6;
+    --sl-color-gray-1: #e0d5e8;
+    --sl-color-gray-2: #a894b3;
+    --sl-color-gray-3: #8a7695;
+    --sl-color-gray-4: #574568;
+    --sl-color-gray-5: #352547;
+    --sl-color-gray-6: #231830;
+    --sl-color-black: #18101f;
+}
+:root[data-theme='light'] {
+    --sl-color-accent-low: #f6ecfd;
+    --sl-color-accent: #9a2fd4;
+    --sl-color-accent-high: #4d1670;
+    --sl-color-white: #2a1e3d;
+    --sl-color-gray-1: #352a4a;
+    --sl-color-gray-2: #4d4060;
+    --sl-color-gray-3: #726584;
+    --sl-color-gray-4: #a195b3;
+    --sl-color-gray-5: #d4cae0;
+    --sl-color-gray-6: #e9e1f0;
+    --sl-color-gray-7: #f5eefa;
+    --sl-color-black: #fbf9fd;
+}
+/* Slightly rounder cards to match the mark */
+.sl-markdown-content .card, .sidebar-pane details {
+    border-radius: 0.6rem;
+}
