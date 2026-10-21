@@ -35,6 +35,17 @@
 
 TBD
 
+# Contributing
+
+The .NET SDK and the extra .NET 10 runtime come from `mise` (`.config/mise.toml`), not `global.json`. Run `mise install` before building.
+
+> [!NOTE]
+> On macOS, the first `mise install` of a new .NET SDK can overwrite the shared `~/.local/share/mise/dotnet-root/dotnet` host in place, and macOS then kills every `dotnet` command (SIGKILL). Replace the host with a fresh copy to fix it:
+>
+> ```bash
+> cd ~/.local/share/mise/dotnet-root && cp -p dotnet dotnet.fresh && mv -f dotnet.fresh dotnet
+> ```
+
 <!-- generated references -->
 [github-release]: https://github.com/RocketSurgeonsGuild/Testing/releases/latest
 [github-release-badge]: https://img.shields.io/github/release/RocketSurgeonsGuild/Testing.svg?logo=github&style=flat "Latest Release"

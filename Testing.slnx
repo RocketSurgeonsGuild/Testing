@@ -26,9 +26,6 @@
     <File Path="NuGet.config" />
     <File Path="package.json" />
     <File Path="Readme.md" />
-    <Project Path=".build/.build.csproj">
-      <Build Project="false" />
-    </Project>
   </Folder>
   <Folder Name="/config/.github/">
     <File Path="labels.yml" />

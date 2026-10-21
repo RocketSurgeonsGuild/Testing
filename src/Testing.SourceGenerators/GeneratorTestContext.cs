@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Runtime.Loader;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,16 +16,22 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 /// <summary>
 ///     The context for running a set of generators against a set of sources
 /// </summary>
+/// <remarks>
+///     Disposing the context unloads the assembly load context that <see cref="GeneratorTestContextBuilder.Build" /> created for it.
+///     A load context passed to <see cref="GeneratorTestContextBuilder.WithAssemblyLoadContext" /> is left to its owner.
+/// </remarks>
 [PublicAPI]
-public record GeneratorTestContext
+public record GeneratorTestContext : IDisposable
 {
     private readonly ImmutableDictionary<string, MarkedLocation> _markedLocations;
     private readonly ImmutableArray<GeneratorTestResultsCustomizer> _customizers;
+    private readonly bool _ownsAssemblyLoadContext;
 
     internal GeneratorTestContext(
         string projectName,
         ILogger logger,
         AssemblyLoadContext assemblyLoadContext,
+        bool ownsAssemblyLoadContext,
         ImmutableHashSet<MetadataReference> metadataReferences,
         ImmutableHashSet<string> referenceNames,
         ImmutableHashSet<Type> relatedTypes,
@@ -54,6 +60,7 @@ public record GeneratorTestContext
         _projectName = projectName;
         _diagnosticSeverity = diagnosticSeverity;
         AssemblyLoadContext = assemblyLoadContext;
+        _ownsAssemblyLoadContext = ownsAssemblyLoadContext;
 
         using var hasher = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         hasher.AppendData(Encoding.UTF8.GetBytes(projectName));
@@ -143,6 +150,25 @@ public record GeneratorTestContext
     /// </summary>
     public string Id { get; }
 
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    ///     Unloads the assembly load context when this context created it
+    /// </summary>
+    /// <param name="disposing"></param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing && _ownsAssemblyLoadContext && AssemblyLoadContext is IDisposable disposable)
+        {
+            disposable.Dispose();
+        }
+    }
+
     internal ILogger _logger { get; init; }
     internal ImmutableHashSet<MetadataReference> _metadataReferences { get; init; }
     internal ImmutableHashSet<Type> _relatedTypes { get; init; }
@@ -174,10 +200,9 @@ public record GeneratorTestContext
 
         var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _parseOptions, _sources, _additionalTexts);
 
-        var compilation = (CSharpCompilation?)await project.GetCompilationAsync(cancellationToken).ConfigureAwait(false);
-        if (compilation is null) throw new InvalidOperationException("Could not compile the sources");
+        var compilation = (CSharpCompilation?)await project.GetCompilationAsync(cancellationToken).ConfigureAwait(false) ?? throw new InvalidOperationException("Could not compile the sources");
 
-        var diagnostics = compilation.GetDiagnostics();
+        var diagnostics = compilation.GetDiagnostics(cancellationToken);
         if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
         {
             _logger.Verbose("--- Input Diagnostics --- {Count}", diagnostics.Length);
@@ -220,11 +245,11 @@ public record GeneratorTestContext
             _logger.Information("--- {Generator} ---", instance.GetType().FullName);
             var generators = new List<ISourceGenerator>
             {
-                instance switch { IIncrementalGenerator i => i.AsSourceGenerator(), ISourceGenerator s => s, _ => throw new ArgumentOutOfRangeException(), },
+                instance switch { IIncrementalGenerator i => i.AsSourceGenerator(), ISourceGenerator s => s, _ => throw new InvalidOperationException($"{instance.GetType().FullName} is not an incremental or source generator"), },
             };
             var driver = CSharpGeneratorDriver.Create(generators, _additionalTexts, _parseOptions, new OptionsProvider(_fileOptions, _globalOptions), default);
 
-            driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out diagnostics);
+            _ = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out diagnostics, cancellationToken);
 
             if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
             {
@@ -257,13 +282,13 @@ public record GeneratorTestContext
                 new(
                     ( outputCompilation as CSharpCompilation )!,
                     diagnostics,
-                    trees.Where(z => !_ignoredFilePaths.Any(x => z.FilePath.Contains(x))).ToImmutableArray()
+                    [.. trees.Where(z => !_ignoredFilePaths.Any(x => z.FilePath.Contains(x)))]
                 )
             );
         }
 
         var analyzers = projectInformation.Analyzers;
-        finalDiagnostics.AddRange(inputCompilation.GetDiagnostics());
+        finalDiagnostics.AddRange(inputCompilation.GetDiagnostics(cancellationToken));
 
         AnalysisResult? analysisResult = null;
         if (analyzers.Count > 0)
@@ -275,7 +300,7 @@ public record GeneratorTestContext
             }
 
             var compilationWithAnalyzers = inputCompilation.WithAnalyzers(
-                analyzers.Values.ToImmutableArray(),
+                [.. analyzers.Values],
                 new AnalyzerOptions(_additionalTexts, new OptionsProvider(_fileOptions, _globalOptions))
             );
 
@@ -303,8 +328,8 @@ public record GeneratorTestContext
             _fileOptions,
             builder.ToImmutable(),
             analyzerBuilder.ToImmutable(),
-            ImmutableDictionary<Type, CodeFixTestResult>.Empty,
-            ImmutableDictionary<Type, CodeRefactoringTestResult>.Empty,
+            [],
+            [],
             _markedLocations,
             inputCompilation,
             finalDiagnostics.ToImmutable(),
@@ -332,11 +357,13 @@ public record GeneratorTestContext
 
         var assemblyStream = Emit(inputCompilation);
         if (assemblyStream is { Length: > 0, })
+        {
             results = results with
             {
                 MetadataReference = MetadataReference.CreateFromStream(new MemoryStream(assemblyStream)),
-                Assembly = AssemblyLoadContext.LoadFromStream(new MemoryStream(assemblyStream)),
+                Assembly = GeneratedAssemblyLocation.LoadFromStream(AssemblyLoadContext, Id, assemblyStream),
             };
+        }
 
         return results;
     }
@@ -348,8 +375,6 @@ public record GeneratorTestContext
             stream,
             options: new(outputNameOverride: outputName ?? compilation.AssemblyName)
         );
-        if (!emitResult.Success) return Array.Empty<byte>();
-
-        return stream.ToArray();
+        return emitResult.Success ? stream.ToArray() : [];
     }
 }
