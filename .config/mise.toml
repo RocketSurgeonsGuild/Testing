@@ -2,7 +2,7 @@
 "github:microsoft/apm" = { version = "v0.34.0", bin = "apm" }
 "github:eljulians/skillfile" = { version = "v1.9.2", bin = "skillfile" }
 hk = "2.8.0"
-pkl = "0.32.1"
+pkl = "0.32.2"
 node = "24.22.1"
 actionlint = "1.7.12"
 biome = "2.5.2"
