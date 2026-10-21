@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project>
-    <!-- Runtime async: net11.0+ only (the flag breaks net10.0 builds) and never for browser targets (incompatible with WebAssembly). Opt out per project with UseRuntimeAsync=false. -->
-    <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net11.0')) and '$(TargetPlatformIdentifier)' != 'browser'">
+    <!-- Runtime async: net11.0+ only (the flag breaks net10.0 builds), never for browser/WebAssembly (Mono WASM can't run runtime-async IL). Opt out per project with UseRuntimeAsync=false. -->
+    <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net11.0')) and '$(TargetPlatformIdentifier)' != 'browser' and '$(RuntimeIdentifier)' != 'browser-wasm' and '$(UseRuntimeAsync)' != 'false'">
         <Features>$(Features);runtime-async=on</Features>
     </PropertyGroup>
     <ItemGroup>
