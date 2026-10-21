@@ -176,6 +176,16 @@ git log --oneline @{u}..HEAD
 # release:full saves a preflight-fail/retry round trip. No-op if clean.
 [[ -x ./scripts/sync-hooks-to-settings.sh ]] && ./scripts/sync-hooks-to-settings.sh
 
+# Ensure GH_TOKEN is in the env — release:preflight checks `[ -n "$GH_TOKEN" ]`
+# but many repos (incl. cc-skills) do NOT define it in .mise.toml [env]; auth
+# lives in the gh keyring instead. Source it for the run. The Process Storm
+# Guard blocks `$(gh auth token)` as a gh-recursion pattern, so the
+# `# PROCESS-STORM-OK` escape hatch is REQUIRED here (this is a one-shot
+# interactive release step, not a hook/credential-helper — the intended use).
+if [ -z "${GH_TOKEN:-}" ]; then
+  export GH_TOKEN="$(gh auth token)" && export GITHUB_TOKEN="$GH_TOKEN"  # PROCESS-STORM-OK
+fi
+
 # Route by flags
 mise run release:full    # default
 mise run release:dry     # --dry

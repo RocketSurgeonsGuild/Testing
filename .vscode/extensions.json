@@ -1,7 +1,6 @@
 {
     "recommendations": [
         "apple.pkl-vscode",
-        "antfu.vite",
         "ms-dotnettools.vscode-dotnet-runtime",
         "ms-dotnettools.csdevkit",
         "ms-dotnettools.csharp",

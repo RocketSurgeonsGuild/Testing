@@ -1,85 +1,10 @@
 lockfile_version: '1'
-generated_at: '2026-06-23T02:59:59.334492+00:00'
+generated_at: '2026-07-16T05:03:29.293584+00:00'
 apm_version: 0.20.0
 dependencies:
-- repo_url: antfu/skills
-  host: github.com
-  resolved_commit: a74f281a27dadc02397bc1a174b0f2c97531b6ae
-  virtual_path: skills/vitepress
-  is_virtual: true
-  package_type: claude_skill
-  deployed_files:
-  - .agents/skills/vitepress
-  - .agents/skills/vitepress/GENERATION.md
-  - .agents/skills/vitepress/SKILL.md
-  - .agents/skills/vitepress/references/advanced-i18n.md
-  - .agents/skills/vitepress/references/advanced-ssr.md
-  - .agents/skills/vitepress/references/core-cli.md
-  - .agents/skills/vitepress/references/core-config.md
-  - .agents/skills/vitepress/references/core-markdown.md
-  - .agents/skills/vitepress/references/core-routing.md
-  - .agents/skills/vitepress/references/features-code-blocks.md
-  - .agents/skills/vitepress/references/features-data-loading.md
-  - .agents/skills/vitepress/references/features-dynamic-routes.md
-  - .agents/skills/vitepress/references/features-vue.md
-  - .agents/skills/vitepress/references/recipes-deploy.md
-  - .agents/skills/vitepress/references/theme-config.md
-  - .agents/skills/vitepress/references/theme-custom.md
-  - .agents/skills/vitepress/references/theme-customization.md
-  - .claude/skills/vitepress
-  - .claude/skills/vitepress/GENERATION.md
-  - .claude/skills/vitepress/SKILL.md
-  - .claude/skills/vitepress/references/advanced-i18n.md
-  - .claude/skills/vitepress/references/advanced-ssr.md
-  - .claude/skills/vitepress/references/core-cli.md
-  - .claude/skills/vitepress/references/core-config.md
-  - .claude/skills/vitepress/references/core-markdown.md
-  - .claude/skills/vitepress/references/core-routing.md
-  - .claude/skills/vitepress/references/features-code-blocks.md
-  - .claude/skills/vitepress/references/features-data-loading.md
-  - .claude/skills/vitepress/references/features-dynamic-routes.md
-  - .claude/skills/vitepress/references/features-vue.md
-  - .claude/skills/vitepress/references/recipes-deploy.md
-  - .claude/skills/vitepress/references/theme-config.md
-  - .claude/skills/vitepress/references/theme-custom.md
-  - .claude/skills/vitepress/references/theme-customization.md
-  deployed_file_hashes:
-    .agents/skills/vitepress/GENERATION.md: sha256:9975841aa0e936aa1206a7de82e8ec7d26fc3185602f5a52b07b8c99199722d6
-    .agents/skills/vitepress/SKILL.md: sha256:eba57687640159cd74333a6d0abcc1c6e7967883b978bc801b9a8fb461021d8c
-    .agents/skills/vitepress/references/advanced-i18n.md: sha256:f02730bf4a60fa84407702e1a498479368d8b29b7547c8250d2619a760d7ddfb
-    .agents/skills/vitepress/references/advanced-ssr.md: sha256:43c09afc3c929c454e9284aea36eab56824c2d42ce5bc7ed1bdb8edbd5c5c188
-    .agents/skills/vitepress/references/core-cli.md: sha256:b86f4d8eb18872173572a6aabf58838cab4e4832cc929cdce3f93c1c42412845
-    .agents/skills/vitepress/references/core-config.md: sha256:85c6a7ee227c47143fdc8e59b5b2e29bfbbf8499c893b7ce6589c2304f469e35
-    .agents/skills/vitepress/references/core-markdown.md: sha256:681277acf237146f0d0b0ffcd088c94e0407982cf01e2ab6ccb0a6ea9af8f136
-    .agents/skills/vitepress/references/core-routing.md: sha256:74c9bf8b8ce351946613cff34b97db6bdc7d88fe442c5423c2efa54e2eaed1a0
-    .agents/skills/vitepress/references/features-code-blocks.md: sha256:ff90e40c8e9494b22745539da477bf9f6255b4da03121bdd5f6a72cb2c61355f
-    .agents/skills/vitepress/references/features-data-loading.md: sha256:92d4364e51dd2647d4738c3869bc7115c1a38277da3eb949fcdec137311f2737
-    .agents/skills/vitepress/references/features-dynamic-routes.md: sha256:eeeb11ddcdac84c91861d713634ddfb93cd3e60375bf66aa65407c3487b613fa
-    .agents/skills/vitepress/references/features-vue.md: sha256:ee803953825a52ca7b7701eb3e6e3b6b3db49d102932c7d60747c5311d9cbb17
-    .agents/skills/vitepress/references/recipes-deploy.md: sha256:7483c7dee28e329b8dbf5a6b6cc67c561d267f3029999ce79e2c7f2b96fa154a
-    .agents/skills/vitepress/references/theme-config.md: sha256:7f32c617ba83793a5648f06064111feb3a223037a077ff43debfbebb4e6def32
-    .agents/skills/vitepress/references/theme-custom.md: sha256:e550a9e5c6db2df707a9187ee0c9710fcd559f0d7e53892bbd1b1c1467305208
-    .agents/skills/vitepress/references/theme-customization.md: sha256:cf39c44fc10d908abc2c660603ccb00e08f5c17b6de49657a0055327a855a381
-    .claude/skills/vitepress/GENERATION.md: sha256:9975841aa0e936aa1206a7de82e8ec7d26fc3185602f5a52b07b8c99199722d6
-    .claude/skills/vitepress/SKILL.md: sha256:eba57687640159cd74333a6d0abcc1c6e7967883b978bc801b9a8fb461021d8c
-    .claude/skills/vitepress/references/advanced-i18n.md: sha256:f02730bf4a60fa84407702e1a498479368d8b29b7547c8250d2619a760d7ddfb
-    .claude/skills/vitepress/references/advanced-ssr.md: sha256:43c09afc3c929c454e9284aea36eab56824c2d42ce5bc7ed1bdb8edbd5c5c188
-    .claude/skills/vitepress/references/core-cli.md: sha256:b86f4d8eb18872173572a6aabf58838cab4e4832cc929cdce3f93c1c42412845
-    .claude/skills/vitepress/references/core-config.md: sha256:85c6a7ee227c47143fdc8e59b5b2e29bfbbf8499c893b7ce6589c2304f469e35
-    .claude/skills/vitepress/references/core-markdown.md: sha256:681277acf237146f0d0b0ffcd088c94e0407982cf01e2ab6ccb0a6ea9af8f136
-    .claude/skills/vitepress/references/core-routing.md: sha256:74c9bf8b8ce351946613cff34b97db6bdc7d88fe442c5423c2efa54e2eaed1a0
-    .claude/skills/vitepress/references/features-code-blocks.md: sha256:ff90e40c8e9494b22745539da477bf9f6255b4da03121bdd5f6a72cb2c61355f
-    .claude/skills/vitepress/references/features-data-loading.md: sha256:92d4364e51dd2647d4738c3869bc7115c1a38277da3eb949fcdec137311f2737
-    .claude/skills/vitepress/references/features-dynamic-routes.md: sha256:eeeb11ddcdac84c91861d713634ddfb93cd3e60375bf66aa65407c3487b613fa
-    .claude/skills/vitepress/references/features-vue.md: sha256:ee803953825a52ca7b7701eb3e6e3b6b3db49d102932c7d60747c5311d9cbb17
-    .claude/skills/vitepress/references/recipes-deploy.md: sha256:7483c7dee28e329b8dbf5a6b6cc67c561d267f3029999ce79e2c7f2b96fa154a
-    .claude/skills/vitepress/references/theme-config.md: sha256:7f32c617ba83793a5648f06064111feb3a223037a077ff43debfbebb4e6def32
-    .claude/skills/vitepress/references/theme-custom.md: sha256:e550a9e5c6db2df707a9187ee0c9710fcd559f0d7e53892bbd1b1c1467305208
-    .claude/skills/vitepress/references/theme-customization.md: sha256:cf39c44fc10d908abc2c660603ccb00e08f5c17b6de49657a0055327a855a381
-  content_hash: sha256:4cb4b38f31b0de634d10fe185af829f418032562d722a53520c926f6e694a7c9
 - repo_url: diegosouzapw/awesome-omni-skills
   host: github.com
-  resolved_commit: eb0888e610c027b5ac37daec092e64e83cd802a3
+  resolved_commit: c3af0048b70a4b84b2f2324e2f7b7ae5206d89b2
   virtual_path: skills/mise-configurator-v2
   is_virtual: true
   package_type: claude_skill
@@ -102,7 +27,7 @@ dependencies:
   content_hash: sha256:ca26118b486f85b567f542c5eeb2589c5deb6b2b07289daa4d28c9a0102fbbad
 - repo_url: dotnet/modernize-dotnet
   host: github.com
-  resolved_commit: f3b670df0cbe94c567cf6817b91f90c5e5a5bd5c
+  resolved_commit: ce4ec09678498da38099ca9169c1624c59c2a89a
   virtual_path: plugins/modernize-dotnet
   is_virtual: true
   package_type: marketplace_plugin
@@ -111,110 +36,32 @@ dependencies:
   - .github/agents/modernize-dotnet.agent.md
   - .github/hooks/modernize-dotnet-hooks.json
   deployed_file_hashes:
-    .claude/agents/modernize-dotnet.md: sha256:e0dc213c02753bc6a611f77ebd5e0aab5bf205a2d511b62b03ec6e4fadc52405
-    .github/agents/modernize-dotnet.agent.md: sha256:e0dc213c02753bc6a611f77ebd5e0aab5bf205a2d511b62b03ec6e4fadc52405
+    .claude/agents/modernize-dotnet.md: sha256:f5c3fd7fbff3235df1a848edb1def31301267ff837c1b1ac3230c72a72e16b7a
+    .github/agents/modernize-dotnet.agent.md: sha256:f5c3fd7fbff3235df1a848edb1def31301267ff837c1b1ac3230c72a72e16b7a
     .github/hooks/modernize-dotnet-hooks.json: sha256:93f0235aff3ea05f01e2a072d8af7920b6a38238e5b0a0b0c67eaf3345228cea
-  content_hash: sha256:4c29f51a67f01d9379fb8c7c60e61ffe1791d0b3557a21bda5d097a13d9e666a
+  content_hash: sha256:54ab29968009854143674b4e77cf70de406e158797dc6f05c1fda72ea258429f
 - repo_url: dotnet/skills
   host: github.com
-  resolved_commit: 5ad4286d06f428a01b421a54adc2e9e07a1c3406
+  resolved_commit: 79a2ada302fe8feb884ab33e1bfc2bddae3ee7ce
   package_type: marketplace_plugin
-  content_hash: sha256:becf5ab4de62af11dde9030afb747959560e48eec63401a0f8d3a65be222f746
+  content_hash: sha256:3f514e311ca2f684ebd9c6a8177f7000ef57d400615dab085e1377bdfee86223
 - repo_url: github/awesome-copilot
   host: github.com
-  resolved_commit: 56a508cca5cbb30a2440534a1f377887d86b9747
+  resolved_commit: 9cdc6606756b9cf16c043d95588e27a37da69eb1
   virtual_path: plugins/context-engineering
   is_virtual: true
   package_type: marketplace_plugin
-  deployed_files:
-  - .agents/skills/context-map
-  - .agents/skills/context-map/SKILL.md
-  - .agents/skills/refactor-plan
-  - .agents/skills/refactor-plan/SKILL.md
-  - .agents/skills/what-context-needed
-  - .agents/skills/what-context-needed/SKILL.md
-  - .claude/agents/context-architect.md
-  - .claude/skills/context-map
-  - .claude/skills/context-map/SKILL.md
-  - .claude/skills/refactor-plan
-  - .claude/skills/refactor-plan/SKILL.md
-  - .claude/skills/what-context-needed
-  - .claude/skills/what-context-needed/SKILL.md
-  - .github/agents/context-architect.agent.md
-  deployed_file_hashes:
-    .agents/skills/context-map/SKILL.md: sha256:af0037b06a0b56a5014e16a32538ac419725638659428b7e229ed5bbb9087a37
-    .agents/skills/refactor-plan/SKILL.md: sha256:93741df0042a15c01ae8589e72014dcf53c557c11ca1df69c29737534c312c29
-    .agents/skills/what-context-needed/SKILL.md: sha256:65ed7445bf561a5e5199ac77478d2691c05019e0dc32fdddc23db9e45bd9d135
-    .claude/agents/context-architect.md: sha256:6da7a854a670d2810fc61b173eea2500a2af644d8292f58e3d440ac2d120ee0d
-    .claude/skills/context-map/SKILL.md: sha256:af0037b06a0b56a5014e16a32538ac419725638659428b7e229ed5bbb9087a37
-    .claude/skills/refactor-plan/SKILL.md: sha256:93741df0042a15c01ae8589e72014dcf53c557c11ca1df69c29737534c312c29
-    .claude/skills/what-context-needed/SKILL.md: sha256:65ed7445bf561a5e5199ac77478d2691c05019e0dc32fdddc23db9e45bd9d135
-    .github/agents/context-architect.agent.md: sha256:6da7a854a670d2810fc61b173eea2500a2af644d8292f58e3d440ac2d120ee0d
-  content_hash: sha256:6d5ed9518d725ff8ff634939759a4b1069b1b89ef9a885bfedd6df569722d473
+  content_hash: sha256:d7cac32de67fa12785a17ed890e687c1194799481e98372c3f0d73fb73168b67
 - repo_url: github/awesome-copilot
   host: github.com
-  resolved_commit: 56a508cca5cbb30a2440534a1f377887d86b9747
+  resolved_commit: 9cdc6606756b9cf16c043d95588e27a37da69eb1
   virtual_path: plugins/csharp-dotnet-development
   is_virtual: true
   package_type: marketplace_plugin
-  deployed_files:
-  - .agents/skills/aspnet-minimal-api-openapi
-  - .agents/skills/aspnet-minimal-api-openapi/SKILL.md
-  - .agents/skills/csharp-async
-  - .agents/skills/csharp-async/SKILL.md
-  - .agents/skills/csharp-mstest
-  - .agents/skills/csharp-mstest/SKILL.md
-  - .agents/skills/csharp-nunit
-  - .agents/skills/csharp-nunit/SKILL.md
-  - .agents/skills/csharp-tunit
-  - .agents/skills/csharp-tunit/SKILL.md
-  - .agents/skills/csharp-xunit
-  - .agents/skills/csharp-xunit/SKILL.md
-  - .agents/skills/dotnet-best-practices
-  - .agents/skills/dotnet-best-practices/SKILL.md
-  - .agents/skills/dotnet-upgrade
-  - .agents/skills/dotnet-upgrade/SKILL.md
-  - .claude/agents/expert-dotnet-software-engineer.md
-  - .claude/skills/aspnet-minimal-api-openapi
-  - .claude/skills/aspnet-minimal-api-openapi/SKILL.md
-  - .claude/skills/csharp-async
-  - .claude/skills/csharp-async/SKILL.md
-  - .claude/skills/csharp-mstest
-  - .claude/skills/csharp-mstest/SKILL.md
-  - .claude/skills/csharp-nunit
-  - .claude/skills/csharp-nunit/SKILL.md
-  - .claude/skills/csharp-tunit
-  - .claude/skills/csharp-tunit/SKILL.md
-  - .claude/skills/csharp-xunit
-  - .claude/skills/csharp-xunit/SKILL.md
-  - .claude/skills/dotnet-best-practices
-  - .claude/skills/dotnet-best-practices/SKILL.md
-  - .claude/skills/dotnet-upgrade
-  - .claude/skills/dotnet-upgrade/SKILL.md
-  - .github/agents/expert-dotnet-software-engineer.agent.md
-  deployed_file_hashes:
-    .agents/skills/aspnet-minimal-api-openapi/SKILL.md: sha256:16e632ce8cb514d413e968811a2e07b8e0f1e97c6e2e93174efd6cec2e49e86f
-    .agents/skills/csharp-async/SKILL.md: sha256:d52c0812a3e4325ab0d89aebd074efe5e6246e722522180f8613ef3c72a72acc
-    .agents/skills/csharp-mstest/SKILL.md: sha256:325e70e82f3edecb7312a7e504a89e87c8fb684c8f2aa55df6f29905ef1bf859
-    .agents/skills/csharp-nunit/SKILL.md: sha256:f03540e3fc328ca1325293a7339e2268f2cbf0d5698a2741b79dabb1c94335ba
-    .agents/skills/csharp-tunit/SKILL.md: sha256:60bda4de96d73461f44acea9ef0978a5b4eadb0a1d764fd0398b66a75bfd2e03
-    .agents/skills/csharp-xunit/SKILL.md: sha256:7a2d020e24a5788c4999c05c86902599bb31a5df70b2595b37c00beb802cdb49
-    .agents/skills/dotnet-best-practices/SKILL.md: sha256:3181f44dfc866313c96cd784a7f003b4b109836a6f02648f95b3323e73e85d62
-    .agents/skills/dotnet-upgrade/SKILL.md: sha256:9e3e789579cc333971b04deaa3627e4e6fadfa2ad237f60a63730c34e8554587
-    .claude/agents/expert-dotnet-software-engineer.md: sha256:28a306e1a700abd0435f1fd6aef365341ac2519cc460f0c83a6f2a93332bf915
-    .claude/skills/aspnet-minimal-api-openapi/SKILL.md: sha256:16e632ce8cb514d413e968811a2e07b8e0f1e97c6e2e93174efd6cec2e49e86f
-    .claude/skills/csharp-async/SKILL.md: sha256:d52c0812a3e4325ab0d89aebd074efe5e6246e722522180f8613ef3c72a72acc
-    .claude/skills/csharp-mstest/SKILL.md: sha256:325e70e82f3edecb7312a7e504a89e87c8fb684c8f2aa55df6f29905ef1bf859
-    .claude/skills/csharp-nunit/SKILL.md: sha256:f03540e3fc328ca1325293a7339e2268f2cbf0d5698a2741b79dabb1c94335ba
-    .claude/skills/csharp-tunit/SKILL.md: sha256:60bda4de96d73461f44acea9ef0978a5b4eadb0a1d764fd0398b66a75bfd2e03
-    .claude/skills/csharp-xunit/SKILL.md: sha256:7a2d020e24a5788c4999c05c86902599bb31a5df70b2595b37c00beb802cdb49
-    .claude/skills/dotnet-best-practices/SKILL.md: sha256:3181f44dfc866313c96cd784a7f003b4b109836a6f02648f95b3323e73e85d62
-    .claude/skills/dotnet-upgrade/SKILL.md: sha256:9e3e789579cc333971b04deaa3627e4e6fadfa2ad237f60a63730c34e8554587
-    .github/agents/expert-dotnet-software-engineer.agent.md: sha256:28a306e1a700abd0435f1fd6aef365341ac2519cc460f0c83a6f2a93332bf915
-  content_hash: sha256:50c15691d05dac6ab39fb591fc6d56b629b1104f7321ec23aa5ab00e171d5cd9
+  content_hash: sha256:0706cc9d71bb2a933988feec5763eb781e2e2cc011c91c5624604cbe0503eb74
 - repo_url: majiayu000/claude-skill-registry
   host: github.com
-  resolved_commit: e279b06baf58da10886c43d49821c5da8e22aa88
+  resolved_commit: ef926663574f5f7a0c19b0429b2540373279ed45
   virtual_path: skills/data/hk-setup
   is_virtual: true
   package_type: claude_skill
@@ -231,24 +78,9 @@ dependencies:
     .claude/skills/hk-setup/SKILL.md: sha256:ba796eb14050d00d1070737be9895ec72ef90ce36aa1b239670efb472334ca6c
     .claude/skills/hk-setup/metadata.json: sha256:cc5a5f4f3509f7eccb85ea4e27aa32f7b0c330d8c3d8bcbcb1d04468ccaa91e2
   content_hash: sha256:0eada7424168bf04bcb05b41b8d55db9abc32c819d4455c9b7a1815d39fad3ff
-- repo_url: sickn33/antigravity-awesome-skills
-  host: github.com
-  resolved_commit: 8e26a629cefb398681a00263b4a669b024c355a3
-  virtual_path: plugins/antigravity-awesome-skills-claude/skills/mise-configurator
-  is_virtual: true
-  package_type: claude_skill
-  deployed_files:
-  - .agents/skills/mise-configurator
-  - .agents/skills/mise-configurator/SKILL.md
-  - .claude/skills/mise-configurator
-  - .claude/skills/mise-configurator/SKILL.md
-  deployed_file_hashes:
-    .agents/skills/mise-configurator/SKILL.md: sha256:2b1898e86abd3c81bc4f869cdac2ee250d8bf2ad99d399c06a3ca54ae7b1bcc6
-    .claude/skills/mise-configurator/SKILL.md: sha256:2b1898e86abd3c81bc4f869cdac2ee250d8bf2ad99d399c06a3ca54ae7b1bcc6
-  content_hash: sha256:696eeb54b100091124646bebc1e5c4f6c4887167379971aa2b70b2bfb814c947
 - repo_url: terrylica/cc-skills
   host: github.com
-  resolved_commit: 4ee54d962b4f620d80af0a56b34647b204c62bc2
+  resolved_commit: 98df31819209545c87271b6b8d750a58bdd9f23a
   virtual_path: plugins/itp/skills/mise-configuration
   is_virtual: true
   package_type: claude_skill
@@ -291,7 +123,7 @@ dependencies:
   content_hash: sha256:0f125b4b212fa4083132aac5ddaab297c719fa672f4d757103456ff4e7ec083d
 - repo_url: terrylica/cc-skills
   host: github.com
-  resolved_commit: 4ee54d962b4f620d80af0a56b34647b204c62bc2
+  resolved_commit: 98df31819209545c87271b6b8d750a58bdd9f23a
   virtual_path: plugins/itp/skills/mise-tasks
   is_virtual: true
   package_type: claude_skill
@@ -342,7 +174,7 @@ dependencies:
   content_hash: sha256:dd93054927a344583aa870ad9f0fa62340395c6a96fded9622afcd25b966e286
 - repo_url: terrylica/cc-skills
   host: github.com
-  resolved_commit: 4ee54d962b4f620d80af0a56b34647b204c62bc2
+  resolved_commit: 98df31819209545c87271b6b8d750a58bdd9f23a
   virtual_path: plugins/mise
   is_virtual: true
   package_type: marketplace_plugin
@@ -374,68 +206,1332 @@ dependencies:
   deployed_file_hashes:
     .agents/skills/list-repo-tasks/SKILL.md: sha256:d83cba02568f44f4aa754bd500ad4fefb9fc98d9a6b7632dbe2ccbb0912eaefb
     .agents/skills/list-repo-tasks/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
-    .agents/skills/run-full-release/SKILL.md: sha256:2779f8b512e9a0b35f629f2701592ad7010e417f29637efd6d913a9e370678a3
-    .agents/skills/run-full-release/references/evolution-log.md: sha256:85151cd003c6feb94326e0bf5cd46454d06bf65c3a9ac66389d354b36881767e
+    .agents/skills/run-full-release/SKILL.md: sha256:3f3c59938803712577b19fd281f4e539b55a195004b780a08d351bc8a1c56fa8
+    .agents/skills/run-full-release/references/evolution-log.md: sha256:5816e91da037e89f5b70c6bb19666eef7fb5f982da5dee69f57282bf2b1c6e66
     .agents/skills/show-env-status/SKILL.md: sha256:a98f383a5968880638d90397606d3d7ee935be33b3b9b929d3973cea94282063
     .agents/skills/show-env-status/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
     .agents/skills/sred-commit/SKILL.md: sha256:24f82dfe65889aa8b09ca692604f319343d2d68e9c32f37b3104f04c8c8c5f52
     .agents/skills/sred-commit/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
     .claude/skills/list-repo-tasks/SKILL.md: sha256:d83cba02568f44f4aa754bd500ad4fefb9fc98d9a6b7632dbe2ccbb0912eaefb
     .claude/skills/list-repo-tasks/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
-    .claude/skills/run-full-release/SKILL.md: sha256:2779f8b512e9a0b35f629f2701592ad7010e417f29637efd6d913a9e370678a3
-    .claude/skills/run-full-release/references/evolution-log.md: sha256:85151cd003c6feb94326e0bf5cd46454d06bf65c3a9ac66389d354b36881767e
+    .claude/skills/run-full-release/SKILL.md: sha256:3f3c59938803712577b19fd281f4e539b55a195004b780a08d351bc8a1c56fa8
+    .claude/skills/run-full-release/references/evolution-log.md: sha256:5816e91da037e89f5b70c6bb19666eef7fb5f982da5dee69f57282bf2b1c6e66
     .claude/skills/show-env-status/SKILL.md: sha256:a98f383a5968880638d90397606d3d7ee935be33b3b9b929d3973cea94282063
     .claude/skills/show-env-status/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
     .claude/skills/sred-commit/SKILL.md: sha256:24f82dfe65889aa8b09ca692604f319343d2d68e9c32f37b3104f04c8c8c5f52
     .claude/skills/sred-commit/references/evolution-log.md: sha256:4a865878655dfafc636da83a1f852faf836e85ad559722aa96c2db72623153b4
-  content_hash: sha256:e87a6ab412ff5040f34f2540bad9968f57359260e2bc1e4f7654f3344dfe0ec4
-- repo_url: yvgude/lean-ctx
-  host: github.com
-  resolved_commit: 45cd29224b4a168f364900fc12995ff180458037
-  package_type: marketplace_plugin
-  deployed_files:
-  - .agents/skills/lean-ctx
-  - .agents/skills/lean-ctx/SKILL.md
-  - .agents/skills/lean-ctx/scripts/install.sh
-  - .claude/skills/lean-ctx
-  - .claude/skills/lean-ctx/SKILL.md
-  - .claude/skills/lean-ctx/scripts/install.sh
-  deployed_file_hashes:
-    .agents/skills/lean-ctx/SKILL.md: sha256:005e7ad77bc09804bbe37d1a8a5aa7129dbf66d7a8bfb3e25eb8afa4d85e48a0
-    .agents/skills/lean-ctx/scripts/install.sh: sha256:7b42ea292086ea57dc6a1514e094fa37840b5a24ad8ebf5f26a7eb87fa1b03f0
-    .claude/skills/lean-ctx/SKILL.md: sha256:005e7ad77bc09804bbe37d1a8a5aa7129dbf66d7a8bfb3e25eb8afa4d85e48a0
-    .claude/skills/lean-ctx/scripts/install.sh: sha256:7b42ea292086ea57dc6a1514e094fa37840b5a24ad8ebf5f26a7eb87fa1b03f0
-  content_hash: sha256:80aba55537ab73057ca55b0e66c91eac78c5f1abd3452715275b7ebeb45cb798
-mcp_servers:
-- io.github.github/github-mcp-server
-- io.github.upstash/context7
-- microsoftdocs/mcp
-- nuget
-mcp_configs:
-  io.github.github/github-mcp-server:
-    name: io.github.github/github-mcp-server
-  io.github.upstash/context7:
-    name: io.github.upstash/context7
-  microsoftdocs/mcp:
-    name: microsoftdocs/mcp
-  nuget:
-    name: nuget
-    transport: stdio
-    registry: false
-    command: nuget-mcp-server
+  content_hash: sha256:7c03b88e11700673e17798b766e4b8fc38644cc2278939406d36580f24c7f210
 local_deployed_files:
 - .agents/skills/context7-mcp
 - .agents/skills/context7-mcp/SKILL.md
+- .agents/skills/dotnet-10-csharp-14
+- .agents/skills/dotnet-10-csharp-14/SKILL.md
+- .agents/skills/dotnet-10-csharp-14/anti-patterns.md
+- .agents/skills/dotnet-10-csharp-14/csharp-14.md
+- .agents/skills/dotnet-10-csharp-14/infrastructure.md
+- .agents/skills/dotnet-10-csharp-14/libraries.md
+- .agents/skills/dotnet-10-csharp-14/minimal-apis.md
+- .agents/skills/dotnet-10-csharp-14/security.md
+- .agents/skills/dotnet-10-csharp-14/testing.md
+- .agents/skills/dotnet-accessibility
+- .agents/skills/dotnet-accessibility/SKILL.md
+- .agents/skills/dotnet-accessibility/references/detailed-examples.md
+- .agents/skills/dotnet-add-analyzers
+- .agents/skills/dotnet-add-analyzers/SKILL.md
+- .agents/skills/dotnet-add-ci
+- .agents/skills/dotnet-add-ci/SKILL.md
+- .agents/skills/dotnet-add-testing
+- .agents/skills/dotnet-add-testing/SKILL.md
+- .agents/skills/dotnet-ado-build-test
+- .agents/skills/dotnet-ado-build-test/SKILL.md
+- .agents/skills/dotnet-ado-build-test/references/detailed-examples.md
+- .agents/skills/dotnet-ado-patterns
+- .agents/skills/dotnet-ado-patterns/SKILL.md
+- .agents/skills/dotnet-ado-publish
+- .agents/skills/dotnet-ado-publish/SKILL.md
+- .agents/skills/dotnet-ado-publish/references/detailed-examples.md
+- .agents/skills/dotnet-ado-unique
+- .agents/skills/dotnet-ado-unique/SKILL.md
+- .agents/skills/dotnet-ado-unique/references/detailed-examples.md
+- .agents/skills/dotnet-advisor
+- .agents/skills/dotnet-advisor/SKILL.md
+- .agents/skills/dotnet-advisor/references/detailed-examples.md
+- .agents/skills/dotnet-aot-architecture
+- .agents/skills/dotnet-aot-architecture/SKILL.md
+- .agents/skills/dotnet-aot-wasm
+- .agents/skills/dotnet-aot-wasm/SKILL.md
+- .agents/skills/dotnet-api-docs
+- .agents/skills/dotnet-api-docs/SKILL.md
+- .agents/skills/dotnet-api-docs/references/detailed-examples.md
+- .agents/skills/dotnet-api-security
+- .agents/skills/dotnet-api-security/SKILL.md
+- .agents/skills/dotnet-api-surface-validation
+- .agents/skills/dotnet-api-surface-validation/SKILL.md
+- .agents/skills/dotnet-api-surface-validation/references/detailed-examples.md
+- .agents/skills/dotnet-api-versioning
+- .agents/skills/dotnet-api-versioning/SKILL.md
+- .agents/skills/dotnet-architecture-patterns
+- .agents/skills/dotnet-architecture-patterns/SKILL.md
+- .agents/skills/dotnet-artifacts-output
+- .agents/skills/dotnet-artifacts-output/SKILL.md
+- .agents/skills/dotnet-aspire-patterns
+- .agents/skills/dotnet-aspire-patterns/SKILL.md
+- .agents/skills/dotnet-aspire-patterns/references/detailed-examples.md
+- .agents/skills/dotnet-background-services
+- .agents/skills/dotnet-background-services/SKILL.md
+- .agents/skills/dotnet-benchmarkdotnet
+- .agents/skills/dotnet-benchmarkdotnet/SKILL.md
+- .agents/skills/dotnet-benchmarkdotnet/references/detailed-examples.md
+- .agents/skills/dotnet-blazor-auth
+- .agents/skills/dotnet-blazor-auth/SKILL.md
+- .agents/skills/dotnet-blazor-auth/references/detailed-examples.md
+- .agents/skills/dotnet-blazor-components
+- .agents/skills/dotnet-blazor-components/SKILL.md
+- .agents/skills/dotnet-blazor-components/references/detailed-examples.md
+- .agents/skills/dotnet-blazor-patterns
+- .agents/skills/dotnet-blazor-patterns/SKILL.md
+- .agents/skills/dotnet-blazor-patterns/references/detailed-examples.md
+- .agents/skills/dotnet-blazor-testing
+- .agents/skills/dotnet-blazor-testing/SKILL.md
+- .agents/skills/dotnet-blazor-testing/references/detailed-examples.md
+- .agents/skills/dotnet-build-analysis
+- .agents/skills/dotnet-build-analysis/SKILL.md
+- .agents/skills/dotnet-build-analysis/references/detailed-examples.md
+- .agents/skills/dotnet-build-optimization
+- .agents/skills/dotnet-build-optimization/SKILL.md
+- .agents/skills/dotnet-build-optimization/references/detailed-examples.md
+- .agents/skills/dotnet-channels
+- .agents/skills/dotnet-channels/SKILL.md
+- .agents/skills/dotnet-channels/references/detailed-examples.md
+- .agents/skills/dotnet-ci-benchmarking
+- .agents/skills/dotnet-ci-benchmarking/SKILL.md
+- .agents/skills/dotnet-ci-benchmarking/references/detailed-examples.md
+- .agents/skills/dotnet-cli-architecture
+- .agents/skills/dotnet-cli-architecture/SKILL.md
+- .agents/skills/dotnet-cli-architecture/references/detailed-examples.md
+- .agents/skills/dotnet-cli-distribution
+- .agents/skills/dotnet-cli-distribution/SKILL.md
+- .agents/skills/dotnet-cli-packaging
+- .agents/skills/dotnet-cli-packaging/SKILL.md
+- .agents/skills/dotnet-cli-packaging/references/detailed-examples.md
+- .agents/skills/dotnet-cli-release-pipeline
+- .agents/skills/dotnet-cli-release-pipeline/SKILL.md
+- .agents/skills/dotnet-cli-release-pipeline/references/detailed-examples.md
+- .agents/skills/dotnet-container-deployment
+- .agents/skills/dotnet-container-deployment/SKILL.md
+- .agents/skills/dotnet-container-deployment/references/detailed-examples.md
+- .agents/skills/dotnet-containers
+- .agents/skills/dotnet-containers/SKILL.md
+- .agents/skills/dotnet-cryptography
+- .agents/skills/dotnet-cryptography/SKILL.md
+- .agents/skills/dotnet-cryptography/references/detailed-examples.md
+- .agents/skills/dotnet-csharp-api-design
+- .agents/skills/dotnet-csharp-api-design/SKILL.md
+- .agents/skills/dotnet-csharp-async-patterns
+- .agents/skills/dotnet-csharp-async-patterns/SKILL.md
+- .agents/skills/dotnet-csharp-code-smells
+- .agents/skills/dotnet-csharp-code-smells/SKILL.md
+- .agents/skills/dotnet-csharp-coding-standards
+- .agents/skills/dotnet-csharp-coding-standards/SKILL.md
+- .agents/skills/dotnet-csharp-coding-standards/references/detailed-examples.md
+- .agents/skills/dotnet-csharp-concurrency-patterns
+- .agents/skills/dotnet-csharp-concurrency-patterns/SKILL.md
+- .agents/skills/dotnet-csharp-concurrency-patterns/references/detailed-examples.md
+- .agents/skills/dotnet-csharp-configuration
+- .agents/skills/dotnet-csharp-configuration/SKILL.md
+- .agents/skills/dotnet-csharp-configuration/references/detailed-examples.md
+- .agents/skills/dotnet-csharp-dependency-injection
+- .agents/skills/dotnet-csharp-dependency-injection/SKILL.md
+- .agents/skills/dotnet-csharp-modern-patterns
+- .agents/skills/dotnet-csharp-modern-patterns/SKILL.md
+- .agents/skills/dotnet-csharp-modern-patterns/references/detailed-examples.md
+- .agents/skills/dotnet-csharp-nullable-reference-types
+- .agents/skills/dotnet-csharp-nullable-reference-types/SKILL.md
+- .agents/skills/dotnet-csharp-source-generators
+- .agents/skills/dotnet-csharp-source-generators/SKILL.md
+- .agents/skills/dotnet-csharp-source-generators/references/detailed-examples.md
+- .agents/skills/dotnet-csharp-type-design-performance
+- .agents/skills/dotnet-csharp-type-design-performance/SKILL.md
+- .agents/skills/dotnet-csproj-reading
+- .agents/skills/dotnet-csproj-reading/SKILL.md
+- .agents/skills/dotnet-csproj-reading/references/detailed-examples.md
+- .agents/skills/dotnet-data-access-strategy
+- .agents/skills/dotnet-data-access-strategy/SKILL.md
+- .agents/skills/dotnet-documentation-strategy
+- .agents/skills/dotnet-documentation-strategy/SKILL.md
+- .agents/skills/dotnet-documentation-strategy/references/detailed-examples.md
+- .agents/skills/dotnet-domain-modeling
+- .agents/skills/dotnet-domain-modeling/SKILL.md
+- .agents/skills/dotnet-domain-modeling/references/detailed-examples.md
+- .agents/skills/dotnet-editorconfig
+- .agents/skills/dotnet-editorconfig/SKILL.md
+- .agents/skills/dotnet-editorconfig/references/detailed-examples.md
+- .agents/skills/dotnet-efcore-architecture
+- .agents/skills/dotnet-efcore-architecture/SKILL.md
+- .agents/skills/dotnet-efcore-architecture/references/detailed-examples.md
+- .agents/skills/dotnet-efcore-patterns
+- .agents/skills/dotnet-efcore-patterns/SKILL.md
+- .agents/skills/dotnet-efcore-patterns/references/detailed-examples.md
+- .agents/skills/dotnet-file-based-apps
+- .agents/skills/dotnet-file-based-apps/SKILL.md
+- .agents/skills/dotnet-file-io
+- .agents/skills/dotnet-file-io/SKILL.md
+- .agents/skills/dotnet-file-io/references/detailed-examples.md
+- .agents/skills/dotnet-gc-memory
+- .agents/skills/dotnet-gc-memory/SKILL.md
+- .agents/skills/dotnet-gc-memory/references/detailed-examples.md
+- .agents/skills/dotnet-github-docs
+- .agents/skills/dotnet-github-docs/SKILL.md
+- .agents/skills/dotnet-github-docs/references/detailed-examples.md
+- .agents/skills/dotnet-github-releases
+- .agents/skills/dotnet-github-releases/SKILL.md
+- .agents/skills/dotnet-github-releases/references/detailed-examples.md
+- .agents/skills/dotnet-grpc
+- .agents/skills/dotnet-grpc/SKILL.md
+- .agents/skills/dotnet-http-client
+- .agents/skills/dotnet-http-client/SKILL.md
+- .agents/skills/dotnet-http-client/references/detailed-examples.md
+- .agents/skills/dotnet-input-validation
+- .agents/skills/dotnet-input-validation/SKILL.md
+- .agents/skills/dotnet-input-validation/references/detailed-examples.md
+- .agents/skills/dotnet-integration-testing
+- .agents/skills/dotnet-integration-testing/SKILL.md
+- .agents/skills/dotnet-integration-testing/references/detailed-examples.md
+- .agents/skills/dotnet-io-pipelines
+- .agents/skills/dotnet-io-pipelines/SKILL.md
+- .agents/skills/dotnet-io-pipelines/references/detailed-examples.md
+- .agents/skills/dotnet-library-api-compat
+- .agents/skills/dotnet-library-api-compat/SKILL.md
+- .agents/skills/dotnet-linq-optimization
+- .agents/skills/dotnet-linq-optimization/SKILL.md
+- .agents/skills/dotnet-linq-optimization/references/detailed-examples.md
+- .agents/skills/dotnet-localization
+- .agents/skills/dotnet-localization/SKILL.md
+- .agents/skills/dotnet-localization/references/detailed-examples.md
+- .agents/skills/dotnet-maui-aot
+- .agents/skills/dotnet-maui-aot/SKILL.md
+- .agents/skills/dotnet-maui-development
+- .agents/skills/dotnet-maui-development/SKILL.md
+- .agents/skills/dotnet-maui-testing
+- .agents/skills/dotnet-maui-testing/SKILL.md
+- .agents/skills/dotnet-maui-testing/references/detailed-examples.md
+- .agents/skills/dotnet-mermaid-diagrams
+- .agents/skills/dotnet-mermaid-diagrams/SKILL.md
+- .agents/skills/dotnet-messaging-patterns
+- .agents/skills/dotnet-messaging-patterns/SKILL.md
+- .agents/skills/dotnet-messaging-patterns/references/detailed-examples.md
+- .agents/skills/dotnet-microsoft-agent-framework
+- .agents/skills/dotnet-microsoft-agent-framework/SKILL.md
+- .agents/skills/dotnet-microsoft-agent-framework/references/detailed-examples.md
+- .agents/skills/dotnet-middleware-patterns
+- .agents/skills/dotnet-middleware-patterns/SKILL.md
+- .agents/skills/dotnet-middleware-patterns/references/detailed-examples.md
+- .agents/skills/dotnet-minimal-apis
+- .agents/skills/dotnet-minimal-apis/SKILL.md
+- .agents/skills/dotnet-minimal-apis/references/detailed-examples.md
+- .agents/skills/dotnet-modernize
+- .agents/skills/dotnet-modernize/SKILL.md
+- .agents/skills/dotnet-msbuild-authoring
+- .agents/skills/dotnet-msbuild-authoring/SKILL.md
+- .agents/skills/dotnet-msbuild-authoring/references/detailed-examples.md
+- .agents/skills/dotnet-msbuild-tasks
+- .agents/skills/dotnet-msbuild-tasks/SKILL.md
+- .agents/skills/dotnet-msix
+- .agents/skills/dotnet-msix/SKILL.md
+- .agents/skills/dotnet-msix/references/detailed-examples.md
+- .agents/skills/dotnet-multi-targeting
+- .agents/skills/dotnet-multi-targeting/SKILL.md
+- .agents/skills/dotnet-multi-targeting/references/detailed-examples.md
+- .agents/skills/dotnet-native-aot
+- .agents/skills/dotnet-native-aot/SKILL.md
+- .agents/skills/dotnet-native-aot/references/detailed-examples.md
+- .agents/skills/dotnet-native-interop
+- .agents/skills/dotnet-native-interop/SKILL.md
+- .agents/skills/dotnet-native-interop/references/detailed-examples.md
+- .agents/skills/dotnet-nuget-authoring
+- .agents/skills/dotnet-nuget-authoring/SKILL.md
+- .agents/skills/dotnet-nuget-authoring/references/detailed-examples.md
+- .agents/skills/dotnet-observability
+- .agents/skills/dotnet-observability/SKILL.md
+- .agents/skills/dotnet-openapi
+- .agents/skills/dotnet-openapi/SKILL.md
+- .agents/skills/dotnet-performance-patterns
+- .agents/skills/dotnet-performance-patterns/SKILL.md
+- .agents/skills/dotnet-playwright
+- .agents/skills/dotnet-playwright/SKILL.md
+- .agents/skills/dotnet-playwright/references/detailed-examples.md
+- .agents/skills/dotnet-profiling
+- .agents/skills/dotnet-profiling/SKILL.md
+- .agents/skills/dotnet-profiling/references/detailed-examples.md
+- .agents/skills/dotnet-project-analysis
+- .agents/skills/dotnet-project-analysis/SKILL.md
+- .agents/skills/dotnet-project-structure
+- .agents/skills/dotnet-project-structure/SKILL.md
+- .agents/skills/dotnet-realtime-communication
+- .agents/skills/dotnet-realtime-communication/SKILL.md
+- .agents/skills/dotnet-realtime-communication/references/detailed-examples.md
+- .agents/skills/dotnet-release-management
+- .agents/skills/dotnet-release-management/SKILL.md
+- .agents/skills/dotnet-release-management/references/detailed-examples.md
+- .agents/skills/dotnet-resilience
+- .agents/skills/dotnet-resilience/SKILL.md
+- .agents/skills/dotnet-resilience/references/detailed-examples.md
+- .agents/skills/dotnet-scaffold-project
+- .agents/skills/dotnet-scaffold-project/SKILL.md
+- .agents/skills/dotnet-secrets-management
+- .agents/skills/dotnet-secrets-management/SKILL.md
+- .agents/skills/dotnet-secrets-management/references/detailed-examples.md
+- .agents/skills/dotnet-security-owasp
+- .agents/skills/dotnet-security-owasp/SKILL.md
+- .agents/skills/dotnet-security-owasp/references/detailed-examples.md
+- .agents/skills/dotnet-serena-analysis-patterns
+- .agents/skills/dotnet-serena-analysis-patterns/SKILL.md
+- .agents/skills/dotnet-serena-code-navigation
+- .agents/skills/dotnet-serena-code-navigation/SKILL.md
+- .agents/skills/dotnet-serena-refactoring
+- .agents/skills/dotnet-serena-refactoring/SKILL.md
+- .agents/skills/dotnet-serialization
+- .agents/skills/dotnet-serialization/SKILL.md
+- .agents/skills/dotnet-service-communication
+- .agents/skills/dotnet-service-communication/SKILL.md
+- .agents/skills/dotnet-snapshot-testing
+- .agents/skills/dotnet-snapshot-testing/SKILL.md
+- .agents/skills/dotnet-snapshot-testing/references/detailed-examples.md
+- .agents/skills/dotnet-solid-principles
+- .agents/skills/dotnet-solid-principles/SKILL.md
+- .agents/skills/dotnet-solid-principles/references/detailed-examples.md
+- .agents/skills/dotnet-solution-navigation
+- .agents/skills/dotnet-solution-navigation/SKILL.md
+- .agents/skills/dotnet-solution-navigation/references/detailed-examples.md
+- .agents/skills/dotnet-spectre-console
+- .agents/skills/dotnet-spectre-console/SKILL.md
+- .agents/skills/dotnet-spectre-console/references/detailed-examples.md
+- .agents/skills/dotnet-structured-logging
+- .agents/skills/dotnet-structured-logging/SKILL.md
+- .agents/skills/dotnet-structured-logging/references/detailed-examples.md
+- .agents/skills/dotnet-system-commandline
+- .agents/skills/dotnet-system-commandline/SKILL.md
+- .agents/skills/dotnet-terminal-gui
+- .agents/skills/dotnet-terminal-gui/SKILL.md
+- .agents/skills/dotnet-test-quality
+- .agents/skills/dotnet-test-quality/SKILL.md
+- .agents/skills/dotnet-test-quality/references/detailed-examples.md
+- .agents/skills/dotnet-testing
+- .agents/skills/dotnet-testing-advanced-aspire-testing
+- .agents/skills/dotnet-testing-advanced-aspire-testing/SKILL.md
+- .agents/skills/dotnet-testing-advanced-testcontainers-database
+- .agents/skills/dotnet-testing-advanced-testcontainers-database/SKILL.md
+- .agents/skills/dotnet-testing-advanced-testcontainers-nosql
+- .agents/skills/dotnet-testing-advanced-testcontainers-nosql/SKILL.md
+- .agents/skills/dotnet-testing-advanced-webapi-integration-testing
+- .agents/skills/dotnet-testing-advanced-webapi-integration-testing/SKILL.md
+- .agents/skills/dotnet-testing-advanced-xunit-upgrade-guide
+- .agents/skills/dotnet-testing-advanced-xunit-upgrade-guide/SKILL.md
+- .agents/skills/dotnet-testing-advanced-xunit-upgrade-guide/references/detailed-examples.md
+- .agents/skills/dotnet-testing-awesome-assertions-guide
+- .agents/skills/dotnet-testing-awesome-assertions-guide/SKILL.md
+- .agents/skills/dotnet-testing-code-coverage-analysis
+- .agents/skills/dotnet-testing-code-coverage-analysis/SKILL.md
+- .agents/skills/dotnet-testing-code-coverage-analysis/references/detailed-examples.md
+- .agents/skills/dotnet-testing-complex-object-comparison
+- .agents/skills/dotnet-testing-complex-object-comparison/SKILL.md
+- .agents/skills/dotnet-testing-datetime-testing-timeprovider
+- .agents/skills/dotnet-testing-datetime-testing-timeprovider/SKILL.md
+- .agents/skills/dotnet-testing-filesystem-testing-abstractions
+- .agents/skills/dotnet-testing-filesystem-testing-abstractions/SKILL.md
+- .agents/skills/dotnet-testing-fluentvalidation-testing
+- .agents/skills/dotnet-testing-fluentvalidation-testing/SKILL.md
+- .agents/skills/dotnet-testing-nsubstitute-mocking
+- .agents/skills/dotnet-testing-nsubstitute-mocking/SKILL.md
+- .agents/skills/dotnet-testing-private-internal-testing
+- .agents/skills/dotnet-testing-private-internal-testing/SKILL.md
+- .agents/skills/dotnet-testing-private-internal-testing/references/detailed-examples.md
+- .agents/skills/dotnet-testing-strategy
+- .agents/skills/dotnet-testing-strategy/SKILL.md
+- .agents/skills/dotnet-testing-test-data
+- .agents/skills/dotnet-testing-test-data/SKILL.md
+- .agents/skills/dotnet-testing-test-naming-conventions
+- .agents/skills/dotnet-testing-test-naming-conventions/SKILL.md
+- .agents/skills/dotnet-testing-test-output-logging
+- .agents/skills/dotnet-testing-test-output-logging/SKILL.md
+- .agents/skills/dotnet-testing/SKILL.md
+- .agents/skills/dotnet-tool-management
+- .agents/skills/dotnet-tool-management/SKILL.md
+- .agents/skills/dotnet-trimming
+- .agents/skills/dotnet-trimming/SKILL.md
+- .agents/skills/dotnet-ui-chooser
+- .agents/skills/dotnet-ui-chooser/SKILL.md
+- .agents/skills/dotnet-ui-testing-core
+- .agents/skills/dotnet-ui-testing-core/SKILL.md
+- .agents/skills/dotnet-uno-mcp
+- .agents/skills/dotnet-uno-mcp/SKILL.md
+- .agents/skills/dotnet-uno-platform
+- .agents/skills/dotnet-uno-platform/SKILL.md
+- .agents/skills/dotnet-uno-platform/references/detailed-examples.md
+- .agents/skills/dotnet-uno-targets
+- .agents/skills/dotnet-uno-targets/SKILL.md
+- .agents/skills/dotnet-uno-targets/references/detailed-examples.md
+- .agents/skills/dotnet-uno-testing
+- .agents/skills/dotnet-uno-testing/SKILL.md
+- .agents/skills/dotnet-validation-patterns
+- .agents/skills/dotnet-validation-patterns/SKILL.md
+- .agents/skills/dotnet-validation-patterns/references/detailed-examples.md
+- .agents/skills/dotnet-version-detection
+- .agents/skills/dotnet-version-detection/SKILL.md
+- .agents/skills/dotnet-version-upgrade
+- .agents/skills/dotnet-version-upgrade/SKILL.md
+- .agents/skills/dotnet-version-upgrade/references/detailed-examples.md
+- .agents/skills/dotnet-winforms-basics
+- .agents/skills/dotnet-winforms-basics/SKILL.md
+- .agents/skills/dotnet-winforms-basics/references/detailed-examples.md
+- .agents/skills/dotnet-winui
+- .agents/skills/dotnet-winui/SKILL.md
+- .agents/skills/dotnet-winui/references/detailed-examples.md
+- .agents/skills/dotnet-wpf-migration
+- .agents/skills/dotnet-wpf-migration/SKILL.md
+- .agents/skills/dotnet-wpf-modern
+- .agents/skills/dotnet-wpf-modern/SKILL.md
+- .agents/skills/dotnet-wpf-modern/references/detailed-examples.md
+- .agents/skills/dotnet-xml-docs
+- .agents/skills/dotnet-xml-docs/SKILL.md
+- .agents/skills/dotnet-xunit
+- .agents/skills/dotnet-xunit/SKILL.md
+- .agents/skills/dotnet-xunit/references/detailed-examples.md
+- .agents/skills/serena
+- .agents/skills/serena/SKILL.md
+- .agents/skills/serena/references/detailed-examples.md
+- .claude/agents/dotnet-architect.md
+- .claude/agents/dotnet-aspnetcore-specialist.md
+- .claude/agents/dotnet-async-performance-specialist.md
+- .claude/agents/dotnet-benchmark-designer.md
+- .claude/agents/dotnet-blazor-specialist.md
+- .claude/agents/dotnet-cloud-specialist.md
+- .claude/agents/dotnet-code-review-agent.md
+- .claude/agents/dotnet-csharp-concurrency-specialist.md
+- .claude/agents/dotnet-docs-generator.md
+- .claude/agents/dotnet-maui-specialist.md
+- .claude/agents/dotnet-microsoft-agent-framework-specialist.md
+- .claude/agents/dotnet-performance-analyst.md
+- .claude/agents/dotnet-security-reviewer.md
+- .claude/agents/dotnet-testing-specialist.md
+- .claude/agents/dotnet-uno-specialist.md
+- .claude/agents/wiki-architect.md
+- .claude/agents/wiki-researcher.md
+- .claude/agents/wiki-writer.md
 - .claude/rules/context7.md
+- .claude/rules/dotnet-agent-harness-operating-modes.md
+- .claude/rules/dotnet-agent-harness-tooling.md
+- .claude/rules/lean-ctx.md
 - .claude/rules/neo4j-knowledgebase.md
 - .claude/skills/context7-mcp
 - .claude/skills/context7-mcp/SKILL.md
+- .claude/skills/dotnet-10-csharp-14
+- .claude/skills/dotnet-10-csharp-14/SKILL.md
+- .claude/skills/dotnet-10-csharp-14/anti-patterns.md
+- .claude/skills/dotnet-10-csharp-14/csharp-14.md
+- .claude/skills/dotnet-10-csharp-14/infrastructure.md
+- .claude/skills/dotnet-10-csharp-14/libraries.md
+- .claude/skills/dotnet-10-csharp-14/minimal-apis.md
+- .claude/skills/dotnet-10-csharp-14/security.md
+- .claude/skills/dotnet-10-csharp-14/testing.md
+- .claude/skills/dotnet-accessibility
+- .claude/skills/dotnet-accessibility/SKILL.md
+- .claude/skills/dotnet-accessibility/references/detailed-examples.md
+- .claude/skills/dotnet-add-analyzers
+- .claude/skills/dotnet-add-analyzers/SKILL.md
+- .claude/skills/dotnet-add-ci
+- .claude/skills/dotnet-add-ci/SKILL.md
+- .claude/skills/dotnet-add-testing
+- .claude/skills/dotnet-add-testing/SKILL.md
+- .claude/skills/dotnet-ado-build-test
+- .claude/skills/dotnet-ado-build-test/SKILL.md
+- .claude/skills/dotnet-ado-build-test/references/detailed-examples.md
+- .claude/skills/dotnet-ado-patterns
+- .claude/skills/dotnet-ado-patterns/SKILL.md
+- .claude/skills/dotnet-ado-publish
+- .claude/skills/dotnet-ado-publish/SKILL.md
+- .claude/skills/dotnet-ado-publish/references/detailed-examples.md
+- .claude/skills/dotnet-ado-unique
+- .claude/skills/dotnet-ado-unique/SKILL.md
+- .claude/skills/dotnet-ado-unique/references/detailed-examples.md
+- .claude/skills/dotnet-advisor
+- .claude/skills/dotnet-advisor/SKILL.md
+- .claude/skills/dotnet-advisor/references/detailed-examples.md
+- .claude/skills/dotnet-aot-architecture
+- .claude/skills/dotnet-aot-architecture/SKILL.md
+- .claude/skills/dotnet-aot-wasm
+- .claude/skills/dotnet-aot-wasm/SKILL.md
+- .claude/skills/dotnet-api-docs
+- .claude/skills/dotnet-api-docs/SKILL.md
+- .claude/skills/dotnet-api-docs/references/detailed-examples.md
+- .claude/skills/dotnet-api-security
+- .claude/skills/dotnet-api-security/SKILL.md
+- .claude/skills/dotnet-api-surface-validation
+- .claude/skills/dotnet-api-surface-validation/SKILL.md
+- .claude/skills/dotnet-api-surface-validation/references/detailed-examples.md
+- .claude/skills/dotnet-api-versioning
+- .claude/skills/dotnet-api-versioning/SKILL.md
+- .claude/skills/dotnet-architecture-patterns
+- .claude/skills/dotnet-architecture-patterns/SKILL.md
+- .claude/skills/dotnet-artifacts-output
+- .claude/skills/dotnet-artifacts-output/SKILL.md
+- .claude/skills/dotnet-aspire-patterns
+- .claude/skills/dotnet-aspire-patterns/SKILL.md
+- .claude/skills/dotnet-aspire-patterns/references/detailed-examples.md
+- .claude/skills/dotnet-background-services
+- .claude/skills/dotnet-background-services/SKILL.md
+- .claude/skills/dotnet-benchmarkdotnet
+- .claude/skills/dotnet-benchmarkdotnet/SKILL.md
+- .claude/skills/dotnet-benchmarkdotnet/references/detailed-examples.md
+- .claude/skills/dotnet-blazor-auth
+- .claude/skills/dotnet-blazor-auth/SKILL.md
+- .claude/skills/dotnet-blazor-auth/references/detailed-examples.md
+- .claude/skills/dotnet-blazor-components
+- .claude/skills/dotnet-blazor-components/SKILL.md
+- .claude/skills/dotnet-blazor-components/references/detailed-examples.md
+- .claude/skills/dotnet-blazor-patterns
+- .claude/skills/dotnet-blazor-patterns/SKILL.md
+- .claude/skills/dotnet-blazor-patterns/references/detailed-examples.md
+- .claude/skills/dotnet-blazor-testing
+- .claude/skills/dotnet-blazor-testing/SKILL.md
+- .claude/skills/dotnet-blazor-testing/references/detailed-examples.md
+- .claude/skills/dotnet-build-analysis
+- .claude/skills/dotnet-build-analysis/SKILL.md
+- .claude/skills/dotnet-build-analysis/references/detailed-examples.md
+- .claude/skills/dotnet-build-optimization
+- .claude/skills/dotnet-build-optimization/SKILL.md
+- .claude/skills/dotnet-build-optimization/references/detailed-examples.md
+- .claude/skills/dotnet-channels
+- .claude/skills/dotnet-channels/SKILL.md
+- .claude/skills/dotnet-channels/references/detailed-examples.md
+- .claude/skills/dotnet-ci-benchmarking
+- .claude/skills/dotnet-ci-benchmarking/SKILL.md
+- .claude/skills/dotnet-ci-benchmarking/references/detailed-examples.md
+- .claude/skills/dotnet-cli-architecture
+- .claude/skills/dotnet-cli-architecture/SKILL.md
+- .claude/skills/dotnet-cli-architecture/references/detailed-examples.md
+- .claude/skills/dotnet-cli-distribution
+- .claude/skills/dotnet-cli-distribution/SKILL.md
+- .claude/skills/dotnet-cli-packaging
+- .claude/skills/dotnet-cli-packaging/SKILL.md
+- .claude/skills/dotnet-cli-packaging/references/detailed-examples.md
+- .claude/skills/dotnet-cli-release-pipeline
+- .claude/skills/dotnet-cli-release-pipeline/SKILL.md
+- .claude/skills/dotnet-cli-release-pipeline/references/detailed-examples.md
+- .claude/skills/dotnet-container-deployment
+- .claude/skills/dotnet-container-deployment/SKILL.md
+- .claude/skills/dotnet-container-deployment/references/detailed-examples.md
+- .claude/skills/dotnet-containers
+- .claude/skills/dotnet-containers/SKILL.md
+- .claude/skills/dotnet-cryptography
+- .claude/skills/dotnet-cryptography/SKILL.md
+- .claude/skills/dotnet-cryptography/references/detailed-examples.md
+- .claude/skills/dotnet-csharp-api-design
+- .claude/skills/dotnet-csharp-api-design/SKILL.md
+- .claude/skills/dotnet-csharp-async-patterns
+- .claude/skills/dotnet-csharp-async-patterns/SKILL.md
+- .claude/skills/dotnet-csharp-code-smells
+- .claude/skills/dotnet-csharp-code-smells/SKILL.md
+- .claude/skills/dotnet-csharp-coding-standards
+- .claude/skills/dotnet-csharp-coding-standards/SKILL.md
+- .claude/skills/dotnet-csharp-coding-standards/references/detailed-examples.md
+- .claude/skills/dotnet-csharp-concurrency-patterns
+- .claude/skills/dotnet-csharp-concurrency-patterns/SKILL.md
+- .claude/skills/dotnet-csharp-concurrency-patterns/references/detailed-examples.md
+- .claude/skills/dotnet-csharp-configuration
+- .claude/skills/dotnet-csharp-configuration/SKILL.md
+- .claude/skills/dotnet-csharp-configuration/references/detailed-examples.md
+- .claude/skills/dotnet-csharp-dependency-injection
+- .claude/skills/dotnet-csharp-dependency-injection/SKILL.md
+- .claude/skills/dotnet-csharp-modern-patterns
+- .claude/skills/dotnet-csharp-modern-patterns/SKILL.md
+- .claude/skills/dotnet-csharp-modern-patterns/references/detailed-examples.md
+- .claude/skills/dotnet-csharp-nullable-reference-types
+- .claude/skills/dotnet-csharp-nullable-reference-types/SKILL.md
+- .claude/skills/dotnet-csharp-source-generators
+- .claude/skills/dotnet-csharp-source-generators/SKILL.md
+- .claude/skills/dotnet-csharp-source-generators/references/detailed-examples.md
+- .claude/skills/dotnet-csharp-type-design-performance
+- .claude/skills/dotnet-csharp-type-design-performance/SKILL.md
+- .claude/skills/dotnet-csproj-reading
+- .claude/skills/dotnet-csproj-reading/SKILL.md
+- .claude/skills/dotnet-csproj-reading/references/detailed-examples.md
+- .claude/skills/dotnet-data-access-strategy
+- .claude/skills/dotnet-data-access-strategy/SKILL.md
+- .claude/skills/dotnet-documentation-strategy
+- .claude/skills/dotnet-documentation-strategy/SKILL.md
+- .claude/skills/dotnet-documentation-strategy/references/detailed-examples.md
+- .claude/skills/dotnet-domain-modeling
+- .claude/skills/dotnet-domain-modeling/SKILL.md
+- .claude/skills/dotnet-domain-modeling/references/detailed-examples.md
+- .claude/skills/dotnet-editorconfig
+- .claude/skills/dotnet-editorconfig/SKILL.md
+- .claude/skills/dotnet-editorconfig/references/detailed-examples.md
+- .claude/skills/dotnet-efcore-architecture
+- .claude/skills/dotnet-efcore-architecture/SKILL.md
+- .claude/skills/dotnet-efcore-architecture/references/detailed-examples.md
+- .claude/skills/dotnet-efcore-patterns
+- .claude/skills/dotnet-efcore-patterns/SKILL.md
+- .claude/skills/dotnet-efcore-patterns/references/detailed-examples.md
+- .claude/skills/dotnet-file-based-apps
+- .claude/skills/dotnet-file-based-apps/SKILL.md
+- .claude/skills/dotnet-file-io
+- .claude/skills/dotnet-file-io/SKILL.md
+- .claude/skills/dotnet-file-io/references/detailed-examples.md
+- .claude/skills/dotnet-gc-memory
+- .claude/skills/dotnet-gc-memory/SKILL.md
+- .claude/skills/dotnet-gc-memory/references/detailed-examples.md
+- .claude/skills/dotnet-github-docs
+- .claude/skills/dotnet-github-docs/SKILL.md
+- .claude/skills/dotnet-github-docs/references/detailed-examples.md
+- .claude/skills/dotnet-github-releases
+- .claude/skills/dotnet-github-releases/SKILL.md
+- .claude/skills/dotnet-github-releases/references/detailed-examples.md
+- .claude/skills/dotnet-grpc
+- .claude/skills/dotnet-grpc/SKILL.md
+- .claude/skills/dotnet-http-client
+- .claude/skills/dotnet-http-client/SKILL.md
+- .claude/skills/dotnet-http-client/references/detailed-examples.md
+- .claude/skills/dotnet-input-validation
+- .claude/skills/dotnet-input-validation/SKILL.md
+- .claude/skills/dotnet-input-validation/references/detailed-examples.md
+- .claude/skills/dotnet-integration-testing
+- .claude/skills/dotnet-integration-testing/SKILL.md
+- .claude/skills/dotnet-integration-testing/references/detailed-examples.md
+- .claude/skills/dotnet-io-pipelines
+- .claude/skills/dotnet-io-pipelines/SKILL.md
+- .claude/skills/dotnet-io-pipelines/references/detailed-examples.md
+- .claude/skills/dotnet-library-api-compat
+- .claude/skills/dotnet-library-api-compat/SKILL.md
+- .claude/skills/dotnet-linq-optimization
+- .claude/skills/dotnet-linq-optimization/SKILL.md
+- .claude/skills/dotnet-linq-optimization/references/detailed-examples.md
+- .claude/skills/dotnet-localization
+- .claude/skills/dotnet-localization/SKILL.md
+- .claude/skills/dotnet-localization/references/detailed-examples.md
+- .claude/skills/dotnet-maui-aot
+- .claude/skills/dotnet-maui-aot/SKILL.md
+- .claude/skills/dotnet-maui-development
+- .claude/skills/dotnet-maui-development/SKILL.md
+- .claude/skills/dotnet-maui-testing
+- .claude/skills/dotnet-maui-testing/SKILL.md
+- .claude/skills/dotnet-maui-testing/references/detailed-examples.md
+- .claude/skills/dotnet-mermaid-diagrams
+- .claude/skills/dotnet-mermaid-diagrams/SKILL.md
+- .claude/skills/dotnet-messaging-patterns
+- .claude/skills/dotnet-messaging-patterns/SKILL.md
+- .claude/skills/dotnet-messaging-patterns/references/detailed-examples.md
+- .claude/skills/dotnet-microsoft-agent-framework
+- .claude/skills/dotnet-microsoft-agent-framework/SKILL.md
+- .claude/skills/dotnet-microsoft-agent-framework/references/detailed-examples.md
+- .claude/skills/dotnet-middleware-patterns
+- .claude/skills/dotnet-middleware-patterns/SKILL.md
+- .claude/skills/dotnet-middleware-patterns/references/detailed-examples.md
+- .claude/skills/dotnet-minimal-apis
+- .claude/skills/dotnet-minimal-apis/SKILL.md
+- .claude/skills/dotnet-minimal-apis/references/detailed-examples.md
+- .claude/skills/dotnet-modernize
+- .claude/skills/dotnet-modernize/SKILL.md
+- .claude/skills/dotnet-msbuild-authoring
+- .claude/skills/dotnet-msbuild-authoring/SKILL.md
+- .claude/skills/dotnet-msbuild-authoring/references/detailed-examples.md
+- .claude/skills/dotnet-msbuild-tasks
+- .claude/skills/dotnet-msbuild-tasks/SKILL.md
+- .claude/skills/dotnet-msix
+- .claude/skills/dotnet-msix/SKILL.md
+- .claude/skills/dotnet-msix/references/detailed-examples.md
+- .claude/skills/dotnet-multi-targeting
+- .claude/skills/dotnet-multi-targeting/SKILL.md
+- .claude/skills/dotnet-multi-targeting/references/detailed-examples.md
+- .claude/skills/dotnet-native-aot
+- .claude/skills/dotnet-native-aot/SKILL.md
+- .claude/skills/dotnet-native-aot/references/detailed-examples.md
+- .claude/skills/dotnet-native-interop
+- .claude/skills/dotnet-native-interop/SKILL.md
+- .claude/skills/dotnet-native-interop/references/detailed-examples.md
+- .claude/skills/dotnet-nuget-authoring
+- .claude/skills/dotnet-nuget-authoring/SKILL.md
+- .claude/skills/dotnet-nuget-authoring/references/detailed-examples.md
+- .claude/skills/dotnet-observability
+- .claude/skills/dotnet-observability/SKILL.md
+- .claude/skills/dotnet-openapi
+- .claude/skills/dotnet-openapi/SKILL.md
+- .claude/skills/dotnet-performance-patterns
+- .claude/skills/dotnet-performance-patterns/SKILL.md
+- .claude/skills/dotnet-playwright
+- .claude/skills/dotnet-playwright/SKILL.md
+- .claude/skills/dotnet-playwright/references/detailed-examples.md
+- .claude/skills/dotnet-profiling
+- .claude/skills/dotnet-profiling/SKILL.md
+- .claude/skills/dotnet-profiling/references/detailed-examples.md
+- .claude/skills/dotnet-project-analysis
+- .claude/skills/dotnet-project-analysis/SKILL.md
+- .claude/skills/dotnet-project-structure
+- .claude/skills/dotnet-project-structure/SKILL.md
+- .claude/skills/dotnet-realtime-communication
+- .claude/skills/dotnet-realtime-communication/SKILL.md
+- .claude/skills/dotnet-realtime-communication/references/detailed-examples.md
+- .claude/skills/dotnet-release-management
+- .claude/skills/dotnet-release-management/SKILL.md
+- .claude/skills/dotnet-release-management/references/detailed-examples.md
+- .claude/skills/dotnet-resilience
+- .claude/skills/dotnet-resilience/SKILL.md
+- .claude/skills/dotnet-resilience/references/detailed-examples.md
+- .claude/skills/dotnet-scaffold-project
+- .claude/skills/dotnet-scaffold-project/SKILL.md
+- .claude/skills/dotnet-secrets-management
+- .claude/skills/dotnet-secrets-management/SKILL.md
+- .claude/skills/dotnet-secrets-management/references/detailed-examples.md
+- .claude/skills/dotnet-security-owasp
+- .claude/skills/dotnet-security-owasp/SKILL.md
+- .claude/skills/dotnet-security-owasp/references/detailed-examples.md
+- .claude/skills/dotnet-serena-analysis-patterns
+- .claude/skills/dotnet-serena-analysis-patterns/SKILL.md
+- .claude/skills/dotnet-serena-code-navigation
+- .claude/skills/dotnet-serena-code-navigation/SKILL.md
+- .claude/skills/dotnet-serena-refactoring
+- .claude/skills/dotnet-serena-refactoring/SKILL.md
+- .claude/skills/dotnet-serialization
+- .claude/skills/dotnet-serialization/SKILL.md
+- .claude/skills/dotnet-service-communication
+- .claude/skills/dotnet-service-communication/SKILL.md
+- .claude/skills/dotnet-snapshot-testing
+- .claude/skills/dotnet-snapshot-testing/SKILL.md
+- .claude/skills/dotnet-snapshot-testing/references/detailed-examples.md
+- .claude/skills/dotnet-solid-principles
+- .claude/skills/dotnet-solid-principles/SKILL.md
+- .claude/skills/dotnet-solid-principles/references/detailed-examples.md
+- .claude/skills/dotnet-solution-navigation
+- .claude/skills/dotnet-solution-navigation/SKILL.md
+- .claude/skills/dotnet-solution-navigation/references/detailed-examples.md
+- .claude/skills/dotnet-spectre-console
+- .claude/skills/dotnet-spectre-console/SKILL.md
+- .claude/skills/dotnet-spectre-console/references/detailed-examples.md
+- .claude/skills/dotnet-structured-logging
+- .claude/skills/dotnet-structured-logging/SKILL.md
+- .claude/skills/dotnet-structured-logging/references/detailed-examples.md
+- .claude/skills/dotnet-system-commandline
+- .claude/skills/dotnet-system-commandline/SKILL.md
+- .claude/skills/dotnet-terminal-gui
+- .claude/skills/dotnet-terminal-gui/SKILL.md
+- .claude/skills/dotnet-test-quality
+- .claude/skills/dotnet-test-quality/SKILL.md
+- .claude/skills/dotnet-test-quality/references/detailed-examples.md
+- .claude/skills/dotnet-testing
+- .claude/skills/dotnet-testing-advanced-aspire-testing
+- .claude/skills/dotnet-testing-advanced-aspire-testing/SKILL.md
+- .claude/skills/dotnet-testing-advanced-testcontainers-database
+- .claude/skills/dotnet-testing-advanced-testcontainers-database/SKILL.md
+- .claude/skills/dotnet-testing-advanced-testcontainers-nosql
+- .claude/skills/dotnet-testing-advanced-testcontainers-nosql/SKILL.md
+- .claude/skills/dotnet-testing-advanced-webapi-integration-testing
+- .claude/skills/dotnet-testing-advanced-webapi-integration-testing/SKILL.md
+- .claude/skills/dotnet-testing-advanced-xunit-upgrade-guide
+- .claude/skills/dotnet-testing-advanced-xunit-upgrade-guide/SKILL.md
+- .claude/skills/dotnet-testing-advanced-xunit-upgrade-guide/references/detailed-examples.md
+- .claude/skills/dotnet-testing-awesome-assertions-guide
+- .claude/skills/dotnet-testing-awesome-assertions-guide/SKILL.md
+- .claude/skills/dotnet-testing-code-coverage-analysis
+- .claude/skills/dotnet-testing-code-coverage-analysis/SKILL.md
+- .claude/skills/dotnet-testing-code-coverage-analysis/references/detailed-examples.md
+- .claude/skills/dotnet-testing-complex-object-comparison
+- .claude/skills/dotnet-testing-complex-object-comparison/SKILL.md
+- .claude/skills/dotnet-testing-datetime-testing-timeprovider
+- .claude/skills/dotnet-testing-datetime-testing-timeprovider/SKILL.md
+- .claude/skills/dotnet-testing-filesystem-testing-abstractions
+- .claude/skills/dotnet-testing-filesystem-testing-abstractions/SKILL.md
+- .claude/skills/dotnet-testing-fluentvalidation-testing
+- .claude/skills/dotnet-testing-fluentvalidation-testing/SKILL.md
+- .claude/skills/dotnet-testing-nsubstitute-mocking
+- .claude/skills/dotnet-testing-nsubstitute-mocking/SKILL.md
+- .claude/skills/dotnet-testing-private-internal-testing
+- .claude/skills/dotnet-testing-private-internal-testing/SKILL.md
+- .claude/skills/dotnet-testing-private-internal-testing/references/detailed-examples.md
+- .claude/skills/dotnet-testing-strategy
+- .claude/skills/dotnet-testing-strategy/SKILL.md
+- .claude/skills/dotnet-testing-test-data
+- .claude/skills/dotnet-testing-test-data/SKILL.md
+- .claude/skills/dotnet-testing-test-naming-conventions
+- .claude/skills/dotnet-testing-test-naming-conventions/SKILL.md
+- .claude/skills/dotnet-testing-test-output-logging
+- .claude/skills/dotnet-testing-test-output-logging/SKILL.md
+- .claude/skills/dotnet-testing/SKILL.md
+- .claude/skills/dotnet-tool-management
+- .claude/skills/dotnet-tool-management/SKILL.md
+- .claude/skills/dotnet-trimming
+- .claude/skills/dotnet-trimming/SKILL.md
+- .claude/skills/dotnet-ui-chooser
+- .claude/skills/dotnet-ui-chooser/SKILL.md
+- .claude/skills/dotnet-ui-testing-core
+- .claude/skills/dotnet-ui-testing-core/SKILL.md
+- .claude/skills/dotnet-uno-mcp
+- .claude/skills/dotnet-uno-mcp/SKILL.md
+- .claude/skills/dotnet-uno-platform
+- .claude/skills/dotnet-uno-platform/SKILL.md
+- .claude/skills/dotnet-uno-platform/references/detailed-examples.md
+- .claude/skills/dotnet-uno-targets
+- .claude/skills/dotnet-uno-targets/SKILL.md
+- .claude/skills/dotnet-uno-targets/references/detailed-examples.md
+- .claude/skills/dotnet-uno-testing
+- .claude/skills/dotnet-uno-testing/SKILL.md
+- .claude/skills/dotnet-validation-patterns
+- .claude/skills/dotnet-validation-patterns/SKILL.md
+- .claude/skills/dotnet-validation-patterns/references/detailed-examples.md
+- .claude/skills/dotnet-version-detection
+- .claude/skills/dotnet-version-detection/SKILL.md
+- .claude/skills/dotnet-version-upgrade
+- .claude/skills/dotnet-version-upgrade/SKILL.md
+- .claude/skills/dotnet-version-upgrade/references/detailed-examples.md
+- .claude/skills/dotnet-winforms-basics
+- .claude/skills/dotnet-winforms-basics/SKILL.md
+- .claude/skills/dotnet-winforms-basics/references/detailed-examples.md
+- .claude/skills/dotnet-winui
+- .claude/skills/dotnet-winui/SKILL.md
+- .claude/skills/dotnet-winui/references/detailed-examples.md
+- .claude/skills/dotnet-wpf-migration
+- .claude/skills/dotnet-wpf-migration/SKILL.md
+- .claude/skills/dotnet-wpf-modern
+- .claude/skills/dotnet-wpf-modern/SKILL.md
+- .claude/skills/dotnet-wpf-modern/references/detailed-examples.md
+- .claude/skills/dotnet-xml-docs
+- .claude/skills/dotnet-xml-docs/SKILL.md
+- .claude/skills/dotnet-xunit
+- .claude/skills/dotnet-xunit/SKILL.md
+- .claude/skills/dotnet-xunit/references/detailed-examples.md
+- .claude/skills/serena
+- .claude/skills/serena/SKILL.md
+- .claude/skills/serena/references/detailed-examples.md
+- .github/agents/dotnet-architect.agent.md
+- .github/agents/dotnet-aspnetcore-specialist.agent.md
+- .github/agents/dotnet-async-performance-specialist.agent.md
+- .github/agents/dotnet-benchmark-designer.agent.md
+- .github/agents/dotnet-blazor-specialist.agent.md
+- .github/agents/dotnet-cloud-specialist.agent.md
+- .github/agents/dotnet-code-review-agent.agent.md
+- .github/agents/dotnet-csharp-concurrency-specialist.agent.md
+- .github/agents/dotnet-docs-generator.agent.md
+- .github/agents/dotnet-maui-specialist.agent.md
+- .github/agents/dotnet-microsoft-agent-framework-specialist.agent.md
+- .github/agents/dotnet-performance-analyst.agent.md
+- .github/agents/dotnet-security-reviewer.agent.md
+- .github/agents/dotnet-testing-specialist.agent.md
+- .github/agents/dotnet-uno-specialist.agent.md
+- .github/agents/wiki-architect.agent.md
+- .github/agents/wiki-researcher.agent.md
+- .github/agents/wiki-writer.agent.md
 - .github/instructions/context7.instructions.md
+- .github/instructions/dotnet-agent-harness-operating-modes.instructions.md
+- .github/instructions/dotnet-agent-harness-tooling.instructions.md
+- .github/instructions/lean-ctx.instructions.md
 - .github/instructions/neo4j-knowledgebase.instructions.md
 local_deployed_file_hashes:
   .agents/skills/context7-mcp/SKILL.md: sha256:6f07fd4d6cbf96c00c66ef859c2981efb0795315069f55af30c0ae4f28b77690
+  .agents/skills/dotnet-10-csharp-14/SKILL.md: sha256:ab23d93e2f09c77cbc4008cbdd5aff161f2f7af34ae9b4932479b03a2e777693
+  .agents/skills/dotnet-10-csharp-14/anti-patterns.md: sha256:21ee41771a2bba0473b68ba3d9626941cf75e3148b24cb058687e7f822473e98
+  .agents/skills/dotnet-10-csharp-14/csharp-14.md: sha256:6444f5dd4d538a5438205ad0f6e63ba9111c9673efa933b04bcf72cb29dfe2a6
+  .agents/skills/dotnet-10-csharp-14/infrastructure.md: sha256:8dafb6e5e39fc9028438dba9c049d1ba9835fcbd710a7103f99e3fc5f751ec8e
+  .agents/skills/dotnet-10-csharp-14/libraries.md: sha256:20d3e3d606f3696f1b09f3fe03fbde62bbdd98a15d42d1be7df000b6121e90e2
+  .agents/skills/dotnet-10-csharp-14/minimal-apis.md: sha256:59cffdf1940ceaffa168b3de3d9eac94d6b72dfe9ab1317db4010a5ceeb09198
+  .agents/skills/dotnet-10-csharp-14/security.md: sha256:ccd2598ef637841b713719341840d6f5e2ec1c12f4b59f83881ffd1da834d502
+  .agents/skills/dotnet-10-csharp-14/testing.md: sha256:e9d824f4eaa7b63d25acaa35dbe494e0ce9a8bda2f8a0eed0f29cd08ca4cc1cb
+  .agents/skills/dotnet-accessibility/SKILL.md: sha256:c4032b6e540b7491451b5b6a13236d6b645c13ed83dc4cd4b86cc11a78fa80b7
+  .agents/skills/dotnet-accessibility/references/detailed-examples.md: sha256:399050b503bd4a22d453267a6c08abcb5901f4856a8b88cddb5c1c7690efcc52
+  .agents/skills/dotnet-add-analyzers/SKILL.md: sha256:c262cf52d069004959af1ecea0e175f42a4a1644f8215f4fcfc395274c8ccc23
+  .agents/skills/dotnet-add-ci/SKILL.md: sha256:87cba7de20b23922139bc0511aea9b76d5efab79253fc6dfefd0a8c652ea70db
+  .agents/skills/dotnet-add-testing/SKILL.md: sha256:690e03e226286fc312a7b532aa1f8795b93d4ff0168d877c46fd91acb2423b8a
+  .agents/skills/dotnet-ado-build-test/SKILL.md: sha256:143ed7648332ffc1c1c01d295d6e4ed2f854756672a7d8bb036ae8b62da6ca8c
+  .agents/skills/dotnet-ado-build-test/references/detailed-examples.md: sha256:ca50b9677e661ef22b4533c932bf1749110231a59115d2b346e47261126c2600
+  .agents/skills/dotnet-ado-patterns/SKILL.md: sha256:75ddb6d2f8824d62558faeed13960396910bec3aabe72012eb6d92ed68682fc1
+  .agents/skills/dotnet-ado-publish/SKILL.md: sha256:b4ef318817e3792d73824f8da659246bd0b738447030e6c1023f0eb00c79c5a4
+  .agents/skills/dotnet-ado-publish/references/detailed-examples.md: sha256:388a769cb0efa877c1eb49e2e9545e872f8a0ecb81a9966412011839fa4e4493
+  .agents/skills/dotnet-ado-unique/SKILL.md: sha256:4807b5a2e0908e308095e8fc43857a86bed89cac1901bf304b57684e53e9d3d4
+  .agents/skills/dotnet-ado-unique/references/detailed-examples.md: sha256:1ae3ef09f34d0105782ecf7f2878a7a7b00184a6473037b6d732cadb486ad3b1
+  .agents/skills/dotnet-advisor/SKILL.md: sha256:0cf180e80c06a8e557c5ff1369bf300bad4256ba5dc03f97ad124f58634720f9
+  .agents/skills/dotnet-advisor/references/detailed-examples.md: sha256:ef969a0ee699afcb44663180439b31d36379daec48894ac4fcaf42d18a000c80
+  .agents/skills/dotnet-aot-architecture/SKILL.md: sha256:de31faee113cc5b7d4eeae2123be2b10b49324ec4d03d8dcdfad05c3162d9b25
+  .agents/skills/dotnet-aot-wasm/SKILL.md: sha256:599f160da6567248c472091545417d59ac6d37e40ae6757a4669a267fbc4df8a
+  .agents/skills/dotnet-api-docs/SKILL.md: sha256:72f436b7d01fd3687cbb25d313b88f81ec12c41c71a3baea5c14c863c582e5ee
+  .agents/skills/dotnet-api-docs/references/detailed-examples.md: sha256:ab786c900b6cf11c2f5d36cdde8283590406001cf1f7ee75f08cf1271350955c
+  .agents/skills/dotnet-api-security/SKILL.md: sha256:a72a743f81f916bc7eb29b23844f17391a0be7e0ea117cff4c5d37309161de06
+  .agents/skills/dotnet-api-surface-validation/SKILL.md: sha256:a1af71c68c4512068a4288282bc9219a57fab07c42cb04d0883a854d7b39ca88
+  .agents/skills/dotnet-api-surface-validation/references/detailed-examples.md: sha256:7ae4817375fcd50ac9a8705b21f6fb66580fd49f276d14ce2143da604ba700dc
+  .agents/skills/dotnet-api-versioning/SKILL.md: sha256:f831085d9beb375e5554cc98dd6beac41830586214d817701add56fd19be1b0d
+  .agents/skills/dotnet-architecture-patterns/SKILL.md: sha256:05421bb15da22f73bae2477f5edd5e1f9c296ef7afb9b3bb266145a4203c7070
+  .agents/skills/dotnet-artifacts-output/SKILL.md: sha256:547744cce029e27c89b137dc47686cf1617bf8f63d55e93e72a7592c5219e22a
+  .agents/skills/dotnet-aspire-patterns/SKILL.md: sha256:6be407958b422e5ebb019fa9ad716b008332de669127868ccd501659ed77758c
+  .agents/skills/dotnet-aspire-patterns/references/detailed-examples.md: sha256:ddbfce853824c7175b1b76b22bd18c69fc7f4f0ec189ae8864a115d6b16e7de0
+  .agents/skills/dotnet-background-services/SKILL.md: sha256:b495a0c2a3b5aa56928f4d7ee33144518a036566f3623cbee57956d0fc3a12e9
+  .agents/skills/dotnet-benchmarkdotnet/SKILL.md: sha256:0f4e24154725b7991e2a6262146c0d7e524b80612f4c4e9ebed635b52cb03b7d
+  .agents/skills/dotnet-benchmarkdotnet/references/detailed-examples.md: sha256:4d2becb21f1f098fdc3bd2e42efdfb69aa73c58a78dbf5b5cb50e4583c467ba1
+  .agents/skills/dotnet-blazor-auth/SKILL.md: sha256:b0263656e465b53614de93ef786297b71116d1f7719408db5510ba26f5df7f78
+  .agents/skills/dotnet-blazor-auth/references/detailed-examples.md: sha256:f8dc694e073c31224707a4da78415c1319a43804fc29d83405a407c59bdc956c
+  .agents/skills/dotnet-blazor-components/SKILL.md: sha256:017dd1a35049ee613453efae99eef12272f5baa25b388b534874f1b5fb53d259
+  .agents/skills/dotnet-blazor-components/references/detailed-examples.md: sha256:e869d6de68f34c4d6d99a45a808d4c6d85a2f27e2e3dfefb0a27b431aa7e74c8
+  .agents/skills/dotnet-blazor-patterns/SKILL.md: sha256:98fffb5dfb01eb2eba061c468d432ebd499f3b3e5ce2446eb38085644c31338a
+  .agents/skills/dotnet-blazor-patterns/references/detailed-examples.md: sha256:021617a4ec22bbf2235f8f914ddbbc72b2997a4cd0c6798eb45f4efe3b5f74d2
+  .agents/skills/dotnet-blazor-testing/SKILL.md: sha256:43a602a24913a3cd459d39cdfbed7c89caf3857097b0d0fd39bbf08c73fd9045
+  .agents/skills/dotnet-blazor-testing/references/detailed-examples.md: sha256:e1dab1dc8dfb81c70c236f742c02ee1402b0fc7d7cf5dae1002c25916be24a43
+  .agents/skills/dotnet-build-analysis/SKILL.md: sha256:6a3d2a5110320a47f2cfc7e1372c6a741d42a885dfa5a49a2e0d92731af606af
+  .agents/skills/dotnet-build-analysis/references/detailed-examples.md: sha256:1c193503fe50739a52d9c0f34c19faf05f1910a3a4743c01fe936900a4629181
+  .agents/skills/dotnet-build-optimization/SKILL.md: sha256:10162a7b650f8c839ecc9942e627ef52732ba9d9ae24a3c0924bc2c0476d3c73
+  .agents/skills/dotnet-build-optimization/references/detailed-examples.md: sha256:bb52a2d8d513c60c309c1bf4412843b06a299340e44dd9cb06c43b8e47c6c2dd
+  .agents/skills/dotnet-channels/SKILL.md: sha256:7632a88461132d047e82e0ccf67353bc0b9e0238e08da427d0b603ac8f790394
+  .agents/skills/dotnet-channels/references/detailed-examples.md: sha256:11d528ba6bde8547051c973909f2bc1946a907b00a99cb903d5ea70398175dad
+  .agents/skills/dotnet-ci-benchmarking/SKILL.md: sha256:d371f60e7cf6d7332faf035fb5d731a716aa29a1e13ec0e944b21e10ea2cd487
+  .agents/skills/dotnet-ci-benchmarking/references/detailed-examples.md: sha256:0de11625a1408413d476f851e243d0b09793b145e29646bae8b6d3abb1d8c72f
+  .agents/skills/dotnet-cli-architecture/SKILL.md: sha256:a8e9eb9db4ae41760e2654b591511522136b5bdebb7d5e9e9f31352de8f61aa1
+  .agents/skills/dotnet-cli-architecture/references/detailed-examples.md: sha256:131a4cc39bbf4ae41ec9ba898930a395789da0418224db248b2535fbe0bc1958
+  .agents/skills/dotnet-cli-distribution/SKILL.md: sha256:7481d60424994b0a17bcdf5f0c22df9678548a6757f87670c61f60df745fea9b
+  .agents/skills/dotnet-cli-packaging/SKILL.md: sha256:ebd7e946588d266dc5d8fdfbcb41071e844c68ec41482b5d5ed530cfcefb900c
+  .agents/skills/dotnet-cli-packaging/references/detailed-examples.md: sha256:8ecd5ebe99c5ca28d7c69778131c3877249db33d89fcaeb554409a488693c008
+  .agents/skills/dotnet-cli-release-pipeline/SKILL.md: sha256:9083d505057bfbca7238cf70e2d3b5e0c6f8f641eeec6761731e485d918e3f23
+  .agents/skills/dotnet-cli-release-pipeline/references/detailed-examples.md: sha256:d122afefebbd64c185a9d41f6e3e9f09f7a36a2c3745f608b796bc0bc6a50ad1
+  .agents/skills/dotnet-container-deployment/SKILL.md: sha256:b8e033b96b421342f87de70cac4f0bc30509f3b40abd2e2efb301a6e491d7bd3
+  .agents/skills/dotnet-container-deployment/references/detailed-examples.md: sha256:a5e15753618ee8fc695b8eb5698da32dfb589ca1a51d8bb895879ee9acd3c997
+  .agents/skills/dotnet-containers/SKILL.md: sha256:08ff60ff8f45fb13313b230f014dcec5d9e81c0bcbb7f55c5370ca6acbcf8163
+  .agents/skills/dotnet-cryptography/SKILL.md: sha256:e5ddd8680f78794272054b56c57d477c50d96fae6fcd3396dd3d3280521de0fc
+  .agents/skills/dotnet-cryptography/references/detailed-examples.md: sha256:77bdb7334f639dec893548eabc4219f507d00069dba790967ff04fb7b931abe6
+  .agents/skills/dotnet-csharp-api-design/SKILL.md: sha256:c9c5f2bdcbad81aba4f4d618e6ffcf0b5db01ca4357d04738ebabee6f34b62e7
+  .agents/skills/dotnet-csharp-async-patterns/SKILL.md: sha256:57f3a6098934f1b41518c713dcdfc946d3533874046a2e5ce56ddac8e0c2acc9
+  .agents/skills/dotnet-csharp-code-smells/SKILL.md: sha256:679f73625a35dcb614bd429fb8bd94200cc30d11a6e6e10e1e9bb4203c95d9d0
+  .agents/skills/dotnet-csharp-coding-standards/SKILL.md: sha256:d87d6577369dde18b8acfe03def7b33c726f8af2cbf4520d9fcc65d6fda43f5a
+  .agents/skills/dotnet-csharp-coding-standards/references/detailed-examples.md: sha256:755b06c0373d35f1b7984997dfb142265138ee891caad19a3758a3528a6a0cfb
+  .agents/skills/dotnet-csharp-concurrency-patterns/SKILL.md: sha256:ca2783e35eb99d768802bf35f5b1cf30ea24d3a2a685f3568e0eefa6d7fdf873
+  .agents/skills/dotnet-csharp-concurrency-patterns/references/detailed-examples.md: sha256:3771aeb26d726673c82730b01df79567af51a2dcdbbcb86f089f24b3358e8413
+  .agents/skills/dotnet-csharp-configuration/SKILL.md: sha256:2f860f793d813c3956701ed0d6f6469459f70230a52b80bdfdc4c53f8baf4385
+  .agents/skills/dotnet-csharp-configuration/references/detailed-examples.md: sha256:7e99e1d81f6514000a4db444ecc779a863e6acc63045cf6fb53d8ad5df348378
+  .agents/skills/dotnet-csharp-dependency-injection/SKILL.md: sha256:2a2a3f411c574dfa70fcd7bfe035bac1922dc57ac7ee131c89553e43c9a5a53b
+  .agents/skills/dotnet-csharp-modern-patterns/SKILL.md: sha256:f955afb2c8549c3eea34be81c5fd5d98636f09b49ff84a826d51cbd62539bc8a
+  .agents/skills/dotnet-csharp-modern-patterns/references/detailed-examples.md: sha256:d6811ad65fe17f0c061e5b6b1d38207227dae259d2da14e04286a16876606200
+  .agents/skills/dotnet-csharp-nullable-reference-types/SKILL.md: sha256:00b1bd69280e49061f77dec33a476d07b97a8f238d8e473a3c12d4e3758f97f2
+  .agents/skills/dotnet-csharp-source-generators/SKILL.md: sha256:07ce378c665fda047f1f3f61d9496a1af845d851ebc29306bf8a4b5665f01aa8
+  .agents/skills/dotnet-csharp-source-generators/references/detailed-examples.md: sha256:e4076c3c0577ae91f359eb9024b947df713a2338be3db272b62ae717c4be997c
+  .agents/skills/dotnet-csharp-type-design-performance/SKILL.md: sha256:9ddfcef00818c621efa56269f9c030542926041a3dca035809c1f0a134d7eb7a
+  .agents/skills/dotnet-csproj-reading/SKILL.md: sha256:d80f0566ad426163363fc3a4f5ba327e6e588fe9fa5f23b39e2fc8717a45340c
+  .agents/skills/dotnet-csproj-reading/references/detailed-examples.md: sha256:c5f38f11260424f768e8ece1e29da667c9d0565449bcc12becbe523db50d3c06
+  .agents/skills/dotnet-data-access-strategy/SKILL.md: sha256:da33099800bb3be4d0706582a0082b04e0799e364a4e8ef042d31b248f2fe595
+  .agents/skills/dotnet-documentation-strategy/SKILL.md: sha256:bf32bebe399140e5041661cdc86ae3697490b7f79a1c8a4e815bc4509e31c66d
+  .agents/skills/dotnet-documentation-strategy/references/detailed-examples.md: sha256:85426102fe4fdf2979f8fb19818f9f3e32e8423150ac0f206ce9b92493e4324b
+  .agents/skills/dotnet-domain-modeling/SKILL.md: sha256:968765fdd3e04bb02b6c0ed4d781964cd2543d770a8f2ffed97ebac658da1324
+  .agents/skills/dotnet-domain-modeling/references/detailed-examples.md: sha256:e5e46d5a7bfc868e495fabb6aa26f03e55f7232c6ba74660ffe4e804adb26145
+  .agents/skills/dotnet-editorconfig/SKILL.md: sha256:ced7bb0804175ccfbcb84624f9390ba066fa7e4c9689330cb2ef33920cd780ff
+  .agents/skills/dotnet-editorconfig/references/detailed-examples.md: sha256:2f3697190df401cd0066d9242087e1a4b143f2f784c66109d17fcaef8c1386f3
+  .agents/skills/dotnet-efcore-architecture/SKILL.md: sha256:4f07bff01dfd4540c4de3e6b4aa7466c7cfb5e7c46439bf6a98cb996a19e8449
+  .agents/skills/dotnet-efcore-architecture/references/detailed-examples.md: sha256:db883447b99c6f2ec46794dffcd9ea8c6d7362b95b2955673b222ed7ce065baa
+  .agents/skills/dotnet-efcore-patterns/SKILL.md: sha256:aaeca42b58232d72eb37f6f9b245ebdb861fc9b80218a5fc1cc4ac274e40b0e1
+  .agents/skills/dotnet-efcore-patterns/references/detailed-examples.md: sha256:97a516b589fd9ed98ae1694a2a2bde6287d9668a4efe9a5e2ecbf45074cc4864
+  .agents/skills/dotnet-file-based-apps/SKILL.md: sha256:bb5e7a549e7c32eb8737e7c94aa5695341f65089860759f5890eaabb4978f660
+  .agents/skills/dotnet-file-io/SKILL.md: sha256:b7e25fa1e6f47ad35fa2a5decf01c1921f6d7dfb9667b13d9d767b68cb1ecf2e
+  .agents/skills/dotnet-file-io/references/detailed-examples.md: sha256:136ca2f1c58f71b5cbbdc96c56cdd6cb9144fdb0ac39bf6acd1a93dd977548d3
+  .agents/skills/dotnet-gc-memory/SKILL.md: sha256:7ac430abdd439d284b6fba8115064600a33e5b7e2bb0da8197ee3ed3ba7dd24a
+  .agents/skills/dotnet-gc-memory/references/detailed-examples.md: sha256:bd5ceed1ae15cd3f8a5c99caacda5e25b97f61d4064b6e8978c57e40443957db
+  .agents/skills/dotnet-github-docs/SKILL.md: sha256:f5c24025e0ceb22509f766bc342b1d0fab1aac4eb047b85f3b79171247068330
+  .agents/skills/dotnet-github-docs/references/detailed-examples.md: sha256:ec77026c302534591f3ebe4799698226a92549b66dd9646c8240fba19f2c19cb
+  .agents/skills/dotnet-github-releases/SKILL.md: sha256:9428810a5c9f60e2b7a67360ae176a83d2bd5f5738cb11fbfa73caa85ec5d218
+  .agents/skills/dotnet-github-releases/references/detailed-examples.md: sha256:705a4c7b8284ce8aeee597c0d8859e8e487c2e5b6e952e77a3c240cb30ecf89f
+  .agents/skills/dotnet-grpc/SKILL.md: sha256:ab3ccd028ef0822df3b40a939b85f48006c7655b078c956628379863c936d24f
+  .agents/skills/dotnet-http-client/SKILL.md: sha256:4d26e1c7463ef2a9b7a4a89319e083939b2b53fdb261f27854f3780e88eef978
+  .agents/skills/dotnet-http-client/references/detailed-examples.md: sha256:835d988d4a4b5b792062ce65d05fa7b9caf07bfae01604bffbd056abe2957d8b
+  .agents/skills/dotnet-input-validation/SKILL.md: sha256:3d789494488c87517de818b0437567c5f63d6095e19ca105f6a39652d8fe22c6
+  .agents/skills/dotnet-input-validation/references/detailed-examples.md: sha256:146767cc908a98bb30cfadc533cf079b08603f159e35469c7835e40009dbc992
+  .agents/skills/dotnet-integration-testing/SKILL.md: sha256:4115d1af28da63acd7fdcd4df6d62baff570b60dd6e91b886372b0ce05d796b6
+  .agents/skills/dotnet-integration-testing/references/detailed-examples.md: sha256:e7eb833328dd2f4cd2a0d619ac8ce27d12ca335112496dcbb8a4ee56cc64a3d1
+  .agents/skills/dotnet-io-pipelines/SKILL.md: sha256:059330c99c7b859d8e24c9b2847ccf36fdfe7702991e43715a32c99244b35725
+  .agents/skills/dotnet-io-pipelines/references/detailed-examples.md: sha256:2add7709c4e3a5a54c61873204944d931c224d1d2591c7fd78d2cb6797c85e49
+  .agents/skills/dotnet-library-api-compat/SKILL.md: sha256:8dab87e74fca497da00060d1dd19c96f1bd12af31260c9facceea16dd2854865
+  .agents/skills/dotnet-linq-optimization/SKILL.md: sha256:14708d8f6c20b67726f5766570c00cd9141d8935c0958d0e858de4a7b5f31110
+  .agents/skills/dotnet-linq-optimization/references/detailed-examples.md: sha256:869f9428436d2de8a91e560cfb696dd1c98d7bb5a811520ad92bede7fd9d5e8f
+  .agents/skills/dotnet-localization/SKILL.md: sha256:dcbd6ac82fd6b04306b9fcfb5cd6e809252ca2933d7db586fc68b1f166ab98ff
+  .agents/skills/dotnet-localization/references/detailed-examples.md: sha256:0d6d61232f571a995ef8d37d04f3d8f696a943ce36d1612ea0d5531098fe14d0
+  .agents/skills/dotnet-maui-aot/SKILL.md: sha256:b44473407db30430c9f3e8c4e5ba4b8360acb83312e39fec662f32b7d8c033b6
+  .agents/skills/dotnet-maui-development/SKILL.md: sha256:90edb8e050458a4213593f39b85d0510989ed4ace9029bb63a21f2be6ba243dd
+  .agents/skills/dotnet-maui-testing/SKILL.md: sha256:739d11df9c7b25ec623e51f050a7762658e2675aa2a80cb91f110ebfbac59ffe
+  .agents/skills/dotnet-maui-testing/references/detailed-examples.md: sha256:e276c25e9caabe60b9f2543cc571e97bf99f1de7a09380e206035523400f1ca0
+  .agents/skills/dotnet-mermaid-diagrams/SKILL.md: sha256:9ccf1e82b93f21ddf1229d471ea436ad62d130ea70fe5d3db7c8f80641e62ff7
+  .agents/skills/dotnet-messaging-patterns/SKILL.md: sha256:5be9422d2ccfefbb8a6ea33984adb58b8492e1223c0c1314bc715bb3cfb4cf44
+  .agents/skills/dotnet-messaging-patterns/references/detailed-examples.md: sha256:566e0b8388d68c310e3704c4ffbd8702edb13cd5561e4fc07d2cbc1b0adf40b8
+  .agents/skills/dotnet-microsoft-agent-framework/SKILL.md: sha256:66c964bba526dc9ed86f9f0e72e2d8010dd891d39dd9624e32ad956cc6c68beb
+  .agents/skills/dotnet-microsoft-agent-framework/references/detailed-examples.md: sha256:8999485ded5277557c1c54edc074f65fda20130594ee6cf1ba04d43a8b175c4a
+  .agents/skills/dotnet-middleware-patterns/SKILL.md: sha256:1275b55ae4d9b061ce6636efddc1a172e6805188940eb4b14eef5b05af86abdf
+  .agents/skills/dotnet-middleware-patterns/references/detailed-examples.md: sha256:f5d99cb19b1a27b8346b4c5099b928047bab588b9306871b718ca5fc7c2e69ba
+  .agents/skills/dotnet-minimal-apis/SKILL.md: sha256:606a6b17ba5df68382960f44e499253c885824ae32d007b3e0554e29b922e5c7
+  .agents/skills/dotnet-minimal-apis/references/detailed-examples.md: sha256:a5e8a1970695255650bc20999ddb7b489dc0c21bafdb6ff4ab7ef3768523a01a
+  .agents/skills/dotnet-modernize/SKILL.md: sha256:511de32be860e68d06126eb6df393f2e65fdec95f9440502af8ff2047c18898d
+  .agents/skills/dotnet-msbuild-authoring/SKILL.md: sha256:5a9940f624dc46b4dd2dbd9710c32fa7a05da85f16a008a034ec33dc8c4feb36
+  .agents/skills/dotnet-msbuild-authoring/references/detailed-examples.md: sha256:a7493e0fc925b1da796e0ffafbff3a821cda638e7c65d0266bd81af06a2fe713
+  .agents/skills/dotnet-msbuild-tasks/SKILL.md: sha256:35baa9970184b9c825261012e813c8e1fc83a222d07b0b063240a3722c4c971d
+  .agents/skills/dotnet-msix/SKILL.md: sha256:3d3d3be6ae2df0eaa5d91500c777450b074ab474555014952dec9cc29672ed59
+  .agents/skills/dotnet-msix/references/detailed-examples.md: sha256:fecb81a7aaff9136880ac005058ddaf5477c34cac18941143a0547b7506c16d7
+  .agents/skills/dotnet-multi-targeting/SKILL.md: sha256:f6c5e6a586e0b747f3543a5d41a3f255317c1245a63e9e7482cb68930f4fff8a
+  .agents/skills/dotnet-multi-targeting/references/detailed-examples.md: sha256:b3200ae4b4b5143d6d4fd15580b1733b84235d4566256eae1a462bd8bc15e936
+  .agents/skills/dotnet-native-aot/SKILL.md: sha256:d42f88fe6aa6c26f299c12f322075aaa16f4c4d9be218919c4a411cfeb2fec81
+  .agents/skills/dotnet-native-aot/references/detailed-examples.md: sha256:f81bdc09eaef2dea426f574c90dbe608f2aa488bbe78be868b2b3172c32d5c3d
+  .agents/skills/dotnet-native-interop/SKILL.md: sha256:47cdf164d50a73b8551d31e89012b9c90434d121842a6e4fcf3b30721fb4c2ae
+  .agents/skills/dotnet-native-interop/references/detailed-examples.md: sha256:eea94ca8e6bfc6689c22a8cd25e5876a38d24c7f3088ceb7b3bde30c5fcb019b
+  .agents/skills/dotnet-nuget-authoring/SKILL.md: sha256:0e0f7bb799146f02a303d4b170d801fe0511efcff206b0bfa36be3ddaa89cd54
+  .agents/skills/dotnet-nuget-authoring/references/detailed-examples.md: sha256:a26b55dd31eb66c8e7df2878cbcc94a47d3debfe8c24e43d5ac8e8f0e6b635c9
+  .agents/skills/dotnet-observability/SKILL.md: sha256:973f7af78b84b62c1376271f2173e9028f136f77885c3a9bab47fc301dccaf99
+  .agents/skills/dotnet-openapi/SKILL.md: sha256:a0e173c9acbf41c0f09e773dcff222b493b43cc4c18fc058c3ecc576a45070e6
+  .agents/skills/dotnet-performance-patterns/SKILL.md: sha256:4661e847cad6893af42093ca26d56f56326a06cdf22a2088d3f1bc2697049bbd
+  .agents/skills/dotnet-playwright/SKILL.md: sha256:2496b12b6180464806b994612efc5c7541b3a30a13a7728eacc45117b5601f7e
+  .agents/skills/dotnet-playwright/references/detailed-examples.md: sha256:8b1fa1c427267ad37feb4cd98da640b0d90419be5624574b928c1db3595641c7
+  .agents/skills/dotnet-profiling/SKILL.md: sha256:167e6ca32d23b0c3a15ad1d47dd7f935f862a2de5bb13f9927afffc09799c55e
+  .agents/skills/dotnet-profiling/references/detailed-examples.md: sha256:dbb831e8d5c852e791570851716d17229e29262e30bf6f68d8257d065ecdadb1
+  .agents/skills/dotnet-project-analysis/SKILL.md: sha256:c84345369d1a3457039809debeb80337b50cebe49d0e8b16ba3fcecb2f65959d
+  .agents/skills/dotnet-project-structure/SKILL.md: sha256:3b06644d41c06df6f757750ce3af9fa5ea741a8051fb2f005b2571be84acc45a
+  .agents/skills/dotnet-realtime-communication/SKILL.md: sha256:acfdae0d4153aae970f41bda1965d565d2039e64ed3dd91d83bf123afb1b24f9
+  .agents/skills/dotnet-realtime-communication/references/detailed-examples.md: sha256:96dc66cefea098ed4a026e074c4b0f0d66f6c6feff051004b5afc1f9c3132363
+  .agents/skills/dotnet-release-management/SKILL.md: sha256:dc34f771da4dc6ded04e529d2265f29eb362dee00c83f10fb6dc09ddc3d2c40e
+  .agents/skills/dotnet-release-management/references/detailed-examples.md: sha256:a5a08646f292578a9093933d77be823bfb8c1585e9633c457e7652dfd644e30d
+  .agents/skills/dotnet-resilience/SKILL.md: sha256:b89ee255c82583e78acd41d23d47e4ef698dc6e63b53976b92f23c2be8d52ba0
+  .agents/skills/dotnet-resilience/references/detailed-examples.md: sha256:ba89e79348c05db61cd0873644465679374d6c11629e7a8cab2ace1cf7e00664
+  .agents/skills/dotnet-scaffold-project/SKILL.md: sha256:91c5af937bcb06f2c504aa96ae0a455b8730eb780cf426a1b1aad24c9ec1820d
+  .agents/skills/dotnet-secrets-management/SKILL.md: sha256:4ddffdb4645528cfde2665084d43195d66561a33cc6684703684186aa71c7768
+  .agents/skills/dotnet-secrets-management/references/detailed-examples.md: sha256:4eeb537597a8314af9bb97e241fce066aaac02fb581c75b0a6841ee4464ab70f
+  .agents/skills/dotnet-security-owasp/SKILL.md: sha256:76b8e9315865a0afe228c6fa98f781ab44b4344d12afb18352aec941234de52c
+  .agents/skills/dotnet-security-owasp/references/detailed-examples.md: sha256:c0c583b1f091a56f6efb39d38743ee77231ee23c4d7d1e82df75e3d6969471e6
+  .agents/skills/dotnet-serena-analysis-patterns/SKILL.md: sha256:b15ecfbaf1b16151741fc7dbc7e1d1fb3c10a3e7c2299f576801d1ba1085ac42
+  .agents/skills/dotnet-serena-code-navigation/SKILL.md: sha256:7f251f8d40cf733c3a877074eb9179d43f354267254e02eebf13a8c57fb7a802
+  .agents/skills/dotnet-serena-refactoring/SKILL.md: sha256:0511ea3d0dd1408686854f47518212b5d5e20c52ee0e8de37736ddfd6214d590
+  .agents/skills/dotnet-serialization/SKILL.md: sha256:76532acd24649fb907856bbc0443059c262c9c9f7015d3d527913b9aaad800a6
+  .agents/skills/dotnet-service-communication/SKILL.md: sha256:62419ce4d2f934fbc531b56e103e004acb1a166ff29588b82391026f9243933e
+  .agents/skills/dotnet-snapshot-testing/SKILL.md: sha256:ad4b7f0f1792c1303da84131b5f10b9cb36bc268cbf05c2c0131eb7f561e781e
+  .agents/skills/dotnet-snapshot-testing/references/detailed-examples.md: sha256:67cd4404bb0a3b045a2675b82305521c8896757795dc29afd3044c3579e20577
+  .agents/skills/dotnet-solid-principles/SKILL.md: sha256:18c8dbab1d2120cd9d113d28e940a3440a86be0111605ca286094d22499d5163
+  .agents/skills/dotnet-solid-principles/references/detailed-examples.md: sha256:21b3235d40328ac77c5c474b790a1d909bbdbb37a8315edbd14c5dd099182d5a
+  .agents/skills/dotnet-solution-navigation/SKILL.md: sha256:413857026d96a35982fab07af747d7d7f093267e438103209ad99f849fd050d1
+  .agents/skills/dotnet-solution-navigation/references/detailed-examples.md: sha256:8355bc544b8c925b68396f193d2c2fac8269179ee5c8893e91872debea9b4e9a
+  .agents/skills/dotnet-spectre-console/SKILL.md: sha256:8c864061be02b9192af527cec31a0d621849b4f23eade86e5688b2b12c38b52c
+  .agents/skills/dotnet-spectre-console/references/detailed-examples.md: sha256:00c8401aa2872515c4cf37d6d8d4032abc7214948a57f605822fea0d4de03a62
+  .agents/skills/dotnet-structured-logging/SKILL.md: sha256:89574e8d0c2cb9f6b1da4b1076744cb721ae5f87279fbb3361f82b331da1c7c9
+  .agents/skills/dotnet-structured-logging/references/detailed-examples.md: sha256:e74d3fc4164452e0f32acb964c503d2a3b69238b5aa3aeae450069233294ea78
+  .agents/skills/dotnet-system-commandline/SKILL.md: sha256:c344890d087a86b14a89319516a823430c6c0ea5fcf99678a22c11550cfb6116
+  .agents/skills/dotnet-terminal-gui/SKILL.md: sha256:eb4a10119b3da2ebe874028efcb6435886304e634eaffdae38bd2e44394c741f
+  .agents/skills/dotnet-test-quality/SKILL.md: sha256:57c4df4364b659dc949fe8de13b472f73c30a9e3e5aac0558c62d861284ee638
+  .agents/skills/dotnet-test-quality/references/detailed-examples.md: sha256:accdc2f5cec5efa35765929db426f0d72859c547156b4fbd337e0df13bf0e35f
+  .agents/skills/dotnet-testing-advanced-aspire-testing/SKILL.md: sha256:36fafd6f474e68b28eaca3b302665ed8a05de5178693b9cecc6d5423b1c74b84
+  .agents/skills/dotnet-testing-advanced-testcontainers-database/SKILL.md: sha256:fe6541f419209a0aafc55e0ffb2f70437008e0f4928e4be11a4c252fe8a8772d
+  .agents/skills/dotnet-testing-advanced-testcontainers-nosql/SKILL.md: sha256:3d9084bfbc52449f1a14a4a3a6412e537816223e0665fdd577a761753c3991ca
+  .agents/skills/dotnet-testing-advanced-webapi-integration-testing/SKILL.md: sha256:d3d968856d45200a3c0a085835dabfef5d082a9ffdfbcfed3fad3914964da895
+  .agents/skills/dotnet-testing-advanced-xunit-upgrade-guide/SKILL.md: sha256:3f1fae5725e5c9324b48f87dfd39551f62f8b2b9bc0a62613610ab9ef40f143a
+  .agents/skills/dotnet-testing-advanced-xunit-upgrade-guide/references/detailed-examples.md: sha256:67a35e6c60ae7fef7b8af9fa6eb160cc554c240c8bbdb9953deccb112f0c67b4
+  .agents/skills/dotnet-testing-awesome-assertions-guide/SKILL.md: sha256:de659335555e7fca5f5c58d69d29b5003fd4627551acac53d1c308790ce6ab74
+  .agents/skills/dotnet-testing-code-coverage-analysis/SKILL.md: sha256:eb21bb0e08b071e7bdc37c1e8b017200875b9ae418dc7c082c70a1a2c747bac4
+  .agents/skills/dotnet-testing-code-coverage-analysis/references/detailed-examples.md: sha256:b065c736dfb1f4ddd5e7c7a1797ed9994a0d8fc3827ff6715806458b5b111c9d
+  .agents/skills/dotnet-testing-complex-object-comparison/SKILL.md: sha256:5fd306adc078ac7776e62cda90e0075c53e874b19dedb8febcd5116d7e43e5f1
+  .agents/skills/dotnet-testing-datetime-testing-timeprovider/SKILL.md: sha256:eede454e92e4691483ac366617eb3eb3de492a936b320d9f0f37e0ebe9828355
+  .agents/skills/dotnet-testing-filesystem-testing-abstractions/SKILL.md: sha256:7b66661ab5556b9af954f4150990dfd951484ff90a6ceecd3094d9499b6b9b61
+  .agents/skills/dotnet-testing-fluentvalidation-testing/SKILL.md: sha256:4f25395930410794cc9b3ffa78485670d3bac2ed50facef6283b081e515ccbdc
+  .agents/skills/dotnet-testing-nsubstitute-mocking/SKILL.md: sha256:8cbf1f77320646f522559c73d4c98b2c455503be22180826cb0a4b4fd4043e3a
+  .agents/skills/dotnet-testing-private-internal-testing/SKILL.md: sha256:fb447f0ce769af1bcce0f69d00f1a3f10b363b83dea46ba1ca62a0be560bf46d
+  .agents/skills/dotnet-testing-private-internal-testing/references/detailed-examples.md: sha256:b26ac10dd01c7cde9e54d30cb04c2750299b1f70d3754b17222bacabdea3f3f8
+  .agents/skills/dotnet-testing-strategy/SKILL.md: sha256:329c6b48a96b86b43a30d7add2306c5b4e54f6e2750de9503691d43fe2807eb1
+  .agents/skills/dotnet-testing-test-data/SKILL.md: sha256:c6bf65861c31387f1151ed9652fe3af76921e85a6427ef53ed443d41f104da68
+  .agents/skills/dotnet-testing-test-naming-conventions/SKILL.md: sha256:6d9ed632cf933c3dae372ad581d19631c3740239a7f1e0de1bcb1df384451c5d
+  .agents/skills/dotnet-testing-test-output-logging/SKILL.md: sha256:404cd5ce3176ceaa57f9cb828174c891430e5f722502a2415e6e8ec54c4d6ca4
+  .agents/skills/dotnet-testing/SKILL.md: sha256:9c34678b3c821040b9b4491c1729723957661fa0e651a492eb870487e0eb7069
+  .agents/skills/dotnet-tool-management/SKILL.md: sha256:167f69376ecb22736ebfb6cba08c07741a574e619f8e0611dcda3de41783cd9d
+  .agents/skills/dotnet-trimming/SKILL.md: sha256:149fe9af7d5b9b5016be29f9d83d5c2d9bcbebd2a30cbfc37318fddc3d3d7994
+  .agents/skills/dotnet-ui-chooser/SKILL.md: sha256:31d515f961afe192e1b458a72a74ca886029def3b404b577d7473f15c6e34d40
+  .agents/skills/dotnet-ui-testing-core/SKILL.md: sha256:632e9ad33b2bb604b35599805cbe70ba7244f2361761259e3b3efce56ceab3a9
+  .agents/skills/dotnet-uno-mcp/SKILL.md: sha256:59f0a08a3bcedddc8c91ba53f7463071c399959c3d0bf1e26ac27cf6cfbcccb4
+  .agents/skills/dotnet-uno-platform/SKILL.md: sha256:4b1adb6c2afbf62e0288ccdcc526c296732b097983e54889c26b266eee27d56d
+  .agents/skills/dotnet-uno-platform/references/detailed-examples.md: sha256:cf01d7bebe8008936db4963b20bc71479ec5fcc228cea4a2e7059932b7416345
+  .agents/skills/dotnet-uno-targets/SKILL.md: sha256:bf551c34ea0e3b108b1c125ff1f74149cc6b554727b677ca7fe68df32447f8bd
+  .agents/skills/dotnet-uno-targets/references/detailed-examples.md: sha256:c0c1a75c81124d0b1f84da869dee756c520c3123521288bd9b528caf555e6e18
+  .agents/skills/dotnet-uno-testing/SKILL.md: sha256:deab29ad973e29eec4dedbe5a82f790a4b56019175ec61f57611c760a4a5a3bf
+  .agents/skills/dotnet-validation-patterns/SKILL.md: sha256:2e43c1791e6ca85d678a0e24dc2a24ee16f3c6d847414f510a30e94cb9f5ae8b
+  .agents/skills/dotnet-validation-patterns/references/detailed-examples.md: sha256:b114a231ab1f74388393e97df3b71944e49d78e832796dfc259fa74c35b565e9
+  .agents/skills/dotnet-version-detection/SKILL.md: sha256:2926bfd308c968f9e94498e9b60347248486653b59e064ada3092d3e20e8f17c
+  .agents/skills/dotnet-version-upgrade/SKILL.md: sha256:7fb52676b7f107db8589772490264c7e904e0a45dc2f75b26f56379ca127bf0d
+  .agents/skills/dotnet-version-upgrade/references/detailed-examples.md: sha256:a1a9d024596c47df6b4de2d09756da54a6f539a5d1fbcd598bcef07e826aa8df
+  .agents/skills/dotnet-winforms-basics/SKILL.md: sha256:838b53be7a24521868a3c2671b069cdf070a46dd98d87435b12c0f587506f4bb
+  .agents/skills/dotnet-winforms-basics/references/detailed-examples.md: sha256:e4f0ccb2e7a2916767c217e1bc50356be8911d0c254dcf512f6c396d9769c28c
+  .agents/skills/dotnet-winui/SKILL.md: sha256:15f3225d27beaeb6775e7c91ef5db070ca7c58ef065283c2643ec38f72a2945e
+  .agents/skills/dotnet-winui/references/detailed-examples.md: sha256:d5475b9f009a964deb828b6ce90c610ee27eb0209906ab2bfb5f59b21250ed75
+  .agents/skills/dotnet-wpf-migration/SKILL.md: sha256:ea775cc1272c8a790e5864610037750a43f98cc9a1885436d57b0c33a7a0bd86
+  .agents/skills/dotnet-wpf-modern/SKILL.md: sha256:a52845126540d0f3bdb020802ce4fe9da207dbec43865b17543dfdecc9d08d4f
+  .agents/skills/dotnet-wpf-modern/references/detailed-examples.md: sha256:831764e989ced2655a0f5db29389ac27ca33c79fb059c3de8e9ba2854d623500
+  .agents/skills/dotnet-xml-docs/SKILL.md: sha256:0ee5de0f489b0532dd9033240d3114ef31961302c8653a1931fbddec71e60410
+  .agents/skills/dotnet-xunit/SKILL.md: sha256:1dbc55c13e6a5c269b6debaa7f0d31b01ee9dd509cc129e2ec6348f9695d60b3
+  .agents/skills/dotnet-xunit/references/detailed-examples.md: sha256:7e1cb9b720eb3d0bdb9a6a12bc4bc534cf9a472dd6e50db683092af7acaf5799
+  .agents/skills/serena/SKILL.md: sha256:7d7401270353e6fa5419eb24877e832d91ccdd2a2836c8224b911deed4b1b508
+  .agents/skills/serena/references/detailed-examples.md: sha256:b1330d068a159fd8c7e244fe56a6ad18c1349ae77823f1fc4e1fe16b956cf5be
+  .claude/agents/dotnet-architect.md: sha256:bd061cc5b6c1821336d4b54fef061ef7edd5e587e312f705096be32bf4c18076
+  .claude/agents/dotnet-aspnetcore-specialist.md: sha256:6db14348009efeef76ae2cf2c40cc5873a4ff05ad49f0fed2e20282a179fe9e3
+  .claude/agents/dotnet-async-performance-specialist.md: sha256:48694381e68efcf885aa718b7b306f20a298b98de25e9fe9498d082b0751ce86
+  .claude/agents/dotnet-benchmark-designer.md: sha256:841dd890ead0c07a40bf20f1e65cba990d3b46bd01ae19609e9f40221cfca86f
+  .claude/agents/dotnet-blazor-specialist.md: sha256:22e8b4f5d119c77545a2d8d8b546572efbd0905c51bb1af5f5c4398b360bf975
+  .claude/agents/dotnet-cloud-specialist.md: sha256:9615a45beb4f3c71cb8ca9341ff7c11b28ac334b5435f6f8ba1f5f1f9b8096fc
+  .claude/agents/dotnet-code-review-agent.md: sha256:b2c87cf2a86b21cb9502c9e6d5cf1f42cd447610bf7f4af2e03e8beebbc28829
+  .claude/agents/dotnet-csharp-concurrency-specialist.md: sha256:60ff47be592c293242002f2a624d5df1d9893df253c70781c571fd1e1055dc2d
+  .claude/agents/dotnet-docs-generator.md: sha256:5de30f354119ab8e15a55ceffa39a04b12a09dc67e6bf6d82fe4953c10992f3c
+  .claude/agents/dotnet-maui-specialist.md: sha256:9d61283c40b686390491507f19f17add0ed304f961a951f3811532738da8d47f
+  .claude/agents/dotnet-microsoft-agent-framework-specialist.md: sha256:b8e323ac223e4c66f7b72387336b23f06c5d4c9055df828791d561b99bbd33ee
+  .claude/agents/dotnet-performance-analyst.md: sha256:7f608b2528e7d9a5be78324f27398ab339451d7bf724ae645ad677055afef3a9
+  .claude/agents/dotnet-security-reviewer.md: sha256:95670dbf6e19a12d93ad3bdd10cde48ea77a2f8523abeb6ebb770b796cc1135d
+  .claude/agents/dotnet-testing-specialist.md: sha256:ee4b6c078445165816caf2c6afb02ed49233aaf98dc092e30e0b474868fb8665
+  .claude/agents/dotnet-uno-specialist.md: sha256:b29c1bfbaf3473e00e2b2f99b707f953e852b2ddd634ff87c33d31d2471d7678
+  .claude/agents/wiki-architect.md: sha256:80ac9ab902c54de8b0e09477bc2f2903d114f634aa91ce58c68a1c40d90cce1b
+  .claude/agents/wiki-researcher.md: sha256:520fb7a66df956630aa3db929c7d7ea11457c8736f7888d8ff8fe37a7bcd4210
+  .claude/agents/wiki-writer.md: sha256:1a45bb2cca492ff481c1f958ec781afc95ab2e9afb362d18ac9ce6b34ab50337
   .claude/rules/context7.md: sha256:0f66072fffde531a3b65ad1fca2a0a719b2c0a146f79a32230e1566aa917a792
+  .claude/rules/dotnet-agent-harness-operating-modes.md: sha256:d5806c0788907396f2173b30e70ba200706d4cd2a4624ef952d51171a5ffb646
+  .claude/rules/dotnet-agent-harness-tooling.md: sha256:7d1fb6320777895d711fc0d8843ca983c362e409fdc431e1be24474cda2f604b
+  .claude/rules/lean-ctx.md: sha256:75e4700dfcf79e181960a8177d8bf189e5db1f79702c3f17160d9465c33a6806
   .claude/rules/neo4j-knowledgebase.md: sha256:416db8f43b40abd878578c0e11c3eb5531c646a5ac77d6df62e4f3ee0876088e
   .claude/skills/context7-mcp/SKILL.md: sha256:6f07fd4d6cbf96c00c66ef859c2981efb0795315069f55af30c0ae4f28b77690
+  .claude/skills/dotnet-10-csharp-14/SKILL.md: sha256:ab23d93e2f09c77cbc4008cbdd5aff161f2f7af34ae9b4932479b03a2e777693
+  .claude/skills/dotnet-10-csharp-14/anti-patterns.md: sha256:21ee41771a2bba0473b68ba3d9626941cf75e3148b24cb058687e7f822473e98
+  .claude/skills/dotnet-10-csharp-14/csharp-14.md: sha256:6444f5dd4d538a5438205ad0f6e63ba9111c9673efa933b04bcf72cb29dfe2a6
+  .claude/skills/dotnet-10-csharp-14/infrastructure.md: sha256:8dafb6e5e39fc9028438dba9c049d1ba9835fcbd710a7103f99e3fc5f751ec8e
+  .claude/skills/dotnet-10-csharp-14/libraries.md: sha256:20d3e3d606f3696f1b09f3fe03fbde62bbdd98a15d42d1be7df000b6121e90e2
+  .claude/skills/dotnet-10-csharp-14/minimal-apis.md: sha256:59cffdf1940ceaffa168b3de3d9eac94d6b72dfe9ab1317db4010a5ceeb09198
+  .claude/skills/dotnet-10-csharp-14/security.md: sha256:ccd2598ef637841b713719341840d6f5e2ec1c12f4b59f83881ffd1da834d502
+  .claude/skills/dotnet-10-csharp-14/testing.md: sha256:e9d824f4eaa7b63d25acaa35dbe494e0ce9a8bda2f8a0eed0f29cd08ca4cc1cb
+  .claude/skills/dotnet-accessibility/SKILL.md: sha256:c4032b6e540b7491451b5b6a13236d6b645c13ed83dc4cd4b86cc11a78fa80b7
+  .claude/skills/dotnet-accessibility/references/detailed-examples.md: sha256:399050b503bd4a22d453267a6c08abcb5901f4856a8b88cddb5c1c7690efcc52
+  .claude/skills/dotnet-add-analyzers/SKILL.md: sha256:c262cf52d069004959af1ecea0e175f42a4a1644f8215f4fcfc395274c8ccc23
+  .claude/skills/dotnet-add-ci/SKILL.md: sha256:87cba7de20b23922139bc0511aea9b76d5efab79253fc6dfefd0a8c652ea70db
+  .claude/skills/dotnet-add-testing/SKILL.md: sha256:690e03e226286fc312a7b532aa1f8795b93d4ff0168d877c46fd91acb2423b8a
+  .claude/skills/dotnet-ado-build-test/SKILL.md: sha256:143ed7648332ffc1c1c01d295d6e4ed2f854756672a7d8bb036ae8b62da6ca8c
+  .claude/skills/dotnet-ado-build-test/references/detailed-examples.md: sha256:ca50b9677e661ef22b4533c932bf1749110231a59115d2b346e47261126c2600
+  .claude/skills/dotnet-ado-patterns/SKILL.md: sha256:75ddb6d2f8824d62558faeed13960396910bec3aabe72012eb6d92ed68682fc1
+  .claude/skills/dotnet-ado-publish/SKILL.md: sha256:b4ef318817e3792d73824f8da659246bd0b738447030e6c1023f0eb00c79c5a4
+  .claude/skills/dotnet-ado-publish/references/detailed-examples.md: sha256:388a769cb0efa877c1eb49e2e9545e872f8a0ecb81a9966412011839fa4e4493
+  .claude/skills/dotnet-ado-unique/SKILL.md: sha256:4807b5a2e0908e308095e8fc43857a86bed89cac1901bf304b57684e53e9d3d4
+  .claude/skills/dotnet-ado-unique/references/detailed-examples.md: sha256:1ae3ef09f34d0105782ecf7f2878a7a7b00184a6473037b6d732cadb486ad3b1
+  .claude/skills/dotnet-advisor/SKILL.md: sha256:0cf180e80c06a8e557c5ff1369bf300bad4256ba5dc03f97ad124f58634720f9
+  .claude/skills/dotnet-advisor/references/detailed-examples.md: sha256:ef969a0ee699afcb44663180439b31d36379daec48894ac4fcaf42d18a000c80
+  .claude/skills/dotnet-aot-architecture/SKILL.md: sha256:de31faee113cc5b7d4eeae2123be2b10b49324ec4d03d8dcdfad05c3162d9b25
+  .claude/skills/dotnet-aot-wasm/SKILL.md: sha256:599f160da6567248c472091545417d59ac6d37e40ae6757a4669a267fbc4df8a
+  .claude/skills/dotnet-api-docs/SKILL.md: sha256:72f436b7d01fd3687cbb25d313b88f81ec12c41c71a3baea5c14c863c582e5ee
+  .claude/skills/dotnet-api-docs/references/detailed-examples.md: sha256:ab786c900b6cf11c2f5d36cdde8283590406001cf1f7ee75f08cf1271350955c
+  .claude/skills/dotnet-api-security/SKILL.md: sha256:a72a743f81f916bc7eb29b23844f17391a0be7e0ea117cff4c5d37309161de06
+  .claude/skills/dotnet-api-surface-validation/SKILL.md: sha256:a1af71c68c4512068a4288282bc9219a57fab07c42cb04d0883a854d7b39ca88
+  .claude/skills/dotnet-api-surface-validation/references/detailed-examples.md: sha256:7ae4817375fcd50ac9a8705b21f6fb66580fd49f276d14ce2143da604ba700dc
+  .claude/skills/dotnet-api-versioning/SKILL.md: sha256:f831085d9beb375e5554cc98dd6beac41830586214d817701add56fd19be1b0d
+  .claude/skills/dotnet-architecture-patterns/SKILL.md: sha256:05421bb15da22f73bae2477f5edd5e1f9c296ef7afb9b3bb266145a4203c7070
+  .claude/skills/dotnet-artifacts-output/SKILL.md: sha256:547744cce029e27c89b137dc47686cf1617bf8f63d55e93e72a7592c5219e22a
+  .claude/skills/dotnet-aspire-patterns/SKILL.md: sha256:6be407958b422e5ebb019fa9ad716b008332de669127868ccd501659ed77758c
+  .claude/skills/dotnet-aspire-patterns/references/detailed-examples.md: sha256:ddbfce853824c7175b1b76b22bd18c69fc7f4f0ec189ae8864a115d6b16e7de0
+  .claude/skills/dotnet-background-services/SKILL.md: sha256:b495a0c2a3b5aa56928f4d7ee33144518a036566f3623cbee57956d0fc3a12e9
+  .claude/skills/dotnet-benchmarkdotnet/SKILL.md: sha256:0f4e24154725b7991e2a6262146c0d7e524b80612f4c4e9ebed635b52cb03b7d
+  .claude/skills/dotnet-benchmarkdotnet/references/detailed-examples.md: sha256:4d2becb21f1f098fdc3bd2e42efdfb69aa73c58a78dbf5b5cb50e4583c467ba1
+  .claude/skills/dotnet-blazor-auth/SKILL.md: sha256:b0263656e465b53614de93ef786297b71116d1f7719408db5510ba26f5df7f78
+  .claude/skills/dotnet-blazor-auth/references/detailed-examples.md: sha256:f8dc694e073c31224707a4da78415c1319a43804fc29d83405a407c59bdc956c
+  .claude/skills/dotnet-blazor-components/SKILL.md: sha256:017dd1a35049ee613453efae99eef12272f5baa25b388b534874f1b5fb53d259
+  .claude/skills/dotnet-blazor-components/references/detailed-examples.md: sha256:e869d6de68f34c4d6d99a45a808d4c6d85a2f27e2e3dfefb0a27b431aa7e74c8
+  .claude/skills/dotnet-blazor-patterns/SKILL.md: sha256:98fffb5dfb01eb2eba061c468d432ebd499f3b3e5ce2446eb38085644c31338a
+  .claude/skills/dotnet-blazor-patterns/references/detailed-examples.md: sha256:021617a4ec22bbf2235f8f914ddbbc72b2997a4cd0c6798eb45f4efe3b5f74d2
+  .claude/skills/dotnet-blazor-testing/SKILL.md: sha256:43a602a24913a3cd459d39cdfbed7c89caf3857097b0d0fd39bbf08c73fd9045
+  .claude/skills/dotnet-blazor-testing/references/detailed-examples.md: sha256:e1dab1dc8dfb81c70c236f742c02ee1402b0fc7d7cf5dae1002c25916be24a43
+  .claude/skills/dotnet-build-analysis/SKILL.md: sha256:6a3d2a5110320a47f2cfc7e1372c6a741d42a885dfa5a49a2e0d92731af606af
+  .claude/skills/dotnet-build-analysis/references/detailed-examples.md: sha256:1c193503fe50739a52d9c0f34c19faf05f1910a3a4743c01fe936900a4629181
+  .claude/skills/dotnet-build-optimization/SKILL.md: sha256:10162a7b650f8c839ecc9942e627ef52732ba9d9ae24a3c0924bc2c0476d3c73
+  .claude/skills/dotnet-build-optimization/references/detailed-examples.md: sha256:bb52a2d8d513c60c309c1bf4412843b06a299340e44dd9cb06c43b8e47c6c2dd
+  .claude/skills/dotnet-channels/SKILL.md: sha256:7632a88461132d047e82e0ccf67353bc0b9e0238e08da427d0b603ac8f790394
+  .claude/skills/dotnet-channels/references/detailed-examples.md: sha256:11d528ba6bde8547051c973909f2bc1946a907b00a99cb903d5ea70398175dad
+  .claude/skills/dotnet-ci-benchmarking/SKILL.md: sha256:d371f60e7cf6d7332faf035fb5d731a716aa29a1e13ec0e944b21e10ea2cd487
+  .claude/skills/dotnet-ci-benchmarking/references/detailed-examples.md: sha256:0de11625a1408413d476f851e243d0b09793b145e29646bae8b6d3abb1d8c72f
+  .claude/skills/dotnet-cli-architecture/SKILL.md: sha256:a8e9eb9db4ae41760e2654b591511522136b5bdebb7d5e9e9f31352de8f61aa1
+  .claude/skills/dotnet-cli-architecture/references/detailed-examples.md: sha256:131a4cc39bbf4ae41ec9ba898930a395789da0418224db248b2535fbe0bc1958
+  .claude/skills/dotnet-cli-distribution/SKILL.md: sha256:7481d60424994b0a17bcdf5f0c22df9678548a6757f87670c61f60df745fea9b
+  .claude/skills/dotnet-cli-packaging/SKILL.md: sha256:ebd7e946588d266dc5d8fdfbcb41071e844c68ec41482b5d5ed530cfcefb900c
+  .claude/skills/dotnet-cli-packaging/references/detailed-examples.md: sha256:8ecd5ebe99c5ca28d7c69778131c3877249db33d89fcaeb554409a488693c008
+  .claude/skills/dotnet-cli-release-pipeline/SKILL.md: sha256:9083d505057bfbca7238cf70e2d3b5e0c6f8f641eeec6761731e485d918e3f23
+  .claude/skills/dotnet-cli-release-pipeline/references/detailed-examples.md: sha256:d122afefebbd64c185a9d41f6e3e9f09f7a36a2c3745f608b796bc0bc6a50ad1
+  .claude/skills/dotnet-container-deployment/SKILL.md: sha256:b8e033b96b421342f87de70cac4f0bc30509f3b40abd2e2efb301a6e491d7bd3
+  .claude/skills/dotnet-container-deployment/references/detailed-examples.md: sha256:a5e15753618ee8fc695b8eb5698da32dfb589ca1a51d8bb895879ee9acd3c997
+  .claude/skills/dotnet-containers/SKILL.md: sha256:08ff60ff8f45fb13313b230f014dcec5d9e81c0bcbb7f55c5370ca6acbcf8163
+  .claude/skills/dotnet-cryptography/SKILL.md: sha256:e5ddd8680f78794272054b56c57d477c50d96fae6fcd3396dd3d3280521de0fc
+  .claude/skills/dotnet-cryptography/references/detailed-examples.md: sha256:77bdb7334f639dec893548eabc4219f507d00069dba790967ff04fb7b931abe6
+  .claude/skills/dotnet-csharp-api-design/SKILL.md: sha256:c9c5f2bdcbad81aba4f4d618e6ffcf0b5db01ca4357d04738ebabee6f34b62e7
+  .claude/skills/dotnet-csharp-async-patterns/SKILL.md: sha256:57f3a6098934f1b41518c713dcdfc946d3533874046a2e5ce56ddac8e0c2acc9
+  .claude/skills/dotnet-csharp-code-smells/SKILL.md: sha256:679f73625a35dcb614bd429fb8bd94200cc30d11a6e6e10e1e9bb4203c95d9d0
+  .claude/skills/dotnet-csharp-coding-standards/SKILL.md: sha256:d87d6577369dde18b8acfe03def7b33c726f8af2cbf4520d9fcc65d6fda43f5a
+  .claude/skills/dotnet-csharp-coding-standards/references/detailed-examples.md: sha256:755b06c0373d35f1b7984997dfb142265138ee891caad19a3758a3528a6a0cfb
+  .claude/skills/dotnet-csharp-concurrency-patterns/SKILL.md: sha256:ca2783e35eb99d768802bf35f5b1cf30ea24d3a2a685f3568e0eefa6d7fdf873
+  .claude/skills/dotnet-csharp-concurrency-patterns/references/detailed-examples.md: sha256:3771aeb26d726673c82730b01df79567af51a2dcdbbcb86f089f24b3358e8413
+  .claude/skills/dotnet-csharp-configuration/SKILL.md: sha256:2f860f793d813c3956701ed0d6f6469459f70230a52b80bdfdc4c53f8baf4385
+  .claude/skills/dotnet-csharp-configuration/references/detailed-examples.md: sha256:7e99e1d81f6514000a4db444ecc779a863e6acc63045cf6fb53d8ad5df348378
+  .claude/skills/dotnet-csharp-dependency-injection/SKILL.md: sha256:2a2a3f411c574dfa70fcd7bfe035bac1922dc57ac7ee131c89553e43c9a5a53b
+  .claude/skills/dotnet-csharp-modern-patterns/SKILL.md: sha256:f955afb2c8549c3eea34be81c5fd5d98636f09b49ff84a826d51cbd62539bc8a
+  .claude/skills/dotnet-csharp-modern-patterns/references/detailed-examples.md: sha256:d6811ad65fe17f0c061e5b6b1d38207227dae259d2da14e04286a16876606200
+  .claude/skills/dotnet-csharp-nullable-reference-types/SKILL.md: sha256:00b1bd69280e49061f77dec33a476d07b97a8f238d8e473a3c12d4e3758f97f2
+  .claude/skills/dotnet-csharp-source-generators/SKILL.md: sha256:07ce378c665fda047f1f3f61d9496a1af845d851ebc29306bf8a4b5665f01aa8
+  .claude/skills/dotnet-csharp-source-generators/references/detailed-examples.md: sha256:e4076c3c0577ae91f359eb9024b947df713a2338be3db272b62ae717c4be997c
+  .claude/skills/dotnet-csharp-type-design-performance/SKILL.md: sha256:9ddfcef00818c621efa56269f9c030542926041a3dca035809c1f0a134d7eb7a
+  .claude/skills/dotnet-csproj-reading/SKILL.md: sha256:d80f0566ad426163363fc3a4f5ba327e6e588fe9fa5f23b39e2fc8717a45340c
+  .claude/skills/dotnet-csproj-reading/references/detailed-examples.md: sha256:c5f38f11260424f768e8ece1e29da667c9d0565449bcc12becbe523db50d3c06
+  .claude/skills/dotnet-data-access-strategy/SKILL.md: sha256:da33099800bb3be4d0706582a0082b04e0799e364a4e8ef042d31b248f2fe595
+  .claude/skills/dotnet-documentation-strategy/SKILL.md: sha256:bf32bebe399140e5041661cdc86ae3697490b7f79a1c8a4e815bc4509e31c66d
+  .claude/skills/dotnet-documentation-strategy/references/detailed-examples.md: sha256:85426102fe4fdf2979f8fb19818f9f3e32e8423150ac0f206ce9b92493e4324b
+  .claude/skills/dotnet-domain-modeling/SKILL.md: sha256:968765fdd3e04bb02b6c0ed4d781964cd2543d770a8f2ffed97ebac658da1324
+  .claude/skills/dotnet-domain-modeling/references/detailed-examples.md: sha256:e5e46d5a7bfc868e495fabb6aa26f03e55f7232c6ba74660ffe4e804adb26145
+  .claude/skills/dotnet-editorconfig/SKILL.md: sha256:ced7bb0804175ccfbcb84624f9390ba066fa7e4c9689330cb2ef33920cd780ff
+  .claude/skills/dotnet-editorconfig/references/detailed-examples.md: sha256:2f3697190df401cd0066d9242087e1a4b143f2f784c66109d17fcaef8c1386f3
+  .claude/skills/dotnet-efcore-architecture/SKILL.md: sha256:4f07bff01dfd4540c4de3e6b4aa7466c7cfb5e7c46439bf6a98cb996a19e8449
+  .claude/skills/dotnet-efcore-architecture/references/detailed-examples.md: sha256:db883447b99c6f2ec46794dffcd9ea8c6d7362b95b2955673b222ed7ce065baa
+  .claude/skills/dotnet-efcore-patterns/SKILL.md: sha256:aaeca42b58232d72eb37f6f9b245ebdb861fc9b80218a5fc1cc4ac274e40b0e1
+  .claude/skills/dotnet-efcore-patterns/references/detailed-examples.md: sha256:97a516b589fd9ed98ae1694a2a2bde6287d9668a4efe9a5e2ecbf45074cc4864
+  .claude/skills/dotnet-file-based-apps/SKILL.md: sha256:bb5e7a549e7c32eb8737e7c94aa5695341f65089860759f5890eaabb4978f660
+  .claude/skills/dotnet-file-io/SKILL.md: sha256:b7e25fa1e6f47ad35fa2a5decf01c1921f6d7dfb9667b13d9d767b68cb1ecf2e
+  .claude/skills/dotnet-file-io/references/detailed-examples.md: sha256:136ca2f1c58f71b5cbbdc96c56cdd6cb9144fdb0ac39bf6acd1a93dd977548d3
+  .claude/skills/dotnet-gc-memory/SKILL.md: sha256:7ac430abdd439d284b6fba8115064600a33e5b7e2bb0da8197ee3ed3ba7dd24a
+  .claude/skills/dotnet-gc-memory/references/detailed-examples.md: sha256:bd5ceed1ae15cd3f8a5c99caacda5e25b97f61d4064b6e8978c57e40443957db
+  .claude/skills/dotnet-github-docs/SKILL.md: sha256:f5c24025e0ceb22509f766bc342b1d0fab1aac4eb047b85f3b79171247068330
+  .claude/skills/dotnet-github-docs/references/detailed-examples.md: sha256:ec77026c302534591f3ebe4799698226a92549b66dd9646c8240fba19f2c19cb
+  .claude/skills/dotnet-github-releases/SKILL.md: sha256:9428810a5c9f60e2b7a67360ae176a83d2bd5f5738cb11fbfa73caa85ec5d218
+  .claude/skills/dotnet-github-releases/references/detailed-examples.md: sha256:705a4c7b8284ce8aeee597c0d8859e8e487c2e5b6e952e77a3c240cb30ecf89f
+  .claude/skills/dotnet-grpc/SKILL.md: sha256:ab3ccd028ef0822df3b40a939b85f48006c7655b078c956628379863c936d24f
+  .claude/skills/dotnet-http-client/SKILL.md: sha256:4d26e1c7463ef2a9b7a4a89319e083939b2b53fdb261f27854f3780e88eef978
+  .claude/skills/dotnet-http-client/references/detailed-examples.md: sha256:835d988d4a4b5b792062ce65d05fa7b9caf07bfae01604bffbd056abe2957d8b
+  .claude/skills/dotnet-input-validation/SKILL.md: sha256:3d789494488c87517de818b0437567c5f63d6095e19ca105f6a39652d8fe22c6
+  .claude/skills/dotnet-input-validation/references/detailed-examples.md: sha256:146767cc908a98bb30cfadc533cf079b08603f159e35469c7835e40009dbc992
+  .claude/skills/dotnet-integration-testing/SKILL.md: sha256:4115d1af28da63acd7fdcd4df6d62baff570b60dd6e91b886372b0ce05d796b6
+  .claude/skills/dotnet-integration-testing/references/detailed-examples.md: sha256:e7eb833328dd2f4cd2a0d619ac8ce27d12ca335112496dcbb8a4ee56cc64a3d1
+  .claude/skills/dotnet-io-pipelines/SKILL.md: sha256:059330c99c7b859d8e24c9b2847ccf36fdfe7702991e43715a32c99244b35725
+  .claude/skills/dotnet-io-pipelines/references/detailed-examples.md: sha256:2add7709c4e3a5a54c61873204944d931c224d1d2591c7fd78d2cb6797c85e49
+  .claude/skills/dotnet-library-api-compat/SKILL.md: sha256:8dab87e74fca497da00060d1dd19c96f1bd12af31260c9facceea16dd2854865
+  .claude/skills/dotnet-linq-optimization/SKILL.md: sha256:14708d8f6c20b67726f5766570c00cd9141d8935c0958d0e858de4a7b5f31110
+  .claude/skills/dotnet-linq-optimization/references/detailed-examples.md: sha256:869f9428436d2de8a91e560cfb696dd1c98d7bb5a811520ad92bede7fd9d5e8f
+  .claude/skills/dotnet-localization/SKILL.md: sha256:dcbd6ac82fd6b04306b9fcfb5cd6e809252ca2933d7db586fc68b1f166ab98ff
+  .claude/skills/dotnet-localization/references/detailed-examples.md: sha256:0d6d61232f571a995ef8d37d04f3d8f696a943ce36d1612ea0d5531098fe14d0
+  .claude/skills/dotnet-maui-aot/SKILL.md: sha256:b44473407db30430c9f3e8c4e5ba4b8360acb83312e39fec662f32b7d8c033b6
+  .claude/skills/dotnet-maui-development/SKILL.md: sha256:90edb8e050458a4213593f39b85d0510989ed4ace9029bb63a21f2be6ba243dd
+  .claude/skills/dotnet-maui-testing/SKILL.md: sha256:739d11df9c7b25ec623e51f050a7762658e2675aa2a80cb91f110ebfbac59ffe
+  .claude/skills/dotnet-maui-testing/references/detailed-examples.md: sha256:e276c25e9caabe60b9f2543cc571e97bf99f1de7a09380e206035523400f1ca0
+  .claude/skills/dotnet-mermaid-diagrams/SKILL.md: sha256:9ccf1e82b93f21ddf1229d471ea436ad62d130ea70fe5d3db7c8f80641e62ff7
+  .claude/skills/dotnet-messaging-patterns/SKILL.md: sha256:5be9422d2ccfefbb8a6ea33984adb58b8492e1223c0c1314bc715bb3cfb4cf44
+  .claude/skills/dotnet-messaging-patterns/references/detailed-examples.md: sha256:566e0b8388d68c310e3704c4ffbd8702edb13cd5561e4fc07d2cbc1b0adf40b8
+  .claude/skills/dotnet-microsoft-agent-framework/SKILL.md: sha256:66c964bba526dc9ed86f9f0e72e2d8010dd891d39dd9624e32ad956cc6c68beb
+  .claude/skills/dotnet-microsoft-agent-framework/references/detailed-examples.md: sha256:8999485ded5277557c1c54edc074f65fda20130594ee6cf1ba04d43a8b175c4a
+  .claude/skills/dotnet-middleware-patterns/SKILL.md: sha256:1275b55ae4d9b061ce6636efddc1a172e6805188940eb4b14eef5b05af86abdf
+  .claude/skills/dotnet-middleware-patterns/references/detailed-examples.md: sha256:f5d99cb19b1a27b8346b4c5099b928047bab588b9306871b718ca5fc7c2e69ba
+  .claude/skills/dotnet-minimal-apis/SKILL.md: sha256:606a6b17ba5df68382960f44e499253c885824ae32d007b3e0554e29b922e5c7
+  .claude/skills/dotnet-minimal-apis/references/detailed-examples.md: sha256:a5e8a1970695255650bc20999ddb7b489dc0c21bafdb6ff4ab7ef3768523a01a
+  .claude/skills/dotnet-modernize/SKILL.md: sha256:511de32be860e68d06126eb6df393f2e65fdec95f9440502af8ff2047c18898d
+  .claude/skills/dotnet-msbuild-authoring/SKILL.md: sha256:5a9940f624dc46b4dd2dbd9710c32fa7a05da85f16a008a034ec33dc8c4feb36
+  .claude/skills/dotnet-msbuild-authoring/references/detailed-examples.md: sha256:a7493e0fc925b1da796e0ffafbff3a821cda638e7c65d0266bd81af06a2fe713
+  .claude/skills/dotnet-msbuild-tasks/SKILL.md: sha256:35baa9970184b9c825261012e813c8e1fc83a222d07b0b063240a3722c4c971d
+  .claude/skills/dotnet-msix/SKILL.md: sha256:3d3d3be6ae2df0eaa5d91500c777450b074ab474555014952dec9cc29672ed59
+  .claude/skills/dotnet-msix/references/detailed-examples.md: sha256:fecb81a7aaff9136880ac005058ddaf5477c34cac18941143a0547b7506c16d7
+  .claude/skills/dotnet-multi-targeting/SKILL.md: sha256:f6c5e6a586e0b747f3543a5d41a3f255317c1245a63e9e7482cb68930f4fff8a
+  .claude/skills/dotnet-multi-targeting/references/detailed-examples.md: sha256:b3200ae4b4b5143d6d4fd15580b1733b84235d4566256eae1a462bd8bc15e936
+  .claude/skills/dotnet-native-aot/SKILL.md: sha256:d42f88fe6aa6c26f299c12f322075aaa16f4c4d9be218919c4a411cfeb2fec81
+  .claude/skills/dotnet-native-aot/references/detailed-examples.md: sha256:f81bdc09eaef2dea426f574c90dbe608f2aa488bbe78be868b2b3172c32d5c3d
+  .claude/skills/dotnet-native-interop/SKILL.md: sha256:47cdf164d50a73b8551d31e89012b9c90434d121842a6e4fcf3b30721fb4c2ae
+  .claude/skills/dotnet-native-interop/references/detailed-examples.md: sha256:eea94ca8e6bfc6689c22a8cd25e5876a38d24c7f3088ceb7b3bde30c5fcb019b
+  .claude/skills/dotnet-nuget-authoring/SKILL.md: sha256:0e0f7bb799146f02a303d4b170d801fe0511efcff206b0bfa36be3ddaa89cd54
+  .claude/skills/dotnet-nuget-authoring/references/detailed-examples.md: sha256:a26b55dd31eb66c8e7df2878cbcc94a47d3debfe8c24e43d5ac8e8f0e6b635c9
+  .claude/skills/dotnet-observability/SKILL.md: sha256:973f7af78b84b62c1376271f2173e9028f136f77885c3a9bab47fc301dccaf99
+  .claude/skills/dotnet-openapi/SKILL.md: sha256:a0e173c9acbf41c0f09e773dcff222b493b43cc4c18fc058c3ecc576a45070e6
+  .claude/skills/dotnet-performance-patterns/SKILL.md: sha256:4661e847cad6893af42093ca26d56f56326a06cdf22a2088d3f1bc2697049bbd
+  .claude/skills/dotnet-playwright/SKILL.md: sha256:2496b12b6180464806b994612efc5c7541b3a30a13a7728eacc45117b5601f7e
+  .claude/skills/dotnet-playwright/references/detailed-examples.md: sha256:8b1fa1c427267ad37feb4cd98da640b0d90419be5624574b928c1db3595641c7
+  .claude/skills/dotnet-profiling/SKILL.md: sha256:167e6ca32d23b0c3a15ad1d47dd7f935f862a2de5bb13f9927afffc09799c55e
+  .claude/skills/dotnet-profiling/references/detailed-examples.md: sha256:dbb831e8d5c852e791570851716d17229e29262e30bf6f68d8257d065ecdadb1
+  .claude/skills/dotnet-project-analysis/SKILL.md: sha256:c84345369d1a3457039809debeb80337b50cebe49d0e8b16ba3fcecb2f65959d
+  .claude/skills/dotnet-project-structure/SKILL.md: sha256:3b06644d41c06df6f757750ce3af9fa5ea741a8051fb2f005b2571be84acc45a
+  .claude/skills/dotnet-realtime-communication/SKILL.md: sha256:acfdae0d4153aae970f41bda1965d565d2039e64ed3dd91d83bf123afb1b24f9
+  .claude/skills/dotnet-realtime-communication/references/detailed-examples.md: sha256:96dc66cefea098ed4a026e074c4b0f0d66f6c6feff051004b5afc1f9c3132363
+  .claude/skills/dotnet-release-management/SKILL.md: sha256:dc34f771da4dc6ded04e529d2265f29eb362dee00c83f10fb6dc09ddc3d2c40e
+  .claude/skills/dotnet-release-management/references/detailed-examples.md: sha256:a5a08646f292578a9093933d77be823bfb8c1585e9633c457e7652dfd644e30d
+  .claude/skills/dotnet-resilience/SKILL.md: sha256:b89ee255c82583e78acd41d23d47e4ef698dc6e63b53976b92f23c2be8d52ba0
+  .claude/skills/dotnet-resilience/references/detailed-examples.md: sha256:ba89e79348c05db61cd0873644465679374d6c11629e7a8cab2ace1cf7e00664
+  .claude/skills/dotnet-scaffold-project/SKILL.md: sha256:91c5af937bcb06f2c504aa96ae0a455b8730eb780cf426a1b1aad24c9ec1820d
+  .claude/skills/dotnet-secrets-management/SKILL.md: sha256:4ddffdb4645528cfde2665084d43195d66561a33cc6684703684186aa71c7768
+  .claude/skills/dotnet-secrets-management/references/detailed-examples.md: sha256:4eeb537597a8314af9bb97e241fce066aaac02fb581c75b0a6841ee4464ab70f
+  .claude/skills/dotnet-security-owasp/SKILL.md: sha256:76b8e9315865a0afe228c6fa98f781ab44b4344d12afb18352aec941234de52c
+  .claude/skills/dotnet-security-owasp/references/detailed-examples.md: sha256:c0c583b1f091a56f6efb39d38743ee77231ee23c4d7d1e82df75e3d6969471e6
+  .claude/skills/dotnet-serena-analysis-patterns/SKILL.md: sha256:b15ecfbaf1b16151741fc7dbc7e1d1fb3c10a3e7c2299f576801d1ba1085ac42
+  .claude/skills/dotnet-serena-code-navigation/SKILL.md: sha256:7f251f8d40cf733c3a877074eb9179d43f354267254e02eebf13a8c57fb7a802
+  .claude/skills/dotnet-serena-refactoring/SKILL.md: sha256:0511ea3d0dd1408686854f47518212b5d5e20c52ee0e8de37736ddfd6214d590
+  .claude/skills/dotnet-serialization/SKILL.md: sha256:76532acd24649fb907856bbc0443059c262c9c9f7015d3d527913b9aaad800a6
+  .claude/skills/dotnet-service-communication/SKILL.md: sha256:62419ce4d2f934fbc531b56e103e004acb1a166ff29588b82391026f9243933e
+  .claude/skills/dotnet-snapshot-testing/SKILL.md: sha256:ad4b7f0f1792c1303da84131b5f10b9cb36bc268cbf05c2c0131eb7f561e781e
+  .claude/skills/dotnet-snapshot-testing/references/detailed-examples.md: sha256:67cd4404bb0a3b045a2675b82305521c8896757795dc29afd3044c3579e20577
+  .claude/skills/dotnet-solid-principles/SKILL.md: sha256:18c8dbab1d2120cd9d113d28e940a3440a86be0111605ca286094d22499d5163
+  .claude/skills/dotnet-solid-principles/references/detailed-examples.md: sha256:21b3235d40328ac77c5c474b790a1d909bbdbb37a8315edbd14c5dd099182d5a
+  .claude/skills/dotnet-solution-navigation/SKILL.md: sha256:413857026d96a35982fab07af747d7d7f093267e438103209ad99f849fd050d1
+  .claude/skills/dotnet-solution-navigation/references/detailed-examples.md: sha256:8355bc544b8c925b68396f193d2c2fac8269179ee5c8893e91872debea9b4e9a
+  .claude/skills/dotnet-spectre-console/SKILL.md: sha256:8c864061be02b9192af527cec31a0d621849b4f23eade86e5688b2b12c38b52c
+  .claude/skills/dotnet-spectre-console/references/detailed-examples.md: sha256:00c8401aa2872515c4cf37d6d8d4032abc7214948a57f605822fea0d4de03a62
+  .claude/skills/dotnet-structured-logging/SKILL.md: sha256:89574e8d0c2cb9f6b1da4b1076744cb721ae5f87279fbb3361f82b331da1c7c9
+  .claude/skills/dotnet-structured-logging/references/detailed-examples.md: sha256:e74d3fc4164452e0f32acb964c503d2a3b69238b5aa3aeae450069233294ea78
+  .claude/skills/dotnet-system-commandline/SKILL.md: sha256:c344890d087a86b14a89319516a823430c6c0ea5fcf99678a22c11550cfb6116
+  .claude/skills/dotnet-terminal-gui/SKILL.md: sha256:eb4a10119b3da2ebe874028efcb6435886304e634eaffdae38bd2e44394c741f
+  .claude/skills/dotnet-test-quality/SKILL.md: sha256:57c4df4364b659dc949fe8de13b472f73c30a9e3e5aac0558c62d861284ee638
+  .claude/skills/dotnet-test-quality/references/detailed-examples.md: sha256:accdc2f5cec5efa35765929db426f0d72859c547156b4fbd337e0df13bf0e35f
+  .claude/skills/dotnet-testing-advanced-aspire-testing/SKILL.md: sha256:36fafd6f474e68b28eaca3b302665ed8a05de5178693b9cecc6d5423b1c74b84
+  .claude/skills/dotnet-testing-advanced-testcontainers-database/SKILL.md: sha256:fe6541f419209a0aafc55e0ffb2f70437008e0f4928e4be11a4c252fe8a8772d
+  .claude/skills/dotnet-testing-advanced-testcontainers-nosql/SKILL.md: sha256:3d9084bfbc52449f1a14a4a3a6412e537816223e0665fdd577a761753c3991ca
+  .claude/skills/dotnet-testing-advanced-webapi-integration-testing/SKILL.md: sha256:d3d968856d45200a3c0a085835dabfef5d082a9ffdfbcfed3fad3914964da895
+  .claude/skills/dotnet-testing-advanced-xunit-upgrade-guide/SKILL.md: sha256:3f1fae5725e5c9324b48f87dfd39551f62f8b2b9bc0a62613610ab9ef40f143a
+  .claude/skills/dotnet-testing-advanced-xunit-upgrade-guide/references/detailed-examples.md: sha256:67a35e6c60ae7fef7b8af9fa6eb160cc554c240c8bbdb9953deccb112f0c67b4
+  .claude/skills/dotnet-testing-awesome-assertions-guide/SKILL.md: sha256:de659335555e7fca5f5c58d69d29b5003fd4627551acac53d1c308790ce6ab74
+  .claude/skills/dotnet-testing-code-coverage-analysis/SKILL.md: sha256:eb21bb0e08b071e7bdc37c1e8b017200875b9ae418dc7c082c70a1a2c747bac4
+  .claude/skills/dotnet-testing-code-coverage-analysis/references/detailed-examples.md: sha256:b065c736dfb1f4ddd5e7c7a1797ed9994a0d8fc3827ff6715806458b5b111c9d
+  .claude/skills/dotnet-testing-complex-object-comparison/SKILL.md: sha256:5fd306adc078ac7776e62cda90e0075c53e874b19dedb8febcd5116d7e43e5f1
+  .claude/skills/dotnet-testing-datetime-testing-timeprovider/SKILL.md: sha256:eede454e92e4691483ac366617eb3eb3de492a936b320d9f0f37e0ebe9828355
+  .claude/skills/dotnet-testing-filesystem-testing-abstractions/SKILL.md: sha256:7b66661ab5556b9af954f4150990dfd951484ff90a6ceecd3094d9499b6b9b61
+  .claude/skills/dotnet-testing-fluentvalidation-testing/SKILL.md: sha256:4f25395930410794cc9b3ffa78485670d3bac2ed50facef6283b081e515ccbdc
+  .claude/skills/dotnet-testing-nsubstitute-mocking/SKILL.md: sha256:8cbf1f77320646f522559c73d4c98b2c455503be22180826cb0a4b4fd4043e3a
+  .claude/skills/dotnet-testing-private-internal-testing/SKILL.md: sha256:fb447f0ce769af1bcce0f69d00f1a3f10b363b83dea46ba1ca62a0be560bf46d
+  .claude/skills/dotnet-testing-private-internal-testing/references/detailed-examples.md: sha256:b26ac10dd01c7cde9e54d30cb04c2750299b1f70d3754b17222bacabdea3f3f8
+  .claude/skills/dotnet-testing-strategy/SKILL.md: sha256:329c6b48a96b86b43a30d7add2306c5b4e54f6e2750de9503691d43fe2807eb1
+  .claude/skills/dotnet-testing-test-data/SKILL.md: sha256:c6bf65861c31387f1151ed9652fe3af76921e85a6427ef53ed443d41f104da68
+  .claude/skills/dotnet-testing-test-naming-conventions/SKILL.md: sha256:6d9ed632cf933c3dae372ad581d19631c3740239a7f1e0de1bcb1df384451c5d
+  .claude/skills/dotnet-testing-test-output-logging/SKILL.md: sha256:404cd5ce3176ceaa57f9cb828174c891430e5f722502a2415e6e8ec54c4d6ca4
+  .claude/skills/dotnet-testing/SKILL.md: sha256:9c34678b3c821040b9b4491c1729723957661fa0e651a492eb870487e0eb7069
+  .claude/skills/dotnet-tool-management/SKILL.md: sha256:167f69376ecb22736ebfb6cba08c07741a574e619f8e0611dcda3de41783cd9d
+  .claude/skills/dotnet-trimming/SKILL.md: sha256:149fe9af7d5b9b5016be29f9d83d5c2d9bcbebd2a30cbfc37318fddc3d3d7994
+  .claude/skills/dotnet-ui-chooser/SKILL.md: sha256:31d515f961afe192e1b458a72a74ca886029def3b404b577d7473f15c6e34d40
+  .claude/skills/dotnet-ui-testing-core/SKILL.md: sha256:632e9ad33b2bb604b35599805cbe70ba7244f2361761259e3b3efce56ceab3a9
+  .claude/skills/dotnet-uno-mcp/SKILL.md: sha256:59f0a08a3bcedddc8c91ba53f7463071c399959c3d0bf1e26ac27cf6cfbcccb4
+  .claude/skills/dotnet-uno-platform/SKILL.md: sha256:4b1adb6c2afbf62e0288ccdcc526c296732b097983e54889c26b266eee27d56d
+  .claude/skills/dotnet-uno-platform/references/detailed-examples.md: sha256:cf01d7bebe8008936db4963b20bc71479ec5fcc228cea4a2e7059932b7416345
+  .claude/skills/dotnet-uno-targets/SKILL.md: sha256:bf551c34ea0e3b108b1c125ff1f74149cc6b554727b677ca7fe68df32447f8bd
+  .claude/skills/dotnet-uno-targets/references/detailed-examples.md: sha256:c0c1a75c81124d0b1f84da869dee756c520c3123521288bd9b528caf555e6e18
+  .claude/skills/dotnet-uno-testing/SKILL.md: sha256:deab29ad973e29eec4dedbe5a82f790a4b56019175ec61f57611c760a4a5a3bf
+  .claude/skills/dotnet-validation-patterns/SKILL.md: sha256:2e43c1791e6ca85d678a0e24dc2a24ee16f3c6d847414f510a30e94cb9f5ae8b
+  .claude/skills/dotnet-validation-patterns/references/detailed-examples.md: sha256:b114a231ab1f74388393e97df3b71944e49d78e832796dfc259fa74c35b565e9
+  .claude/skills/dotnet-version-detection/SKILL.md: sha256:2926bfd308c968f9e94498e9b60347248486653b59e064ada3092d3e20e8f17c
+  .claude/skills/dotnet-version-upgrade/SKILL.md: sha256:7fb52676b7f107db8589772490264c7e904e0a45dc2f75b26f56379ca127bf0d
+  .claude/skills/dotnet-version-upgrade/references/detailed-examples.md: sha256:a1a9d024596c47df6b4de2d09756da54a6f539a5d1fbcd598bcef07e826aa8df
+  .claude/skills/dotnet-winforms-basics/SKILL.md: sha256:838b53be7a24521868a3c2671b069cdf070a46dd98d87435b12c0f587506f4bb
+  .claude/skills/dotnet-winforms-basics/references/detailed-examples.md: sha256:e4f0ccb2e7a2916767c217e1bc50356be8911d0c254dcf512f6c396d9769c28c
+  .claude/skills/dotnet-winui/SKILL.md: sha256:15f3225d27beaeb6775e7c91ef5db070ca7c58ef065283c2643ec38f72a2945e
+  .claude/skills/dotnet-winui/references/detailed-examples.md: sha256:d5475b9f009a964deb828b6ce90c610ee27eb0209906ab2bfb5f59b21250ed75
+  .claude/skills/dotnet-wpf-migration/SKILL.md: sha256:ea775cc1272c8a790e5864610037750a43f98cc9a1885436d57b0c33a7a0bd86
+  .claude/skills/dotnet-wpf-modern/SKILL.md: sha256:a52845126540d0f3bdb020802ce4fe9da207dbec43865b17543dfdecc9d08d4f
+  .claude/skills/dotnet-wpf-modern/references/detailed-examples.md: sha256:831764e989ced2655a0f5db29389ac27ca33c79fb059c3de8e9ba2854d623500
+  .claude/skills/dotnet-xml-docs/SKILL.md: sha256:0ee5de0f489b0532dd9033240d3114ef31961302c8653a1931fbddec71e60410
+  .claude/skills/dotnet-xunit/SKILL.md: sha256:1dbc55c13e6a5c269b6debaa7f0d31b01ee9dd509cc129e2ec6348f9695d60b3
+  .claude/skills/dotnet-xunit/references/detailed-examples.md: sha256:7e1cb9b720eb3d0bdb9a6a12bc4bc534cf9a472dd6e50db683092af7acaf5799
+  .claude/skills/serena/SKILL.md: sha256:7d7401270353e6fa5419eb24877e832d91ccdd2a2836c8224b911deed4b1b508
+  .claude/skills/serena/references/detailed-examples.md: sha256:b1330d068a159fd8c7e244fe56a6ad18c1349ae77823f1fc4e1fe16b956cf5be
+  .github/agents/dotnet-architect.agent.md: sha256:bd061cc5b6c1821336d4b54fef061ef7edd5e587e312f705096be32bf4c18076
+  .github/agents/dotnet-aspnetcore-specialist.agent.md: sha256:6db14348009efeef76ae2cf2c40cc5873a4ff05ad49f0fed2e20282a179fe9e3
+  .github/agents/dotnet-async-performance-specialist.agent.md: sha256:48694381e68efcf885aa718b7b306f20a298b98de25e9fe9498d082b0751ce86
+  .github/agents/dotnet-benchmark-designer.agent.md: sha256:841dd890ead0c07a40bf20f1e65cba990d3b46bd01ae19609e9f40221cfca86f
+  .github/agents/dotnet-blazor-specialist.agent.md: sha256:22e8b4f5d119c77545a2d8d8b546572efbd0905c51bb1af5f5c4398b360bf975
+  .github/agents/dotnet-cloud-specialist.agent.md: sha256:9615a45beb4f3c71cb8ca9341ff7c11b28ac334b5435f6f8ba1f5f1f9b8096fc
+  .github/agents/dotnet-code-review-agent.agent.md: sha256:b2c87cf2a86b21cb9502c9e6d5cf1f42cd447610bf7f4af2e03e8beebbc28829
+  .github/agents/dotnet-csharp-concurrency-specialist.agent.md: sha256:60ff47be592c293242002f2a624d5df1d9893df253c70781c571fd1e1055dc2d
+  .github/agents/dotnet-docs-generator.agent.md: sha256:5de30f354119ab8e15a55ceffa39a04b12a09dc67e6bf6d82fe4953c10992f3c
+  .github/agents/dotnet-maui-specialist.agent.md: sha256:9d61283c40b686390491507f19f17add0ed304f961a951f3811532738da8d47f
+  .github/agents/dotnet-microsoft-agent-framework-specialist.agent.md: sha256:b8e323ac223e4c66f7b72387336b23f06c5d4c9055df828791d561b99bbd33ee
+  .github/agents/dotnet-performance-analyst.agent.md: sha256:7f608b2528e7d9a5be78324f27398ab339451d7bf724ae645ad677055afef3a9
+  .github/agents/dotnet-security-reviewer.agent.md: sha256:95670dbf6e19a12d93ad3bdd10cde48ea77a2f8523abeb6ebb770b796cc1135d
+  .github/agents/dotnet-testing-specialist.agent.md: sha256:ee4b6c078445165816caf2c6afb02ed49233aaf98dc092e30e0b474868fb8665
+  .github/agents/dotnet-uno-specialist.agent.md: sha256:b29c1bfbaf3473e00e2b2f99b707f953e852b2ddd634ff87c33d31d2471d7678
+  .github/agents/wiki-architect.agent.md: sha256:80ac9ab902c54de8b0e09477bc2f2903d114f634aa91ce58c68a1c40d90cce1b
+  .github/agents/wiki-researcher.agent.md: sha256:520fb7a66df956630aa3db929c7d7ea11457c8736f7888d8ff8fe37a7bcd4210
+  .github/agents/wiki-writer.agent.md: sha256:1a45bb2cca492ff481c1f958ec781afc95ab2e9afb362d18ac9ce6b34ab50337
   .github/instructions/context7.instructions.md: sha256:c2faee057cf9de0bd7fcf511743479ab2755f09b0274d3ba69ad157ff5757d24
+  .github/instructions/dotnet-agent-harness-operating-modes.instructions.md: sha256:ee9e0d05e62a8b5454d7f31c2a7c75fff521b78105913db047817673ad4b270f
+  .github/instructions/dotnet-agent-harness-tooling.instructions.md: sha256:15a43b49094fb42710e3bf6c699ae688ad063e6ea59162d45964ca4163d7bba6
+  .github/instructions/lean-ctx.instructions.md: sha256:75e4700dfcf79e181960a8177d8bf189e5db1f79702c3f17160d9465c33a6806
   .github/instructions/neo4j-knowledgebase.instructions.md: sha256:1c54cb072667363a83ba46ba02b1d25d022f9a5b9256b5c9f17d63b22793c6db

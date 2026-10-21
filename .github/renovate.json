@@ -1,12 +1,17 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["local>RocketSurgeonsGuild/.github:renovate-config"],
-    "ignorePaths": ["**/node_modules/**", "**/*.csproj", "Directory.Packages.support.props"],
-    "packageRules": [
-        {
-            "matchCategories": ["js"],
-            "automerge": true,
-            "labels": [":truck: private-dependencies"]
-        }
-    ]
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["local>RocketSurgeonsGuild/.github:renovate-config"],
+  "ignorePaths": ["**/node_modules/**", "**/*.csproj", "Directory.Packages.support.props"],
+  "packageRules": [
+    {
+      "description": "The per-Roslyn-version analyzer builds pin their dependencies on purpose",
+      "matchFileNames": ["src/*.Analyzers.supports/**"],
+      "enabled": false
+    },
+    {
+      "matchCategories": ["js"],
+      "automerge": true,
+      "labels": [":truck: private-dependencies"]
+    }
+  ]
 }

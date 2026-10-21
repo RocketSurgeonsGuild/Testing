@@ -34,6 +34,22 @@
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
     <PropertyGroup>
+        <RollForward>LatestMajor</RollForward>
+
+        <!--
+        <ApiCompatStrictMode>true</ApiCompatStrictMode>
+        <ApiCompatValidateAssemblies>true</ApiCompatValidateAssemblies>
+        <ApiCompatEnableRuleAttributesMustMatch>true</ApiCompatEnableRuleAttributesMustMatch>
+        <ApiCompatEnableRuleCannotChangeParameterName>true</ApiCompatEnableRuleCannotChangeParameterName>
+        -->
+
+        <EnablePackageValidation>true</EnablePackageValidation>
+        <EnableStrictModeForBaselineValidation>false</EnableStrictModeForBaselineValidation>
+        <EnableStrictModeForCompatibleFrameworksInPackage>false</EnableStrictModeForCompatibleFrameworksInPackage>
+        <EnableStrictModeForCompatibleTfms>false</EnableStrictModeForCompatibleTfms>
+        <PackageValidationBaselineFrameworkToIgnore>netstandard2.0</PackageValidationBaselineFrameworkToIgnore>
+    </PropertyGroup>
+    <PropertyGroup>
         <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
         <Verify_SponsorshipExemptionUntil>$([System.DateTime]::Today.AddDays(300).ToString("yyyy-MM"))</Verify_SponsorshipExemptionUntil>
     </PropertyGroup>

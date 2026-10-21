@@ -2,7 +2,19 @@
 
 > **Convention**: Reverse chronological order (newest on top, oldest at bottom). Prepend new entries.
 
+<!-- version literals in this log are frozen historical release records, not tracked dependency versions # SSoT-OK -->
+
 ---
+
+## 2026-06-29 — GH_TOKEN not in env + storm-guard blocks `gh auth token`
+
+**Trigger**: `mise run release:full` on cc-skills (the v22.8 → v22.9 bump) from a fresh non-interactive shell failed at `release:preflight` with `✗ GH_TOKEN not set`. The repo does NOT define `GH_TOKEN` in `.mise.toml [env]` — auth lives in the `gh` keyring (account terrylica). The natural fix `export GH_TOKEN="$(gh auth token)"` was then BLOCKED by the Process Storm Guard (`gh_recursion` pattern), costing a second failed attempt.
+
+**Root cause**: Two gaps. (1) Step 3 assumed `GH_TOKEN` would be present, but preflight only checks the ambient env var, which keyring-based `gh` auth does not populate. (2) The storm guard treats any `$(gh auth token)` subshell as a recursion hazard — correct for hooks/credential-helpers, but a one-shot interactive release step is the legitimate exception.
+
+**Fix**: Added a Step 3 pre-`release:full` block that sources `GH_TOKEN`/`GITHUB_TOKEN` from `gh auth token` guarded by `if [ -z "${GH_TOKEN:-}" ]`, with the required `# PROCESS-STORM-OK` escape-hatch comment inline and a note explaining why it's safe here.
+
+**Evidence**: After exporting the token with the escape hatch, preflight → version → verify → postflight all passed; the tag was created, GitHub release published, marketplace synced, tree clean. Verified same session.
 
 ## 2026-06-02: `.gitignore`-in-WIP Stash Trap (curve-dental v2.9.4) <!-- # SSoT-OK -->
 
