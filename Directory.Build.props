@@ -33,6 +33,10 @@
         <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
+    <PropertyGroup>
+        <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
+        <Verify_SponsorshipExemptionUntil>$([System.DateTime]::Today.AddDays(300).ToString("yyyy-MM"))</Verify_SponsorshipExemptionUntil>
+    </PropertyGroup>
     <ItemGroup>
         <None
             Include="$(MSBuildThisFileDirectory).temp/packageicon.png"

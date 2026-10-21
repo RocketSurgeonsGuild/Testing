@@ -1,0 +1,75 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.2/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": ["**", "!!**/*.verified.*", "!!**/*.received.*", "!!docs/src/content/docs/api"]
+  },
+  "formatter": {
+    "enabled": true,
+    "attributePosition": "multiline",
+    "bracketSameLine": true,
+    "lineWidth": 220,
+    "useEditorconfig": true,
+    "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "suspicious": {
+        "noAssignInExpressions": "off",
+        "noExplicitAny": "off",
+        "useIterableCallbackReturn": "off",
+        "noUnsafeDeclarationMerging": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "arrowParentheses": "asNeeded",
+      "attributePosition": "multiline"
+    },
+    "experimentalEmbeddedSnippetsEnabled": true,
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true,
+      "jsxEverywhere": true,
+      "gritMetavariables": true
+    }
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "parser": {
+      "interpolation": true
+    },
+    "formatter": {
+      "enabled": true
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "noDuplicateClasses": "on",
+        "recommended": true
+      },
+      "recommended": true,
+      "preset": "recommended"
+    }
+  }
+}

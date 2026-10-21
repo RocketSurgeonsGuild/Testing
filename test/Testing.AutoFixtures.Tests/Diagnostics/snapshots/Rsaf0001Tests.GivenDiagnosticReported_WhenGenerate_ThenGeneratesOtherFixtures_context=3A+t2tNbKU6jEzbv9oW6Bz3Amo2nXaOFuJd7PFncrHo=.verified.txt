@@ -1,4 +1,4 @@
-{
+﻿{
   AnalyzerDiagnostics: {
     Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0001: [
       {

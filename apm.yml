@@ -1,6 +1,6 @@
-name: equestria-cluster
+name: Testing
 version: 1.0.0
-description: APM project for equestria-cluster
+description: APM project for Testing
 author: David Driscoll
 targets:
     - claude
