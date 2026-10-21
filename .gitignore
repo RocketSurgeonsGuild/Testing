@@ -245,3 +245,9 @@ docs/api/
 .agents/skills/fnox
 .agents/skills/hk-configure
 .agents/skills/hk-debug
+
+# apm: machine-local files deployed by apm install (modernize-dotnet telemetry hooks whose script is not vendored here, Copilot plugin settings pointing at apm_modules/)
+.claude/settings.json
+.claude/apm-hooks.json
+.github/hooks/
+.github/copilot/settings.local.json
