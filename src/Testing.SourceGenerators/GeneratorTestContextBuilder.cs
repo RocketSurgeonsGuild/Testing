@@ -291,7 +291,7 @@ public record GeneratorTestContextBuilder
             ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
             : ( AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
             {
-                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name)),
+                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name!)),
             } );
     }
 
@@ -308,7 +308,7 @@ public record GeneratorTestContextBuilder
             ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
             : AddReferencesInternal(generatorTestResultsEnumerable.Select(z => z.MetadataReference!).ToArray()) with
             {
-                _referenceNames = _referenceNames.Union(generatorTestResultsEnumerable.Select(z => z.Assembly!.GetName().Name)),
+                _referenceNames = _referenceNames.Union(generatorTestResultsEnumerable.Select(z => z.Assembly!.GetName().Name!)),
             };
     }
 
@@ -324,7 +324,7 @@ public record GeneratorTestContextBuilder
             ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
             : ( AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
             {
-                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name)),
+                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name!)),
             } );
     }
 

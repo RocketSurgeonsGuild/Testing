@@ -19,6 +19,8 @@ public sealed class TestFixtureBuilderExtensionTests
         Assert.Equal(dictionary, builder.Variables);
     }
 
+    private static readonly string[] _expectedTests = ["testing",];
+
     [Fact]
     public void Should_Add_To_List()
     {
@@ -26,7 +28,7 @@ public sealed class TestFixtureBuilderExtensionTests
         TestFixture builder = new TestFixtureBuilder().WithTest("testing");
 
         // Then
-        Assert.Equal(new[] { "testing", }, builder.Tests);
+        Assert.Equal(_expectedTests, builder.Tests);
     }
 
     public static IEnumerable<object[]> Data =>

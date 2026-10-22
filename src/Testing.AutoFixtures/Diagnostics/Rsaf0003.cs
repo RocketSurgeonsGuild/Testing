@@ -7,13 +7,16 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 
+/// <summary>
+///     Reports classes with multiple constructors; the generator uses the one with the most parameters.
+/// </summary>
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class Rsaf0003 : DiagnosticAnalyzer
 {
     /// <summary>
     ///     Diagnostic for unsupported classes with multiple constructors.
     /// </summary>
-    public static DiagnosticDescriptor Descriptor = new(
+    public static readonly DiagnosticDescriptor Descriptor = new(
         nameof(Rsaf0003),
         "classes with multiple constructors are currently select the one with the most parameters",
         "",

@@ -4,6 +4,9 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
+/// <summary>
+///     Generates fixture builders for types marked with <c>[AutoFixture]</c>.
+/// </summary>
 [Generator]
 public partial class AutoFixtureGenerator : IIncrementalGenerator
 {
@@ -55,7 +58,7 @@ public partial class AutoFixtureGenerator : IIncrementalGenerator
            .WithMembers([.. fullList]);
 
         var namespaceDeclaration = BuildNamespace(targetSymbol)
-           .WithMembers(new(classDeclaration));
+           .WithMembers([classDeclaration]);
 
         var usingDirectives = new HashSet<string>(
                                   parameterSymbols

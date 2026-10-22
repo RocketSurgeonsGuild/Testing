@@ -58,9 +58,9 @@ public static class TestFixtureBuilderExtensions
     /// <param name="field">The field.</param>
     /// <param name="values">The values.</param>
     /// <returns></returns>
-    #pragma warning disable CA1002
+#pragma warning disable CA1002
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, IEnumerable<TField>? values)
-        #pragma warning restore CA1002
+#pragma warning restore CA1002
         where TBuilder : ITestFixtureBuilder
     {
         if (values == null)
@@ -100,9 +100,9 @@ public static class TestFixtureBuilderExtensions
     /// <param name="field">The field.</param>
     /// <param name="value">The value.</param>
     /// <returns></returns>
-    #pragma warning disable CA1002
+#pragma warning disable CA1002
     public static TBuilder With<TBuilder, TField>(this TBuilder @this, ref List<TField>? field, TField value)
-        #pragma warning restore CA1002
+#pragma warning restore CA1002
         where TBuilder : ITestFixtureBuilder
     {
         field?.Add(value);
@@ -127,10 +127,7 @@ public static class TestFixtureBuilderExtensions
         where TBuilder : ITestFixtureBuilder
         where TKey : notnull
     {
-        if (dictionary == null)
-        {
-            throw new ArgumentNullException(nameof(dictionary));
-        }
+        ArgumentNullException.ThrowIfNull(dictionary);
 
         dictionary.Add(keyValuePair.Key, keyValuePair.Value);
         return @this;
@@ -151,10 +148,7 @@ public static class TestFixtureBuilderExtensions
         where TBuilder : ITestFixtureBuilder
         where TKey : notnull
     {
-        if (dictionary == null)
-        {
-            throw new ArgumentNullException(nameof(dictionary));
-        }
+        ArgumentNullException.ThrowIfNull(dictionary);
 
         dictionary.Add(key, value);
         return @this;

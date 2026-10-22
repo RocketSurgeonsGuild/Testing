@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis.Completion;
+using Microsoft.CodeAnalysis.Completion;
 using Microsoft.CodeAnalysis.Text;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -6,25 +6,18 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 /// <summary>
 ///     A class to represent a code markup
 /// </summary>
-public class CodeMarkup
+/// <param name="markup">The markup, with <c>[| |]</c> spans, <c>[|]</c> locations or <c>[* *]</c> completion triggers.</param>
+public class CodeMarkup(string markup)
 {
-    private static TextSpan GetLocation(string markupCode)
-    {
-        if (TryFindMarkedTextSpan(markupCode, out var textSpan)) return textSpan;
+    private static TextSpan GetLocation(string markupCode) =>
+        TryFindMarkedTextSpan(markupCode, out var textSpan) ? textSpan
+        : TryFindMarkedLocation(markupCode, out var ts) ? ts
+        : new();
 
-        if (TryFindMarkedLocation(markupCode, out var ts)) return ts;
-
-        return new();
-    }
-
-    private static CompletionTrigger? GetCompletionTrigger(string markupCode)
-    {
-        if (TryFindCompletion(markupCode, out var ts)) return ts;
-
-        if (TryFindCompletionCharacter(markupCode, out var textSpan)) return textSpan;
-
-        return null;
-    }
+    private static CompletionTrigger? GetCompletionTrigger(string markupCode) =>
+        TryFindCompletion(markupCode, out var ts) ? ts
+        : TryFindCompletionCharacter(markupCode, out var textSpan) ? textSpan
+        : null;
 
     private static bool TryFindMarkedTextSpan(string markupCode, out TextSpan textSpan)
     {
@@ -37,7 +30,7 @@ public class CodeMarkup
         if (end == -1) end = markupCode.IndexOf("*]", StringComparison.InvariantCulture);
         if (end < 0) return false;
 
-        textSpan = TextSpan.FromBounds(start, ( end - 2 ) + 1);
+        textSpan = TextSpan.FromBounds(start, end - 2 + 1);
         return true;
     }
 
@@ -70,40 +63,27 @@ public class CodeMarkup
     private static bool TryFindCompletion(string markupCode, out CompletionTrigger trigger)
     {
         trigger = CompletionTrigger.Invoke;
-        var start = markupCode.IndexOf("[*]", StringComparison.InvariantCulture);
-        return start >= 0;
-    }
-
-    /// <summary>
-    ///     Create a new instance of the <see cref="CodeMarkup" /> class
-    /// </summary>
-    /// <param name="markup"></param>
-    public CodeMarkup(string markup)
-    {
-        Code = markup
-              .Replace("[|", "")
-              .Replace("|]", "")
-              .Replace("[|]", "")
-              .Replace("[*]", "")
-              .Replace("[*", "")
-              .Replace("*]", "")
-            ;
-        Location = GetLocation(markup);
-        Trigger = GetCompletionTrigger(markup);
+        return markupCode.Contains("[*]", StringComparison.InvariantCulture);
     }
 
     /// <summary>
     ///     The location of the code
     /// </summary>
-    public TextSpan Location { get; }
+    public TextSpan Location { get; } = GetLocation(markup);
 
     /// <summary>
     ///     The completion trigger
     /// </summary>
-    public CompletionTrigger? Trigger { get; }
+    public CompletionTrigger? Trigger { get; } = GetCompletionTrigger(markup);
 
     /// <summary>
     ///     The source code
     /// </summary>
-    public string Code { get; }
+    public string Code { get; } = markup
+                                 .Replace("[|", "")
+                                 .Replace("|]", "")
+                                 .Replace("[|]", "")
+                                 .Replace("[*]", "")
+                                 .Replace("[*", "")
+                                 .Replace("*]", "");
 }

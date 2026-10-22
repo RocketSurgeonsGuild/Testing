@@ -25,7 +25,6 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
 {
     private static readonly IConfiguration _readOnlyConfiguration = new ConfigurationBuilder().Build();
     private readonly Action<IFakeOptions>? _fakeOptionsAction = fakeOptionsAction;
-    private AutoFake? _autoFake;
     private bool _building;
 
     /// <summary>
@@ -36,7 +35,11 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
     /// <summary>
     ///     The AutoFake instance
     /// </summary>
-    protected AutoFake AutoFake => _autoFake ??= Rebuild();
+    protected AutoFake AutoFake
+    {
+        get => field ??= Rebuild();
+        private set;
+    }
 
     /// <summary>
     ///     The Service Provider
@@ -44,7 +47,7 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
     protected IContainer Container
     {
         get => AutoFake.Container;
-        private set => _autoFake = Rebuild(value);
+        private set => AutoFake = Rebuild(value);
     }
 
     /// <summary>
@@ -67,11 +70,12 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
         return autoFake;
     }
 
+    /// <inheritdoc />
     protected override ILoggerFactory CreateLoggerFactory(LoggerProviderCollection? loggerProviderCollection = null)
     {
-        #pragma warning disable CA2000 // Dispose objects before losing scope
+#pragma warning disable CA2000 // Dispose objects before losing scope
         var factory = new FakeItEasyLoggerFactory(new SerilogLoggerFactory(Logger, false, loggerProviderCollection));
-        #pragma warning restore CA2000 // Dispose objects before losing scope
+#pragma warning restore CA2000 // Dispose objects before losing scope
         return A.Fake<ILoggerFactory>(l => l.Wrapping(factory));
     }
 
@@ -94,18 +98,12 @@ public abstract class AutoFakeTest<TContext>(TContext context, Action<IFakeOptio
     /// <summary>
     ///     Populate the test class with the given configuration and services
     /// </summary>
-    protected void Populate(IServiceCollection serviceCollection)
-    {
-        Container.Populate(serviceCollection);
-    }
+    protected void Populate(IServiceCollection serviceCollection) => Container.Populate(serviceCollection);
 
     /// <summary>
     ///     Populate the test class with the given configuration and services
     /// </summary>
-    protected void Populate(IContainer container)
-    {
-        Container = container;
-    }
+    protected void Populate(IContainer container) => Container = container;
 
     /// <summary>
     ///     A method that allows you to override and update the behavior of building the container

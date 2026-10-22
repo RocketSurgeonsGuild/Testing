@@ -25,10 +25,10 @@ public abstract class LoggerTest<TContext>(TContext testContext) : IDisposable w
     /// <summary>
     ///     The <see cref="CompositeDisposable" />
     /// </summary>
-    protected CompositeDisposable Disposables { get; } = new();
+    protected CompositeDisposable Disposables { get; } = [];
 
     /// <summary>
-    ///     The <see cref="Serilog.ILogger" />
+    ///     The <see cref="ILogger" />
     /// </summary>
     protected ILogger Logger => testContext.Logger;
 
@@ -47,7 +47,7 @@ public abstract class LoggerTest<TContext>(TContext testContext) : IDisposable w
         var list = new List<LogEvent>();
         logs = list;
         return LogStream
-           .Subscribe(x => list.Add(x));
+           .Subscribe(list.Add);
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public abstract class LoggerTest<TContext>(TContext testContext) : IDisposable w
         logs = list;
         return LogStream
               .Where(filterLogs)
-              .Subscribe(x => list.Add(x));
+              .Subscribe(list.Add);
     }
 
     /// <summary>
@@ -90,10 +90,9 @@ public abstract class LoggerTest<TContext>(TContext testContext) : IDisposable w
     }
 }
 
-public class LoggerTest : LoggerTest<RocketSurgeryTestContext>
-{
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="LoggerTest" /> class.
-    /// </summary>
-    public LoggerTest(Action<RocketSurgeryTestContext, LoggerConfiguration> configureLogger) : base(new(configureLogger)) { }
-}
+/// <summary>
+///     A simple base test class with a logger, using <see cref="RocketSurgeryTestContext" />
+/// </summary>
+/// <param name="configureLogger">Configures the test's Serilog logger.</param>
+public class LoggerTest(Action<RocketSurgeryTestContext, LoggerConfiguration> configureLogger)
+    : LoggerTest<RocketSurgeryTestContext>(new(configureLogger));

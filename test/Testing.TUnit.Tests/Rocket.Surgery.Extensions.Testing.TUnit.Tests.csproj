@@ -2,7 +2,8 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
-        <NoWarn>$(NoWarn);RS1036;RS1016</NoWarn>
+        <!-- The generators, analyzers and code fixes in Generators/ are test fixtures for the generator harness: they target the test TFMs and never ship. -->
+        <NoWarn>$(NoWarn);RS1036;RS1016;RS1041;RS2008</NoWarn>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
