@@ -4,6 +4,31 @@
     <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net11.0')) and '$(TargetPlatformIdentifier)' != 'browser' and '$(RuntimeIdentifier)' != 'browser-wasm' and '$(UseRuntimeAsync)' != 'false'">
         <Features>$(Features);runtime-async=on</Features>
     </PropertyGroup>
+    <!--
+        Blazor WebAssembly apps load a package's lib/net11.0 asset, which Mono WASM can't run when it contains runtime-async IL.
+        Libraries a browser app can load set RuntimeAsyncBrowserWasmAsset=true: they also restore for browser-wasm, and pack adds
+        a browser-wasm build of each runtime-async TFM (compiled without runtime async by the block above) under
+        runtimes/browser-wasm/lib/<tfm>/, which browser-wasm restores prefer over lib/<tfm>/.
+    -->
+    <PropertyGroup Condition="'$(RuntimeAsyncBrowserWasmAsset)' == 'true'">
+        <RuntimeIdentifiers>$(RuntimeIdentifiers);browser-wasm</RuntimeIdentifiers>
+        <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_AddRuntimeAsyncBrowserWasmAsset</TargetsForTfmSpecificContentInPackage>
+    </PropertyGroup>
+    <Target Name="_AddRuntimeAsyncBrowserWasmAsset" Condition="'$(RuntimeIdentifier)' == '' and $(Features.Contains('runtime-async=on'))">
+        <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Build" Properties="TargetFramework=$(TargetFramework);RuntimeIdentifier=browser-wasm">
+            <Output TaskParameter="TargetOutputs" ItemName="_RuntimeAsyncBrowserWasmAssembly" />
+        </MSBuild>
+        <ItemGroup>
+            <TfmSpecificPackageFile Include="@(_RuntimeAsyncBrowserWasmAssembly)" PackagePath="runtimes/browser-wasm/lib/$(TargetFramework)/" />
+        </ItemGroup>
+    </Target>
+
+    <!-- In-repo browser apps build the libraries they reference for browser-wasm (separate output, no runtime async). -->
+    <ItemDefinitionGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+        <ProjectReference>
+            <AdditionalProperties>RuntimeIdentifier=browser-wasm</AdditionalProperties>
+        </ProjectReference>
+    </ItemDefinitionGroup>
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations.Sources" PrivateAssets="all" />
     </ItemGroup>
