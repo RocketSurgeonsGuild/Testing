@@ -76,6 +76,9 @@ jobs:
             - name: Close Milestone
               if: ${{ !github.event.release.prerelease && steps.gitversion.outputs.preReleaseTag == '' }}
               shell: pwsh
+              env:
+                  # GitReleaseManager 0.20.0 (the latest) targets .NET 9, and mise only installs the .NET 10 and 11 runtimes.
+                  DOTNET_ROLL_FORWARD: Major
               run: |
                   dotnet-gitreleasemanager close `
                   -o "${{ steps.repository.outputs.owner }}" `
