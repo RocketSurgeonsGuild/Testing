@@ -20,7 +20,7 @@ biome = "2.5.2"
 "dotnet:NuGet.Mcp.Server" = "1.4.3"
 "dotnet:docfx" = "2.78.5"
 "dotnet:hertzole.docfx2astro" = "1.4.1"
-tombi = "1.8.9"
+tombi = "1.8.10"
 oxfmt = "0.74.0"
 
 [tasks]
