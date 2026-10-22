@@ -33,6 +33,10 @@ jobs:
               with:
                   install: true
                   cache: true
+                  # Save in the post step: `mise run build` fills the npm cache (npm_config_cache lives in the mise data dir) after
+                  # `mise install`, and mise-action otherwise saves right after install, leaving the npm cache out.
+                  cache_save_post: true
+                  cache_key_prefix: mise-v2
                   experimental: true
                   github_token: ${{ secrets.GITHUB_TOKEN }}
             - name: ⚙️ Build

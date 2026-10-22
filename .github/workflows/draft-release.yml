@@ -44,6 +44,9 @@ jobs:
               with:
                   install: true
                   cache: true
+                  # Restore only: build.yml is the single cache writer, so the saved cache always includes the npm cache.
+                  cache_save: false
+                  cache_key_prefix: mise-v2
                   experimental: true
                   github_token: ${{ secrets.GITHUB_TOKEN }}
             - name: 🔨 Use GitVersion
