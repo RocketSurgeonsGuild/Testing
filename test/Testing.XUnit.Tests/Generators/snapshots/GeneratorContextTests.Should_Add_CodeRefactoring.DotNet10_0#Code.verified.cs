@@ -1,2 +1,0 @@
-//HintName: Code.cs
-c

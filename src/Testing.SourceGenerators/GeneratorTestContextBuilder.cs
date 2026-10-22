@@ -757,6 +757,7 @@ public record GeneratorTestContextBuilder
             _projectName ?? "TestProject",
             _logger ?? Logger.None,
             _assemblyLoadContext ?? new CollectibleTestAssemblyLoadContext(),
+            _assemblyLoadContext is null,
             _metadataReferences,
             _referenceNames,
             _relatedTypes,

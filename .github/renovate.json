@@ -1,12 +1,43 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>RocketSurgeonsGuild/.github:renovate-config"],
-  "ignorePaths": ["**/node_modules/**", "**/*.csproj", "Directory.Packages.support.props"],
+  "ignorePaths": ["**/node_modules/**", "**/*.csproj"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "The .NET SDK pinned in mise (Renovate's mise manager does not update dotnet)",
+      "managerFilePatterns": ["/^\\.config/mise\\.toml$/"],
+      "matchStrings": ["dotnet = \\[\\s*\\{ version = \"(?<currentValue>[^\"]+)\""],
+      "depNameTemplate": "dotnet-sdk",
+      "datasourceTemplate": "dotnet-version",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "The extra .NET runtime pinned in mise (Renovate's mise manager ignores the runtime element)",
+      "managerFilePatterns": ["/^\\.config/mise\\.toml$/"],
+      "matchStrings": ["version = \"(?<currentValue>[^\"]+)\", runtime = \"dotnet\""],
+      "depNameTemplate": "dotnet-runtime",
+      "datasourceTemplate": "dotnet-version",
+      "versioningTemplate": "semver"
+    }
+  ],
   "packageRules": [
     {
       "description": "The per-Roslyn-version analyzer builds pin their dependencies on purpose",
       "matchFileNames": ["src/*.Analyzers.supports/**"],
       "enabled": false
+    },
+    {
+      "description": "The extra runtime is the net10.0 test runtime; the SDK carries the newest one",
+      "matchDepNames": ["dotnet-runtime"],
+      "allowedVersions": "<11"
+    },
+    {
+      "description": "net10.0 assets stay on the 10.0.x release train; the net11.0 group moves along 11.0.x",
+      "matchPackageNames": ["Microsoft.AspNetCore.*", "Microsoft.Extensions.*"],
+      "matchCurrentVersion": "/^10\\./",
+      "allowedVersions": "<11.0.0"
     },
     {
       "matchCategories": ["js"],

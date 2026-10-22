@@ -1,3 +1,6 @@
+#if NET11_0_OR_GREATER
+using System.Reflection;
+#endif
 using System.Runtime.Loader;
 using System.Text;
 using FakeItEasy;
@@ -27,6 +30,51 @@ public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create(
                      .Build();
         await Verify(context.GenerateAsync());
         context.AssemblyLoadContext.ShouldBe(AssemblyLoadContext.Default);
+    }
+
+    [Test]
+    public async Task Should_Unload_The_Default_Assembly_Load_Context_On_Dispose()
+    {
+        var context = GeneratorTestContextBuilder.Create().AddSources("public class Test { }").Build();
+        var unloaded = false;
+        context.AssemblyLoadContext.Unloading += _ => unloaded = true;
+
+        var results = await context.GenerateAsync();
+        context.Dispose();
+
+        context.AssemblyLoadContext.IsCollectible.ShouldBeTrue();
+        results.Assembly.ShouldNotBeNull();
+        unloaded.ShouldBeTrue();
+    }
+
+    [Test]
+    public async Task Should_Not_Unload_A_Provided_Assembly_Load_Context_On_Dispose()
+    {
+        var assemblyLoadContext = new AssemblyLoadContext("provided", true);
+        var unloaded = false;
+        assemblyLoadContext.Unloading += _ => unloaded = true;
+        var context = GeneratorTestContextBuilder.Create().AddSources("public class Test { }").WithAssemblyLoadContext(assemblyLoadContext).Build();
+
+        await context.GenerateAsync();
+        context.Dispose();
+
+        unloaded.ShouldBeFalse();
+        assemblyLoadContext.Unload();
+    }
+
+    [Test]
+    public async Task Should_Give_The_Generated_Assembly_A_Location()
+    {
+        using var context = GeneratorTestContextBuilder.Create().AddSources("public class Test { }").Build();
+        var results = await context.GenerateAsync();
+
+        results.Assembly.ShouldNotBeNull();
+#if NET11_0_OR_GREATER
+        File.Exists(results.Assembly.Location).ShouldBeTrue();
+        AssemblyName.GetAssemblyName(results.Assembly.Location).Name.ShouldBe(results.Assembly.GetName().Name);
+#else
+        results.Assembly.Location.ShouldBeEmpty();
+#endif
     }
 
     [Test]
