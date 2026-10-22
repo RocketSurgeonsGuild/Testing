@@ -29,6 +29,11 @@
       "enabled": false
     },
     {
+      "description": "Keep the global.json and mise.toml .NET SDK pins in lockstep",
+      "matchDepNames": ["dotnet-sdk"],
+      "groupName": "dotnet sdk"
+    },
+    {
       "description": "The extra runtime is the net10.0 test runtime; the SDK carries the newest one",
       "matchDepNames": ["dotnet-runtime"],
       "allowedVersions": "<11"
