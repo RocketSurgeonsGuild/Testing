@@ -43,6 +43,7 @@ public static class VerifyGeneratorTextContext
     /// <summary>
     ///     Initializes the context
     /// </summary>
+    /// <param name="diagnosticSeverityFilter">The minimum severity of diagnostics to include, or <see langword="null" /> for all.</param>
     /// <param name="customizers"></param>
     public static void Initialize(DiagnosticSeverity? diagnosticSeverityFilter, params GeneratorTestResultsCustomizer[] customizers)
     {

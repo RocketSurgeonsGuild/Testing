@@ -2,5 +2,13 @@
     <ItemGroup>
         <PackageReference Include="Polyfill" PrivateAssets="all" />
     </ItemGroup>
+    <!--
+        Analyzer release tracking (RS2000-RS2008) for every analyzer/generator project:
+        https://github.com/dotnet/roslyn/blob/main/src/RoslynAnalyzers/Microsoft.CodeAnalysis.Analyzers/ReleaseTrackingAnalyzers.Help.md
+        On release, move the entries from AnalyzerReleases.Unshipped.md into a new "## Release x.y.z" section of AnalyzerReleases.Shipped.md.
+    -->
+    <ItemGroup Condition="'$(EnforceExtendedAnalyzerRules)' == 'true'">
+        <AdditionalFiles Include="AnalyzerReleases.Shipped.md;AnalyzerReleases.Unshipped.md" />
+    </ItemGroup>
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 </Project>

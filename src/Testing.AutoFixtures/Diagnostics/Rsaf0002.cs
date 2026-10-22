@@ -7,15 +7,18 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics;
 
+/// <summary>
+///     Reports constructors with params arrays, which auto fixtures don't support.
+/// </summary>
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class Rsaf0002 : DiagnosticAnalyzer
 {
     /// <summary>
     ///     Diagnostic for unsupported parameter arrays as constructors.
     /// </summary>
-    public static DiagnosticDescriptor Descriptor { get; } = new(
+    public static readonly DiagnosticDescriptor Descriptor = new(
         nameof(Rsaf0002),
-        "params arrays are not currently supported with AutoFixture.",
+        "params arrays are not currently supported with AutoFixture",
         "Consider using IEnumerable<T>",
         "Support",
         DiagnosticSeverity.Info,
@@ -62,10 +65,7 @@ public class Rsaf0002 : DiagnosticAnalyzer
         {
             if (context.Node is TypeDeclarationSyntax typeDeclaration)
             {
-                return context
-                      .Compilation
-                      .GetSemanticModel(typeDeclaration.SyntaxTree)
-                      .GetDeclaredSymbol(typeDeclaration);
+                return context.SemanticModel.GetDeclaredSymbol(typeDeclaration);
             }
 
             // If the containing symbol is a named type, return it

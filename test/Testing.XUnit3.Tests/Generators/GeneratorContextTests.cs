@@ -27,7 +27,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddPreprocessorSymbol("SOMETHING", "SOMETHING_ELSE")
                      .WithCustomizer(Customizers.IncludeContextId)
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
         context.AssemblyLoadContext.ShouldBe(AssemblyLoadContext.Default);
     }
 
@@ -39,7 +39,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddSources("public class Test { }")
                      .AddSources(SourceText.From("public class Test2 { }", Encoding.UTF8))
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .WithGenerator<MyInputLikeSourceGenerator>()
                      .AddSources("public class Test { }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddSource("Test.cs", "public class Test { }")
                      .AddSource("Test2.cs", SourceText.From("public class Test2 { }", Encoding.UTF8))
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -83,7 +83,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddOption(customSyntax, "custom_option", "custom_value")
                      .AddSources(SourceText.From("public class Test2 { }", Encoding.UTF8))
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -98,7 +98,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddAdditionalText("some-other.csv", SourceText.From("d,e,f", Encoding.UTF8))
                      .AddAdditionalTexts(customText)
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -109,7 +109,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddReferences(GetType().Assembly)
                      .AddReferences(typeof(GeneratorTestResult))
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -119,7 +119,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .Create()
                      .WithAnalyzer<TestAnalyzer>()
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -131,7 +131,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .WithAnalyzer<TestAnalyzer>()
                      .WithCodeFix<TestCodeFix>()
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -142,7 +142,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddMarkup("Code.cs", "[*c*]")
                      .WithCodeRefactoring<TestRefactoring>()
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -150,7 +150,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
     {
         var context = GeneratorTestContextBuilder
            .Create();
-        await Verify(context.GenerateAnalyzer<TestAnalyzer>());
+        await Verify(context.GenerateAnalyzer<TestAnalyzer>(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -161,7 +161,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .AddSources("")
                      .WithAnalyzer<TestAnalyzer>()
                      .Build();
-        await Verify(context.GenerateCodeFix<TestCodeFix>());
+        await Verify(context.GenerateCodeFix<TestCodeFix>(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -171,7 +171,7 @@ public class GeneratorContextTests(ITestOutputHelper outputHelper) : LoggerTest<
                      .Create()
                      .AddMarkup("Code.cs", "[*c*]")
                      .Build();
-        await Verify(context.GenerateCodeRefactoring<TestRefactoring>());
+        await Verify(context.GenerateCodeRefactoring<TestRefactoring>(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -189,14 +189,14 @@ public class Class1
 "
                               )
                              .Build()
-                             .GenerateAsync();
+                             .GenerateAsync(Xunit.TestContext.Current.CancellationToken);
 
         var context = GeneratorTestContextBuilder
                      .Create()
                      .AddCompilationReferences(assemblyA)
                      .AddSources(@"public class A { public Sample.DependencyOne.Class1 Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -206,7 +206,7 @@ public class Class1
                      .Create()
                      .AddSources(@"public class A { public Class1 Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -218,7 +218,7 @@ public class Class1
                      .WithGenerator<MySourceGenerator>()
                      .AddSources(@"public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -230,7 +230,7 @@ public class Class1
                      .IgnoreOutputFile("test.g.cs")
                      .AddSources(@"public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Fact]
@@ -242,7 +242,7 @@ public class Class1
                      .WithGenerator<MyIncrementalGenerator>()
                      .AddSources(@"public class A { public GeneratorTest Class1 { get; set; } }")
                      .Build();
-        await Verify(context.GenerateAsync());
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken));
     }
 
     [Theory]
@@ -258,7 +258,7 @@ public class Class1
                      .WithDiagnosticSeverity(diagnosticSeverity)
                      .WithGenerator<MyDiagnosticGenerator>()
                      .Build();
-        await Verify(context.GenerateAsync()).UseParameters(diagnosticSeverity);
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken)).UseParameters(diagnosticSeverity);
     }
 
     [Theory]
@@ -275,7 +275,7 @@ public class Class1
                      .AddSource("file.cs", "")
                      .WithGenerator<MySourceGenerator>()
                      .Build();
-        await Verify(context.GenerateAsync()).UseParameters(name);
+        await Verify(context.GenerateAsync(Xunit.TestContext.Current.CancellationToken)).UseParameters(name);
     }
 
     public static IEnumerable<object[]> GeneratorTestResultsCustomizerData()

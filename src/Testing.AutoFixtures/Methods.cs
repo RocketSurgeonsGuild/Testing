@@ -4,8 +4,16 @@ using Microsoft.CodeAnalysis;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures;
 
+/// <summary>
+///     Symbol helpers used by the auto fixture generator.
+/// </summary>
 public static class Methods
 {
+    /// <summary>
+    ///     Gets the fully qualified metadata name of a symbol (namespace, containing types and arity).
+    /// </summary>
+    /// <param name="s">The symbol.</param>
+    /// <returns>The metadata name, or an empty string for <see langword="null" /> and the global namespace.</returns>
     public static string GetFullMetadataName(this ISymbol? s)
     {
         if (s is null || IsRootNamespace(s))
@@ -43,10 +51,20 @@ public static class Methods
         }
     }
 
+    /// <summary>
+    ///     Determines whether the type is an unbound or open generic type.
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <returns><see langword="true" /> when every type argument is a type parameter.</returns>
     public static bool IsOpenGenericType(this INamedTypeSymbol type) => type.IsGenericType
         && ( type.IsUnboundGenericType
             || type.TypeArguments.All(z => z.TypeKind == TypeKind.TypeParameter) );
 
+    /// <summary>
+    ///     Gets a display name for a symbol that includes its generic type arguments.
+    /// </summary>
+    /// <param name="symbol">The symbol.</param>
+    /// <returns>The display name.</returns>
     public static string GetGenericDisplayName(this ISymbol? symbol)
     {
         if (symbol is null || IsRootNamespace(symbol))

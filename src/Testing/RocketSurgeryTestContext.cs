@@ -1,4 +1,4 @@
-﻿using System.Reactive.Subjects;
+using System.Reactive.Subjects;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -14,8 +14,8 @@ public abstract class RocketSurgeryTestContext<TContext> : ILoggingTestContext
 {
     private readonly Action<TContext, LoggerConfiguration>? _configureLogger;
 
-    private readonly List<string> _excludeSourceContexts = new();
-    private readonly List<string> _includeSourceContexts = new();
+    private readonly List<string> _excludeSourceContexts = [];
+    private readonly List<string> _includeSourceContexts = [];
     private readonly Subject<LogEvent> _logs = new();
     private readonly LoggerConfiguration _loggerConfiguration = new();
     private Logger? _logger;
@@ -36,7 +36,6 @@ public abstract class RocketSurgeryTestContext<TContext> : ILoggingTestContext
         _loggerConfiguration
            .WriteTo.Observers(x => x.Subscribe(_logs))
            .MinimumLevel.Is(logEventLevel)
-//                    .WriteTo.Spectre(RocketSurgeonsTestingDefaults.LogFormat)
            .Enrich.FromLogContext();
         FilterLogs(_loggerConfiguration);
         OutputTemplate = outputTemplate ?? RocketSurgeonsTestingDefaults.OutputTemplate;
@@ -66,30 +65,20 @@ public abstract class RocketSurgeryTestContext<TContext> : ILoggingTestContext
     {
         loggerConfiguration
            .Filter.ByExcluding(
-                x =>
-                {
-                    if (!x.Properties.TryGetValue("SourceContext", out var c))
-                        return false;
-                    if (c is not ScalarValue { Value: string sourceContext })
-                        return true;
-                    return _excludeSourceContexts.Any(z => z.Equals(sourceContext, StringComparison.Ordinal));
-                }
+                x => x.Properties.TryGetValue("SourceContext", out var c)
+                 && ( c is not ScalarValue { Value: string sourceContext }
+                     || _excludeSourceContexts.Any(z => z.Equals(sourceContext, StringComparison.Ordinal)) )
             )
            .Filter.ByIncludingOnly(
-                x =>
-                {
-                    if (!x.Properties.TryGetValue("SourceContext", out var c))
-                        return true;
-                    if (c is not ScalarValue { Value: string sourceContext })
-                        return false;
-                    return _includeSourceContexts.All(z => z.Equals(sourceContext, StringComparison.Ordinal));
-                }
+                x => !x.Properties.TryGetValue("SourceContext", out var c)
+                 || ( c is ScalarValue { Value: string sourceContext }
+                     && _includeSourceContexts.All(z => z.Equals(sourceContext, StringComparison.Ordinal)) )
             );
     }
 
-    #pragma warning disable CA1033
+#pragma warning disable CA1033
     ILogger ILoggingTestContext.Logger => _logger ??= CreateLogger();
-    #pragma warning restore CA1033
+#pragma warning restore CA1033
 
     /// <summary>
     ///     Filter a given source context from serilog
@@ -118,6 +107,7 @@ public abstract class RocketSurgeryTestContext<TContext> : ILoggingTestContext
     {
         _logger?.Dispose();
         _logs.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     IDisposable IObservable<LogEvent>.Subscribe(IObserver<LogEvent> observer) => _logs.Subscribe(observer);

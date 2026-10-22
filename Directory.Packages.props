@@ -37,7 +37,6 @@
     <PackageVersion Include="Serilog.Sinks.Spectre" Version="0.6.0" />
     <PackageVersion Include="TUnit" Version="1.76.0" />
     <PackageVersion Include="TUnit.Core" Version="1.76.0" />
-    <PackageVersion Include="Verify.DiffPlex" Version="3.4.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.9.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.9.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="5.9.0" />

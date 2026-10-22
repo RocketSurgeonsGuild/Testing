@@ -1,7 +1,6 @@
 using System.Runtime.CompilerServices;
 using DiffEngine;
 using Rocket.Surgery.Extensions.Testing.SourceGenerators;
-using VerifyTests.DiffPlex;
 
 namespace Rocket.Surgery.Extensions.Testing.AutoFixtures.Tests;
 
@@ -10,17 +9,20 @@ internal static class ModuleInitializer
     [ModuleInitializer]
     public static void Initialize()
     {
-        VerifyGeneratorTextContext.Initialize();
-        VerifyDiffPlex.Initialize(OutputType.Minimal);
+        VerifyGeneratorTextContext.Initialize(
+            Customizers.ExcludeInputs,
+            Customizers.IncludeParseOptions,
+            Customizers.IncludeGlobalOptions,
+            Customizers.IncludeFileOptions,
+            Customizers.IncludeReferences
+        );
+        VerifierSettings.UseTextDiffFormat(TextDiffFormat.Minimal);
         DiffRunner.Disabled = true;
 
         DerivePathInfo(
             (sourceFile, projectDirectory, type, method) =>
             {
-                static string GetTypeName(Type type)
-                {
-                    return type.IsNested ? $"{type.ReflectedType!.Name}.{type.Name}" : type.Name;
-                }
+                static string GetTypeName(Type type) => type.IsNested ? $"{type.ReflectedType!.Name}.{type.Name}" : type.Name;
 
                 var typeName = GetTypeName(type);
 
