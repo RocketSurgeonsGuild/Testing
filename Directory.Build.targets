@@ -15,7 +15,7 @@
         <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_AddRuntimeAsyncBrowserWasmAsset</TargetsForTfmSpecificContentInPackage>
     </PropertyGroup>
     <Target Name="_AddRuntimeAsyncBrowserWasmAsset" Condition="'$(RuntimeIdentifier)' == '' and $(Features.Contains('runtime-async=on'))">
-        <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Build" Properties="TargetFramework=$(TargetFramework);RuntimeIdentifier=browser-wasm">
+        <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Build" Properties="TargetFramework=$(TargetFramework);RuntimeIdentifier=browser-wasm;NoBuild=false">
             <Output TaskParameter="TargetOutputs" ItemName="_RuntimeAsyncBrowserWasmAssembly" />
         </MSBuild>
         <ItemGroup>
