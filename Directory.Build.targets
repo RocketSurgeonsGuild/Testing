@@ -10,7 +10,7 @@
         a browser-wasm build of each runtime-async TFM (compiled without runtime async by the block above) under
         runtimes/browser-wasm/lib/<tfm>/, which browser-wasm restores prefer over lib/<tfm>/.
     -->
-    <PropertyGroup Condition="'$(RuntimeAsyncBrowserWasmAsset)' == 'true'">
+    <PropertyGroup Condition="'$(RuntimeAsyncBrowserWasmAsset)' == 'true' and $(Features.Contains('runtime-async=on'))">
         <RuntimeIdentifiers>$(RuntimeIdentifiers);browser-wasm</RuntimeIdentifiers>
         <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_AddRuntimeAsyncBrowserWasmAsset</TargetsForTfmSpecificContentInPackage>
     </PropertyGroup>
@@ -24,7 +24,7 @@
     </Target>
 
     <!-- In-repo browser apps build the libraries they reference for browser-wasm (separate output, no runtime async). -->
-    <ItemDefinitionGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+    <ItemDefinitionGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm' and $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net11.0'))">
         <ProjectReference>
             <AdditionalProperties>RuntimeIdentifier=browser-wasm</AdditionalProperties>
         </ProjectReference>
