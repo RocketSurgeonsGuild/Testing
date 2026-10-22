@@ -1,0 +1,20 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "src",
+          "files": ["**/*.csproj"],
+          "exclude": ["**/*Analyzers*/**", "**/Testing.AutoFixtures/**", "**/bin/**", "**/obj/**"]
+        }
+      ],
+      "properties": {
+        "Configuration": "Release"
+      },
+      "dest": "docs/.docfx-metadata/api",
+      "namespaceLayout": "flattened",
+      "memberLayout": "samePage",
+      "disableGitFeatures": true
+    }
+  ]
+}

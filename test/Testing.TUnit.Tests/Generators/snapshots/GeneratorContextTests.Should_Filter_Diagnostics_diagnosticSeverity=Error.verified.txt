@@ -1,4 +1,4 @@
-{
+﻿{
   FinalDiagnostics: [
     {
       Id: TEST001,

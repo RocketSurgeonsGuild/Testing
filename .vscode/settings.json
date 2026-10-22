@@ -3,6 +3,9 @@
     "coverage-gutters.coverageFileNames": ["coverage/coverage.info"],
     "coverage-gutters.showGutterCoverage": true,
     "coverage-gutters.showRulerCoverage": true,
+    "csharp.preview.improvedLaunchExperience": true,
+    "dotnet.automaticallySyncWithActiveItem": true,
+    "dotnet.testWindow.useTestingPlatformProtocol": true,
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#eccdfc",
         "activityBar.background": "#eccdfc",
@@ -39,5 +42,6 @@
         "titleBar.inactiveBackground": "#c66df699",
         "titleBar.inactiveForeground": "#15202b99"
     },
-    "peacock.color": "#d99df9"
+    "peacock.color": "#d99df9",
+    "pkl.cli.path": "${env:HOME}/.local/share/mise/shims/pkl"
 }

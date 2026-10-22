@@ -1,9 +1,9 @@
-amends "package://github.com/jdx/hk/releases/download/v2.6.0/hk@2.6.0#/Config.pkl"
+amends "package://github.com/jdx/hk/releases/download/v2.8.0/hk@2.8.0#/Config.pkl"
 
-import "package://github.com/jdx/hk/releases/download/v2.6.0/hk@2.6.0#/Builtins.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.8.0/hk@2.8.0#/Builtins.pkl"
 
 // Solution the .NET formatters operate against.
-local solution = "Dovetail.slnx"
+local solution = "Testing.slnx"
 
 local excludeDiagnostics = new Listing<String> {
   "CA1869"

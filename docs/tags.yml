@@ -1,0 +1,19 @@
+tags:
+    getting-started:
+        label: Getting Started
+        description: Introductory guides and tutorials.
+    logging:
+        label: Logging
+        description: Capturing and asserting on Serilog / Microsoft.Extensions.Logging output in tests.
+    mocking:
+        label: Mocking
+        description: Auto-mocking containers built on FakeItEasy or NSubstitute.
+    fixtures:
+        label: Fixtures
+        description: Test fixture builders, hand-written or source generated.
+    source-generator:
+        label: Source Generator
+        description: Testing Roslyn source generators, analyzers, code fixes and refactorings.
+    api:
+        label: API
+        description: API reference and public surface documentation.

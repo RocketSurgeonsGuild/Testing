@@ -1,0 +1,21 @@
+/* Target-framework tags emitted by the .NET XML API loader (docs/src/loaders/dotnet-xml-api.ts).
+   Rendered on their own line beneath each type/member heading. */
+.sl-markdown-content .tfm-badge {
+    display: inline-block;
+    margin-inline-end: 0.25rem;
+    padding: 0.02rem 0.3rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.2rem;
+    font-family: var(--sl-font-system-mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--sl-color-gray-2);
+    background-color: var(--sl-color-gray-6);
+    white-space: nowrap;
+}
+
+/* Tighten the gap between a heading and its badge line. */
+.sl-markdown-content :is(h2, h3, h4) + p:has(> .tfm-badge) {
+    margin-top: 0.35rem;
+}

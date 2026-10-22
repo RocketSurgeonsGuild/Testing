@@ -1,7 +1,6 @@
 {
     "recommendations": [
         "apple.pkl-vscode",
-        "antfu.vite",
         "ms-dotnettools.vscode-dotnet-runtime",
         "ms-dotnettools.csdevkit",
         "ms-dotnettools.csharp",
@@ -10,6 +9,8 @@
         "lambdageek.msbuild-structured-log-viewer",
         "github.vscode-github-actions",
         "christian-kohler.path-intellisense",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "astro-build.astro-vscode",
+        "hideoo.starlight-links"
     ]
 }
