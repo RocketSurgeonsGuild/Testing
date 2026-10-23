@@ -10,7 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "0.42.6",
+    "@astrojs/starlight": "0.42.7",
     "astro": "7.4.2",
     "starlight-auto-drafts": "0.3.1",
     "starlight-changelogs": "0.7.1",
