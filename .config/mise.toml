@@ -25,7 +25,7 @@ biome = "2.5.2"
 "dotnet:docfx" = "2.78.5"
 "dotnet:hertzole.docfx2astro" = "1.4.1"
 tombi = "1.8.10"
-oxfmt = "0.74.0"
+oxfmt = "0.75.0"
 
 [tasks]
 build = { run = "dotnet run build/Build.cs" }
