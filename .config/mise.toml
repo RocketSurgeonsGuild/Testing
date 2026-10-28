@@ -7,7 +7,7 @@ dotnet = [
 "github:eljulians/skillfile" = { version = "v1.9.2", bin = "skillfile" }
 hk = "2.8.1"
 pkl = "0.32.2"
-node = "24.22.1"
+node = "24.22.2"
 actionlint = "1.7.12"
 biome = "2.5.2"
 
