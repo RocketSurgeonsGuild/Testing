@@ -3,7 +3,7 @@ dotnet = [
   { version = "11.0.100-rc.3.26522.148" },
   { version = "10.0.13", runtime = "dotnet" },
 ]
-"github:microsoft/apm" = { version = "v0.34.0", bin = "apm" }
+"github:microsoft/apm" = { version = "v0.35.0", bin = "apm" }
 "github:eljulians/skillfile" = { version = "v1.9.2", bin = "skillfile" }
 hk = "2.8.1"
 pkl = "0.32.2"
