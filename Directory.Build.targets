@@ -29,7 +29,4 @@
             <AdditionalProperties>RuntimeIdentifier=browser-wasm</AdditionalProperties>
         </ProjectReference>
     </ItemDefinitionGroup>
-    <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations.Sources" PrivateAssets="all" />
-    </ItemGroup>
 </Project>
