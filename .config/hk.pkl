@@ -83,7 +83,15 @@ steps {
   ["case-conflict"] = Builtins.check_case_conflict
   ["merge-conflict"] = Builtins.check_merge_conflict
   ["symlinks"] = Builtins.check_symlinks
-  ["hk-test"] = Builtins.hk_test
+  // `hk test` runs each builtin's tests in scratch git repositories. Inside a git hook, git exports GIT_DIR, GIT_WORK_TREE and
+  // GIT_INDEX_FILE, so those tests' `git init` and `git config` reach this repository instead: from a worktree's pre-commit they
+  // wrote core.worktree into the shared .git/config and fought over its lock. Clear them first.
+  ["hk-test"] = (Builtins.hk_test) {
+    check = new CommandSpec {
+      command = "env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE hk test --quiet"
+      effect = "write"
+    }
+  }
   ["pkl-format"] = Builtins.pkl_format
   // Validate the hand-authored GitHub Actions workflows (.github/workflows/*.yml).
   ["actionlint"] = Builtins.actionlint
@@ -96,3 +104,14 @@ steps {
 }
 
 exclude = excludes
+
+hooks {
+  // Local commits apply the fixes and stage them. Unstaged edits are stashed first, so a fixer only rewrites what's being committed
+  // and the unstaged rest isn't swept into the commit. There's deliberately no pre-push hook: fixes happen at commit time, and CI
+  // fixes the PR.
+  ["pre-commit"] {
+    fix = true
+    stage = true
+    stash = "git"
+  }
+}
