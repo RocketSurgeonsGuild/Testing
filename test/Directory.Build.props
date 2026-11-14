@@ -4,5 +4,10 @@
         <IsPackable>false</IsPackable>
         <MergeCoverage>true</MergeCoverage>
         <IncludeTestAssembly>true</IncludeTestAssembly>
+        <!--
+            The repo-wide LatestMajor would run the net10.0 tests on the newest installed runtime (.NET 11), so a .NET 10 regression
+            would pass CI. Keep each target on its own major: mise installs the .NET 10 runtime alongside the SDK for this.
+        -->
+        <RollForward>Minor</RollForward>
     </PropertyGroup>
 </Project>
