@@ -4,7 +4,7 @@ dotnet = [{ version = "11.0.100" }, { version = "10.0.15", runtime = "dotnet" }]
 "github:eljulians/skillfile" = { version = "v1.9.2", bin = "skillfile" }
 hk = "2.12.0"
 pkl = "0.33.0"
-node = "24.22.3"
+node = "26.13.1"
 actionlint = "1.7.12"
 biome = "2.5.2"
 
