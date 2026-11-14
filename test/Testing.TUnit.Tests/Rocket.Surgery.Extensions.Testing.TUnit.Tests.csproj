@@ -9,6 +9,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="TUnit" />
+        <PackageReference Include="TUnit.Mocks" />
         <PackageReference Include="Verify.TUnit" />
         <PackageReference Include="Serilog.Sinks.Spectre" />
     </ItemGroup>

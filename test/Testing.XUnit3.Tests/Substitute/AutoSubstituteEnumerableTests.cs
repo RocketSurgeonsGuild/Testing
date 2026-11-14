@@ -1,59 +1,61 @@
 using Microsoft.Extensions.Logging;
+using TUnit.Assertions.Extensions;
+using TUnitAssert = TUnit.Assertions.Assert;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit3.Tests.Substitute;
 
 public class AutoSubstituteEnumerableTests(ITestOutputHelper testOutputHelper) : AutoSubstituteTest<TestOutputTestContext>(Defaults.CreateTestOutput(testOutputHelper))
 {
     [Fact]
-    public void Does_Not_Auto_Substitute_Enumerable()
+    public async Task Does_Not_Auto_Substitute_Enumerable()
     {
         AutoSubstitute.Provide<Item>(new A());
         AutoSubstitute.Provide<Item>(new B());
 
-        AutoSubstitute.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
+        await AutoSubstitute.Resolve<IEnumerable<Item>>().Count().Should().BeEqualTo(2);
     }
 
     [Fact]
-    public void Handle_Zero_Items() => AutoSubstitute.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
+    public async Task Handle_Zero_Items() => await AutoSubstitute.Resolve<IEnumerable<Item>>().Count().Should().BeEqualTo(0);
 
     [Fact]
-    public void Handle_One_Substitute_Item()
+    public async Task Handle_One_Substitute_Item()
     {
         var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Count().ShouldBe(1);
-        result.ShouldContain(fake1);
+        await result.Count().Should().BeEqualTo(1);
+        await result.Should().Contain(fake1);
     }
 
     [Fact]
-    public void Handle_Two_Substitute_Item()
+    public async Task Handle_Two_Substitute_Item()
     {
         var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
         var fake2 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Count().ShouldBe(2);
-        result.ShouldContain(fake1);
-        result.ShouldContain(fake2);
+        await result.Count().Should().BeEqualTo(2);
+        await result.Should().Contain(fake1);
+        await result.Should().Contain(fake2);
     }
 
     [Fact]
-    public void Handle_Three_Substitute_Item()
+    public async Task Handle_Three_Substitute_Item()
     {
         var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
         var fake2 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
         var fake3 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Count().ShouldBe(3);
-        result.ShouldContain(fake1);
-        result.ShouldContain(fake2);
-        result.ShouldContain(fake3);
+        await result.Count().Should().BeEqualTo(3);
+        await result.Should().Contain(fake1);
+        await result.Should().Contain(fake2);
+        await result.Should().Contain(fake3);
     }
 
     [Fact]
-    public void Handle_Four_Substitute_Item()
+    public async Task Handle_Four_Substitute_Item()
     {
         var fake1 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
         var fake2 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
@@ -61,23 +63,23 @@ public class AutoSubstituteEnumerableTests(ITestOutputHelper testOutputHelper) :
         var fake4 = AutoSubstitute.Provide(NSubstitute.Substitute.For<Item>());
 
         var result = AutoSubstitute.Resolve<IEnumerable<Item>>().ToArray();
-        result.Count().ShouldBe(4);
-        result.ShouldContain(fake1);
-        result.ShouldContain(fake2);
-        result.ShouldContain(fake3);
-        result.ShouldContain(fake4);
+        await result.Count().Should().BeEqualTo(4);
+        await result.Should().Contain(fake1);
+        await result.Should().Contain(fake2);
+        await result.Should().Contain(fake3);
+        await result.Should().Contain(fake4);
     }
 
     [Fact(Skip = "Obsolete?")]
     [Obsolete("TBD")]
-    public void Should_Handle_Creating_A_Substitute_With_Logger()
+    public async Task Should_Handle_Creating_A_Substitute_With_Logger()
     {
-        var a = () =>
-                {
-                    var lt = AutoSubstitute.Resolve<LoggerTest>();
-                    AutoSubstitute.Provide<Item>(lt);
-                };
-        a.ShouldNotThrow();
+        void a()
+        {
+            var lt = AutoSubstitute.Resolve<LoggerTest>();
+            AutoSubstitute.Provide<Item>(lt);
+        }
+        await TUnitAssert.That(a).ThrowsNothing();
     }
 
     public interface Item { }
