@@ -83,15 +83,7 @@ steps {
   ["case-conflict"] = Builtins.check_case_conflict
   ["merge-conflict"] = Builtins.check_merge_conflict
   ["symlinks"] = Builtins.check_symlinks
-  // `hk test` runs each builtin's tests in scratch git repositories. Inside a git hook, git exports GIT_DIR, GIT_WORK_TREE and
-  // GIT_INDEX_FILE, so those tests' `git init` and `git config` reach this repository instead: from a worktree's pre-commit they
-  // wrote core.worktree into the shared .git/config and fought over its lock. Clear them first.
-  ["hk-test"] = (Builtins.hk_test) {
-    check = new CommandSpec {
-      command = "env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE hk test --quiet"
-      effect = "write"
-    }
-  }
+  ["hk-test"] = Builtins.hk_test
   ["pkl-format"] = Builtins.pkl_format
   // Validate the hand-authored GitHub Actions workflows (.github/workflows/*.yml).
   ["actionlint"] = Builtins.actionlint
@@ -113,5 +105,13 @@ hooks {
     fix = true
     stage = true
     stash = "git"
+    steps {
+      // `hk test` runs each builtin's tests in scratch git repositories, and inside a git hook the GIT_DIR / GIT_WORK_TREE git
+      // exports point those at this repository instead (from a worktree they wrote core.worktree into the shared .git/config).
+      // It still runs in `hk check`, `hk fix` and CI.
+      ["hk-test"] = (Builtins.hk_test) {
+        step_condition = "false"
+      }
+    }
   }
 }
