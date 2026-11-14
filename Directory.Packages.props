@@ -26,7 +26,7 @@
   <ItemGroup>
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.12.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.5.3" />
-    <PackageVersion Include="Rocket.Surgery.ModularPipelines.Extensions" Version="0.2.2" />
+    <PackageVersion Include="Rocket.Surgery.ModularPipelines.Extensions" Version="0.2.3" />
     <!-- The build host (build/Build.cs) references the published Dovetail and Specular generators directly, as Rocket.Surgery.ModularPipelines.Extensions requires; they write ConfigureDovetail and the module scan into it. -->
     <PackageVersion Include="Joinery.Dovetail.ModularPipelines" Version="0.5.3" />
     <PackageVersion Include="Specular" Version="0.4.1" />
