@@ -40,19 +40,18 @@ jobs:
                   cache_key_prefix: mise-v2
                   experimental: true
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-            # Pull requests and the merge queue both run the fixers (hk fix) rather than verifying (hk check). In verify mode
-            # `dotnet format` fails on every analyzer warning it has no code fix for, even in lines the change didn't touch;
-            # in fix mode it applies what it can and passes. Steps with no fixer (actionlint, the private-key and merge-conflict
-            # checks, ...) still fail the run.
+            # Pull requests run the fixers (hk fix) rather than verifying (hk check): in verify mode `dotnet format` fails on every
+            # analyzer warning it has no code fix for, even in lines the change didn't touch; in fix mode it applies what it can and
+            # passes. Steps with no fixer (actionlint, the private-key and merge-conflict checks, ...) still fail the run. The merge
+            # queue runs no lint step: its temporary branch can't take a push, and the PR's run has already pushed its fixes.
             - name: 🧹 Lint (hk fix)
-              if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
+              if: github.event_name == 'pull_request'
               run: |
                   hk fix --from-ref "$BASE" --to-ref "$HEAD"
               env:
-                  BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
-                  HEAD: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
-            # pull_request (same-repo AND fork): autofix.ci commits the fixes back to the PR. The merge queue's temporary branch
-            # can't take a push, so fixes made there are dropped; the PR's own run has already pushed them.
+                  BASE: ${{ github.event.pull_request.base.sha }}
+                  HEAD: ${{ github.event.pull_request.head.sha }}
+            # pull_request (same-repo AND fork): autofix.ci commits the fixes back to the PR.
             # Must be the LAST step: pushes the working-tree changes back as a
             # verified commit (and fails the check when a fix was needed).
             - name: ✍️ Apply fixes (autofix.ci)
