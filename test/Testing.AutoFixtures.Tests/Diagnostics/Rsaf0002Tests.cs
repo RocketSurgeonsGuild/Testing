@@ -13,9 +13,9 @@ public class Rsaf0002Tests
         var result = await context.GenerateAsync(TestContext.Current.CancellationToken);
 
         // Then
-        result
+        await result
            .AnalyzerResults
-           .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Rsaf0002.Descriptor.Id));
+           .Should().Contain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Rsaf0002.Descriptor.Id));
     }
 
     [Theory]
@@ -27,9 +27,9 @@ public class Rsaf0002Tests
         var result = await context.GenerateAsync(TestContext.Current.CancellationToken);
 
         // Then
-        result
+        await result
            .AnalyzerResults
-           .ShouldNotContain(pair => pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Rsaf0002.Descriptor.Id));
+           .Should().All(pair => !pair.Value.Diagnostics.Any(diagnostic => diagnostic.Id == Rsaf0002.Descriptor.Id));
     }
 
     [Theory]

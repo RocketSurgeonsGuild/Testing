@@ -1,6 +1,4 @@
 using System.Globalization;
-using FakeItEasy;
-using FakeItEasy.Creation;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -13,7 +11,10 @@ public class TestOutputTestContext(ITestOutputHelper testOutputHelper, LogEventL
 {
     private readonly LogEventLevel _logEventLevel = logEventLevel;
 
-    public ITestOutputHelper TestOutputHelper { get; } = A.Fake<ITestOutputHelper>(z => z.Wrapping(testOutputHelper));
+    /// <summary>
+    ///     A mock that records every call and forwards it to the real output helper, so tests can verify what was written.
+    /// </summary>
+    public ITestOutputHelperMock TestOutputHelper { get; } = CreateForwardingMock(testOutputHelper);
 
     protected override void ConfigureLogger(TestOutputTestContext context, LoggerConfiguration loggerConfiguration)
     {
@@ -22,7 +23,17 @@ public class TestOutputTestContext(ITestOutputHelper testOutputHelper, LogEventL
            .WriteTo.Sink(new TestOutputSink(TestOutputHelper, new MessageTemplateTextFormatter(OutputTemplate, CultureInfo.InvariantCulture)));
     }
 
-    public Action<IFakeOptions>? FakeOptionsAction => null;
+    // TUnit.Mocks cannot wrap an interface instance, so forward each member to the real helper explicitly.
+    private static ITestOutputHelperMock CreateForwardingMock(ITestOutputHelper inner)
+    {
+        var mock = ITestOutputHelper.Mock();
+        mock.Output.Returns(() => inner.Output);
+        mock.Write(Any<string>()).Callback(inner.Write);
+        mock.Write(Any<string>(), Any<object[]>()).Callback(inner.Write);
+        mock.WriteLine(Any<string>()).Callback(inner.WriteLine);
+        mock.WriteLine(Any<string>(), Any<object[]>()).Callback(inner.WriteLine);
+        return mock;
+    }
 }
 
 internal class TestOutputSink(ITestOutputHelper testOutputHelper, ITextFormatter textFormatter) : ILogEventSink

@@ -3,7 +3,6 @@ using System.Reflection;
 #endif
 using System.Runtime.Loader;
 using System.Text;
-using FakeItEasy;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -29,7 +28,7 @@ public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create(
                      .WithCustomizer(Customizers.IncludeContextId)
                      .Build();
         await Verify(context.GenerateAsync());
-        context.AssemblyLoadContext.ShouldBe(AssemblyLoadContext.Default);
+        await context.AssemblyLoadContext.Should().BeEqualTo(AssemblyLoadContext.Default);
     }
 
     [Test]
@@ -42,9 +41,9 @@ public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create(
         var results = await context.GenerateAsync();
         context.Dispose();
 
-        context.AssemblyLoadContext.IsCollectible.ShouldBeTrue();
-        results.Assembly.ShouldNotBeNull();
-        unloaded.ShouldBeTrue();
+        await context.AssemblyLoadContext.IsCollectible.Should().BeTrue();
+        await results.Assembly.Should().NotBeNull();
+        await unloaded.Should().BeTrue();
     }
 
     [Test]
@@ -58,7 +57,7 @@ public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create(
         await context.GenerateAsync();
         context.Dispose();
 
-        unloaded.ShouldBeFalse();
+        await unloaded.Should().BeFalse();
         assemblyLoadContext.Unload();
     }
 
@@ -68,12 +67,12 @@ public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create(
         using var context = GeneratorTestContextBuilder.Create().AddSources("public class Test { }").Build();
         var results = await context.GenerateAsync();
 
-        results.Assembly.ShouldNotBeNull();
+        await results.Assembly.Should().NotBeNull();
 #if NET11_0_OR_GREATER
-        File.Exists(results.Assembly.Location).ShouldBeTrue();
-        AssemblyName.GetAssemblyName(results.Assembly.Location).Name.ShouldBe(results.Assembly.GetName().Name);
+        await File.Exists(results.Assembly.Location).Should().BeTrue();
+        await AssemblyName.GetAssemblyName(results.Assembly.Location).Name.Should().BeEqualTo(results.Assembly.GetName().Name);
 #else
-        results.Assembly.Location.ShouldBeEmpty();
+        await results.Assembly.Location.Should().BeEmpty();
 #endif
     }
 
@@ -113,20 +112,20 @@ public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create(
     [Test]
     public async Task Should_Add_Options()
     {
-        var customText = A.Fake<AdditionalText>();
-        A.CallTo(() => customText.Path).Returns("custom.txt");
-        A.CallTo(() => customText.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
-        var customSyntax = A.Fake<SyntaxTree>();
-        A.CallTo(() => customSyntax.FilePath).Returns("custom.cs");
-        A.CallTo(() => customSyntax.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
+        var customText = AdditionalText.Mock();
+        customText.Path.Returns("custom.txt");
+        customText.GetText(Any()).Returns(SourceText.From("this is a text file", Encoding.UTF8));
+        var customSyntax = SyntaxTree.Mock();
+        customSyntax.FilePath.Returns("custom.cs");
+        customSyntax.GetText(Any()).Returns(SourceText.From("this is a text file", Encoding.UTF8));
 
 
         var context = GeneratorTestContextBuilder
                      .Create()
                      .AddGlobalOption("my_option", "my_value")
                      .AddOption("my_file.cs", "my_option", "my_local_value")
-                     .AddOption(customText, "custom_option", "custom_value")
-                     .AddOption(customSyntax, "custom_option", "custom_value")
+                     .AddOption(customText.Object, "custom_option", "custom_value")
+                     .AddOption(customSyntax.Object, "custom_option", "custom_value")
                      .AddSources(SourceText.From("public class Test2 { }", Encoding.UTF8))
                      .Build();
         await Verify(context.GenerateAsync());
@@ -135,14 +134,14 @@ public class GeneratorContextTests() : LoggerTest<TestRecord>(TestRecord.Create(
     [Test]
     public async Task Should_Add_Additional_Texts()
     {
-        var customText = A.Fake<AdditionalText>();
-        A.CallTo(() => customText.Path).Returns("custom.txt");
-        A.CallTo(() => customText.GetText(A<CancellationToken>._)).Returns(SourceText.From("this is a text file", Encoding.UTF8));
+        var customText = AdditionalText.Mock();
+        customText.Path.Returns("custom.txt");
+        customText.GetText(Any()).Returns(SourceText.From("this is a text file", Encoding.UTF8));
         var context = GeneratorTestContextBuilder
                      .Create()
                      .AddAdditionalText("some.csv", "a,b,c")
                      .AddAdditionalText("some-other.csv", SourceText.From("d,e,f", Encoding.UTF8))
-                     .AddAdditionalTexts(customText)
+                     .AddAdditionalTexts(customText.Object)
                      .Build();
         await Verify(context.GenerateAsync());
     }

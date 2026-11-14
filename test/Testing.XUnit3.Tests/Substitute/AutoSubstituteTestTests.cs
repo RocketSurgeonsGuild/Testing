@@ -41,34 +41,34 @@ public class AutoSubstituteTestTests(ITestOutputHelper outputHelper) : AutoSubst
     }
 
     [Fact]
-    public void Should_Provide_Values()
+    public async Task Should_Provide_Values()
     {
         var item = AutoSubstitute.Provide(new MyItem());
-        ServiceProvider.GetRequiredService<MyItem>().ShouldBeSameAs(item);
+        await ServiceProvider.GetRequiredService<MyItem>().Should().BeSameReferenceAs(item);
     }
 
     [Fact]
-    public void Should_Return_Self_For_ServiceProvider() => ServiceProvider.GetRequiredService<IServiceProvider>().ShouldBe(ServiceProvider);
+    public async Task Should_Return_Self_For_ServiceProvider() => await ServiceProvider.GetRequiredService<IServiceProvider>().Should().BeEqualTo(ServiceProvider);
 
     [Fact]
-    public void Should_Not_Fake_Optional_Parameters() => AutoSubstitute.Resolve<Optional>().Item.ShouldBeNull();
+    public async Task Should_Not_Fake_Optional_Parameters() => await AutoSubstitute.Resolve<Optional>().Item.Should().BeNull();
 
     [Fact]
-    public void Should_Populate_Optional_Parameters_When_Provided()
+    public async Task Should_Populate_Optional_Parameters_When_Provided()
     {
         AutoSubstitute.Provide<IItem>(new MyItem());
-        AutoSubstitute
+        await AutoSubstitute
            .Resolve<Optional>()
            .Item
-           .ShouldNotBeNull();
+           .Should().NotBeNull();
     }
 
     [Fact]
-    public void Should_Fail_If_Container_Is_Touched_When_Building()
+    public async Task Should_Fail_If_Container_Is_Touched_When_Building()
     {
         var access = AutoSubstitute.Resolve<DoubleAccess>();
         Action a = () => access.Self.Resolve<IContainer>();
-        a.ShouldThrow<TestBootstrapException>();
+        await a.Should().Throw<TestBootstrapException>();
     }
 
     private class Impl : AutoSubstituteTest<TestOutputTestContext>

@@ -9,5 +9,10 @@
             would pass CI. Keep each target on its own major: mise installs the .NET 10 runtime alongside the SDK for this.
         -->
         <RollForward>Minor</RollForward>
+        <!--
+            TUnit.Assertions (pulled in by TUnit.Assertions.Should) would add a global using for TUnit.Assertions, whose Assert
+            clashes with xUnit's Assert in the xUnit test projects. Tests only need the Should() surface, imported in Directory.Build.targets.
+        -->
+        <TUnitAssertionsImplicitUsings>false</TUnitAssertionsImplicitUsings>
     </PropertyGroup>
 </Project>
