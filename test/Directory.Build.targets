@@ -2,9 +2,9 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
         <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" />
-        <PackageReference Include="FakeItEasy" />
-        <PackageReference Include="Shouldly" />
-        <Using Include="Shouldly" />
+        <PackageReference Include="TUnit.Assertions.Should" />
+        <Using Include="TUnit.Assertions.Should" />
+        <Using Include="TUnit.Assertions.Should.Extensions" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
     </ItemGroup>
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />

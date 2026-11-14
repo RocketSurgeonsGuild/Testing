@@ -1,4 +1,3 @@
-using FakeItEasy;
 using Microsoft.Extensions.Logging;
 using Serilog.Events;
 
@@ -6,7 +5,7 @@ namespace Rocket.Surgery.Extensions.Testing.XUnit3.Tests;
 
 public class LoggerTestTests : LoggerTest<TestOutputTestContext>
 {
-    private readonly ITestOutputHelper _testOutputHelper;
+    private readonly ITestOutputHelperMock _testOutputHelper;
 
     public LoggerTestTests(ITestOutputHelper testOutputHelper) : base(Defaults.CreateTestOutput(testOutputHelper)) =>
         // this is the wrapped one.
@@ -16,12 +15,12 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
     public Task Should_Create_Usable_Logger()
     {
         using var _ = new Impl(_testOutputHelper);
-        A.CallTo(() => _testOutputHelper.WriteLine(A<string>._)).MustHaveHappened();
+        _testOutputHelper.WriteLine(Any<string>()).WasCalled();
         return Task.CompletedTask;
     }
 
     [Fact]
-    public Task Should_Create_A_Log_Stream()
+    public async Task Should_Create_A_Log_Stream()
     {
         Logger.Information("this is a test 1");
 
@@ -32,12 +31,11 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Count().ShouldBe(1);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(1);
     }
 
     [Fact]
-    public Task Should_Create_A_Log_Filter_Stream()
+    public async Task Should_Create_A_Log_Filter_Stream()
     {
         Logger.Information("this is a test 1");
 
@@ -51,12 +49,11 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Count().ShouldBe(3);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(3);
     }
 
     [Fact]
-    public Task Should_Create_A_Serilog_Stream()
+    public async Task Should_Create_A_Serilog_Stream()
     {
         Logger.Information("this is a test 1");
 
@@ -67,12 +64,11 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Count().ShouldBe(1);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(1);
     }
 
     [Fact]
-    public Task Should_Create_A_Log_Serilog_Stream()
+    public async Task Should_Create_A_Log_Serilog_Stream()
     {
         Logger.Information("this is a test 1");
 
@@ -86,29 +82,27 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         }
 
         Logger.Information("this is a test 3");
-        logs.Count().ShouldBe(3);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(3);
     }
 
     [Fact]
-    public Task Should_Exclude_SourceContext_Messages()
+    public async Task Should_Exclude_SourceContext_Messages()
     {
         using var listener = CaptureLogs(out var logs);
         var factory = CreateLoggerFactory();
         var logger = factory.CreateLogger("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Count().ShouldBe(1);
+        await logs.Count().Should().BeEqualTo(1);
 
         ExcludeSourceContext("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Count().ShouldBe(1);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(1);
     }
 
     [Fact]
-    public Task Should_Include_SourceContext_Messages()
+    public async Task Should_Include_SourceContext_Messages()
     {
         using var listener = CaptureLogs(out var logs);
         var factory = CreateLoggerFactory();
@@ -118,14 +112,13 @@ public class LoggerTestTests : LoggerTest<TestOutputTestContext>
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Count().ShouldBe(2);
+        await logs.Count().Should().BeEqualTo(2);
 
         IncludeSourceContext("MyLogger");
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Count().ShouldBe(3);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(3);
     }
 
     private class Impl : LoggerTest<TestOutputTestContext>

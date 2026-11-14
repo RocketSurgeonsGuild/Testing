@@ -6,10 +6,16 @@
         <NoWarn>$(NoWarn);RS1036;RS1016;RS1041;RS2008</NoWarn>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
+        <!-- TUnit.Mocks brings in TUnit.Core, but this project runs on xUnit: keep TUnit's global usings and test discovery generator out. -->
+        <TUnitImplicitUsings>false</TUnitImplicitUsings>
+        <EnableTUnitSourceGeneration>false</EnableTUnitSourceGeneration>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Verify.XUnitV3" />
         <PackageReference Include="xunit.v3" />
+        <PackageReference Include="TUnit.Mocks" />
+        <!-- The Fake/ tests exercise the AutoFakeTest (FakeItEasy) integration itself, so they keep using FakeItEasy. -->
+        <PackageReference Include="FakeItEasy" />
         <PackageReference Include="xunit.analyzers" />
         <PackageReference Include="Serilog.Sinks.Spectre" />
         <PackageReference Include="Verify.SourceGenerators" />

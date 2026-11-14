@@ -1,4 +1,3 @@
-using FakeItEasy.Creation;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Spectre;
@@ -15,6 +14,4 @@ public class TestOutputTestContext(LogEventLevel logEventLevel = LogEventLevel.V
            .MinimumLevel.Is(_logEventLevel)
            .WriteTo.Spectre(outputTemplate: OutputTemplate);
     }
-
-    public Action<IFakeOptions>? FakeOptionsAction => null;
 }

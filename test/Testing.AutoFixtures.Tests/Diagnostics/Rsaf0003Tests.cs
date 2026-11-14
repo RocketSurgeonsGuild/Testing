@@ -13,9 +13,9 @@ public class Rsaf0003Tests
         var result = await context.GenerateAsync(TestContext.Current.CancellationToken);
 
         // Then
-        result
+        await result
            .AnalyzerResults
-           .ShouldContain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Rsaf0003.Descriptor.Id));
+           .Should().Contain(pair => pair.Value.Diagnostics.All(diagnostic => diagnostic.Id == Rsaf0003.Descriptor.Id));
     }
 
     [Theory]

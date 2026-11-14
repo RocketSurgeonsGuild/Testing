@@ -1,4 +1,6 @@
+using TUnit.Assertions.Extensions;
 using ILogger = Serilog.ILogger;
+using TUnitAssert = TUnit.Assertions.Assert;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit3.Tests.Fake;
 
@@ -6,55 +8,55 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
 {
 
     [Fact]
-    public void Does_Not_Auto_Fake_Enumerable()
+    public async Task Does_Not_Auto_Fake_Enumerable()
     {
         AutoFake.Provide<Item>(new A());
         AutoFake.Provide<Item>(new B());
 
-        AutoFake.Resolve<IEnumerable<Item>>().Count().ShouldBe(2);
+        await AutoFake.Resolve<IEnumerable<Item>>().Count().Should().BeEqualTo(2);
     }
 
     [Fact]
-    public void Handle_Zero_Items() => AutoFake.Resolve<IEnumerable<Item>>().Count().ShouldBe(0);
+    public async Task Handle_Zero_Items() => await AutoFake.Resolve<IEnumerable<Item>>().Count().Should().BeEqualTo(0);
 
     [Fact]
-    public void Handle_One_Fake_Item()
+    public async Task Handle_One_Fake_Item()
     {
         var fake1 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoFake.Resolve<IEnumerable<Item>>().ToArray();
-        result.Count().ShouldBe(1);
-        result.ShouldContain(fake1);
+        await result.Count().Should().BeEqualTo(1);
+        await result.Should().Contain(fake1);
     }
 
     [Fact]
-    public void Handle_Two_Fake_Item()
+    public async Task Handle_Two_Fake_Item()
     {
         var fake1 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
         var fake2 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoFake.Resolve<IEnumerable<Item>>().ToArray();
-        result.Count().ShouldBe(2);
-        result.ShouldContain(fake1);
-        result.ShouldContain(fake2);
+        await result.Count().Should().BeEqualTo(2);
+        await result.Should().Contain(fake1);
+        await result.Should().Contain(fake2);
     }
 
     [Fact]
-    public void Handle_Three_Fake_Item()
+    public async Task Handle_Three_Fake_Item()
     {
         var fake1 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
         var fake2 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
         var fake3 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoFake.Resolve<IEnumerable<Item>>().ToArray();
-        result.Count().ShouldBe(3);
-        result.ShouldContain(fake1);
-        result.ShouldContain(fake2);
-        result.ShouldContain(fake3);
+        await result.Count().Should().BeEqualTo(3);
+        await result.Should().Contain(fake1);
+        await result.Should().Contain(fake2);
+        await result.Should().Contain(fake3);
     }
 
     [Fact]
-    public void Handle_Four_Fake_Item()
+    public async Task Handle_Four_Fake_Item()
     {
         var fake1 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
         var fake2 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
@@ -62,23 +64,23 @@ public class AutoFakeEnumerableTests(ITestOutputHelper outputHelper) : AutoFakeT
         var fake4 = AutoFake.Provide(FakeItEasy.A.Fake<Item>());
 
         var result = AutoFake.Resolve<IEnumerable<Item>>().ToArray();
-        result.Count().ShouldBe(4);
-        result.ShouldContain(fake1);
-        result.ShouldContain(fake2);
-        result.ShouldContain(fake3);
-        result.ShouldContain(fake4);
+        await result.Count().Should().BeEqualTo(4);
+        await result.Should().Contain(fake1);
+        await result.Should().Contain(fake2);
+        await result.Should().Contain(fake3);
+        await result.Should().Contain(fake4);
     }
 
     [Fact]
     [Obsolete("TBD")]
-    public void Should_Handle_Creating_A_Mock_With_Logger()
+    public async Task Should_Handle_Creating_A_Mock_With_Logger()
     {
-        var a = () =>
-                {
-                    var lt = AutoFake.Resolve<LoggerTest>();
-                    AutoFake.Provide<Item>(lt);
-                };
-        a.ShouldNotThrow();
+        void a()
+        {
+            var lt = AutoFake.Resolve<LoggerTest>();
+            AutoFake.Provide<Item>(lt);
+        }
+        await TUnitAssert.That(a).ThrowsNothing();
     }
 
     public interface Item { }

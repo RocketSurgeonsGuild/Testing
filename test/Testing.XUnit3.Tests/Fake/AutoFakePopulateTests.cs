@@ -2,38 +2,40 @@ using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TUnit.Assertions.Extensions;
+using TUnitAssert = TUnit.Assertions.Assert;
 
 namespace Rocket.Surgery.Extensions.Testing.XUnit3.Tests.Fake;
 
 public class AutoFakePopulateTests(ITestOutputHelper outputHelper) : AutoFakeTest<TestOutputTestContext>(Defaults.CreateTestOutput(outputHelper))
 {
     [Fact]
-    public void Should_Populate_Configuration_And_Services()
+    public async Task Should_Populate_Configuration_And_Services()
     {
         Container.Populate(new ServiceCollection().AddSingleton(new A()));
         Container.RegisterInstance<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?> { ["a"] = "1", }).Build());
-        Configuration.GetValue<string>("a").ShouldBe("1");
-        ServiceProvider.GetRequiredService<A>().ShouldBeSameAs(ServiceProvider.GetService<A>());
+        await Configuration.GetValue<string>("a").Should().BeEqualTo("1");
+        await ServiceProvider.GetRequiredService<A>().Should().BeSameReferenceAs(ServiceProvider.GetService<A>());
     }
 
     [Fact]
-    public void Should_Populate_Services()
+    public async Task Should_Populate_Services()
     {
         Populate(
             new ServiceCollection()
                .AddSingleton(new A())
                .AddSingleton<IConfiguration>(new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?> { ["a"] = "1", }).Build())
         );
-        Configuration.GetValue<string>("a").ShouldBe("1");
-        ServiceProvider.GetRequiredService<A>().ShouldBeSameAs(ServiceProvider.GetService<A>());
+        await Configuration.GetValue<string>("a").Should().BeEqualTo("1");
+        await ServiceProvider.GetRequiredService<A>().Should().BeSameReferenceAs(ServiceProvider.GetService<A>());
     }
 
     [Fact]
-    public void Should_Populate_Container()
+    public async Task Should_Populate_Container()
     {
         Populate(new Container());
-        Configuration.GetValue<string>("a").ShouldBeNullOrEmpty();
-        Container.IsRegistered<A>().ShouldBeFalse();
+        await TUnitAssert.That(Configuration.GetValue<string>("a")).IsNullOrEmpty();
+        await Container.IsRegistered<A>().Should().BeFalse();
     }
 
     private class A;

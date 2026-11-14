@@ -6,7 +6,7 @@ namespace Rocket.Surgery.Extensions.Testing.TUnit.Tests;
 public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create())
 {
     [Test]
-    public Task Should_Create_A_Log_Stream()
+    public async Task Should_Create_A_Log_Stream()
     {
         Logger.Information("this is a test 1");
 
@@ -17,12 +17,11 @@ public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create())
         }
 
         Logger.Information("this is a test 3");
-        logs.Count().ShouldBe(1);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(1);
     }
 
     [Test]
-    public Task Should_Create_A_Log_Filter_Stream()
+    public async Task Should_Create_A_Log_Filter_Stream()
     {
         Logger.Information("this is a test 1");
 
@@ -36,12 +35,11 @@ public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create())
         }
 
         Logger.Information("this is a test 3");
-        logs.Count().ShouldBe(3);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(3);
     }
 
     [Test]
-    public Task Should_Create_A_Serilog_Stream()
+    public async Task Should_Create_A_Serilog_Stream()
     {
         Logger.Information("this is a test 1");
 
@@ -52,12 +50,11 @@ public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create())
         }
 
         Logger.Information("this is a test 3");
-        logs.Count().ShouldBe(1);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(1);
     }
 
     [Test]
-    public Task Should_Create_A_Log_Serilog_Stream()
+    public async Task Should_Create_A_Log_Serilog_Stream()
     {
         Logger.Information("this is a test 1");
 
@@ -71,29 +68,27 @@ public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create())
         }
 
         Logger.Information("this is a test 3");
-        logs.Count().ShouldBe(3);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(3);
     }
 
     [Test]
-    public Task Should_Exclude_SourceContext_Messages()
+    public async Task Should_Exclude_SourceContext_Messages()
     {
         using var listener = CaptureLogs(out var logs);
         var Factory = CreateLoggerFactory();
         var logger = Factory.CreateLogger("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Count().ShouldBe(1);
+        await logs.Count().Should().BeEqualTo(1);
 
         ExcludeSourceContext("MyLogger");
         logger.LogInformation("Info");
 
-        logs.Count().ShouldBe(1);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(1);
     }
 
     [Test]
-    public Task Should_Include_SourceContext_Messages()
+    public async Task Should_Include_SourceContext_Messages()
     {
         using var listener = CaptureLogs(out var logs);
         var Factory = CreateLoggerFactory();
@@ -103,13 +98,12 @@ public class LoggerTestTests() : LoggerTest<TestRecord>(TestRecord.Create())
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Count().ShouldBe(2);
+        await logs.Count().Should().BeEqualTo(2);
 
         IncludeSourceContext("MyLogger");
         logger.LogInformation("Info");
         otherLogger.LogInformation("Info");
 
-        logs.Count().ShouldBe(3);
-        return Task.CompletedTask;
+        await logs.Count().Should().BeEqualTo(3);
     }
 }

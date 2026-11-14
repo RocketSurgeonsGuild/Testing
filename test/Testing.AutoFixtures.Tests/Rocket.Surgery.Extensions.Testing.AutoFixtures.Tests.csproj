@@ -11,6 +11,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging" />
+        <!-- The generator emits FakeItEasy or NSubstitute fixtures; the test data adds both assemblies to the generator compilation. -->
+        <PackageReference Include="FakeItEasy" />
         <PackageReference Include="NSubstitute" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" />
     </ItemGroup>
