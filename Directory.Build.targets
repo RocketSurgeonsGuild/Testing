@@ -29,4 +29,14 @@
             <AdditionalProperties>RuntimeIdentifier=browser-wasm</AdditionalProperties>
         </ProjectReference>
     </ItemDefinitionGroup>
+    <!--
+        On CI, skip Verify's sponsor check: the Verify_SponsorshipExemption in Directory.Build.props already settles it. The check calls
+        MSBuild on every project reference of each test project's inner build, and each call waits for the node that owns that
+        configuration, which holds up test builds behind unrelated compiles (LaunchPad #3203 measured 12,226 s of that waiting).
+        ContinuousIntegrationBuild comes from Rocket.Surgery.MSBuild.CI's props, which load after Directory.Build.props, so this has
+        to be in a .targets file. The suffix is Verify's hash of its package id; if Verify renames the property this just stops applying.
+    -->
+    <PropertyGroup Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+        <_SponsorCheck_OwnerVerified_Verify_eea2745e>true</_SponsorCheck_OwnerVerified_Verify_eea2745e>
+    </PropertyGroup>
 </Project>
