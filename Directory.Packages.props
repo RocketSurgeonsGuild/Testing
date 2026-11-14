@@ -8,7 +8,6 @@
     <GlobalPackageReference Include="Rocket.Surgery.MSBuild.GlobalAnalyzerConfig" Version="1.3.0-beta.2" />
     <GlobalPackageReference Include="Rocket.Surgery.MSBuild.GitVersion" Version="1.3.0-beta.2" />
     <GlobalPackageReference Include="Rocket.Surgery.MSBuild.SourceLink" Version="1.3.0-beta.2" />
-    <GlobalPackageReference Include="Rocket.Surgery.MyAssembly" Version="1.3.0-beta.2" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="5.6.0" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="11.0.100" />
@@ -27,7 +26,10 @@
   <ItemGroup>
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.12.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.5.3" />
-    <PackageVersion Include="Rocket.Surgery.ModularPipelines.Extensions" Version="0.1.15" />
+    <PackageVersion Include="Rocket.Surgery.ModularPipelines.Extensions" Version="0.2.2" />
+    <!-- The build host (build/Build.cs) references the published Dovetail and Specular generators directly, as Rocket.Surgery.ModularPipelines.Extensions requires; they write ConfigureDovetail and the module scan into it. -->
+    <PackageVersion Include="Joinery.Dovetail.ModularPipelines" Version="0.5.3" />
+    <PackageVersion Include="Specular" Version="0.4.1" />
     <PackageVersion Include="Sourcy.DotNet" Version="1.1.1" />
     <PackageVersion Include="Sourcy.Git" Version="1.1.1" />
     <PackageVersion Include="Microsoft.VisualStudio.SolutionPersistence" Version="1.0.52" />

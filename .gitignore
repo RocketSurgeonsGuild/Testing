@@ -251,3 +251,6 @@ docs/api/
 .claude/apm-hooks.json
 .github/hooks/
 .github/copilot/settings.local.json
+
+# ModularPipelines run history and module cache (Rocket.Surgery.ModularPipelines.Extensions 0.2+)
+.modularpipelines/
