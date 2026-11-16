@@ -4,6 +4,8 @@
         <IsTestProject>false</IsTestProject>
         <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
         <IsMagicProject>true</IsMagicProject>
+        <PackageTags>$(PackageTags);fakeiteasy;mocking;auto-mocking;automock;dryioc;verify</PackageTags>
+        <PackageDescription>AutoFakeTest&lt;TContext&gt; and AutoFake, a DryIoc container that resolves the class under test and fills in FakeItEasy fakes for dependencies it can't construct. Also initializes Verify.FakeItEasy.</PackageDescription>
     </PropertyGroup>
     <ItemGroup>
         <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.Tests" />

@@ -4,6 +4,8 @@
         <IsTestProject>false</IsTestProject>
         <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
         <IsMagicProject>true</IsMagicProject>
+        <PackageTags>$(PackageTags);nsubstitute;mocking;auto-mocking;automock;dryioc;verify</PackageTags>
+        <PackageDescription>AutoSubstituteTest&lt;TContext&gt; and AutoSubstitute, a DryIoc container that resolves the class under test and fills in NSubstitute substitutes for dependencies it can't construct. Also initializes Verify.NSubstitute.</PackageDescription>
     </PropertyGroup>
     <ItemGroup>
         <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.Tests" />

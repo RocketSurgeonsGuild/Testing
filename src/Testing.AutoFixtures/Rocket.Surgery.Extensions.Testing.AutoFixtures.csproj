@@ -8,6 +8,8 @@
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <GeneratedFolder>Generated</GeneratedFolder>
         <!--        <IncludeBuildOutput>false</IncludeBuildOutput>-->
+        <PackageTags>$(PackageTags);source-generator;roslyn;test-data;test-fixtures;fixture-builder;builder-pattern;fakeiteasy;nsubstitute</PackageTags>
+        <PackageDescription>Source generator that writes a test data builder from a class's constructor for types marked with [AutoFixture], with a With method per parameter and FakeItEasy or NSubstitute fakes as defaults.</PackageDescription>
     </PropertyGroup>
     <ItemGroup>
         <Compile Remove="$(GeneratedFolder)/**/*.cs" />

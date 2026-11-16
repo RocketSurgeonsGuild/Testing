@@ -8,12 +8,8 @@
         <PackageIcon>images/packageicon.png</PackageIcon>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
-        <!--
-            in package
-            Title
-            Description
-            Tags
-        -->
+        <!-- Tags every Rocket.Surgery.Extensions.Testing package shares; each project appends its own with $(PackageTags);... -->
+        <PackageTags>rocket-surgery;testing;unit-testing;test-helpers</PackageTags>
         <LangVersion>preview</LangVersion>
         <Features>strict</Features>
         <Nullable>enable</Nullable>

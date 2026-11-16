@@ -1,41 +1,94 @@
-# Rocket Surgeons - Testing
+# Rocket Surgery Testing
 
-# Status
+Test helpers for .NET: a test base class that sends Serilog output to your test framework and captures log events for
+assertions, auto-mocking containers for FakeItEasy and NSubstitute, test data builders, and a harness for testing Roslyn
+source generators, analyzers and code fixes. TUnit and xUnit v3 are supported.
 
-<!-- badges -->
 [![github-release-badge]][github-release]
 [![github-license-badge]][github-license]
+[![github-build-badge]][github-build]
 [![codecov-badge]][codecov]
-<!-- badges -->
+[![nuget-Rocket.Surgery.Extensions.Testing-badge]][nuget-Rocket.Surgery.Extensions.Testing]
 
-<!-- history badges -->
-| GitHub Actions |
-| -------------- |
-| [![github-badge]][github] |
-| [![github-history-badge]][github] |
-<!-- history badges -->
+Documentation: [docs/src/content/docs](https://github.com/RocketSurgeonsGuild/Testing/tree/main/docs/src/content/docs)
 
-<!-- nuget packages -->
-| Package | NuGet |
-| ------- | ----- |
-| Rocket.Surgery.Extensions.Testing | [![nuget-version-ingbk+ngdt+w-badge]![nuget-downloads-ingbk+ngdt+w-badge]][nuget-ingbk+ngdt+w] |
-| Rocket.Surgery.Extensions.Testing.Analyzers | [![nuget-version-is2d/pp3l2nq-badge]![nuget-downloads-is2d/pp3l2nq-badge]][nuget-is2d/pp3l2nq] |
-| Rocket.Surgery.Extensions.Testing.AutoFixtures | [![nuget-version-zo+gi4/wtnoq-badge]![nuget-downloads-zo+gi4/wtnoq-badge]][nuget-zo+gi4/wtnoq] |
-| Rocket.Surgery.Extensions.Testing.FakeItEasy | [![nuget-version-6rnnzg4ixtvq-badge]![nuget-downloads-6rnnzg4ixtvq-badge]][nuget-6rnnzg4ixtvq] |
-| Rocket.Surgery.Extensions.Testing.Fixtures | [![nuget-version-xegxxxxh/pzg-badge]![nuget-downloads-xegxxxxh/pzg-badge]][nuget-xegxxxxh/pzg] |
-| Rocket.Surgery.Extensions.Testing.Moq | [![nuget-version-lgkm8pi65yea-badge]![nuget-downloads-lgkm8pi65yea-badge]][nuget-lgkm8pi65yea] |
-| Rocket.Surgery.Extensions.Testing.NSubstitute | [![nuget-version-fyo8rfzowxvg-badge]![nuget-downloads-fyo8rfzowxvg-badge]][nuget-fyo8rfzowxvg] |
-| Rocket.Surgery.Extensions.Testing.SourceGenerators | [![nuget-version-m2gtxx+rpfoa-badge]![nuget-downloads-m2gtxx+rpfoa-badge]][nuget-m2gtxx+rpfoa] |
-| Rocket.Surgery.Extensions.Testing.TUnit | [![nuget-version-62wdpzblxeyq-badge]![nuget-downloads-62wdpzblxeyq-badge]][nuget-62wdpzblxeyq] |
-| Rocket.Surgery.Extensions.Testing.XUnit | [![nuget-version-8nuftac8whxa-badge]![nuget-downloads-8nuftac8whxa-badge]][nuget-8nuftac8whxa] |
-| Rocket.Surgery.Extensions.Testing.XUnit3 | [![nuget-version-qbcmvuq1m6jg-badge]![nuget-downloads-qbcmvuq1m6jg-badge]][nuget-qbcmvuq1m6jg] |
-<!-- nuget packages -->
+## Getting started
 
-# Whats next?
+Add the package for your test framework. It brings in `Rocket.Surgery.Extensions.Testing`:
 
-TBD
+```bash
+# TUnit
+dotnet add package Rocket.Surgery.Extensions.Testing.TUnit
 
-# Contributing
+# xUnit v3
+dotnet add package Rocket.Surgery.Extensions.Testing.XUnit3
+```
+
+Derive the test class from `LoggerTest<TContext>`. `Logger` writes to the current test's output, and `CaptureLogs`
+collects the events written until it is disposed:
+
+```csharp
+using Serilog.Events;
+using Rocket.Surgery.Extensions.Testing;
+
+public class OrderServiceTests() : LoggerTest<TestRecord>(TestRecord.Create())
+{
+    [Test]
+    public async Task Logs_a_warning_for_empty_orders()
+    {
+        using var capture = CaptureLogs(log => log.Level >= LogEventLevel.Warning, out var logs);
+
+        Logger.Information("not captured: below the filter");
+        Logger.Warning("order {OrderId} has no lines", 42);
+
+        await Assert.That(logs.Count()).IsEqualTo(1);
+    }
+}
+```
+
+With `Rocket.Surgery.Extensions.Testing.FakeItEasy`, derive from `AutoFakeTest<TContext>` instead. `AutoFake.Resolve<T>()`
+builds the class under test and fakes every dependency the container can't construct, returning the same fake each time
+within a test:
+
+```csharp
+using FakeItEasy;
+using Rocket.Surgery.Extensions.Testing;
+
+public class CheckoutTests() : AutoFakeTest<TestRecord>(TestRecord.Create())
+{
+    [Test]
+    public async Task Charges_the_customer()
+    {
+        var payments = AutoFake.Resolve<IPaymentGateway>();
+        var checkout = AutoFake.Resolve<CheckoutService>();
+
+        await checkout.CompleteAsync(orderId: 42);
+
+        A.CallTo(() => payments.ChargeAsync(42, A<CancellationToken>._)).MustHaveHappenedOnceExactly();
+    }
+}
+```
+
+See the [quickstart](https://github.com/RocketSurgeonsGuild/Testing/blob/main/docs/src/content/docs/guide/quickstart.md), [auto-mocking](https://github.com/RocketSurgeonsGuild/Testing/blob/main/docs/src/content/docs/reference/auto-mocking.md),
+[fixtures](https://github.com/RocketSurgeonsGuild/Testing/blob/main/docs/src/content/docs/reference/fixtures.md) and [source generator testing](https://github.com/RocketSurgeonsGuild/Testing/blob/main/docs/src/content/docs/reference/source-generators.md) pages.
+
+## Packages
+
+| Package                                                                                                        | NuGet                                                                                                                         | What it does                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Rocket.Surgery.Extensions.Testing][nuget-Rocket.Surgery.Extensions.Testing]                                   | [![nuget-Rocket.Surgery.Extensions.Testing-badge]][nuget-Rocket.Surgery.Extensions.Testing]                                   | `LoggerTest<TContext>`, which wires Serilog to the test output and captures log events, and the DryIoc helpers the mocking packages build on    |
+| [Rocket.Surgery.Extensions.Testing.TUnit][nuget-Rocket.Surgery.Extensions.Testing.TUnit]                       | [![nuget-Rocket.Surgery.Extensions.Testing.TUnit-badge]][nuget-Rocket.Surgery.Extensions.Testing.TUnit]                       | `TestRecord`, the test context for TUnit                                                                                                        |
+| [Rocket.Surgery.Extensions.Testing.XUnit3][nuget-Rocket.Surgery.Extensions.Testing.XUnit3]                     | [![nuget-Rocket.Surgery.Extensions.Testing.XUnit3-badge]][nuget-Rocket.Surgery.Extensions.Testing.XUnit3]                     | `XUnitTestContext`, the test context for xUnit v3                                                                                               |
+| [Rocket.Surgery.Extensions.Testing.FakeItEasy][nuget-Rocket.Surgery.Extensions.Testing.FakeItEasy]             | [![nuget-Rocket.Surgery.Extensions.Testing.FakeItEasy-badge]][nuget-Rocket.Surgery.Extensions.Testing.FakeItEasy]             | `AutoFakeTest<TContext>`: a DryIoc container that resolves the system under test and fakes missing dependencies with FakeItEasy                 |
+| [Rocket.Surgery.Extensions.Testing.NSubstitute][nuget-Rocket.Surgery.Extensions.Testing.NSubstitute]           | [![nuget-Rocket.Surgery.Extensions.Testing.NSubstitute-badge]][nuget-Rocket.Surgery.Extensions.Testing.NSubstitute]           | `AutoSubstituteTest<TContext>`: the same container with NSubstitute substitutes                                                                 |
+| [Rocket.Surgery.Extensions.Testing.Fixtures][nuget-Rocket.Surgery.Extensions.Testing.Fixtures]                 | [![nuget-Rocket.Surgery.Extensions.Testing.Fixtures-badge]][nuget-Rocket.Surgery.Extensions.Testing.Fixtures]                 | `ITestFixtureBuilder` and the `With` helpers for hand-written test data builders                                                                |
+| [Rocket.Surgery.Extensions.Testing.AutoFixtures][nuget-Rocket.Surgery.Extensions.Testing.AutoFixtures]         | [![nuget-Rocket.Surgery.Extensions.Testing.AutoFixtures-badge]][nuget-Rocket.Surgery.Extensions.Testing.AutoFixtures]         | Source generator that writes a fixture builder from a constructor, marked with `[AutoFixture]`                                                  |
+| [Rocket.Surgery.Extensions.Testing.SourceGenerators][nuget-Rocket.Surgery.Extensions.Testing.SourceGenerators] | [![nuget-Rocket.Surgery.Extensions.Testing.SourceGenerators-badge]][nuget-Rocket.Surgery.Extensions.Testing.SourceGenerators] | `GeneratorTestContextBuilder`: compiles sources, runs generators, analyzers, code fixes and refactorings, and snapshots the results with Verify |
+
+`Rocket.Surgery.Extensions.Testing.Analyzers` comes in with `Rocket.Surgery.Extensions.Testing`, so you don't
+reference it yourself. It ships no analyzer rules at present.
+
+## Contributing
 
 Run `mise install` before building: it installs the .NET SDK and the extra .NET 10 runtime that the net10.0 tests run on (`.config/mise.toml`). `global.json` pins the same SDK, so a `dotnet` outside mise fails fast unless that SDK is installed.
 
@@ -46,53 +99,31 @@ Run `mise install` before building: it installs the .NET SDK and the extra .NET 
 > cd ~/.local/share/mise/dotnet-root && cp -p dotnet dotnet.fresh && mv -f dotnet.fresh dotnet
 > ```
 
-<!-- generated references -->
+<!-- references -->
+
 [github-release]: https://github.com/RocketSurgeonsGuild/Testing/releases/latest
 [github-release-badge]: https://img.shields.io/github/release/RocketSurgeonsGuild/Testing.svg?logo=github&style=flat "Latest Release"
-[github-license]: https://github.com/RocketSurgeonsGuild/Testing/blob/master/LICENSE
+[github-license]: https://github.com/RocketSurgeonsGuild/Testing/blob/main/LICENSE
 [github-license-badge]: https://img.shields.io/github/license/RocketSurgeonsGuild/Testing.svg?style=flat "License"
+[github-build]: https://github.com/RocketSurgeonsGuild/Testing/actions/workflows/build.yml
+[github-build-badge]: https://github.com/RocketSurgeonsGuild/Testing/actions/workflows/build.yml/badge.svg?branch=main "Build"
 [codecov]: https://codecov.io/gh/RocketSurgeonsGuild/Testing
-[codecov-badge]: https://img.shields.io/codecov/c/github/RocketSurgeonsGuild/Testing.svg?color=E03997&label=codecov&logo=codecov&logoColor=E03997&style=flat "Code Coverage"
-[github]: https://github.com/RocketSurgeonsGuild/Testing/actions?query=workflow%3Aci
-[github-badge]: https://img.shields.io/github/workflow/status/RocketSurgeonsGuild/Testing/ci.svg?label=github&logo=github&color=b845fc&logoColor=b845fc&style=flat "GitHub Actions Status"
-[github-history-badge]: https://buildstats.info/github/chart/RocketSurgeonsGuild/Testing?includeBuildsFromPullRequest=false "GitHub Actions History"
-[nuget-ingbk+ngdt+w]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing/
-[nuget-version-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-ingbk+ngdt+w-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-is2d/pp3l2nq]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Analyzers/
-[nuget-version-is2d/pp3l2nq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Analyzers.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-is2d/pp3l2nq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Analyzers.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-zo+gi4/wtnoq]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.AutoFixtures/
-[nuget-version-zo+gi4/wtnoq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.AutoFixtures.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-zo+gi4/wtnoq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.AutoFixtures.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-6rnnzg4ixtvq]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.FakeItEasy/
-[nuget-version-6rnnzg4ixtvq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.FakeItEasy.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-6rnnzg4ixtvq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.FakeItEasy.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-xegxxxxh/pzg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Fixtures/
-[nuget-version-xegxxxxh/pzg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Fixtures.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-xegxxxxh/pzg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Fixtures.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-lgkm8pi65yea]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Moq/
-[nuget-version-lgkm8pi65yea-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Moq.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-lgkm8pi65yea-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.Moq.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-fyo8rfzowxvg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.NSubstitute/
-[nuget-version-fyo8rfzowxvg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.NSubstitute.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-fyo8rfzowxvg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.NSubstitute.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-m2gtxx+rpfoa]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.SourceGenerators/
-[nuget-version-m2gtxx+rpfoa-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.SourceGenerators.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-m2gtxx+rpfoa-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.SourceGenerators.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-62wdpzblxeyq]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.TUnit/
-[nuget-version-62wdpzblxeyq-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.TUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-62wdpzblxeyq-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.TUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-8nuftac8whxa]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.XUnit/
-[nuget-version-8nuftac8whxa-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.XUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-8nuftac8whxa-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.XUnit.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-[nuget-qbcmvuq1m6jg]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.XUnit3/
-[nuget-version-qbcmvuq1m6jg-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.XUnit3.svg?color=004880&logo=nuget&style=flat-square "NuGet Version"
-[nuget-downloads-qbcmvuq1m6jg-badge]: https://img.shields.io/nuget/dt/Rocket.Surgery.Extensions.Testing.XUnit3.svg?color=004880&logo=nuget&style=flat-square "NuGet Downloads"
-<!-- generated references -->
-
-<!-- nuke-data
-github:
-  owner: RocketSurgeonsGuild
-  repository: Testing
--->
+[codecov-badge]: https://img.shields.io/codecov/c/github/RocketSurgeonsGuild/Testing.svg?logo=codecov&style=flat "Code Coverage"
+[nuget-Rocket.Surgery.Extensions.Testing]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing/
+[nuget-Rocket.Surgery.Extensions.Testing-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.svg?logo=nuget&style=flat
+[nuget-Rocket.Surgery.Extensions.Testing.TUnit]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.TUnit/
+[nuget-Rocket.Surgery.Extensions.Testing.TUnit-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.TUnit.svg?logo=nuget&style=flat
+[nuget-Rocket.Surgery.Extensions.Testing.XUnit3]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.XUnit3/
+[nuget-Rocket.Surgery.Extensions.Testing.XUnit3-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.XUnit3.svg?logo=nuget&style=flat
+[nuget-Rocket.Surgery.Extensions.Testing.FakeItEasy]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.FakeItEasy/
+[nuget-Rocket.Surgery.Extensions.Testing.FakeItEasy-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.FakeItEasy.svg?logo=nuget&style=flat
+[nuget-Rocket.Surgery.Extensions.Testing.NSubstitute]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.NSubstitute/
+[nuget-Rocket.Surgery.Extensions.Testing.NSubstitute-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.NSubstitute.svg?logo=nuget&style=flat
+[nuget-Rocket.Surgery.Extensions.Testing.Fixtures]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Fixtures/
+[nuget-Rocket.Surgery.Extensions.Testing.Fixtures-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Fixtures.svg?logo=nuget&style=flat
+[nuget-Rocket.Surgery.Extensions.Testing.AutoFixtures]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.AutoFixtures/
+[nuget-Rocket.Surgery.Extensions.Testing.AutoFixtures-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.AutoFixtures.svg?logo=nuget&style=flat
+[nuget-Rocket.Surgery.Extensions.Testing.SourceGenerators]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.SourceGenerators/
+[nuget-Rocket.Surgery.Extensions.Testing.SourceGenerators-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.SourceGenerators.svg?logo=nuget&style=flat
+[nuget-Rocket.Surgery.Extensions.Testing.Analyzers]: https://www.nuget.org/packages/Rocket.Surgery.Extensions.Testing.Analyzers/
+[nuget-Rocket.Surgery.Extensions.Testing.Analyzers-badge]: https://img.shields.io/nuget/v/Rocket.Surgery.Extensions.Testing.Analyzers.svg?logo=nuget&style=flat
