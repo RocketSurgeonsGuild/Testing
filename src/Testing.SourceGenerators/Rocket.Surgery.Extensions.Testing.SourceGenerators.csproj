@@ -4,6 +4,7 @@
         <IsTestProject>false</IsTestProject>
         <IsMagicProject>true</IsMagicProject>
         <PackageTags>$(PackageTags);source-generator;roslyn;analyzers;code-fix;refactoring;generator-testing;snapshot-testing;verify</PackageTags>
+        <PackageDescription>GeneratorTestContextBuilder for testing Roslyn source generators, analyzers, code fixes, refactorings and completions: it compiles test sources, runs them and snapshots the results with Verify.SourceGenerators.</PackageDescription>
     </PropertyGroup>
 
     <ItemGroup>

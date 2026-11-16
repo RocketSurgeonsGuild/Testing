@@ -3,5 +3,6 @@
         <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
         <IsTestProject>false</IsTestProject>
         <PackageTags>$(PackageTags);test-data;test-fixtures;fixture-builder;builder-pattern</PackageTags>
+        <PackageDescription>ITestFixtureBuilder and the With extension methods for hand-written test data builders, with overloads that set a field or add items to List&lt;T&gt;, Collection&lt;T&gt; and dictionary fields.</PackageDescription>
     </PropertyGroup>
 </Project>

@@ -3,6 +3,7 @@
         <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
         <IsTestProject>false</IsTestProject>
         <PackageTags>$(PackageTags);logging;serilog;log-capture;dryioc;microsoft-extensions</PackageTags>
+        <PackageDescription>LoggerTest&lt;TContext&gt;, a test base class that sends Serilog output to the test framework and captures log events for assertions, plus the DryIoc resolver rules the FakeItEasy and NSubstitute auto-mocking packages build on.</PackageDescription>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="DryIoc.dll" />

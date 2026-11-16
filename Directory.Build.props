@@ -9,7 +9,7 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <!-- Tags every Rocket.Surgery.Extensions.Testing package shares; each project appends its own with $(PackageTags);... -->
-        <PackageTags>rocket-surgery;rocket-surgeons-guild;testing;unit-testing;test-helpers</PackageTags>
+        <PackageTags>rocket-surgery;testing;unit-testing;test-helpers</PackageTags>
         <LangVersion>preview</LangVersion>
         <Features>strict</Features>
         <Nullable>enable</Nullable>

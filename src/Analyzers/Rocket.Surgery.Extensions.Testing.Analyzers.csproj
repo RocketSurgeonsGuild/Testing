@@ -4,6 +4,7 @@
         <NoPackageAnalysis>true</NoPackageAnalysis>
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <PackageTags>$(PackageTags);roslyn;analyzers</PackageTags>
+        <PackageDescription>Placeholder Roslyn analyzer assembly with no analyzers, generators or diagnostics. Rocket.Surgery.Extensions.Testing references it, so there is no reason to install it directly.</PackageDescription>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="all" />

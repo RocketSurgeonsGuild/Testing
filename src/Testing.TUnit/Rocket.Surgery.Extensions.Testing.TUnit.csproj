@@ -5,6 +5,7 @@
         <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
         <IsMagicProject>true</IsMagicProject>
         <PackageTags>$(PackageTags);tunit;test-context;logging;serilog</PackageTags>
+        <PackageDescription>TestRecord, the TUnit test context for LoggerTest&lt;TContext&gt;, which writes Serilog output to the current TUnit test's output.</PackageDescription>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="BeaKona.AutoInterfaceGenerator" PrivateAssets="all" />
