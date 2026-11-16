@@ -2,5 +2,6 @@
     <PropertyGroup>
         <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
         <IsTestProject>false</IsTestProject>
+        <PackageTags>$(PackageTags);test-data;test-fixtures;fixture-builder;builder-pattern</PackageTags>
     </PropertyGroup>
 </Project>

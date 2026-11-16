@@ -2,6 +2,7 @@
     <PropertyGroup>
         <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
         <IsTestProject>false</IsTestProject>
+        <PackageTags>$(PackageTags);logging;serilog;log-capture;dryioc;microsoft-extensions</PackageTags>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="DryIoc.dll" />

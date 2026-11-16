@@ -8,6 +8,7 @@
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <GeneratedFolder>Generated</GeneratedFolder>
         <!--        <IncludeBuildOutput>false</IncludeBuildOutput>-->
+        <PackageTags>$(PackageTags);source-generator;roslyn;test-data;test-fixtures;fixture-builder;builder-pattern;fakeiteasy;nsubstitute</PackageTags>
     </PropertyGroup>
     <ItemGroup>
         <Compile Remove="$(GeneratedFolder)/**/*.cs" />

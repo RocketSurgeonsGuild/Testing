@@ -4,6 +4,7 @@
         <IsTestProject>false</IsTestProject>
         <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
         <IsMagicProject>true</IsMagicProject>
+        <PackageTags>$(PackageTags);fakeiteasy;mocking;auto-mocking;automock;dryioc;verify</PackageTags>
     </PropertyGroup>
     <ItemGroup>
         <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Testing.Tests" />

@@ -3,6 +3,7 @@
         <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
         <IsTestProject>false</IsTestProject>
         <IsMagicProject>true</IsMagicProject>
+        <PackageTags>$(PackageTags);source-generator;roslyn;analyzers;code-fix;refactoring;generator-testing;snapshot-testing;verify</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

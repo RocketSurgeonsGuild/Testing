@@ -4,6 +4,7 @@
         <IsTestProject>false</IsTestProject>
         <RootNamespace>Rocket.Surgery.Extensions.Testing</RootNamespace>
         <IsMagicProject>true</IsMagicProject>
+        <PackageTags>$(PackageTags);tunit;test-context;logging;serilog</PackageTags>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="BeaKona.AutoInterfaceGenerator" PrivateAssets="all" />
