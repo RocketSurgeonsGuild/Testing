@@ -13,7 +13,7 @@
     "@astrojs/starlight": "0.43.1",
     "astro": "7.4.12",
     "starlight-auto-drafts": "0.3.1",
-    "starlight-changelogs": "0.7.1",
+    "starlight-changelogs": "0.7.2",
     "starlight-github-alerts": "0.5.0",
     "starlight-heading-badges": "0.8.0",
     "starlight-image-zoom": "0.16.2",
