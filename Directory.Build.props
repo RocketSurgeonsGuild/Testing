@@ -1,31 +1,21 @@
 <Project>
+    <Sdk Name="Rocket.Surgery.Sdk" />
     <PropertyGroup>
+        <!-- No PublicAPI.*.txt tracking in this repository. -->
+        <RocketSurgeryPublicApiAnalyzers>false</RocketSurgeryPublicApiAnalyzers>
         <Company>Rocket Surgeons Guild</Company>
         <Copyright>Copyright Rocket Surgeons Guild © $([System.DateTime]::Now.ToString('yyyy'))</Copyright>
         <Authors>David Driscoll,Rocket Surgeons Guild contributors</Authors>
         <PackageProjectUrl>https://rocketsurgeonsguild.github.io/</PackageProjectUrl>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <PackageIcon>images/packageicon.png</PackageIcon>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <!-- Tags every Rocket.Surgery.Extensions.Testing package shares; each project appends its own with $(PackageTags);... -->
         <PackageTags>rocket-surgery;testing;unit-testing;test-helpers</PackageTags>
-        <LangVersion>preview</LangVersion>
-        <Features>strict</Features>
-        <Nullable>enable</Nullable>
-        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-        <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
-        <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <AnalysisLevel>latest</AnalysisLevel>
         <!--        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
         <!--        <WarningsNotAsErrors></WarningsNotAsErrors>-->
-        <WarningsAsErrors>RS0017</WarningsAsErrors>
 
-        <NuGetAudit>true</NuGetAudit>
-        <NuGetAuditMode>all</NuGetAuditMode>
-        <NuGetAuditLevel>moderate</NuGetAuditLevel>
         <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
@@ -65,7 +55,6 @@
         <ProjectCapability Include="DynamicFileNesting" />
     </ItemGroup>
     <ItemGroup>
-        <Using Include="JetBrains.Annotations" />
         <Using Include="System.Diagnostics.CodeAnalysis" />
         <Using Include="System.Diagnostics.CodeAnalysis.NotNullAttribute" Alias="NotNullAttribute" />
     </ItemGroup>
