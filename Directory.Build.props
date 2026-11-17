@@ -1,6 +1,8 @@
 <Project>
     <Sdk Name="Rocket.Surgery.Sdk" />
     <PropertyGroup>
+        <!-- Warnings stay non-fatal on CI, as before the SDK (the SDK defaults this on); RS0017 still fails the build. -->
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <!-- No PublicAPI.*.txt tracking in this repository. -->
         <RocketSurgeryPublicApiAnalyzers>false</RocketSurgeryPublicApiAnalyzers>
         <Company>Rocket Surgeons Guild</Company>
