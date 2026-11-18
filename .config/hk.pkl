@@ -1,6 +1,7 @@
-amends "package://github.com/jdx/hk/releases/download/v2.12.0/hk@2.12.0#/Config.pkl"
+amends "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/Config.pkl"
 
-import "package://github.com/jdx/hk/releases/download/v2.12.0/hk@2.12.0#/Builtins.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/Builtins.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/builtins/test/helpers.pkl"
 
 // Solution the .NET formatters operate against.
 local solution = "Testing.slnx"
@@ -15,6 +16,9 @@ local excludeDiagnostics = new Listing<String> {
   "CS1591"
   "CS8602"
   "CS8604"
+  // A nullable annotation outside a nullable context: reported when the formatter's workspace evaluates a project without its Nullable
+  // setting (CI's does for the samples), and "fixed" by stripping the annotation, which changes what HotChocolate infers.
+  "CS8632"
   "IDE0052"
   "IDE0060"
   "IDE0130"
@@ -33,21 +37,26 @@ local excludeDiagnostics = new Listing<String> {
   "RS0026"
 }
 
-local excludes = new Listing<String> {
-  "**/obj/**/*"
-  "**/bin/**/*"
-  ".git/**/*"
-  ".vs/**/*"
-  ".vscode/**/*"
-  ".idea/**/*"
-  ".claude/**/*"
-  ".agents/**/*"
-  ".apm/**/*"
-  ".copilot/**/*"
-  ".squad/**/*"
-  "**/*.verified.*"
-  "**/*.received.*"
-}
+local excludes =
+  List(
+    "**/obj/**/*",
+    "**/bin/**/*",
+    ".git/**/*",
+    ".vs/**/*",
+    ".vscode/**/*",
+    ".idea/**/*",
+    ".claude/**/*",
+    ".agents/**/*",
+    ".apm/**/*",
+    ".copilot/**/*",
+    ".squad/**/*",
+    "**/*.verified.*",
+    "**/*.received.*",
+  )
+
+local yamlTest = new helpers.TestMaker { filename = "foo.yml" }
+local badYaml = "key:   value\nlist:\n    -   item\n"
+local goodYaml = "key: value\nlist:\n  - item\n"
 
 local excludedDiagnosticsString = excludeDiagnostics.join(" ")
 
@@ -79,7 +88,10 @@ steps {
   ["tombi"] = Builtins.tombi
   ["tombi-format"] = Builtins.tombi_format
   ["xmllint"] = Builtins.xmllint
-  ["byte-order-marker"] = Builtins.byte_order_marker
+  // The schema the GraphQL sample's build writes keeps the BOM the build gives it; stripping it here only makes the next build put it back.
+  ["byte-order-marker"] = (Builtins.byte_order_marker) {
+    exclude = List("test/Sample.Graphql.Tests/schema.graphql")
+  }
   ["case-conflict"] = Builtins.check_case_conflict
   ["merge-conflict"] = Builtins.check_merge_conflict
   ["symlinks"] = Builtins.check_symlinks
@@ -91,7 +103,28 @@ steps {
   ["detect-private-key"] = Builtins.detect_private_key
   ["large-files"] = Builtins.check_added_large_files
   ["dotnet-format"] = dotnetFormat
-  // ["oxfmt"] = Builtins.oxfmt
+  // YAML, Markdown and CSS/HTML only: biome formats JS/TS/JSON and tombi formats TOML. Style and ignores live in .oxfmtrc.json.
+  ["oxfmt"] = (Builtins.oxfmt) {
+    glob =
+      List(
+        "**/*.yml",
+        "**/*.yaml",
+        "**/*.md",
+        "**/*.mdx",
+        "**/*.markdown",
+        "**/*.css",
+        "**/*.scss",
+        "**/*.html",
+        "**/*.htm",
+      )
+    // The builtin's tests format a .ts file, which this glob leaves to biome; test the same way with YAML.
+    tests = new {
+      ["check bad file"] = yamlTest.checkFail(badYaml, 1)
+      ["check good file"] = yamlTest.checkPass(goodYaml)
+      ["fix bad file"] = yamlTest.fixPass(badYaml, goodYaml)
+      ["diff bad file"] = yamlTest.diffPass(badYaml, goodYaml)
+    }
+  }
   // ["jb-cleanupcode"] = jbCleanupCode
 }
 
