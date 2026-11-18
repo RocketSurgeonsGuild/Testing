@@ -1,9 +1,12 @@
 <Project>
+    <!-- Before the parent import: the SDK it applies only wires up test extensions when IsTestProject is already true. -->
+    <PropertyGroup>
+        <IsTestProject>true</IsTestProject>
+        <!-- The build pipeline passes its own coverage settings; the option takes one value. -->
+        <RsgSdk_Testing_CoverageSettings>false</RsgSdk_Testing_CoverageSettings>
+    </PropertyGroup>
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
     <PropertyGroup>
-        <IsPackable>false</IsPackable>
-        <MergeCoverage>true</MergeCoverage>
-        <IncludeTestAssembly>true</IncludeTestAssembly>
         <!--
             The repo-wide LatestMajor would run the net10.0 tests on the newest installed runtime (.NET 11), so a .NET 10 regression
             would pass CI. Keep each target on its own major: mise installs the .NET 10 runtime alongside the SDK for this.

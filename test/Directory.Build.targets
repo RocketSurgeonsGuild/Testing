@@ -1,7 +1,5 @@
 <Project>
     <ItemGroup>
-        <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
-        <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" />
         <PackageReference Include="TUnit.Assertions.Should" />
         <Using Include="TUnit.Assertions.Should" />
         <Using Include="TUnit.Assertions.Should.Extensions" />
