@@ -2,6 +2,8 @@
     <!-- Before the parent import: the SDK it applies only wires up test extensions when IsTestProject is already true. -->
     <PropertyGroup>
         <IsTestProject>true</IsTestProject>
+        <!-- The build pipeline passes its own coverage settings; the option takes one value. -->
+        <RsgSdk_Testing_CoverageSettings>false</RsgSdk_Testing_CoverageSettings>
     </PropertyGroup>
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
     <PropertyGroup>
