@@ -1,0 +1,14 @@
+<Project>
+    <ItemGroup>
+        <Compile
+            Include="$(MSBuildThisFileDirectory)..\Testing.AutoFixtures\**\*.cs"
+            Exclude="$(MSBuildThisFileDirectory)..\Testing.AutoFixtures\obj\**;$(MSBuildThisFileDirectory)..\Testing.AutoFixtures\bin\**;$(MSBuildThisFileDirectory)..\Testing.AutoFixtures\Generated\**"
+        />
+    </ItemGroup>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+    <!-- Release tracking: the diagnostics live in Rocket.Surgery.Extensions.Testing.AutoFixtures' sources, so these builds track them with its files. -->
+    <ItemGroup>
+        <AdditionalFiles Remove="AnalyzerReleases.Shipped.md;AnalyzerReleases.Unshipped.md" />
+        <AdditionalFiles Include="$(MSBuildThisFileDirectory)..\Testing.AutoFixtures\AnalyzerReleases.Shipped.md;$(MSBuildThisFileDirectory)..\Testing.AutoFixtures\AnalyzerReleases.Unshipped.md" />
+    </ItemGroup>
+</Project>

@@ -25,7 +25,7 @@
   "packageRules": [
     {
       "description": "The per-Roslyn-version analyzer builds pin their dependencies on purpose",
-      "matchFileNames": ["src/*.Analyzers.supports/**"],
+      "matchFileNames": ["src/*.Analyzers.supports/**", "src/*.AutoFixtures.supports/**"],
       "enabled": false
     },
     {

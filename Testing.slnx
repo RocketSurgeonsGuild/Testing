@@ -64,6 +64,9 @@
     <Project Path="src/Testing.XUnit3/Rocket.Surgery.Extensions.Testing.XUnit3.csproj" />
     <Project Path="src/Testing/Rocket.Surgery.Extensions.Testing.csproj" />
   </Folder>
+  <Folder Name="/src/Testing.AutoFixtures.supports/">
+    <Project Path="src/Testing.AutoFixtures.supports/Rocket.Surgery.Extensions.Testing.AutoFixtures.roslyn5.9.csproj" />
+  </Folder>
   <Folder Name="/test/">
     <File Path=".editorconfig" />
     <File Path="Directory.Build.props" />

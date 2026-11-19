@@ -4,6 +4,7 @@ internal static class AutoFixtureBase
 {
     // lang=csharp
     public const string Source = """
+        #nullable enable
         using System;
         using System.Collections.Generic;
         using System.Collections.ObjectModel;

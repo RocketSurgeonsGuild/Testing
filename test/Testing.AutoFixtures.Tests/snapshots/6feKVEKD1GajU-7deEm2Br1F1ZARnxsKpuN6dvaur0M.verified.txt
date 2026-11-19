@@ -1,0 +1,121 @@
+﻿{
+  AnalyzerDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0001: [],
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0002: [],
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.Diagnostics.Rsaf0003: []
+  },
+  FinalDiagnostics: [
+    {
+      Id: CS0246,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Input0.cs: (4,27)-(4,39),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0246),
+      MessageFormat: The type or namespace name '{0}' could not be found (are you missing a using directive or an assembly reference?),
+      Message: The type or namespace name 'Lazy<>' could not be found (are you missing a using directive or an assembly reference?),
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS0260,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Input2.cs: (5,13)-(5,35),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0260),
+      MessageFormat: Missing partial modifier on declaration of type '{0}'; another partial declaration of this type exists,
+      Message: Missing partial modifier on declaration of type 'LazyConstructorFixture'; another partial declaration of this type exists,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS0262,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Input2.cs: (5,13)-(5,35),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0262),
+      MessageFormat: Partial declarations of '{0}' have conflicting accessibility modifiers,
+      Message: Partial declarations of 'LazyConstructorFixture' have conflicting accessibility modifiers,
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS0246,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/LazyConstructor.AutoFixture.g.cs: (10,52)-(10,78),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0246),
+      MessageFormat: The type or namespace name '{0}' could not be found (are you missing a using directive or an assembly reference?),
+      Message: The type or namespace name 'Lazy<>' could not be found (are you missing a using directive or an assembly reference?),
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS0246,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/LazyConstructor.AutoFixture.g.cs: (12,16)-(12,42),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0246),
+      MessageFormat: The type or namespace name '{0}' could not be found (are you missing a using directive or an assembly reference?),
+      Message: The type or namespace name 'Lazy<>' could not be found (are you missing a using directive or an assembly reference?),
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    },
+    {
+      Id: CS0060,
+      Title: ,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/LazyConstructor.AutoFixture.g.cs: (7,34)-(7,56),
+      HelpLink: https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0060),
+      MessageFormat: Inconsistent accessibility: base class '{1}' is less accessible than class '{0}',
+      Message: Inconsistent accessibility: base class 'AutoFixtureBase<LazyConstructorFixture>' is less accessible than class 'LazyConstructorFixture',
+      Category: Compiler,
+      CustomTags: [
+        Compiler,
+        Telemetry,
+        NotConfigurable
+      ]
+    }
+  ],
+  GeneratorDiagnostics: {
+    Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator: []
+  },
+  ParseOptions: {
+    DocumentationMode: Parse
+  },
+  References: [
+    FakeItEasy.dll,
+    Microsoft.Extensions.Logging.Abstractions.dll,
+    mscorlib.dll,
+    netstandard.dll,
+    System.Core.dll,
+    System.dll,
+    System.Private.CoreLib.dll,
+    System.Runtime.dll
+  ]
+}

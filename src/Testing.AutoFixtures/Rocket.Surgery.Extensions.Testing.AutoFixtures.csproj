@@ -17,10 +17,17 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.Common" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="all" />
+        <!--
+            Built only so its output can be packed below. Private="false" keeps it (the same assembly name, built against an older
+            Roslyn) from flowing on to this project's output and to the projects that reference this one.
+        -->
+        <ProjectReference Include="../Testing.AutoFixtures.supports/Rocket.Surgery.Extensions.Testing.AutoFixtures.roslyn5.9.csproj" PrivateAssets="all" ReferenceOutputAssembly="false" Private="false" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <!-- The generator, once per Roslyn version: NuGet picks the highest roslynX.Y folder the compiler supports. -->
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/roslyn5.12/cs" Visible="false" />
+        <None Include="../Testing.AutoFixtures.supports/bin/roslyn5.9/$(Configuration)/netstandard2.0/$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/roslyn5.9/cs" Visible="false" />
     </ItemGroup>
 
 </Project>
