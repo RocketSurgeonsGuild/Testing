@@ -1,4 +1,5 @@
 ﻿//HintName: Rocket.Surgery.Extensions.Testing.AutoFixtures/Rocket.Surgery.Extensions.Testing.AutoFixtures.AutoFixtureGenerator/AutoFixtureBase.g.cs
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
