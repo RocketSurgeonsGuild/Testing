@@ -22,12 +22,12 @@ public class CodeMarkup(string markup)
     private static bool TryFindMarkedTextSpan(string markupCode, out TextSpan textSpan)
     {
         textSpan = default;
-        var start = markupCode.IndexOf("[|", StringComparison.InvariantCulture);
-        if (start == -1) start = markupCode.IndexOf("[*", StringComparison.InvariantCulture);
+        var start = markupCode.IndexOf("[|", StringComparison.Ordinal);
+        if (start == -1) start = markupCode.IndexOf("[*", StringComparison.Ordinal);
         if (start < 0) return false;
 
-        var end = markupCode.IndexOf("|]", start, StringComparison.InvariantCulture);
-        if (end == -1) end = markupCode.IndexOf("*]", StringComparison.InvariantCulture);
+        var end = markupCode.IndexOf("|]", start, StringComparison.Ordinal);
+        if (end == -1) end = markupCode.IndexOf("*]", StringComparison.Ordinal);
         if (end < 0) return false;
 
         textSpan = TextSpan.FromBounds(start, end - 2 + 1);
@@ -37,8 +37,8 @@ public class CodeMarkup(string markup)
     private static bool TryFindMarkedLocation(string markupCode, out TextSpan textSpan)
     {
         textSpan = default;
-        var start = markupCode.IndexOf("[|]", StringComparison.InvariantCulture);
-        if (start == -1) start = markupCode.IndexOf("[*]", StringComparison.InvariantCulture);
+        var start = markupCode.IndexOf("[|]", StringComparison.Ordinal);
+        if (start == -1) start = markupCode.IndexOf("[*]", StringComparison.Ordinal);
         if (start < 0) return false;
 
         textSpan = TextSpan.FromBounds(start, start + 1);
@@ -48,10 +48,10 @@ public class CodeMarkup(string markup)
     private static bool TryFindCompletionCharacter(string markupCode, out CompletionTrigger trigger)
     {
         trigger = CompletionTrigger.Invoke;
-        var start = markupCode.IndexOf("[*", StringComparison.InvariantCulture);
+        var start = markupCode.IndexOf("[*", StringComparison.Ordinal);
         if (start < 0) return false;
 
-        var end = markupCode.IndexOf("*]", start, StringComparison.InvariantCulture);
+        var end = markupCode.IndexOf("*]", start, StringComparison.Ordinal);
         if (end < 0) return false;
 
         trigger = markupCode[start + 2] == '-'
@@ -63,7 +63,7 @@ public class CodeMarkup(string markup)
     private static bool TryFindCompletion(string markupCode, out CompletionTrigger trigger)
     {
         trigger = CompletionTrigger.Invoke;
-        return markupCode.Contains("[*]", StringComparison.InvariantCulture);
+        return markupCode.Contains("[*]", StringComparison.Ordinal);
     }
 
     /// <summary>

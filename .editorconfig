@@ -41,6 +41,12 @@ indent_style = space
 indent_size = 4
 indent_style = space
 
+[src/Testing.SourceGenerators/**.cs]
+# ZeroAlloc hot-path hints don't apply to this test-time harness: each loop iteration runs a full generator driver/compilation.
+dotnet_diagnostic.ZA0201.severity = none
+dotnet_diagnostic.ZA0501.severity = none
+dotnet_diagnostic.ZA0601.severity = none
+
 [*.{vue}]
 indent_size = 4
 indent_style = space
