@@ -41,6 +41,12 @@ indent_style = space
 indent_size = 4
 indent_style = space
 
+[src/**.cs]
+# ZeroAlloc hot-path hints are noise for these test-helper libraries (e.g. the generator harness runs a full compilation per loop iteration).
+dotnet_diagnostic.ZA0201.severity = none
+dotnet_diagnostic.ZA0501.severity = none
+dotnet_diagnostic.ZA0601.severity = none
+
 [*.{vue}]
 indent_size = 4
 indent_style = space

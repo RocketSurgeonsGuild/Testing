@@ -1,0 +1,7 @@
+{
+  Markup: Console.[*],
+  Code: Console.,
+  Location: [8..8),
+  MarkedText: ,
+  TriggerKind: Other
+}
