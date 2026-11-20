@@ -9,9 +9,10 @@ namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 /// <param name="markup">The markup, with <c>[| |]</c> spans, <c>[|]</c> locations or <c>[* *]</c> completion triggers.</param>
 public class CodeMarkup(string markup)
 {
+    // Point markers ([|] / [*]) are checked first: "[|]" also contains "[|" and "|]", which would otherwise parse as an empty span.
     private static TextSpan GetLocation(string markupCode) =>
-        TryFindMarkedTextSpan(markupCode, out var textSpan) ? textSpan
-        : TryFindMarkedLocation(markupCode, out var ts) ? ts
+        TryFindMarkedLocation(markupCode, out var ts) ? ts
+        : TryFindMarkedTextSpan(markupCode, out var textSpan) ? textSpan
         : new();
 
     private static CompletionTrigger? GetCompletionTrigger(string markupCode) =>
@@ -27,10 +28,11 @@ public class CodeMarkup(string markup)
         if (start < 0) return false;
 
         var end = markupCode.IndexOf("|]", start, StringComparison.Ordinal);
-        if (end == -1) end = markupCode.IndexOf("*]", StringComparison.Ordinal);
+        if (end == -1) end = markupCode.IndexOf("*]", start, StringComparison.Ordinal);
         if (end < 0) return false;
 
-        textSpan = TextSpan.FromBounds(start, end - 2 + 1);
+        // Bounds are in the stripped code: the opening marker (2 chars) sits before the marked text.
+        textSpan = TextSpan.FromBounds(start, end - 2);
         return true;
     }
 
@@ -41,7 +43,7 @@ public class CodeMarkup(string markup)
         if (start == -1) start = markupCode.IndexOf("[*]", StringComparison.Ordinal);
         if (start < 0) return false;
 
-        textSpan = TextSpan.FromBounds(start, start + 1);
+        textSpan = new(start, 0);
         return true;
     }
 
@@ -80,10 +82,10 @@ public class CodeMarkup(string markup)
     ///     The source code
     /// </summary>
     public string Code { get; } = markup
-                                 .Replace("[|", "")
-                                 .Replace("|]", "")
                                  .Replace("[|]", "")
                                  .Replace("[*]", "")
+                                 .Replace("[|", "")
+                                 .Replace("|]", "")
                                  .Replace("[*", "")
                                  .Replace("*]", "");
 }

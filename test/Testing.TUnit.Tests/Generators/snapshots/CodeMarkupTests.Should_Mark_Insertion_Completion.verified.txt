@@ -1,0 +1,8 @@
+{
+  Markup: Console[*.*],
+  Code: Console.,
+  Location: [7..8),
+  MarkedText: .,
+  TriggerKind: Insertion,
+  TriggerCharacter: .
+}

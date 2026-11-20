@@ -1,0 +1,6 @@
+{
+  Markup: class Foo { },
+  Code: class Foo { },
+  Location: [0..0),
+  MarkedText: 
+}
