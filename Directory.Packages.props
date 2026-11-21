@@ -31,8 +31,8 @@
     <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
     <PackageVersion Include="Serilog.Sinks.Observable" Version="3.0.0" />
     <PackageVersion Include="System.Reactive" Version="7.0.0" />
-    <PackageVersion Include="DryIoc.dll" Version="6.0.0-preview-09" />
-    <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-04" />
+    <PackageVersion Include="DryIoc.dll" Version="6.0.0" />
+    <PackageVersion Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0" />
     <PackageVersion Include="BeaKona.AutoInterfaceGenerator" Version="1.0.46" />
     <PackageVersion Include="Verify.XunitV3" Version="33.7.1" />
     <PackageVersion Include="xunit.analyzers" Version="2.3.0" />
