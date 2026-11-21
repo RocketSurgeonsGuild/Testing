@@ -48,6 +48,32 @@
       "matchCategories": ["js"],
       "automerge": true,
       "labels": [":truck: private-dependencies"]
+    },
+    {
+      "description": "Shipped: the src/Testing.* packages build on these test frameworks, mocking libraries and Roslyn. The org preset marks them private; this repository ships them",
+      "matchDepNames": [
+        "TUnit",
+        "TUnit.*",
+        "xunit",
+        "xunit.*",
+        "FakeItEasy",
+        "FakeItEasy.*",
+        "Verify.FakeItEasy",
+        "NSubstitute",
+        "NSubstitute.*",
+        "Verify.NSubstitute",
+        "Verify.SourceGenerators",
+        "Microsoft.CodeAnalysis.Common",
+        "Microsoft.CodeAnalysis.CSharp.Workspaces",
+        "Microsoft.CodeAnalysis.Features",
+        "Microsoft.CodeAnalysis.Workspaces.Common"
+      ],
+      "labels": [":package: dependencies"]
+    },
+    {
+      "description": "Compile-time only (PrivateAssets=all): consumers of this repository's packages never get them",
+      "matchDepNames": ["BeaKona.AutoInterfaceGenerator"],
+      "labels": [":truck: private-dependencies"]
     }
   ]
 }
