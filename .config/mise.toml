@@ -1,7 +1,7 @@
 [tools]
 dotnet = [{ version = "11.0.100" }, { version = "10.0.15", runtime = "dotnet" }]
 "github:microsoft/apm" = { version = "v0.36.1", bin = "apm" }
-"github:eljulians/skillfile" = { version = "v1.9.2", bin = "skillfile" }
+"github:eljulians/skillfile" = { version = "v1.9.3", bin = "skillfile" }
 hk = "2.13.0"
 pkl = "0.33.1"
 node = "26.13.1"
