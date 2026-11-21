@@ -10,7 +10,6 @@ biome = "2.5.2"
 
 "dotnet:gitversion.tool" = "6.6.0"
 "dotnet:dotnet-reportgenerator-globaltool" = "5.5.3"
-"dotnet:codecov.tool" = "1.13.0"
 "dotnet:jetbrains.resharper.globaltools" = "2025.3.3"
 "dotnet:jetbrains.dotcover.commandlinetools" = "2025.3.3"
 "dotnet:jetbrains.dottrace.globaltools" = "2025.3.3"
