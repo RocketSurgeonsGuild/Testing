@@ -1,87 +1,23 @@
 name: Close Milestone
 
+# When a release is published: its milestone gets exactly the pull requests since the previous release (and the issues
+# they close), anything still open moves on to the next version, and the milestone is closed. Prereleases are skipped.
 on:
-    workflow_call:
-        secrets:
-            RSG_BOT_TOKEN:
-                required: true
-    release:
+  release:
+    types:
+      - published
 
 permissions:
-    actions: read
-    checks: write
-    contents: read
-    deployments: read
-    id-token: none
-    issues: write
-    discussions: none
-    packages: none
-    pages: none
-    pull-requests: write
-    repository-projects: none
-    security-events: none
-    statuses: write
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: release-milestones
+  cancel-in-progress: false
 
 jobs:
-    close_milestone:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v7
-              with:
-                  clean: 'false'
-                  fetch-depth: '0'
-            - name: Fetch all history for all tags and branches
-              run: |
-                  git fetch --prune
-            - name: 🛠️ Setup mise
-              uses: jdx/mise-action@v5
-              with:
-                  install: true
-                  cache: true
-                  # Restore only: build.yml is the single cache writer, so the saved cache always includes the npm cache.
-                  cache_save: false
-                  cache_key_prefix: mise-v2
-                  experimental: true
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-            - name: 🔨 Use GitVersion
-              id: gitversion
-              shell: pwsh
-              run: |
-                  $data = dotnet-gitversion | ConvertFrom-Json
-                  foreach ($item in $data.PSObject.Properties) {
-                  $key = $item.Name
-                  $value = $item.Value
-                  echo "$($key.Substring(0,1).ToLower() + $key.Substring(1))=$value" >> $env:GITHUB_OUTPUT
-                  }
-            - name: Create Milestone
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              uses: WyriHaximus/github-action-create-milestone@v1
-              with:
-                  title: v${{ steps.gitversion.outputs.majorMinorPatch }}
-            - name: sync milestones
-              uses: RocketSurgeonsGuild/actions/sync-milestone@v0.3.19
-              with:
-                  default-label: ':sparkles: mysterious'
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-            - name: Get Repo and Owner
-              id: repository
-              if: ${{ !github.event.release.prerelease && steps.gitversion.outputs.preReleaseTag == '' }}
-              shell: pwsh
-              run: |
-                  $parts = $ENV:GITHUB_REPOSITORY.Split('/')
-                  echo "owner=$($parts[0])" >> $env:GITHUB_OUTPUT
-                  echo "repository=$($parts[1])" >> $env:GITHUB_OUTPUT
-            - name: Close Milestone
-              if: ${{ !github.event.release.prerelease && steps.gitversion.outputs.preReleaseTag == '' }}
-              shell: pwsh
-              env:
-                  # GitReleaseManager 0.20.0 (the latest) targets .NET 9, and mise only installs the .NET 10 and 11 runtimes.
-                  DOTNET_ROLL_FORWARD: Major
-              run: |
-                  dotnet-gitreleasemanager close `
-                  -o "${{ steps.repository.outputs.owner }}" `
-                  -r "${{ steps.repository.outputs.repository }}" `
-                  --token "${{ secrets.GITHUB_TOKEN }}" `
-                  -m "v${{ steps.gitversion.outputs.majorMinorPatch }}"
+  close_milestone:
+    uses: RocketSurgeonsGuild/actions/.github/workflows/close-milestone.yml@v0.4.0
+    secrets:
+      RSG_BOT_TOKEN: ${{ secrets.RSG_BOT_TOKEN }}

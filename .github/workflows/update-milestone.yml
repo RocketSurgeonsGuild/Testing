@@ -1,69 +1,25 @@
 name: Update Milestone
 
+# Files a pull request into main under the pending version milestone while it is open or once it merges, and takes it
+# back out if it closes without merging. The logic lives in RocketSurgeonsGuild/actions (release-milestones).
 on:
-    push:
-    pull_request_target:
-        types:
-            - closed
-            - opened
-            - reopened
-            - synchronize
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
 
 permissions:
-    actions: read
-    checks: write
-    contents: read
-    deployments: read
-    id-token: none
-    issues: write
-    discussions: none
-    packages: none
-    pages: none
-    pull-requests: write
-    repository-projects: none
-    security-events: none
-    statuses: write
+  contents: read
+  issues: write
+  pull-requests: write
+
+# A newer event for the same pull request replaces this one.
+concurrency:
+  group: update-milestone-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
-    update_milestone:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v7
-              with:
-                  clean: 'false'
-                  fetch-depth: '0'
-            - name: Fetch all history for all tags and branches
-              run: |
-                  git fetch --prune
-            - name: 🛠️ Setup mise
-              uses: jdx/mise-action@v5
-              with:
-                  install: true
-                  cache: true
-                  # Restore only: build.yml is the single cache writer, so the saved cache always includes the npm cache.
-                  cache_save: false
-                  cache_key_prefix: mise-v2
-                  experimental: true
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-            - name: 🔨 Use GitVersion
-              id: gitversion
-              shell: pwsh
-              run: |
-                  $data = dotnet-gitversion | ConvertFrom-Json
-                  foreach ($item in $data.PSObject.Properties) {
-                  $key = $item.Name
-                  $value = $item.Value
-                  echo "$($key.Substring(0,1).ToLower() + $key.Substring(1))=$value" >> $env:GITHUB_OUTPUT
-                  }
-            - name: Create Milestone
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              uses: WyriHaximus/github-action-create-milestone@v1
-              with:
-                  title: v${{ steps.gitversion.outputs.majorMinorPatch }}
-            - name: sync milestones
-              uses: RocketSurgeonsGuild/actions/sync-milestone@v0.3.19
-              with:
-                  default-label: ':sparkles: mysterious'
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
+  update_milestone:
+    uses: RocketSurgeonsGuild/actions/.github/workflows/update-milestone.yml@v0.4.0
