@@ -42,7 +42,11 @@ public record GeneratorTestResult
     /// <exception cref="InvalidOperationException">Lists every diagnostic at or above <paramref name="severity" />.</exception>
     public void EnsureDiagnosticSeverity(DiagnosticSeverity severity = DiagnosticSeverity.Warning)
     {
-        if (!Diagnostics.Any(x => x.Severity >= severity)) return;
+        if (!Diagnostics.Any(x => x.Severity >= severity))
+        {
+            return;
+        }
+
         throw new InvalidOperationException(
             Helpers.FormatFailure($"Compilation failed: the generator reported diagnostics at or above {severity}.", [("Generator", Diagnostics.AtOrAbove(severity)),])
         );

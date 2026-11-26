@@ -72,7 +72,10 @@ internal sealed class AnalyzerConfigSyntaxTreeOptionsProvider : SyntaxTreeOption
             }
 
             var id = option.Key[DiagnosticPrefix.Length..^SeveritySuffix.Length];
-            if (ReadSeverity(option.Value) is { } severity) builder[id] = severity;
+            if (ReadSeverity(option.Value) is { } severity)
+            {
+                builder[id] = severity;
+            }
         }
 
         return builder.ToImmutable();
