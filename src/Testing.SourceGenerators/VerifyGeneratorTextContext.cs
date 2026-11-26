@@ -104,9 +104,9 @@ public static class VerifyGeneratorTextContext
                        targets.AddRange(item.Value.SyntaxTrees.Select(Customizers.Selector));
                    }
 
-                   data["FinalDiagnostics"] = target.FinalDiagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults();
-                   data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults());
-                   data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.Where(s => s.Severity >= target.Severity).OrderDiagnosticResults());
+                   data["FinalDiagnostics"] = target.FinalDiagnostics.AtOrAbove(target.Severity).OrderDiagnosticResults();
+                   data["GeneratorDiagnostics"] = target.Results.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.AtOrAbove(target.Severity).OrderDiagnosticResults());
+                   data["AnalyzerDiagnostics"] = target.AnalyzerResults.ToDictionary(z => z.Key.FullName!, z => z.Value.Diagnostics.AtOrAbove(target.Severity).OrderDiagnosticResults());
 
                    if (target.CodeFixResults.Count > 0)
                    {
@@ -263,7 +263,7 @@ public static class VerifyGeneratorTextContext
                 writer.Serializer.Serialize(writer, item);
             }
 
-            writer.WriteStartObject();
+            writer.WriteEndArray();
         }
     }
 
@@ -327,7 +327,7 @@ public static class VerifyGeneratorTextContext
                 writer.Serializer.Serialize(writer, item);
             }
 
-            writer.WriteStartArray();
+            writer.WriteEndArray();
         }
     }
 

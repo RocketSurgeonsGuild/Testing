@@ -1,0 +1,31 @@
+{
+  Fix: [
+    {
+      Diagnostic: {
+        Id: TEST0001,
+        Title: title,
+        Severity: Warning,
+        WarningLevel: 1,
+        Location: : (0,0)-(0,0),
+        MessageFormat: message,
+        Message: message,
+        Category: category
+      },
+      CodeActions: [
+        {
+          TextChanges: {
+            Input0.cs: [
+              {
+                Length: 0,
+                NewText: NewText
+              }
+            ]
+          },
+          CodeAction: {
+            Title: Test Code Action
+          }
+        }
+      ]
+    }
+  ]
+}

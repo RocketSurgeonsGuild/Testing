@@ -1,7 +1,8 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
 
@@ -58,30 +59,21 @@ public record GeneratorTestResults
     /// </summary>
     /// <param name="results"></param>
     /// <returns></returns>
-    public static implicit operator CSharpCompilation(GeneratorTestResults results)
-    {
-        return results.FinalCompilation;
-    }
+    public static implicit operator CSharpCompilation(GeneratorTestResults results) => results.FinalCompilation;
 
     /// <summary>
     ///     Implicitly convert the results to assembly from the final compilation
     /// </summary>
     /// <param name="results"></param>
     /// <returns></returns>
-    public static implicit operator Assembly?(GeneratorTestResults results)
-    {
-        return results.Assembly;
-    }
+    public static implicit operator Assembly?(GeneratorTestResults results) => results.Assembly;
 
     /// <summary>
     ///     Implicitly convert the results to assembly from the final compilation
     /// </summary>
     /// <param name="results"></param>
     /// <returns></returns>
-    public static implicit operator MetadataReference?(GeneratorTestResults results)
-    {
-        return results.MetadataReference;
-    }
+    public static implicit operator MetadataReference?(GeneratorTestResults results) => results.MetadataReference;
 
     /// <summary>
     ///     Try to get the result for the specified generator
@@ -89,10 +81,7 @@ public record GeneratorTestResults
     /// <param name="type"></param>
     /// <param name="result"></param>
     /// <returns></returns>
-    public bool TryGetResult(Type type, [NotNullWhen(true)] out GeneratorTestResult? result)
-    {
-        return Results.TryGetValue(type, out result);
-    }
+    public bool TryGetResult(Type type, [NotNullWhen(true)] out GeneratorTestResult? result) => Results.TryGetValue(type, out result);
 
     /// <summary>
     ///     Try to get the result for the specified generator
@@ -101,10 +90,7 @@ public record GeneratorTestResults
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public bool TryGetResult<T>([NotNullWhen(true)] out GeneratorTestResult? result)
-        where T : new()
-    {
-        return Results.TryGetValue(typeof(T), out result);
-    }
+        where T : new() => Results.TryGetValue(typeof(T), out result);
 
     /// <summary>
     ///     Try to get the result for the specified analyzer
@@ -112,10 +98,7 @@ public record GeneratorTestResults
     /// <param name="type"></param>
     /// <param name="result"></param>
     /// <returns></returns>
-    public bool TryGetAnalyzerResult(Type type, [NotNullWhen(true)] out AnalyzerTestResult? result)
-    {
-        return AnalyzerResults.TryGetValue(type, out result);
-    }
+    public bool TryGetAnalyzerResult(Type type, [NotNullWhen(true)] out AnalyzerTestResult? result) => AnalyzerResults.TryGetValue(type, out result);
 
     /// <summary>
     ///     Try to get the result for the specified analyzer
@@ -124,51 +107,138 @@ public record GeneratorTestResults
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public bool TryGetAnalyzerResult<T>([NotNullWhen(true)] out AnalyzerTestResult? result)
-        where T : new()
+        where T : new() => AnalyzerResults.TryGetValue(typeof(T), out result);
+
+    /// <summary>
+    ///     The result of emitting <see cref="FinalCompilation" />, or <see langword="null" /> when it was not emitted.
+    ///     When <see cref="EmitResult.Success" /> is false, <see cref="Assembly" /> and <see cref="MetadataReference" /> are null
+    ///     and <see cref="EmitDiagnostics" /> says why.
+    /// </summary>
+    public EmitResult? EmitResult { get; init; }
+
+    /// <summary>
+    ///     The diagnostics from emitting <see cref="FinalCompilation" />.
+    /// </summary>
+    public ImmutableArray<Diagnostic> EmitDiagnostics => EmitResult?.Diagnostics ?? [];
+
+    /// <summary>
+    ///     The emitted assembly image (PE bytes), or empty when emit failed.
+    /// </summary>
+    public ImmutableArray<byte> Image { get; init; } = [];
+
+    /// <summary>
+    ///     The context that produced these results, used to run the generators again.
+    /// </summary>
+    internal GeneratorTestContext? Context { get; init; }
+
+    /// <summary>
+    ///     Run the same generator drivers again, on an edited copy of <see cref="InputCompilation" />, then the analyzers and emit.
+    ///     This is how incremental caching is tested: build with <see cref="GeneratorTestContextBuilder.WithIncrementalTracking" />,
+    ///     rerun, and read <see cref="GeneratorRunResult.TrackedSteps" /> from <see cref="GeneratorTestResult.RunResult" />.
+    /// </summary>
+    /// <remarks>
+    ///     The rerun results carry <see cref="Image" /> and <see cref="MetadataReference" /> but no <see cref="Assembly" />, because the first run already
+    ///     loaded an assembly with the same name into the context's load context. Code fixes and refactorings are not run again.
+    /// </remarks>
+    /// <param name="editCompilation">
+    ///     Edits the input compilation, for example <c>c =&gt; c.AddSyntaxTrees(...)</c>, <c>c.ReplaceSyntaxTree(...)</c> or <c>c.ReplaceReference(...)</c>.
+    ///     <see langword="null" /> runs on the same compilation.
+    /// </param>
+    /// <param name="editDriver">
+    ///     Edits each driver before it runs, for example <c>d =&gt; d.ReplaceAdditionalText(...)</c> or <c>d.WithUpdatedAnalyzerConfigOptions(...)</c>.
+    /// </param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>New results; these results are left as they are.</returns>
+    /// <exception cref="InvalidOperationException">These results were not produced by a <see cref="GeneratorTestContext" />.</exception>
+    public Task<GeneratorTestResults> RerunAsync(
+        Func<CSharpCompilation, CSharpCompilation>? editCompilation = null,
+        Func<GeneratorDriver, GeneratorDriver>? editDriver = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        return AnalyzerResults.TryGetValue(typeof(T), out result);
+        return Context is { } context
+            ? context.RerunAsync(this, editCompilation, editDriver, cancellationToken)
+            : throw new InvalidOperationException("These results were not produced by a GeneratorTestContext, so there are no generator drivers to run again.");
     }
 
     /// <summary>
     ///     Ensure the resulting diagnostics are less than the specified severity
     /// </summary>
     /// <param name="severity"></param>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="InvalidOperationException">Lists every diagnostic at or above <paramref name="severity" />.</exception>
     public void EnsureDiagnosticSeverity(DiagnosticSeverity severity = DiagnosticSeverity.Warning)
     {
-        if (FinalDiagnostics.Any(x => x.Severity >= severity)) throw new InvalidOperationException("Compilation failed");
-
-        foreach (var result in Results.Values)
+        if (FinalDiagnostics.Any(x => x.Severity >= severity) || Results.Values.Any(z => z.Diagnostics.Any(x => x.Severity >= severity)))
         {
-            result.EnsureDiagnosticSeverity(severity);
+            throw new InvalidOperationException(
+                Helpers.FormatFailure($"Compilation failed: there are diagnostics at or above {severity}.", DiagnosticGroups(severity))
+            );
         }
     }
 
     /// <summary>
-    ///     Assert that the compilation was a success
+    ///     Assert that the compilation was a success: no diagnostic is a warning or an error, and the final compilation emitted.
     /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
-    public void AssertCompilationWasSuccessful()
+    /// <exception cref="InvalidOperationException">Lists every failing diagnostic.</exception>
+    public void AssertCompilationWasSuccessful() => AssertCompilationWasSuccessful(DiagnosticSeverity.Warning);
+
+    /// <summary>
+    ///     Assert that the compilation was a success: no diagnostic is at or above <paramref name="severity" />, and the final compilation emitted.
+    /// </summary>
+    /// <param name="severity">The lowest severity that fails the assertion; pass <see cref="DiagnosticSeverity.Error" /> to allow warnings.</param>
+    /// <exception cref="InvalidOperationException">Lists every failing diagnostic.</exception>
+    public void AssertCompilationWasSuccessful(DiagnosticSeverity severity)
     {
-        if (FinalDiagnostics.Any(x => x.Severity >= DiagnosticSeverity.Warning)) throw new InvalidOperationException("Compilation failed");
-
-        foreach (var result in Results.Values)
+        EnsureDiagnosticSeverity(severity);
+        if (EmitResult is { Success: false, })
         {
-            result.EnsureDiagnosticSeverity();
+            throw new InvalidOperationException(
+                Helpers.FormatFailure("Compilation failed: the final compilation did not emit.", [("Emit", EmitDiagnostics.AtOrAbove(DiagnosticSeverity.Error)),])
+            );
         }
     }
 
     /// <summary>
-    ///     Assert that the generation was a success
+    ///     Assert that the generation was a success: no generator reported a warning or an error.
     /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
-    public void AssertGenerationWasSuccessful()
+    /// <exception cref="InvalidOperationException">Lists every failing generator diagnostic.</exception>
+    public void AssertGenerationWasSuccessful() => AssertGenerationWasSuccessful(DiagnosticSeverity.Warning);
+
+    /// <summary>
+    ///     Assert that the generation was a success: no generator reported a diagnostic at or above <paramref name="severity" />.
+    /// </summary>
+    /// <param name="severity">The lowest severity that fails the assertion; pass <see cref="DiagnosticSeverity.Error" /> to allow warnings.</param>
+    /// <exception cref="InvalidOperationException">Lists every failing generator diagnostic.</exception>
+    public void AssertGenerationWasSuccessful(DiagnosticSeverity severity)
     {
         foreach (var item in Results.Values)
         {
             if (item.Compilation is null) throw new InvalidOperationException("Compilation must not be null");
-
-            item.EnsureDiagnosticSeverity();
         }
+
+        if (Results.Values.Any(z => z.Diagnostics.Any(x => x.Severity >= severity)))
+        {
+            throw new InvalidOperationException(
+                Helpers.FormatFailure($"Generation failed: generators reported diagnostics at or above {severity}.", GeneratorGroups(severity))
+            );
+        }
+    }
+
+    private IEnumerable<(string Source, IEnumerable<Diagnostic> Diagnostics)> DiagnosticGroups(DiagnosticSeverity severity)
+    {
+        yield return ("Final compilation", FinalDiagnostics.AtOrAbove(severity));
+        foreach (var (Source, Diagnostics) in GeneratorGroups(severity))
+        {
+            // The final diagnostics already hold the generator diagnostics; list a generator only when it adds something.
+            var extra = Diagnostics.Except(FinalDiagnostics).ToList();
+            if (extra.Count > 0) yield return (Source, extra);
+        }
+    }
+
+    private IEnumerable<(string Source, IEnumerable<Diagnostic> Diagnostics)> GeneratorGroups(DiagnosticSeverity severity)
+    {
+        return Results
+              .OrderBy(z => z.Key.FullName, StringComparer.Ordinal)
+              .Select(z => ($"Generator {z.Key.FullName}", z.Value.Diagnostics.AtOrAbove(severity)));
     }
 }

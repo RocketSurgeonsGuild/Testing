@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Composition.Hosting;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -12,6 +12,7 @@ internal static class GenerationHelpers
         string projectName,
         IEnumerable<MetadataReference> metadataReferences,
         CSharpParseOptions parseOptions,
+        CSharpCompilationOptions compilationOptions,
         ImmutableArray<NamedSourceText> sources,
         ImmutableArray<AdditionalText> additionalTexts
     )
@@ -27,18 +28,14 @@ internal static class GenerationHelpers
         var solution = new AdhocWorkspace(host)
                       .CurrentSolution
                       .AddProject(projectId, projectName, projectName, LanguageNames.CSharp)
-                      .WithProjectCompilationOptions(
-                           projectId,
-                           new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
-                       )
+                      .WithProjectCompilationOptions(projectId, compilationOptions)
                       .WithProjectParseOptions(projectId, parseOptions)
                       .AddMetadataReferences(projectId, metadataReferences);
 
         var count = 0;
         foreach (var source in sources)
         {
-            var newFileName = source.Name ?? DefaultFilePathPrefix + count + "." + CSharpDefaultFileExt;
-            if (!newFileName.EndsWith(CSharpDefaultFileExt)) newFileName += "." + CSharpDefaultFileExt;
+            var newFileName = GetDocumentName(source.Name, count);
 
             var documentId = DocumentId.CreateNewId(projectId, newFileName);
             solution = solution.AddDocument(documentId, newFileName, source.SourceText);
@@ -53,9 +50,19 @@ internal static class GenerationHelpers
         }
 
         var project = solution.GetProject(projectId);
-        if (project is null) throw new InvalidOperationException($"The ad hoc workspace does not contain a project with the id {projectId.Id}");
 
-        return project;
+        return project is null
+            ? throw new InvalidOperationException($"The ad hoc workspace does not contain a project with the id {projectId.Id}")
+            : project;
+    }
+
+    /// <summary>
+    ///     The document name a source gets in the project: its own name with ".cs" appended when missing, or Input{index}.cs.
+    /// </summary>
+    internal static string GetDocumentName(string? name, int index)
+    {
+        var fileName = name ?? DefaultFilePathPrefix + index + "." + CSharpDefaultFileExt;
+        return fileName.EndsWith("." + CSharpDefaultFileExt, StringComparison.Ordinal) ? fileName : fileName + "." + CSharpDefaultFileExt;
     }
 
     internal const string DefaultFilePathPrefix = "Input";

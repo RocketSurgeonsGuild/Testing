@@ -43,7 +43,9 @@ public record GeneratorTestContext : IDisposable
         ImmutableArray<AdditionalText> additionalTexts,
         ImmutableDictionary<string, MarkedLocation> markedLocations,
         DiagnosticSeverity? diagnosticSeverity,
-        ImmutableArray<GeneratorTestResultsCustomizer> customizers
+        ImmutableArray<GeneratorTestResultsCustomizer> customizers,
+        CSharpCompilationOptions compilationOptions,
+        GeneratorDriverOptions driverOptions
     )
     {
         _markedLocations = markedLocations;
@@ -59,6 +61,8 @@ public record GeneratorTestContext : IDisposable
         _additionalTexts = additionalTexts;
         _projectName = projectName;
         _diagnosticSeverity = diagnosticSeverity;
+        _compilationOptions = compilationOptions;
+        _driverOptions = driverOptions;
         AssemblyLoadContext = assemblyLoadContext;
         _ownsAssemblyLoadContext = ownsAssemblyLoadContext;
 
@@ -137,6 +141,12 @@ public record GeneratorTestContext : IDisposable
             }
         }
 
+        // Only non-default options are hashed, so contexts built without them keep the ids they had before compilation options existed.
+        if (!compilationOptions.Equals(DefaultCompilationOptions))
+        {
+            hasher.AppendData(Encoding.UTF8.GetBytes(DescribeCompilationOptions(compilationOptions)));
+        }
+
         Id = Convert.ToBase64String(hasher.GetCurrentHash());
     }
 
@@ -180,6 +190,36 @@ public record GeneratorTestContext : IDisposable
     internal CSharpParseOptions _parseOptions { get; init; }
     internal ImmutableArray<AdditionalText> _additionalTexts { get; init; }
     internal DiagnosticSeverity? _diagnosticSeverity { get; init; }
+    internal CSharpCompilationOptions _compilationOptions { get; init; }
+    internal GeneratorDriverOptions _driverOptions { get; init; }
+
+    /// <summary>
+    ///     The compilation options used when none are configured.
+    /// </summary>
+    internal static readonly CSharpCompilationOptions DefaultCompilationOptions = new(OutputKind.DynamicallyLinkedLibrary);
+
+    private static string DescribeCompilationOptions(CSharpCompilationOptions options)
+    {
+        var builder = new StringBuilder()
+                     .Append(options.OutputKind).Append('|')
+                     .Append(options.NullableContextOptions).Append('|')
+                     .Append(options.AllowUnsafe).Append('|')
+                     .Append(options.OptimizationLevel).Append('|')
+                     .Append(options.Platform).Append('|')
+                     .Append(options.CheckOverflow).Append('|')
+                     .Append(options.WarningLevel).Append('|')
+                     .Append(options.GeneralDiagnosticOption).Append('|')
+                     .Append(options.ModuleName).Append('|')
+                     .Append(options.MainTypeName).Append('|')
+                     .Append(string.Join(",", options.Usings)).Append('|')
+                     .Append(options.SyntaxTreeOptionsProvider?.GetType().FullName);
+        foreach (var item in options.SpecificDiagnosticOptions.OrderBy(z => z.Key, StringComparer.Ordinal))
+        {
+            builder.Append('|').Append(item.Key).Append('=').Append(item.Value);
+        }
+
+        return builder.ToString();
+    }
 
     /// <summary>
     ///     Generate and return the results of the generators
@@ -198,25 +238,10 @@ public record GeneratorTestContext : IDisposable
             }
         }
 
-        var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _parseOptions, _sources, _additionalTexts);
+        var project = GenerationHelpers.CreateProject(_projectName, _metadataReferences, _parseOptions, _compilationOptions, _sources, _additionalTexts);
 
         var compilation = (CSharpCompilation?)await project.GetCompilationAsync(cancellationToken).ConfigureAwait(false) ?? throw new InvalidOperationException("Could not compile the sources");
-
-        var diagnostics = compilation.GetDiagnostics(cancellationToken);
-        if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
-        {
-            _logger.Verbose("--- Input Diagnostics --- {Count}", diagnostics.Length);
-            foreach (var d in diagnostics)
-            {
-                _logger.Verbose("    Reference: {Name}", d.ToString());
-            }
-        }
-
-        var builder = ImmutableDictionary<Type, GeneratorTestResult>.Empty.ToBuilder();
-        var analyzerBuilder = ImmutableDictionary<Type, AnalyzerTestResult>.Empty.ToBuilder();
-
-        var inputCompilation = compilation;
-        var inputDiagnostics = diagnostics;
+        compilation = ApplyDiagnosticOptions(compilation);
 
         TestProjectInformation projectInformation;
 
@@ -238,18 +263,120 @@ public record GeneratorTestContext : IDisposable
             );
         }
 
+        // Each generator gets its own driver over the original compilation, so no generator sees another's output.
+        var optionsProvider = new OptionsProvider(_fileOptions, _globalOptions);
+        var drivers = GeneratorsInOrder(projectInformation)
+                     .Select(
+                          z => (z.Type, (GeneratorDriver)CSharpGeneratorDriver.Create(
+                              [
+                                  z.Instance switch
+                                  {
+                                      IIncrementalGenerator i => i.AsSourceGenerator(),
+                                      ISourceGenerator g => g,
+                                      _ => throw new InvalidOperationException($"{z.Type.FullName} is not an incremental or source generator"),
+                                  },
+                              ],
+                              _additionalTexts,
+                              _parseOptions,
+                              optionsProvider,
+                              _driverOptions
+                          ))
+                      )
+                     .ToList();
+
+        var results = await RunAsync(projectInformation, compilation, drivers, cancellationToken).ConfigureAwait(false);
+
+        if (projectInformation.CodeFixProviders.Count > 0)
+        {
+            _logger.Information("--- Code Fix Providers ---");
+            foreach (var provider in projectInformation.CodeFixProviders.Values)
+            {
+                results = await results.AddCodeFix(provider, cancellationToken);
+            }
+        }
+
+        if (projectInformation.CodeRefactoringProviders.Count > 0)
+        {
+            _logger.Information("--- Code Refactoring Providers ---");
+            foreach (var provider in projectInformation.CodeRefactoringProviders.Values)
+            {
+                results = await results.AddCodeRefactoring(provider, cancellationToken);
+            }
+        }
+
+        return Emit(results, true);
+    }
+
+    /// <summary>
+    ///     Runs the drivers kept on <paramref name="previous" /> again on an edited compilation, then the analyzers and emit.
+    /// </summary>
+    internal async Task<GeneratorTestResults> RerunAsync(
+        GeneratorTestResults previous,
+        Func<CSharpCompilation, CSharpCompilation>? editCompilation,
+        Func<GeneratorDriver, GeneratorDriver>? editDriver,
+        CancellationToken cancellationToken
+    )
+    {
+        var compilation = editCompilation?.Invoke(previous.InputCompilation) ?? previous.InputCompilation;
+        var drivers = GeneratorsInOrder(previous.ProjectInformation)
+                     .Select(
+                          z =>
+                          {
+                              var driver = previous.Results.TryGetValue(z.Type, out var result) && result.Driver is { } d
+                                  ? d
+                                  : throw new InvalidOperationException($"The results for {z.Type.FullName} have no generator driver to run again.");
+                              return (z.Type, editDriver?.Invoke(driver) ?? driver);
+                          }
+                      )
+                     .ToList();
+
+        var results = await RunAsync(previous.ProjectInformation, compilation, drivers, cancellationToken).ConfigureAwait(false);
+        // The first run already loaded an assembly with this name into the load context, so a rerun only emits.
+        return Emit(results, false);
+    }
+
+    private static IEnumerable<(Type Type, object Instance)> GeneratorsInOrder(TestProjectInformation projectInformation) =>
+        projectInformation
+           .IncrementalGenerators.Select(z => (z.Key, (object)z.Value))
+           .Concat(projectInformation.SourceGenerators.Select(z => (z.Key, (object)z.Value)));
+
+    private CSharpCompilation ApplyDiagnosticOptions(CSharpCompilation compilation)
+    {
+        // The workspace builds its own syntax tree options, so the severities from analyzer config options are applied to the compilation it returns.
+        var provider = _compilationOptions.SyntaxTreeOptionsProvider
+                                           ?? AnalyzerConfigSyntaxTreeOptionsProvider.Create(_fileOptions, _globalOptions);
+        return provider is null ? compilation : compilation.WithOptions(compilation.Options.WithSyntaxTreeOptionsProvider(provider));
+    }
+
+    private async Task<GeneratorTestResults> RunAsync(
+        TestProjectInformation projectInformation,
+        CSharpCompilation compilation,
+        IEnumerable<(Type Type, GeneratorDriver Driver)> drivers,
+        CancellationToken cancellationToken
+    )
+    {
+        var diagnostics = compilation.GetDiagnostics(cancellationToken);
+        if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
+        {
+            _logger.Verbose("--- Input Diagnostics --- {Count}", diagnostics.Length);
+            foreach (var d in diagnostics)
+            {
+                _logger.Verbose("    Reference: {Name}", d.ToString());
+            }
+        }
+
+        var builder = ImmutableDictionary<Type, GeneratorTestResult>.Empty.ToBuilder();
+        var analyzerBuilder = ImmutableDictionary<Type, AnalyzerTestResult>.Empty.ToBuilder();
+
+        var inputCompilation = compilation;
+        var inputDiagnostics = diagnostics;
+
         var finalDiagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
-        foreach (var instance in projectInformation.IncrementalGenerators.Values.Concat(projectInformation.SourceGenerators.Values.Cast<object>()))
+        foreach ((var type, var driver) in drivers)
         {
-            _logger.Information("--- {Generator} ---", instance.GetType().FullName);
-            var generators = new List<ISourceGenerator>
-            {
-                instance switch { IIncrementalGenerator i => i.AsSourceGenerator(), ISourceGenerator s => s, _ => throw new InvalidOperationException($"{instance.GetType().FullName} is not an incremental or source generator"), },
-            };
-            var driver = CSharpGeneratorDriver.Create(generators, _additionalTexts, _parseOptions, new OptionsProvider(_fileOptions, _globalOptions), default);
-
-            _ = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out diagnostics, cancellationToken);
+            _logger.Information("--- {Generator} ---", type.FullName);
+            var updatedDriver = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out diagnostics, cancellationToken);
 
             if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
             {
@@ -278,19 +405,22 @@ public record GeneratorTestContext : IDisposable
             finalDiagnostics.AddRange(diagnostics);
 
             builder.Add(
-                instance.GetType(),
+                type,
                 new(
                     ( outputCompilation as CSharpCompilation )!,
                     diagnostics,
-                    [.. trees.Where(z => !_ignoredFilePaths.Any(x => z.FilePath.Contains(x)))]
+                    [.. trees.Where(z => !_ignoredFilePaths.Any(x => z.FilePath.Contains(x))),]
                 )
+                {
+                    Driver = updatedDriver,
+                    DriverRunResult = updatedDriver.GetRunResult(),
+                }
             );
         }
 
         var analyzers = projectInformation.Analyzers;
         finalDiagnostics.AddRange(inputCompilation.GetDiagnostics(cancellationToken));
 
-        AnalysisResult? analysisResult = null;
         if (analyzers.Count > 0)
         {
             _logger.Information("--- Analyzers ---");
@@ -300,11 +430,11 @@ public record GeneratorTestContext : IDisposable
             }
 
             var compilationWithAnalyzers = inputCompilation.WithAnalyzers(
-                [.. analyzers.Values],
+                [.. analyzers.Values,],
                 new AnalyzerOptions(_additionalTexts, new OptionsProvider(_fileOptions, _globalOptions))
             );
 
-            analysisResult = await compilationWithAnalyzers.GetAnalysisResultAsync(cancellationToken);
+            var analysisResult = await compilationWithAnalyzers.GetAnalysisResultAsync(cancellationToken);
             foreach (var analyzer in analyzers)
             {
                 var analyzerResults = analysisResult.GetAllDiagnostics(analyzer.Value);
@@ -314,7 +444,7 @@ public record GeneratorTestContext : IDisposable
             finalDiagnostics.AddRange(analysisResult.GetAllDiagnostics());
         }
 
-        var results = new GeneratorTestResults(
+        return new(
             Id,
             projectInformation,
             compilation,
@@ -333,48 +463,37 @@ public record GeneratorTestContext : IDisposable
             _markedLocations,
             inputCompilation,
             finalDiagnostics.ToImmutable(),
-            null!,
-            null!
-        );
-
-        if (projectInformation.CodeFixProviders.Count > 0)
+            null,
+            null
+        )
         {
-            _logger.Information("--- Code Fix Providers ---");
-            foreach (var provider in projectInformation.CodeFixProviders.Values)
-            {
-                results = await results.AddCodeFix(provider, cancellationToken);
-            }
-        }
-
-        if (projectInformation.CodeRefactoringProviders.Count > 0)
-        {
-            _logger.Information("--- Code Refactoring Providers ---");
-            foreach (var provider in projectInformation.CodeRefactoringProviders.Values)
-            {
-                results = await results.AddCodeRefactoring(provider, cancellationToken);
-            }
-        }
-
-        var assemblyStream = Emit(inputCompilation);
-        if (assemblyStream is { Length: > 0, })
-        {
-            results = results with
-            {
-                MetadataReference = MetadataReference.CreateFromStream(new MemoryStream(assemblyStream)),
-                Assembly = GeneratedAssemblyLocation.LoadFromStream(AssemblyLoadContext, Id, assemblyStream),
-            };
-        }
-
-        return results;
+            Context = this,
+        };
     }
 
-    private byte[] Emit(CSharpCompilation compilation, string? outputName = null)
+    private GeneratorTestResults Emit(GeneratorTestResults results, bool loadAssembly)
     {
+        var compilation = results.FinalCompilation;
         using var stream = new MemoryStream();
-        var emitResult = compilation.Emit(
-            stream,
-            options: new(outputNameOverride: outputName ?? compilation.AssemblyName)
-        );
-        return emitResult.Success ? stream.ToArray() : [];
+        var emitResult = compilation.Emit(stream, options: new(outputNameOverride: compilation.AssemblyName));
+        if (!emitResult.Success)
+        {
+            _logger.Warning("--- Emit failed --- {Count}", emitResult.Diagnostics.Length);
+            foreach (var d in emitResult.Diagnostics)
+            {
+                _logger.Warning("    {Diagnostic}", d.ToString());
+            }
+
+            return results with { EmitResult = emitResult, };
+        }
+
+        var image = stream.ToArray();
+        return results with
+        {
+            EmitResult = emitResult,
+            Image = [.. image,],
+            MetadataReference = MetadataReference.CreateFromStream(new MemoryStream(image)),
+            Assembly = loadAssembly ? GeneratedAssemblyLocation.LoadFromStream(AssemblyLoadContext, Id, image) : null,
+        };
     }
 }
