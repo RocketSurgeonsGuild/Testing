@@ -356,17 +356,9 @@ public record GeneratorTestContext : IDisposable
     )
     {
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
-        if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
-        {
-            _logger.Verbose("--- Input Diagnostics --- {Count}", diagnostics.Length);
-            foreach (var d in diagnostics)
-            {
-                _logger.Verbose("    Reference: {Name}", d.ToString());
-            }
-        }
+        LogDiagnostics("--- Input Diagnostics --- {Count}", diagnostics);
 
         var builder = ImmutableDictionary<Type, GeneratorTestResult>.Empty.ToBuilder();
-        var analyzerBuilder = ImmutableDictionary<Type, AnalyzerTestResult>.Empty.ToBuilder();
 
         var inputCompilation = compilation;
         var inputDiagnostics = diagnostics;
@@ -377,29 +369,13 @@ public record GeneratorTestContext : IDisposable
         {
             _logger.Information("--- {Generator} ---", type.FullName);
             var updatedDriver = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out diagnostics, cancellationToken);
-
-            if (_logger.IsEnabled(LogEventLevel.Verbose) && diagnostics is { Length: > 0, })
-            {
-                _logger.Verbose("--- Diagnostics --- {Count}", diagnostics.Length);
-                foreach (var d in diagnostics)
-                {
-                    _logger.Verbose("    Reference: {Name}", d.ToString());
-                }
-            }
+            LogDiagnostics("--- Diagnostics --- {Count}", diagnostics);
 
             var trees = outputCompilation
                        .SyntaxTrees
                        .Except(compilation.SyntaxTrees)
                        .ToImmutableArray();
-            if (_logger.IsEnabled(LogEventLevel.Verbose) && trees is { Length: > 0, })
-            {
-                _logger.Verbose("--- Syntax Trees --- {Count}", trees.Length);
-                foreach (var t in trees)
-                {
-                    _logger.Verbose("    FilePath: {Name}", t.FilePath);
-                    _logger.Verbose("    Source:\n{Name}", ( await t.GetTextAsync(cancellationToken).ConfigureAwait(false) ).ToString());
-                }
-            }
+            await LogSyntaxTreesAsync(trees, cancellationToken).ConfigureAwait(false);
 
             inputCompilation = inputCompilation.AddSyntaxTrees(trees);
             finalDiagnostics.AddRange(diagnostics);
@@ -418,31 +394,8 @@ public record GeneratorTestContext : IDisposable
             );
         }
 
-        var analyzers = projectInformation.Analyzers;
         finalDiagnostics.AddRange(inputCompilation.GetDiagnostics(cancellationToken));
-
-        if (analyzers.Count > 0)
-        {
-            _logger.Information("--- Analyzers ---");
-            foreach (var analyzer in analyzers)
-            {
-                _logger.Information("    {Analyzer}", analyzer.Key.FullName);
-            }
-
-            var compilationWithAnalyzers = inputCompilation.WithAnalyzers(
-                [.. analyzers.Values,],
-                new AnalyzerOptions(_additionalTexts, new OptionsProvider(_fileOptions, _globalOptions))
-            );
-
-            var analysisResult = await compilationWithAnalyzers.GetAnalysisResultAsync(cancellationToken);
-            foreach (var analyzer in analyzers)
-            {
-                var analyzerResults = analysisResult.GetAllDiagnostics(analyzer.Value);
-                analyzerBuilder.Add(analyzer.Key, new(analyzerResults));
-            }
-
-            finalDiagnostics.AddRange(analysisResult.GetAllDiagnostics());
-        }
+        var analyzerResults = await RunAnalyzersAsync(projectInformation.Analyzers, inputCompilation, finalDiagnostics, cancellationToken).ConfigureAwait(false);
 
         return new(
             Id,
@@ -457,7 +410,7 @@ public record GeneratorTestContext : IDisposable
             _globalOptions,
             _fileOptions,
             builder.ToImmutable(),
-            analyzerBuilder.ToImmutable(),
+            analyzerResults,
             [],
             [],
             _markedLocations,
@@ -469,6 +422,63 @@ public record GeneratorTestContext : IDisposable
         {
             Context = this,
         };
+    }
+
+    private async Task<ImmutableDictionary<Type, AnalyzerTestResult>> RunAnalyzersAsync(
+        ImmutableDictionary<Type, DiagnosticAnalyzer> analyzers,
+        CSharpCompilation compilation,
+        ImmutableArray<Diagnostic>.Builder finalDiagnostics,
+        CancellationToken cancellationToken
+    )
+    {
+        if (analyzers.Count == 0)
+        {
+            return [];
+        }
+
+        _logger.Information("--- Analyzers ---");
+        foreach (var analyzer in analyzers)
+        {
+            _logger.Information("    {Analyzer}", analyzer.Key.FullName);
+        }
+
+        var compilationWithAnalyzers = compilation.WithAnalyzers(
+            [.. analyzers.Values,],
+            new AnalyzerOptions(_additionalTexts, new OptionsProvider(_fileOptions, _globalOptions))
+        );
+
+        var analysisResult = await compilationWithAnalyzers.GetAnalysisResultAsync(cancellationToken).ConfigureAwait(false);
+        finalDiagnostics.AddRange(analysisResult.GetAllDiagnostics());
+        return analyzers.ToImmutableDictionary(z => z.Key, z => new AnalyzerTestResult(analysisResult.GetAllDiagnostics(z.Value)));
+    }
+
+    private void LogDiagnostics(string messageTemplate, ImmutableArray<Diagnostic> diagnostics)
+    {
+        if (!_logger.IsEnabled(LogEventLevel.Verbose) || diagnostics.IsEmpty)
+        {
+            return;
+        }
+
+        _logger.Verbose(messageTemplate, diagnostics.Length);
+        foreach (var d in diagnostics)
+        {
+            _logger.Verbose("    Reference: {Name}", d.ToString());
+        }
+    }
+
+    private async Task LogSyntaxTreesAsync(ImmutableArray<SyntaxTree> trees, CancellationToken cancellationToken)
+    {
+        if (!_logger.IsEnabled(LogEventLevel.Verbose) || trees.IsEmpty)
+        {
+            return;
+        }
+
+        _logger.Verbose("--- Syntax Trees --- {Count}", trees.Length);
+        foreach (var t in trees)
+        {
+            _logger.Verbose("    FilePath: {Name}", t.FilePath);
+            _logger.Verbose("    Source:\n{Name}", ( await t.GetTextAsync(cancellationToken).ConfigureAwait(false) ).ToString());
+        }
     }
 
     private GeneratorTestResults Emit(GeneratorTestResults results, bool loadAssembly)

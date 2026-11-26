@@ -227,11 +227,14 @@ public record GeneratorTestResults
     private IEnumerable<(string Source, IEnumerable<Diagnostic> Diagnostics)> DiagnosticGroups(DiagnosticSeverity severity)
     {
         yield return ("Final compilation", FinalDiagnostics.AtOrAbove(severity));
-        foreach (var (Source, Diagnostics) in GeneratorGroups(severity))
+        foreach ((var source, var diagnostics) in GeneratorGroups(severity))
         {
             // The final diagnostics already hold the generator diagnostics; list a generator only when it adds something.
-            var extra = Diagnostics.Except(FinalDiagnostics).ToList();
-            if (extra.Count > 0) yield return (Source, extra);
+            var extra = diagnostics.Except(FinalDiagnostics).ToList();
+            if (extra.Count > 0)
+            {
+                yield return (source, extra);
+            }
         }
     }
 

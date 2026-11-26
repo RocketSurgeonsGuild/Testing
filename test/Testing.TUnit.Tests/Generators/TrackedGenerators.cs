@@ -9,7 +9,7 @@ namespace Rocket.Surgery.Extensions.Testing.TUnit.Tests.Generators;
 [Generator]
 public class ClassNamesGenerator : IIncrementalGenerator
 {
-    public const string StepName = "ClassNames";
+    public static string StepName => "ClassNames";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -32,7 +32,7 @@ public class ClassNamesGenerator : IIncrementalGenerator
 [Generator]
 public class ReferenceNamesGenerator : IIncrementalGenerator
 {
-    public const string StepName = "ReferenceNames";
+    public static string StepName => "ReferenceNames";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {

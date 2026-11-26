@@ -27,7 +27,11 @@ internal static class Helpers
         foreach ((var source, var diagnostics) in groups)
         {
             var list = diagnostics.OrderDiagnosticResults().ToList();
-            if (list.Count == 0) continue;
+            if (list.Count == 0)
+            {
+                continue;
+            }
+
             builder.AppendLine().Append(source).Append(':');
             foreach (var diagnostic in list)
             {
