@@ -1,0 +1,24 @@
+{
+  Refactoring: [
+    {
+      Location: [0..1),
+      TriggerKind: Insertion,
+      TriggerCharacter: c,
+      CodeActions: [
+        {
+          TextChanges: {
+            Code.cs: [
+              {
+                Length: 0,
+                NewText: NewText
+              }
+            ]
+          },
+          CodeAction: {
+            Title: Test Code Action
+          }
+        }
+      ]
+    }
+  ]
+}

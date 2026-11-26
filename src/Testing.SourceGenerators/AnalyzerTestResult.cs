@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
 namespace Rocket.Surgery.Extensions.Testing.SourceGenerators;
@@ -17,9 +17,12 @@ public record AnalyzerTestResult
     ///     Ensure that the diagnostics are less than the specified severity within the generator results
     /// </summary>
     /// <param name="severity"></param>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="InvalidOperationException">Lists every diagnostic at or above <paramref name="severity" />.</exception>
     public void EnsureDiagnosticSeverity(DiagnosticSeverity severity = DiagnosticSeverity.Warning)
     {
-        if (Diagnostics.Any(x => x.Severity >= severity)) throw new InvalidOperationException("Compilation failed");
+        if (!Diagnostics.Any(x => x.Severity >= severity)) return;
+        throw new InvalidOperationException(
+            Helpers.FormatFailure($"Compilation failed: the analyzer reported diagnostics at or above {severity}.", [("Analyzer", Diagnostics.AtOrAbove(severity)),])
+        );
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -20,10 +20,7 @@ public static class GeneratorTestContextExtensions
     /// <param name="context"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static GeneratorTestContext IncludeRelatedType(this GeneratorTestContext context, Type type)
-    {
-        return context with { _relatedTypes = context._relatedTypes.Add(type), };
-    }
+    public static GeneratorTestContext IncludeRelatedType(this GeneratorTestContext context, Type type) => context with { _relatedTypes = context._relatedTypes.Add(type), };
 
     /// <summary>
     ///     Generate the analyzer
@@ -33,10 +30,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<AnalyzerTestResult> GenerateAnalyzer<T>(this GeneratorTestContext context, CancellationToken cancellationToken = default)
-        where T : DiagnosticAnalyzer, new()
-    {
-        return GenerateAnalyzer(context, typeof(T), cancellationToken);
-    }
+        where T : DiagnosticAnalyzer, new() => GenerateAnalyzer(context, typeof(T), cancellationToken);
 
     /// <summary>
     ///     Generate the analyzer
@@ -46,10 +40,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<AnalyzerTestResult> GenerateAnalyzer<T>(this GeneratorTestContextBuilder builder, CancellationToken cancellationToken = default)
-        where T : DiagnosticAnalyzer, new()
-    {
-        return GenerateAnalyzer(builder, typeof(T), cancellationToken);
-    }
+        where T : DiagnosticAnalyzer, new() => GenerateAnalyzer(builder, typeof(T), cancellationToken);
 
     /// <summary>
     ///     Generate the analyzer
@@ -58,10 +49,7 @@ public static class GeneratorTestContextExtensions
     /// <param name="type"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static Task<AnalyzerTestResult> GenerateAnalyzer(this GeneratorTestContextBuilder builder, Type type, CancellationToken cancellationToken = default)
-    {
-        return builder.Build().GenerateAnalyzer(type, cancellationToken);
-    }
+    public static Task<AnalyzerTestResult> GenerateAnalyzer(this GeneratorTestContextBuilder builder, Type type, CancellationToken cancellationToken = default) => builder.Build().GenerateAnalyzer(type, cancellationToken);
 
     /// <summary>
     ///     Generate the analyzer
@@ -88,10 +76,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<GeneratorTestResult> GenerateSourceGenerator<T>(this GeneratorTestContext context, CancellationToken cancellationToken = default)
-        where T : new()
-    {
-        return GenerateSourceGenerator(context, typeof(T), cancellationToken);
-    }
+        where T : new() => GenerateSourceGenerator(context, typeof(T), cancellationToken);
 
     /// <summary>
     ///     Generate the source generator
@@ -101,10 +86,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<GeneratorTestResult> GenerateSourceGenerator<T>(this GeneratorTestContextBuilder builder, CancellationToken cancellationToken = default)
-        where T : new()
-    {
-        return GenerateSourceGenerator(builder, typeof(T), cancellationToken);
-    }
+        where T : new() => GenerateSourceGenerator(builder, typeof(T), cancellationToken);
 
     /// <summary>
     ///     Generate the source generator
@@ -113,10 +95,7 @@ public static class GeneratorTestContextExtensions
     /// <param name="type"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static Task<GeneratorTestResult> GenerateSourceGenerator(this GeneratorTestContextBuilder builder, Type type, CancellationToken cancellationToken = default)
-    {
-        return builder.Build().GenerateSourceGenerator(type, cancellationToken);
-    }
+    public static Task<GeneratorTestResult> GenerateSourceGenerator(this GeneratorTestContextBuilder builder, Type type, CancellationToken cancellationToken = default) => builder.Build().GenerateSourceGenerator(type, cancellationToken);
 
     /// <summary>
     ///     Generate the source generator
@@ -143,10 +122,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<CodeFixTestResult> GenerateCodeFix<T>(this GeneratorTestContext context, CancellationToken cancellationToken = default)
-        where T : CodeFixProvider, new()
-    {
-        return GenerateCodeFix(context, typeof(T), cancellationToken);
-    }
+        where T : CodeFixProvider, new() => GenerateCodeFix(context, typeof(T), cancellationToken);
 
     /// <summary>
     ///     Generate the code fix
@@ -156,10 +132,7 @@ public static class GeneratorTestContextExtensions
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static Task<CodeFixTestResult> GenerateCodeFix<T>(this GeneratorTestContextBuilder builder, CancellationToken cancellationToken = default)
-        where T : CodeFixProvider, new()
-    {
-        return GenerateCodeFix(builder, typeof(T), cancellationToken);
-    }
+        where T : CodeFixProvider, new() => GenerateCodeFix(builder, typeof(T), cancellationToken);
 
     /// <summary>
     ///     Generate the code fix
@@ -168,10 +141,7 @@ public static class GeneratorTestContextExtensions
     /// <param name="type"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static Task<CodeFixTestResult> GenerateCodeFix(this GeneratorTestContextBuilder builder, Type type, CancellationToken cancellationToken = default)
-    {
-        return builder.Build().GenerateCodeFix(type, cancellationToken);
-    }
+    public static Task<CodeFixTestResult> GenerateCodeFix(this GeneratorTestContextBuilder builder, Type type, CancellationToken cancellationToken = default) => builder.Build().GenerateCodeFix(type, cancellationToken);
 
     /// <summary>
     ///     Generate the code fix
@@ -198,10 +168,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<GeneratorTestResults> AddCodeFix<T>(this GeneratorTestResults context, CancellationToken cancellationToken = default)
-        where T : CodeFixProvider, new()
-    {
-        return AddCodeFix(context, new T(), cancellationToken);
-    }
+        where T : CodeFixProvider, new() => AddCodeFix(context, new T(), cancellationToken);
 
     /// <summary>
     ///     Add the code fix to the results
@@ -225,7 +192,7 @@ public static class GeneratorTestContextExtensions
             if (project.GetDocument(fixableDiagnostic.Location.SourceTree) is { } document)
             {
                 var cab = ImmutableArray.CreateBuilder<(Document Document, CodeAction CodeAction)>();
-                var codeFixContext = new CodeFixContext(document, fixableDiagnostic, (a, _) => cab.Add(( document, a )), cancellationToken);
+                var codeFixContext = new CodeFixContext(document, fixableDiagnostic, (a, _) => cab.Add((document, a)), cancellationToken);
                 await provider.RegisterCodeFixesAsync(codeFixContext);
 
                 resolvedValues.Add(new(document, fixableDiagnostic, await CreateCodeActionTestResults(project, cab, cancellationToken)));
@@ -235,7 +202,7 @@ public static class GeneratorTestContextExtensions
                 foreach (var doc in project.Documents)
                 {
                     var cab = ImmutableArray.CreateBuilder<(Document Document, CodeAction CodeAction)>();
-                    var codeFixContext = new CodeFixContext(doc, fixableDiagnostic, (a, _) => cab.Add(( doc, a )), cancellationToken);
+                    var codeFixContext = new CodeFixContext(doc, fixableDiagnostic, (a, _) => cab.Add((doc, a)), cancellationToken);
                     await provider.RegisterCodeFixesAsync(codeFixContext);
                     resolvedValues.Add(new(doc, fixableDiagnostic, await CreateCodeActionTestResults(project, cab, cancellationToken)));
                 }
@@ -247,12 +214,11 @@ public static class GeneratorTestContextExtensions
             CodeFixResults = context.CodeFixResults.SetItem(
                 provider.GetType(),
                 new(
-                    resolvedValues
+                    [.. resolvedValues
                        .OrderBy(z => z.Document.Name)
                        .ThenBy(static z => z.Diagnostic.Location.GetMappedLineSpan().ToString())
                        .ThenBy(static z => z.Diagnostic.Severity)
-                       .ThenBy(static z => z.Diagnostic.Id)
-                       .ToImmutableArray()
+                       .ThenBy(static z => z.Diagnostic.Id)]
                 )
             ),
         };
@@ -268,10 +234,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring<T>(this GeneratorTestContext context, CancellationToken cancellationToken = default)
-        where T : CodeRefactoringProvider, new()
-    {
-        return GenerateCodeRefactoring(context, typeof(T), cancellationToken);
-    }
+        where T : CodeRefactoringProvider, new() => GenerateCodeRefactoring(context, typeof(T), cancellationToken);
 
     /// <summary>
     ///     Generate the code refactoring
@@ -281,10 +244,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring<T>(this GeneratorTestContextBuilder builder, CancellationToken cancellationToken = default)
-        where T : CodeRefactoringProvider, new()
-    {
-        return GenerateCodeRefactoring(builder, typeof(T), cancellationToken);
-    }
+        where T : CodeRefactoringProvider, new() => GenerateCodeRefactoring(builder, typeof(T), cancellationToken);
 
     /// <summary>
     ///     Generate the code refactoring
@@ -293,10 +253,7 @@ public static class GeneratorTestContextExtensions
     /// <param name="type"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring(this GeneratorTestContextBuilder builder, Type type, CancellationToken cancellationToken = default)
-    {
-        return builder.Build().GenerateCodeRefactoring(type, cancellationToken);
-    }
+    public static Task<CodeRefactoringTestResult> GenerateCodeRefactoring(this GeneratorTestContextBuilder builder, Type type, CancellationToken cancellationToken = default) => builder.Build().GenerateCodeRefactoring(type, cancellationToken);
 
     /// <summary>
     ///     Generate the code refactoring
@@ -323,10 +280,7 @@ public static class GeneratorTestContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static Task<GeneratorTestResults> AddCodeRefactoring<T>(this GeneratorTestResults context, CancellationToken cancellationToken = default)
-        where T : CodeRefactoringProvider, new()
-    {
-        return AddCodeRefactoring(context, new T(), cancellationToken);
-    }
+        where T : CodeRefactoringProvider, new() => AddCodeRefactoring(context, new T(), cancellationToken);
 
     /// <summary>
     ///     Add the code refactoring to the results
@@ -342,11 +296,13 @@ public static class GeneratorTestContextExtensions
 
         var resolvedValues = ImmutableArray.CreateBuilder<ResolvedCodeRefactoringTestResult>();
         _logger.Information("    {CodeRefactoring}", provider.GetType().FullName);
-        foreach (( var path, var mark ) in context.MarkedLocations)
+        foreach ((var path, var mark) in context.MarkedLocations)
         {
             var cab = ImmutableArray.CreateBuilder<(Document Document, CodeAction CodeAction)>();
-            var document = project.Documents.Single(z => z.Name == path);
-            var codeFixContext = new CodeRefactoringContext(document, mark.Location, a => cab.Add(( document, a )), cancellationToken);
+            // Sources are renamed to end in ".cs" when the project is built, so look the marked document up by that name.
+            var documentName = GenerationHelpers.GetDocumentName(path, 0);
+            var document = project.Documents.Single(z => z.Name == documentName);
+            var codeFixContext = new CodeRefactoringContext(document, mark.Location, a => cab.Add((document, a)), cancellationToken);
             await provider.ComputeRefactoringsAsync(codeFixContext);
             resolvedValues.Add(new(document, mark, await CreateCodeActionTestResults(project, cab, cancellationToken)));
         }
@@ -356,10 +312,9 @@ public static class GeneratorTestContextExtensions
             CodeRefactoringResults = context.CodeRefactoringResults.SetItem(
                 provider.GetType(),
                 new(
-                    resolvedValues
+                    [.. resolvedValues
                        .OrderBy(z => z.Document.Name)
-                       .ThenBy(z => z.MarkedLocation)
-                       .ToImmutableArray()
+                       .ThenBy(z => z.MarkedLocation)]
                 )
             ),
         };
@@ -373,17 +328,15 @@ public static class GeneratorTestContextExtensions
         CancellationToken cancellationToken
     )
     {
-        var originalSolution = project.Solution.Workspace.CurrentSolution;
+        // Each action is diffed against the original project from its own ApplyChangesOperation.ChangedSolution.
+        // Applying the operations to the workspace instead would leave each action's changes behind for the next one.
         var results = ImmutableArray.CreateBuilder<CodeActionTestResult>();
-        foreach (( var targetDocument, var codeAction ) in cab)
+        foreach ((var targetDocument, var codeAction) in cab)
         {
             var operations = await codeAction.GetOperationsAsync(cancellationToken);
-            foreach (var o in operations)
-            {
-                o.Apply(originalSolution.Workspace, cancellationToken);
-            }
+            var changedSolution = operations.OfType<ApplyChangesOperation>().LastOrDefault()?.ChangedSolution;
 
-            var changedProject = project.Solution.Workspace.CurrentSolution.GetProject(project.Id);
+            var changedProject = changedSolution?.GetProject(project.Id);
             if (changedProject is null) continue;
 
             var documentChanges = changedProject.GetChanges(project);
@@ -401,13 +354,11 @@ public static class GeneratorTestContextExtensions
                 documentTextChanges.Add(oldDocument.Name, textChanges);
             }
 
-            originalSolution.Workspace.TryApplyChanges(originalSolution);
             results.Add(new(documentChanges, targetDocument, codeAction, documentTextChanges.ToImmutable()));
         }
 
-        return results
+        return [.. results
               .OrderBy(z => z.TargetDocument.Name)
-              .ThenBy(z => z.CodeAction.Title)
-              .ToImmutableArray();
+              .ThenBy(z => z.CodeAction.Title)];
     }
 }

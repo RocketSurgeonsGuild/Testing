@@ -39,6 +39,8 @@ public record GeneratorTestContextBuilder
     private string? _projectName;
     private AssemblyLoadContext? _assemblyLoadContext;
     private CSharpParseOptions _parseOptions = new();
+    private CSharpCompilationOptions _compilationOptions = GeneratorTestContext.DefaultCompilationOptions;
+    private GeneratorDriverOptions _driverOptions;
     private DiagnosticSeverity? _diagnosticSeverity = VerifyGeneratorTextContext.diagnosticSeverityFilter;
 
     private ImmutableHashSet<MetadataReference>
@@ -95,26 +97,14 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="languageVersion"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder WithLanguageVersion(LanguageVersion languageVersion)
-    {
-        return this with
-        {
-            _parseOptions = new(languageVersion, _parseOptions.DocumentationMode, _parseOptions.Kind, _parseOptions.PreprocessorSymbolNames.ToArray()),
-        };
-    }
+    public GeneratorTestContextBuilder WithLanguageVersion(LanguageVersion languageVersion) => WithParseOptions(z => z.WithLanguageVersion(languageVersion));
 
     /// <summary>
     ///     Set the documentation mode for the compilation
     /// </summary>
     /// <param name="documentationMode"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder WithDocumentationMode(DocumentationMode documentationMode)
-    {
-        return this with
-        {
-            _parseOptions = new(_parseOptions.LanguageVersion, documentationMode, _parseOptions.Kind, _parseOptions.PreprocessorSymbolNames.ToArray()),
-        };
-    }
+    public GeneratorTestContextBuilder WithDocumentationMode(DocumentationMode documentationMode) => WithParseOptions(z => z.WithDocumentationMode(documentationMode));
 
     /// <summary>
     ///     Add a preprocessor symbol to the compilation
@@ -122,18 +112,7 @@ public record GeneratorTestContextBuilder
     /// <param name="preprocessorSymbolNames"></param>
     /// <returns></returns>
     [OverloadResolutionPriority(-1)]
-    public GeneratorTestContextBuilder AddPreprocessorSymbol(params string[] preprocessorSymbolNames)
-    {
-        return this with
-        {
-            _parseOptions = new(
-                _parseOptions.LanguageVersion,
-                _parseOptions.DocumentationMode,
-                _parseOptions.Kind,
-                _parseOptions.PreprocessorSymbolNames.Union(preprocessorSymbolNames).ToArray()
-            ),
-        };
-    }
+    public GeneratorTestContextBuilder AddPreprocessorSymbol(params string[] preprocessorSymbolNames) => AddPreprocessorSymbolInternal(preprocessorSymbolNames);
 
     /// <summary>
     ///     Add a preprocessor symbol to the compilation
@@ -141,19 +120,7 @@ public record GeneratorTestContextBuilder
     /// <param name="preprocessorSymbolNames"></param>
     /// <returns></returns>
     [OverloadResolutionPriority(0)]
-    public GeneratorTestContextBuilder AddPreprocessorSymbol(params IEnumerable<string> preprocessorSymbolNames)
-    {
-        var preprocessorSymbolNameList = preprocessorSymbolNames.ToList();
-        return this with
-        {
-            _parseOptions = new(
-                _parseOptions.LanguageVersion,
-                _parseOptions.DocumentationMode,
-                _parseOptions.Kind,
-                _parseOptions.PreprocessorSymbolNames.Union(preprocessorSymbolNameList).ToArray()
-            ),
-        };
-    }
+    public GeneratorTestContextBuilder AddPreprocessorSymbol(params IEnumerable<string> preprocessorSymbolNames) => AddPreprocessorSymbolInternal(preprocessorSymbolNames.ToList());
 
     /// <summary>
     ///     Add a preprocessor symbol to the compilation
@@ -161,56 +128,101 @@ public record GeneratorTestContextBuilder
     /// <param name="preprocessorSymbolNames"></param>
     /// <returns></returns>
     [OverloadResolutionPriority(1)]
-    public GeneratorTestContextBuilder AddPreprocessorSymbol(params IReadOnlyCollection<string> preprocessorSymbolNames)
-    {
-        return this with
-        {
-            _parseOptions = new(
-                _parseOptions.LanguageVersion,
-                _parseOptions.DocumentationMode,
-                _parseOptions.Kind,
-                _parseOptions.PreprocessorSymbolNames.Union(preprocessorSymbolNames).ToArray()
-            ),
-        };
-    }
+    public GeneratorTestContextBuilder AddPreprocessorSymbol(params IReadOnlyCollection<string> preprocessorSymbolNames) => AddPreprocessorSymbolInternal(preprocessorSymbolNames);
+
+    private GeneratorTestContextBuilder AddPreprocessorSymbolInternal(IEnumerable<string> preprocessorSymbolNames) =>
+        WithParseOptions(z => z.WithPreprocessorSymbols(z.PreprocessorSymbolNames.Union(preprocessorSymbolNames)));
 
     /// <summary>
     ///     What kind of source code is being compiled
     /// </summary>
     /// <param name="sourceCodeKind"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder WithSourceCodeKind(SourceCodeKind sourceCodeKind)
-    {
-        return this with
-        {
-            _parseOptions = new(
-                _parseOptions.LanguageVersion,
-                _parseOptions.DocumentationMode,
-                sourceCodeKind,
-                _parseOptions.PreprocessorSymbolNames.ToArray()
-            ),
-        };
-    }
+    public GeneratorTestContextBuilder WithSourceCodeKind(SourceCodeKind sourceCodeKind) => WithParseOptions(z => z.WithKind(sourceCodeKind));
 
     /// <summary>
-    ///     Set features for the compilation
+    ///     Set a parse option feature for the compilation. Setting a key again replaces its value.
     /// </summary>
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns></returns>
     public GeneratorTestContextBuilder WithFeature(string key, string? value = null)
     {
-        return this with
-        {
-            _parseOptions = new CSharpParseOptions(
-                    _parseOptions.LanguageVersion,
-                    _parseOptions.DocumentationMode,
-                    _parseOptions.Kind,
-                    _parseOptions.PreprocessorSymbolNames.ToArray()
-                )
-               .WithFeatures(_parseOptions.Features.Concat(new KeyValuePair<string, string>[] { new(key, value ?? string.Empty), })),
-        };
+        // Roslyn keys features case-insensitively, so drop any existing entry for the key before adding the new value.
+        return WithParseOptions(
+            z => z.WithFeatures(
+                z.Features
+                 .Where(feature => !string.Equals(feature.Key, key, StringComparison.OrdinalIgnoreCase))
+                 .Append(new(key, value ?? string.Empty))
+            )
+        );
     }
+
+    /// <summary>
+    ///     Change the parse options for the compilation. Every other parse option setter goes through this one, so earlier settings are kept.
+    /// </summary>
+    /// <param name="configure">Returns the new parse options from the current ones.</param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithParseOptions(Func<CSharpParseOptions, CSharpParseOptions> configure) => this with { _parseOptions = configure(_parseOptions), };
+
+    /// <summary>
+    ///     Change the compilation options for the compilation.
+    ///     The default is <c>new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)</c>.
+    /// </summary>
+    /// <remarks>
+    ///     <c>dotnet_diagnostic.&lt;id&gt;.severity</c> keys added with <see cref="AddGlobalOption" /> or <see cref="AddOption(string, string, string)" />
+    ///     also set diagnostic severities, as an .editorconfig or .globalconfig does for the real compiler. A
+    ///     <see cref="CompilationOptions.SyntaxTreeOptionsProvider" /> set here replaces that mapping.
+    /// </remarks>
+    /// <param name="configure">Returns the new compilation options from the current ones.</param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithCompilationOptions(Func<CSharpCompilationOptions, CSharpCompilationOptions> configure) => this with { _compilationOptions = configure(_compilationOptions), };
+
+    /// <summary>
+    ///     Set the nullable context for the compilation, as <c>&lt;Nullable&gt;</c> does in a project file.
+    /// </summary>
+    /// <param name="nullableContextOptions"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithNullableContext(NullableContextOptions nullableContextOptions) => WithCompilationOptions(z => z.WithNullableContextOptions(nullableContextOptions));
+
+    /// <summary>
+    ///     Allow or disallow unsafe code in the compilation, as <c>&lt;AllowUnsafeBlocks&gt;</c> does in a project file.
+    /// </summary>
+    /// <param name="allowUnsafe"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithAllowUnsafe(bool allowUnsafe = true) => WithCompilationOptions(z => z.WithAllowUnsafe(allowUnsafe));
+
+    /// <summary>
+    ///     Set the optimization level for the compilation (Debug by default).
+    /// </summary>
+    /// <param name="optimizationLevel"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithOptimizationLevel(OptimizationLevel optimizationLevel) => WithCompilationOptions(z => z.WithOptimizationLevel(optimizationLevel));
+
+    /// <summary>
+    ///     Set how a diagnostic is reported, as <c>/nowarn</c>, <c>/warnaserror</c> or <c>&lt;WarningsAsErrors&gt;</c> do for the real compiler.
+    /// </summary>
+    /// <param name="diagnosticId"></param>
+    /// <param name="reportDiagnostic"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithDiagnosticOption(string diagnosticId, ReportDiagnostic reportDiagnostic) =>
+        WithCompilationOptions(z => z.WithSpecificDiagnosticOptions(z.SpecificDiagnosticOptions.SetItem(diagnosticId, reportDiagnostic)));
+
+    /// <summary>
+    ///     Set the options for the generator drivers, for example to track incremental generator steps.
+    /// </summary>
+    /// <param name="driverOptions"></param>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithDriverOptions(GeneratorDriverOptions driverOptions) => this with { _driverOptions = driverOptions, };
+
+    /// <summary>
+    ///     Track incremental generator steps, so <see cref="GeneratorTestResult.RunResult" /> carries
+    ///     <see cref="GeneratorRunResult.TrackedSteps" /> and <see cref="GeneratorRunResult.TrackedOutputSteps" />.
+    ///     Use <see cref="GeneratorTestResults.RerunAsync" /> to run the same drivers again on an edited compilation.
+    /// </summary>
+    /// <returns></returns>
+    public GeneratorTestContextBuilder WithIncrementalTracking() =>
+        WithDriverOptions(new(_driverOptions.DisabledOutputs, trackIncrementalGeneratorSteps: true));
 
     /// <summary>
     ///     Ignore a given output file, if you don't want to see it's results.
@@ -224,7 +236,8 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder WithGenerator(Type type) => this with { _relatedTypes = _relatedTypes.Add(type), };
+    public GeneratorTestContextBuilder WithGenerator(Type type) =>
+        AddRelatedType(type, typeof(IIncrementalGenerator).IsAssignableFrom(type) || typeof(ISourceGenerator).IsAssignableFrom(type), "an IIncrementalGenerator or ISourceGenerator");
 
     /// <summary>
     ///     Add a generator to the compilation
@@ -239,7 +252,7 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder WithAnalyzer(Type type) => this with { _relatedTypes = _relatedTypes.Add(type), };
+    public GeneratorTestContextBuilder WithAnalyzer(Type type) => AddRelatedType(type, typeof(DiagnosticAnalyzer).IsAssignableFrom(type), "a DiagnosticAnalyzer");
 
     /// <summary>
     ///     Add a analyzer to the compilation
@@ -254,7 +267,7 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder WithCodeFix(Type type) => this with { _relatedTypes = _relatedTypes.Add(type), };
+    public GeneratorTestContextBuilder WithCodeFix(Type type) => AddRelatedType(type, typeof(CodeFixProvider).IsAssignableFrom(type), "a CodeFixProvider");
 
     /// <summary>
     ///     Add a codefix provider to the compilation
@@ -269,7 +282,7 @@ public record GeneratorTestContextBuilder
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public GeneratorTestContextBuilder WithCodeRefactoring(Type type) => this with { _relatedTypes = _relatedTypes.Add(type), };
+    public GeneratorTestContextBuilder WithCodeRefactoring(Type type) => AddRelatedType(type, typeof(CodeRefactoringProvider).IsAssignableFrom(type), "a CodeRefactoringProvider");
 
     /// <summary>
     ///     Add a code refactoring provider to the compilation
@@ -277,7 +290,15 @@ public record GeneratorTestContextBuilder
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public GeneratorTestContextBuilder WithCodeRefactoring<T>()
-        where T : CodeRefactoringProvider, new() => WithCodeFix(typeof(T));
+        where T : CodeRefactoringProvider, new() => WithCodeRefactoring(typeof(T));
+
+    private GeneratorTestContextBuilder AddRelatedType(Type type, bool isExpectedKind, string expectedKind)
+    {
+        // Types of the wrong kind were dropped without a word when the context was built; say so at the call instead.
+        return isExpectedKind
+            ? this with { _relatedTypes = _relatedTypes.Add(type), }
+            : throw new ArgumentException($"{type.FullName} is not {expectedKind}.", nameof(type));
+    }
 
     /// <summary>
     ///     Add an in memory compiled assembly to the compilation
@@ -285,15 +306,7 @@ public record GeneratorTestContextBuilder
     /// <param name="additionalCompilations"></param>
     /// <returns></returns>
     [OverloadResolutionPriority(-1)]
-    public GeneratorTestContextBuilder AddCompilationReferences(params GeneratorTestResults[] additionalCompilations)
-    {
-        return additionalCompilations.Any(z => z.MetadataReference is null)
-            ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
-            : ( AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
-            {
-                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name!)),
-            } );
-    }
+    public GeneratorTestContextBuilder AddCompilationReferences(params GeneratorTestResults[] additionalCompilations) => AddCompilationReferencesInternal(additionalCompilations);
 
     /// <summary>
     ///     Add an in memory compiled assembly to the compilation
@@ -301,16 +314,7 @@ public record GeneratorTestContextBuilder
     /// <param name="additionalCompilations"></param>
     /// <returns></returns>
     [OverloadResolutionPriority(0)]
-    public GeneratorTestContextBuilder AddCompilationReferences(params IEnumerable<GeneratorTestResults> additionalCompilations)
-    {
-        var generatorTestResultsEnumerable = additionalCompilations.ToList();
-        return generatorTestResultsEnumerable.Any(z => z.MetadataReference is null)
-            ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
-            : AddReferencesInternal(generatorTestResultsEnumerable.Select(z => z.MetadataReference!).ToArray()) with
-            {
-                _referenceNames = _referenceNames.Union(generatorTestResultsEnumerable.Select(z => z.Assembly!.GetName().Name!)),
-            };
-    }
+    public GeneratorTestContextBuilder AddCompilationReferences(params IEnumerable<GeneratorTestResults> additionalCompilations) => AddCompilationReferencesInternal(additionalCompilations.ToList());
 
     /// <summary>
     ///     Add an in memory compiled assembly to the compilation
@@ -318,14 +322,22 @@ public record GeneratorTestContextBuilder
     /// <param name="additionalCompilations"></param>
     /// <returns></returns>
     [OverloadResolutionPriority(1)]
-    public GeneratorTestContextBuilder AddCompilationReferences(params IReadOnlyCollection<GeneratorTestResults> additionalCompilations)
+    public GeneratorTestContextBuilder AddCompilationReferences(params IReadOnlyCollection<GeneratorTestResults> additionalCompilations) => AddCompilationReferencesInternal(additionalCompilations);
+
+    private GeneratorTestContextBuilder AddCompilationReferencesInternal(IReadOnlyCollection<GeneratorTestResults> additionalCompilations)
     {
-        return additionalCompilations.Any(z => z.MetadataReference is null)
-            ? throw new ArgumentException("All additional compilations must have a metadata reference", nameof(additionalCompilations))
-            : ( AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
+        return additionalCompilations.Where(z => z.MetadataReference is null).ToList() is { Count: > 0, } failed
+            ? throw new ArgumentException(
+                Helpers.FormatFailure(
+                    "All additional compilations must have a metadata reference, but these failed to emit:",
+                    failed.Select(z => ($"{z.FinalCompilation.AssemblyName} (context {z.ContextId})", (IEnumerable<Diagnostic>)z.EmitDiagnostics))
+                ),
+                nameof(additionalCompilations)
+            )
+            : AddReferencesInternal(additionalCompilations.Select(z => z.MetadataReference!).ToArray()) with
             {
-                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.Assembly!.GetName().Name!)),
-            } );
+                _referenceNames = _referenceNames.Union(additionalCompilations.Select(z => z.FinalCompilation.AssemblyName ?? z.Assembly?.GetName().Name ?? "")),
+            };
     }
 
     /// <summary>
@@ -769,7 +781,9 @@ public record GeneratorTestContextBuilder
             _additionalTexts,
             _markedLocations,
             _diagnosticSeverity,
-            _customizers
+            _customizers,
+            _compilationOptions,
+            _driverOptions
         );
     }
 

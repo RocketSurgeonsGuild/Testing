@@ -36,7 +36,7 @@ public static class Customizers
                                                                       targets.AddRange(results.InputSyntaxTrees.Select(Selector));
                                                                       data["InputDiagnostics"] = results
                                                                                                 .InputDiagnostics
-                                                                                                .Where(s => s.Severity >= results.Severity)
+                                                                                                .AtOrAbove(results.Severity)
                                                                                                 .OrderDiagnosticResults();
                                                                       data["InputAdditionalTexts"] = results.InputAdditionalTexts;
                                                                   };

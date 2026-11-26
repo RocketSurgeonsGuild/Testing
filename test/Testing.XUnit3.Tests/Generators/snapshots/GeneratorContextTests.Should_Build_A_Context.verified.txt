@@ -1,9 +1,12 @@
 {
-  ContextId: 9WKF4eSJJiKj9m18RhlOzSOaL4UXqAR8c9mkz92wfu4=,
+  ContextId: yzjSmdbTS0uOmFjpwwEK/WSstoc9g63CXU+GzBJmC/A=,
   FinalDiagnostics: [],
   InputDiagnostics: [],
   ParseOptions: {
     DocumentationMode: Diagnose,
+    Features: {
+      my-feature: true
+    },
     PreprocessorSymbolNames: [
       SOMETHING,
       SOMETHING_ELSE
