@@ -8,7 +8,7 @@
     "runner": "Microsoft.Testing.Platform"
   },
   "msbuild-sdks": {
-    "Rocket.Surgery.Sdk": "2026.11.6",
+    "Rocket.Surgery.Sdk": "2026.11.7",
     "Joinery.Dovetail.Sdk": "0.8.0"
   }
 }
