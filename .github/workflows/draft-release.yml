@@ -24,6 +24,6 @@ concurrency:
 
 jobs:
   draft_release:
-    uses: RocketSurgeonsGuild/actions/.github/workflows/draft-release.yml@v0.4.0
+    uses: RocketSurgeonsGuild/actions/.github/workflows/draft-release.yml@v0.5.0
     secrets:
       RSG_BOT_TOKEN: ${{ secrets.RSG_BOT_TOKEN }}
