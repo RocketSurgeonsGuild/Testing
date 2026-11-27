@@ -23,7 +23,7 @@
     "starlight-plugin-icons": "1.1.6",
     "starlight-scroll-to-top": "2.0.0",
     "starlight-sidebar-topics": "0.9.0",
-    "starlight-tags": "2.0.0"
+    "starlight-tags": "2.0.1"
   },
   "devDependencies": {
     "@types/node": "^26.0.0"
